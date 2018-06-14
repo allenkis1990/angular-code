@@ -1,0 +1,53 @@
+<!--发票信息-->
+<div class="tab-bd clear" ng-show="model.noUserInformation">
+    <div class="no-data w-4 pt20 pb20 clear">
+        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+        <div class="p-txt">请先输入相关信息进行搜索！</div>
+    </div>
+</div>
+<div class="tab-bd clear" ng-show="!model.noUserInformation">
+    <ul class="ul-form li-fl lh-1 mt20 clear">
+        <li>
+            <select class="slt slt-medium" ng-model="invoiceModel.billOrderSearch.isNeedBill">
+                <option ng-selected="true" value="">是否需要发票(全部)</option>
+                <option value="true">是</option>
+                <option value="false">否</option>
+            </select>
+        </li>
+        <li ng-show="invoiceModel.billOrderSearch.isNeedBill !== 'false'">
+            <select class="slt slt-medium" ng-model="invoiceModel.billOrderSearch.electron">
+                <option ng-selected="true" value="">发票类型</option>
+                <option value="true">电子</option>
+                <option value="false">纸质</option>
+            </select>
+        </li>
+        <li ng-show="invoiceModel.billOrderSearch.isNeedBill">
+            <select class="slt slt-medium" ng-model="invoiceModel.billOrderSearch.billing">
+                <option ng-selected="true" value="">是否已开票</option>
+                <option value="true">是</option>
+                <option value="false">否</option>
+            </select>
+        </li>
+        <li ng-show="showTimeDate">
+            <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                   ng-model="invoiceModel.billOrderSearch.billingTimeStart" type="text" class="ipt ipt-s"
+                   placeholder="开票时间"
+                   ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+            /> -
+            <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                   ng-model="invoiceModel.billOrderSearch.billingTimeEnd" type="text" class="ipt ipt-s"
+                   placeholder="开票时间"
+                   ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+            />
+        </li>
+        <li><a href="javascript:void (0);"
+               has-permission="classInformation/searchInvoiceInfo"
+               ng-click="events.MainPageQueryList($event)"
+               class="btn btn-b">查询</a></li>
+    </ul>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.invoiceGrid"
+             k-ng-delay="kendoPlus.gridDelay"
+             k-options="ui.invoiceGrid.options"></div>
+    </div>
+</div>

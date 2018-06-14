@@ -1,0 +1,59 @@
+<!--订单信息-->
+
+<div class="no-data w-4 pt20 pb20 clear"
+     ng-show="model.noUserInformation">
+    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+    <div class="p-txt">请先输入相关信息进行搜索！</div>
+</div>
+
+<div class="tab-bd clear" ng-if="!model.noUserInformation">
+    <ul class="ul-form li-fl lh-1 mt20 clear">
+       <!-- <li><input type="text"
+                   ng-model="refundQueryParam.orderNo"
+                   class="ipt ipt-middle"
+                   placeholder="订单号">
+        </li>-->
+        <li>退款状态：
+            <select  class="slt slt-middle" ng-model="refundQueryParam.refundOrderStatus">
+                <option value="ALL">全部</option>
+                <option value="WAIT_FOR_AFFIRM">退款审批中</option>
+                <option value="REFUND_PROCESSING">退款处理中</option>
+                <option value="REFUND_SUCCESS">退款成功</option>
+                <option value="REFUND_FAIL">退款失败</option>
+                <option value="REJECT_APPLY">拒绝退款</option>
+                <option value="CANCEL">已取消</option>
+            </select>
+        </li>
+        <li>
+            <input type="text"
+                   class="ipt"
+                   hb-clear-input
+                   ng-model="refundQueryParam.applyStartTimeMills"
+                   k-options="kendoPlus.timeOptions"
+                   kendo-date-picker="kendoPlus.timeModel"
+                   hb-readonly
+                   placeholder="退款申请开始时间"/> -
+            <input type="text"
+                   hb-clear-input
+                   ng-model="refundQueryParam.applyEndTimeMills"
+                   k-options="kendoPlus.timeOptions"
+                   kendo-date-picker="kendoPlus.timeModel"
+                   hb-readonly
+                   class="ipt"
+                   placeholder="退款申请结束时间"/>
+
+        </li>
+
+        <li><a href="javascript:void(0)"
+               has-permission="refundOrder/searchrefundPage"
+               ng-click="events.MainPageQueryList($event)"
+               class="btn btn-b">查询</a></li>
+    </ul>
+
+
+    <div style="margin-top:10px;" kendo-grid="kendoPlus.refundGridInstance"
+         k-ng-delay="kendoPlus.gridDelay"
+         k-options="refundGrid.options">
+    </div>
+
+</div>

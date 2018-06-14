@@ -1,0 +1,23 @@
+<li ng-repeat="item in skuList">
+    <select class="slt slt-small"
+            ng-if="lwhif"
+            ng-change="events.changeSelect(item)"
+            ng-options="sbItem.optionId as sbItem.name for sbItem in model[item.listName]"
+            ng-model="item[lwhModel]">
+        <option value="" ng-bind="item.placeholder"></option>
+    </select>
+    <!--<select class="slt slt-small"
+            ng-if="item.model==='trainType'"
+            ng-change="events.changeTrainLevl(trainType,item,trainType)"
+            ng-options="sbItem.optionId as sbItem.name for sbItem in trainTypeList"
+            ng-model="trainType">
+        <option value="" ng-bind="item.placeholder"></option>
+    </select>
+    <select class="slt slt-small"
+            ng-if="item.model==='level'"
+            ng-change="events.changeSelect(item,level)"
+            ng-options="sbItem.optionId as sbItem.name for sbItem in levelList"
+            ng-model="level">
+        <option value="" ng-bind="item.placeholder"></option>
+    </select>-->
+</li>

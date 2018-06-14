@@ -1,0 +1,9 @@
+<li ng-if=" item.eName == 'trainingYear' || item.eName == 'trainingSubject'" ng-repeat="item in skuList">
+    <select class="slt slt-small"
+            ng-change="events.changeSelect(item)"
+            ng-options="sbItem.optionId as sbItem.name for sbItem in model[item.listName]"
+            ng-model="item[lwhModel]">
+        <option ng-hide="hidePlaceHolder" value="" ng-bind="item.placeholder"></option>
+    </select>
+</li>
+<li></li>

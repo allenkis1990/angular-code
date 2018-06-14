@@ -1,0 +1,112 @@
+<div class="modules zoomInDown animated">
+    <div class="header">
+        <div class="wrap clearfix">
+            <!--<a ui-sref="^.home" class="h-btn btn-min" title="桌面" href="#/home"></a>-->
+            <a href="#" class="h-btn btn-back" ng-click="events.goBack($event)" title="上一步"></a>
+            <a ui-sref="^.home" class="h-btn btn-close" title="关闭" href="#/home"></a>
+
+            <div class="title">课程详情页</div>
+        </div>
+    </div>
+    <div class="main-wrap-body">
+        <div class="main-wrap">
+            <div class="wrap-title mb20 clearfix"><span class="ico"></span>课程基础信息</div>
+            <div class="ml50 clearfix">
+                <ul class="ul-form fl">
+                    <li><span class="left-txt">课程名称：</span><span ng-bind="model.course.courseUpdate.name"></span></li>
+                    <li><span class="left-txt">讲师：</span><span ng-bind="model.course.courseUpdate.teacherInfo"></span>
+                    </li>
+                    <li><span class="left-txt">学分：</span><span ng-bind="model.course.courseUpdate.period"></span></li>
+                    <li><span class="left-txt">课程资源分类：</span><span ng-bind="model.course.courseUpdate.typeName"></span>
+                    </li>
+                    <li><span class="left-txt">创建时间：</span><span ng-bind="model.course.courseUpdate.createTime"></span>
+                    </li>
+                    <li class="clearfix"><span class="left-txt fl">课程简介：</span>
+                        <span class="w-3 fl"
+                              ng-bind="model.course.courseUpdate.abouts?model.course.courseUpdate.abouts:'暂无简介'"></span>
+                    </li>
+                </ul>
+                <div class="fl course-detail-img">
+                    <img
+                            ng-src="b{{model.course.courseUpdate.iconPath?'/mfs/'+model.course.courseUpdate.iconPath:'@systemUrl@/images/afei.jpg'}}"
+                            alt=" "/>
+                </div>
+            </div>
+            <div class="wrap-title mt50 mb20 clearfix"><span class="ico"></span>课程章节</div>
+            <div class="mb20 clearfix">
+                <div class="w-2 fl">
+                    <div class="border-box">
+                        <div class="cd-tit">课程章节(<span
+                                ng-bind="model.course.courseUpdate.courseOutlineDtos.length"></span>)
+                        </div>
+                        <ul class="cd-list">
+                            <li ng-click="events.select($index)"
+                                ng-repeat="courseOutlineDto in model.course.courseUpdate.courseOutlineDtos"
+                                ng-class="{'current':$index==model.selectIndex}"><span class="num"
+                                                                                       ng-bind="$index+1"></span> <span
+                                    ng-bind="courseOutlineDto.name"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="w-1 fr">
+                    <div class="border-box">
+                        <div class="cd-tit">
+                            课程章节(<span
+                                ng-bind="model.course.courseUpdate.courseOutlineDtos[model.selectIndex].subCourseOutlines.length"></span>)
+                        </div>
+                        <div class="file-upload-box">
+                            <ul class="ul-file-upload">
+                                <li ng-repeat="subCourseOutline in model.course.courseUpdate.courseOutlineDtos[model.selectIndex].subCourseOutlines">
+                                    <span class="file-tit to"><span class="num" ng-bind="$index+1"></span><span
+                                            ng-class="{'ico ico-document':subCourseOutline.type==1,'ico ico-video':subCourseOutline.type==2,'ico ico-scorm':subCourseOutline.type==3}"></span><span
+                                            ng-bind="subCourseOutline.name"></span> (<span
+                                            ng-bind="subCourseOutline.formatSize"></span>)</span>
+                                    <span class="file-state" ng-bind="subCourseOutline.status==1?'正常':'异常'"></span>
+                                    <span class="fr-ico">
+                                      <a ng-if="subCourseOutline.status!=1" href="javascript:void(0)"
+                                         class="ico-play disable"><span class="ico"></span>播放</a>
+                                    <a ng-if="subCourseOutline.status==1" href="javascript:void(0)" class="ico-play"
+                                       ng-click="events.playCourse(model.course.courseUpdate.id,subCourseOutline.cweId)"><span
+                                            class="ico"></span>播放</a>
+                                </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="float-layout">
+                <!-----------  已经点赞或者踩的。添加current  -------------->
+
+                <!-------------  选中时添加current  -------------->
+                <!--<button type="button" ng-disabled="model.course.haveClicked" ng-class="{'current':ico like}"
+                        ng-click="events.like()"><span class="ico like"></span>(b{{model.course.likeNumber}})
+                </button>
+                <button type="button" ng-disabled="model.course.haveClicked" ng-class="{'current':ico unlike}"
+                        ng-click="events.tread()"><span class="ico unlike"></span>(b{{model.course.treadNumber}})
+                </button>-->
+
+                <a href="javascript:void(0)" ng-if="!model.course.haveClicked" ng-click="events.like()" title="赞"><span
+                        class="ico like"></span>
+                    <p>(<span ng-bind="model.course.likeNumber"></span>)</p></a>
+
+                <a href="javascript:void(0)" ng-if="model.course.haveClicked" title="已操作"><span class="ico like"></span>
+                    <p>(<span ng-bind="model.course.likeNumber"></span>)</p></a>
+
+                <a href="javascript:void(0)" ng-if="!model.course.haveClicked" ng-click="events.tread()" title="踩"><span
+                        class="ico unlike"></span>
+                    <p>(<span ng-bind="model.course.treadNumber"></span>)</p></a>
+
+                <a href="javascript:void(0)" ng-if="model.course.haveClicked" title="已操作"><span
+                        class="ico unlike"></span>
+                    <p>(<span ng-bind="model.course.treadNumber"></span>)</p></a>
+
+                <a href="javascript:void(0)" ng-click="events.playCourse(model.course.courseUpdate.id)"><span
+                        class="ico play"></span>
+
+                    <p>播放</p></a>
+            </div>
+        </div>
+    </div>
+</div>

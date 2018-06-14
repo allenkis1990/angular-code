@@ -1,0 +1,72 @@
+<div class="main-wrap-cont">
+    <div class="m-box-1">
+        <div class="m-box-2">
+            <div class="m-box-3">
+                <div class="main-wrap-body">
+                    <div class="tips-box">
+                        温馨提示:<br>
+                        1. 导入学员并开班，将由系统以用户名为依据，对未存在于平台中的学员自动生成登录帐号并开通班级，对已存在于平台中的学员变更学员姓名信息；<br>
+                        2. 在导入报名表前请下载<span class="b t-r"><a target="_blank" class="t-r" href="b{{urlPrefix}}/mfs/resource/file/surveyor_distributor_open_import_temp.xlsx">[导入学员并开班模板]</a></span>，并严格根据表格内容填写保存后再导入系统；<br>
+                        3. 导入表格一次最多支持1000条记录，若超过1000条则不能正常导入；<br>
+                        4. 导入后可以通过“导入任务查看” 查看并确认导入结果。
+                    </div>
+
+                    <div class="clear" style="margin-bottom: 15px">
+                        <input type="text" ng-model="model.upload.result.fileName" readonly class="ipt ipt-large ml20"
+                               placeholder="请选择要导入的表格" style="float:left;margin-top:10px;"/>
+
+                        <div hb-file-uploader="test" auto="true" ng-model="model.upload.result"
+                             class="upload" style="float:left;margin-left:10px">选择
+                        </div>
+
+                        <div><a href="javascript: void(0);" ng-click="events.openKendoWindow('classWindow')"
+                                class="ml20" style="margin-top: 16px; color: #3399FF;">查询平台可报名的面授班级</a></div>
+                    </div>
+
+                    <div class="clear">
+                        <span class="b">默认密码：</span>
+                        <label><input name="default_password" type="radio" value="1" ng-model="model.importUser.passWordType">000000</label>
+                        <label class="ml20"><input name="default_password" type="radio" value="2" ng-model="model.importUser.passWordType">手机号后6位</label>
+                        <label class="ml20"><input name="default_password" type="radio" value="3" ng-model="model.importUser.passWordType">自定义密码 <input ng-show="model.importUser.passWordType==3" ng-model="model.importUser.password" type="text" class="ipt ipt-m"></label>
+                        <label class="ml50"><span><input type="checkbox" ng-model="model.importUser.test">导入数据仅作为测试账号</span></label>
+                    </div>
+                    <div>
+                        <a href="javascript: void(0);" class="btn btn-r mt20" ng-click="events.importOpenUser($event)">导入</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--培训班弹窗-->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="classWindow" style="width:1200px;">
+    <div class="dialog-body">
+        <div class="dialog-tit">平台可报班级列表<a href="javascript:void(0)" class="ico ico-close"ng-click="events.closeKendoWindow('classWindow')"></a></div>
+
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <div hb-sku-directive
+                             category-type="model.configedQueryParam.categoryType"
+                             lwhmodel="skuParamsConfiged"
+                             ng-model="skuParamsConfiged"
+                             templateurl="@systemUrl@/templates/common/hb-sku-zgj.html">
+                        </div>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" ng-click="events.mainPageQueryList($event,'classGridInstance','classPage')"class="btn btn-b">搜索</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div kendo-grid="kendoPlus.classGridInstance" k-options="kendoPlus.classGrid.options"></div>
+        </div>
+
+        <div class="btn-center">
+            <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="events.closeKendoWindow('classWindow')">取消</a>
+        </div>
+    </div>
+</div>

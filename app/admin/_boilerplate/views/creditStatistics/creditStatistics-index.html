@@ -1,0 +1,44 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.creditStatistics'">
+    <div class="column">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text" class="ipt ipt-small"
+                           placeholder="请输入机构名称"
+                           hb-clear-input
+                           ng-keyup="events.pressEnterKey($event)"
+                           ng-model="model.queryParam.organizationName"
+                /></li>
+                <li>
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="统计开始日期"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.statisticTimeBegin"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.statisticTimeBegin"
+                    /> -
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="统计结束日期"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.statisticTimeEnd"
+                           k-options="ui.datePicker.end.options"
+                           ng-model="model.statisticTimeEnd"
+                    />
+                </li>
+                <li><a href="javascript:void(0);" class="btn btn-b" ng-click="events.MainPageQueryList($event)">查询</a>
+                    <!--<a href="javascript:void(0);" class="btn btn-b" ng-click="">导出数据</a>-->
+                </li>
+            </ul>
+        </div>
+        <p class="mb10"><span class="b">统计时间段：</span><span
+                ng-show="model.statisticTimeBegin!=''">b{{model.startTime}}</span> <span
+                ng-show="model.statisticTimeBegin==''">-</span>至 <span ng-show="model.statisticTimeEnd!=''">b{{model.endTime}}</span>
+            <span ng-show="model.statisticTimeEnd==''">-</span></p>
+        <div class="column mt20">
+            <div kendo-grid="node.gridInstance" k-options="ui.grid.options">
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view></div>

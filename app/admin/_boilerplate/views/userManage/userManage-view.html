@@ -1,0 +1,179 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goUserManage($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goUserManage($event)">学员管理</a>
+        &gt;查看详情
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit">学员基本信息</div>
+        <div class="dash-line-1"></div>
+        <ul class="ul-d-form pt20 lh-1 clear">
+            <li class="wp-4 fl">
+                <span class="left-txt" style="width:128px">真实姓名：</span>
+                <span ng-bind="model.userMessage.name"></span>
+            </li>
+
+            <li class="wp-4 fl">
+                <span class="left-txt" style="width:128px">性别：</span>
+                <span ng-bind="model.userMessage.gender"></span>
+            </li>
+            <li class="wp-4 fl">
+                <span class="left-txt" style="width:128px">身份证号：</span>
+                <span ng-bind="model.userMessage.identify"></span>
+            </li>
+            <!--<li class="wp-4 fl">-->
+            <!--<span class="left-txt"  style="width:128px">电子邮箱：</span>-->
+            <!--<span ng-bind="model.userMessage.email"></span>-->
+            <!--</li>-->
+            <li class="wp-4 fl">
+                <span class="left-txt" style="width:128px">手机号：</span>
+                <span ng-bind="model.userMessage.phoneNumber"></span>
+            </li>
+            <!--   <li class="wp-4 fl">
+                   <span class="left-txt"  style="width:128px">所在地区：</span>
+                   <span ng-bind="model.userMessage.areaPath"></span>
+
+               </li>
+               <li class="wp-4 fl">
+                   <span class="left-txt" style="width:128px">学历：</span>
+                   <span ng-bind="model.userMessage.highestEducation"></span>
+
+               </li>-->
+
+
+            <!--  <li class="wp-4 fl">
+                  <span class="left-txt" style="width:128px">专业技术岗位：</span>
+                  <span ng-bind="model.userMessage.job"></span>
+
+              </li>
+              <li class="wp-4 fl">
+                  <span class="left-txt" style="width:128px">专业技术职务：</span>
+                  <span ng-bind="model.userMessage.jobGrade"></span>
+
+              </li>-->
+
+            <li class="wp-4 fl">
+                <span class="left-txt" style="width:128px">工作单位：</span>
+                <span ng-bind="model.userMessage.unitName"></span>
+            </li>
+            <!-- <li class="wp-4 fl">
+                 <span class="left-txt">职称：</span>
+                 <span ng-bind="model.userMessage.jobGrade"></span>
+             </li>-->
+            <!--  <li class="wp-4 fl">
+                  <span class="left-txt">出生年月：</span>
+                  <span ng-bind="model.userMessage.bornDay"></span>
+              </li>-->
+            <!-- <li class="wp-4 fl">
+                 <span class="left-txt" style="width:128px">邮政编码：</span>
+                 <span ng-bind="model.userMessage.postCode"></span>
+             </li>
+             <li class="wp-4 fl">
+                 <span class="left-txt" style="width:128px">通讯地址：</span>
+                 <span ng-bind="model.userMessage.address"></span>
+             </li>-->
+            <li class="wp-4 fl">
+                <span class="left-txt" style="width:128px">注册来源：</span>
+                <span ng-bind="model.userMessage.registerType"></span>
+            </li>
+            <li class="wp-4 fl">
+                <span class="left-txt" style="width:128px">注册时间：</span>
+                <span ng-bind="model.userMessage.createTime"></span>
+            </li>
+            <!--   <li class="wp-4 fl">
+                   <span class="left-txt" style="width:128px">继续教育证书编号：</span>
+                   <span ng-bind="model.userMessage.certificateNumber"></span>
+
+               </li>-->
+        </ul>
+    </div>
+    <div class="tab-tit">
+        <a href="javascript:void(0)"
+           ng-click="events.tabConfig('course')"
+           ng-class="{'current':model.configState=='course'}">学习的课程</a>
+        <a href="javascript:void(0)"
+           ng-click="events.tabConfig('class')"
+           ng-class="{'current':model.configState=='class'}">学习的班级</a>
+    </div>
+    <div class="column mt50" ng-show="model.configState=='course'">
+        <ul class="ul-d-form pt20 lh-1" ng-repeat="item in model.trainCourseMessage">
+            <li class="mt30"><b>b{{item.trainingYearValue}} b{{item.subjectName}}</b></li>
+            <li>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>课程名称</th>
+                        <th width="100" ng-if="item.subjectName==='专业课'">专业</th>
+                        <th width="60">学时</th>
+                        <th width="140">选购时间</th>
+                        <th width="140">选购的单位</th>
+                        <th width="140">创建单位</th>
+                        <th width="140">开始学习时间</th>
+                        <th width="140">考核通过时间</th>
+                        <th width="80">课程进度</th>
+                        <th width="100">课后测验得分</th>
+                    </tr>
+
+                    </thead>
+                    <tbody ng-repeat="it in item.userCourseInfoList">
+                    <tr>
+                        <td>b{{it.courseName}}</td>
+                        <td ng-if="item.subjectName==='专业课'">b{{it.coursePoolName}}</td>
+                        <td>b{{it.coursePeriod}}</td>
+                        <td><span ng-if="it.chooseTime!==null">b{{it.chooseTime}}</span>
+                            <span ng-if="it.chooseTime===null">--</span></td>
+                        <td ng-bind="it.purchaseUnit"></td>
+                        <td ng-bind="it.createUnit"></td>
+                        <td><span ng-if="it.learningBeginTime!==null">b{{it.learningBeginTime}}</span>
+                            <span ng-if="it.learningBeginTime===null">--</span></td>
+                        <td><span ng-if="it.assessPassTime!==null">b{{it.assessPassTime}}</span>
+                            <span ng-if="it.assessPassTime===null">--</span></td>
+                        <td><span ng-if="it.courseSchedule!==null">b{{it.courseSchedule}}</span>
+                            <span ng-if="it.courseSchedule===null">--</span></td>
+                        <td><span ng-if="it.coursePracticeScore!==null">b{{it.coursePracticeScore}}</span>
+                            <span ng-if="it.coursePracticeScore===null">--</span></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </div>
+    <div class="column mt50" ng-show="model.configState=='class'">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="50">序号</th>
+                <th width="100">继续教育年度</th>
+                <th width="100">科目</th>
+                <th>培训班名称</th>
+                <th width="200">报名时间</th>
+                <th width="140">选购的单位</th>
+                <th width="140">创建单位</th>
+                <th width="100">是否合格</th>
+                <th width="250">获得班级方式</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="trainClass in model.trainClassMessage">
+                <td ng-bind="$index+1"></td>
+                <td ng-bind="trainClass.trainingYear"></td>
+                <td ng-bind="trainClass.subjectName"></td>
+                <td ng-bind="trainClass.name"></td>
+                <td ng-bind="trainClass.registerTime"></td>
+                <td ng-bind="trainClass.purchaseUnit"></td>
+                <td ng-bind="trainClass.createUnit"></td>
+                <td ng-bind="trainClass.trainingResult==-1?'未考核':trainClass.trainingResult==0?'不合格':'合格'"></td>
+                <td ng-bind="trainClass.createType==1?'系统创建':trainClass.createType==2
+                    ?'用户创建':trainClass.createType==3?'管理员创建':trainClass.createType==4?'历史迁移':'外部接口'">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </tbody>
+        </table>
+    </div>
+
+</div>

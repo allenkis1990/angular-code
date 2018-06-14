@@ -1,0 +1,358 @@
+<!--我是protal门户-->
+<!--<a ui-sref="states.mod3">mod3</a>-->
+
+
+<!--<div protal-login get-is-login="events.getIslogin()"></div>-->
+
+<div class="banner-box mb15 rel">
+    <div class="p-wrap-full rel">
+        <!-- 课程导航 -->
+        <div class="nav-wrap">
+            <div class="nav-bar clear">
+                <div class="title-box mt18 clear"><h2 class="title t-b">学习数据</h2></div>
+                <div class="data-box plr20 tc">
+                    <p class="time-panel"><span class="p-ico time_icon"></span>2016-07-01 15:00:00</p>
+                    <div class="data-panel bor-b">
+                        <div class="data-num fs42">2,159</div>
+                        <p class="lh36 txt-g">累计考核通过学时</p>
+                    </div>
+                    <div class="data-panel">
+                        <div class="data-num fs42">159</div>
+                        <p class="lh36 txt-g">当前在线用户数</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 登录框-登录前 -->
+        <div class="course-my" ng-if="!sureUseLogin">
+            <div class="course-my-info clear"><a class="my-headimg"><img src="kccs/kccsv2/images/userimgindex.jpg"></a>
+                <div class="info-detail mt10">
+                    <div>HI，您还没登录</div>
+                    <span>欢迎登录徽学网</span></div>
+            </div>
+            <div class="login-entry">
+                <a href="javascript:void(0)" ng-click="events.openLoginDialog()" class="btn-b-b">登录</a>
+                <a href="#" ui-sref="states.accountant.registration" class="btn-r">注册</a>
+            </div>
+            <ul class="entry-box clearfix">
+                <li><a href="javascript:void(0)"
+                       ng-click="events.openLoginDialog()"><i class="p-ico i1"></i><span>我的学习</span></a></li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.openLoginDialog()"><i class="p-ico i2"></i><span>学习档案</span></a></li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.openLoginDialog()"><i class="p-ico i3"></i><span>我的订单</span></a></li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.openLoginDialog()"><i class="p-ico i4"></i><span>购物车</span></a></li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.openLoginDialog()"><i class="p-ico i5"></i><span>通知</span></a></li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.openLoginDialog()"><i class="p-ico i6"></i><span>帐号设置</span></a></li>
+            </ul>
+        </div>
+        <!-- 登录框-登录后 -->
+        <div class="course-my" ng-if="sureUseLogin">
+            <div class="course-my-info clear"><a class="my-headimg"><img src="kccs/kccsv2/images/userimgindex.jpg"
+                                                                         ng-src="{{useInformation.photo===null?'kccs/kccsv2/images/userimgindex.jpg':'/mfs'+useInformation.photo}}"></a>
+                <div class="info-detail">
+                    <div class="mb5">欢迎您，<span class="t-b" ng-bind="useInformation.userName"></span></div>
+                    <span class="fs12">除了诗和远方外，还有徽学网！</span></div>
+            </div>
+            <div class="login-entry">
+                <a href="javascript:void(0)"
+                   ng-click="events.goCenter($event)"
+                   class="btn-b-b w196">进入学习中心</a>
+            </div>
+            <ul class="entry-box clearfix">
+                <li><a href="javascript:void(0)" ng-click="events.goMyCourse()"><i
+                        class="p-ico i1"></i><span>我的学习</span></a></li>
+                <li><a href="javascript:void(0)" ng-click="events.goTrainingCertificate()"><i
+                        class="p-ico i2"></i><span>学习档案</span></a></li>
+                <li><a href="javascript:void(0)" ng-click="events.goMyOrder()"><i class="p-ico i3"></i><span>我的订单</span></a>
+                </li>
+                <li><a href="javascript:void(0)" ng-click="events.goShoppingCart()"><i
+                        class="p-ico i4"></i><span>购物车</span></a></li>
+                <li><a href="javascript:void(0)" ng-click="events.goNotice()"><i
+                        class="p-ico i5"></i><span>通知</span></a></li>
+                <li><a href="javascript:void(0)" ng-click="events.goAccountSetting($event)"><i
+                        class="p-ico i6"></i><span>帐号设置</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div scroll-banner></div>
+
+</div>
+
+
+<div class="p-wrap-full white-bg clear mt10">
+    <div class="title-box mt5 clear"><h2 class="title">继续教育流程</h2></div>
+    <ul class="lc-list">
+        <li><i class="p-ico ico-lc-1"></i><span>第一步<br><b class="fs16">注册登录</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-2"></i><span>第二步<br><b class="fs16">选择学习内容</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-3"></i><span>第三步<br><b class="fs16">在线学习</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-4"></i><span>第四步<br><b class="fs16">在线考核</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-5"></i><span>第五步<br><b class="fs16">考核通过</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-6"></i><span>第六步<br><b class="fs16">打印证明</b></span></li>
+    </ul>
+</div>
+
+<div class="p-wrap-full clear mt10">
+    <!--<div class="w840 white-bg fl">
+        <div class="tabheadtow">
+            <h2 class="title">培训课程</h2>
+            <ul class="tabitemstwo clear">
+                <li ng-repeat="item in model.subjectList"
+                    ng-click="events.tabSubject(item)"
+                    ng-class="{'hover':item.optionId===model.subjectOptionsId}"
+                    ng-bind="item.name"></li>
+            </ul>
+            <a href="#" ui-sref="states.accountant.onTraining" class="more">MORE+</a>
+        </div>
+        <div class="tabbody h514" style="padding-bottom: 29px;">
+            <div id="con_one_1" ng-if="model.subjectOptionsId==='5628812b569c57e001569c5a77f6a011'">
+                <div class="items">
+                    <ul class="clear">
+                        <li ng-repeat="item in model.yearList"
+                            ng-click="events.tabYear(item)"
+                            ng-if="$index<6"
+                            ng-class="{'hover':item.optionId===model.yearOptionsId}"><span ng-bind="item.name"></span>年度</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="con_one_2" ng-if="model.subjectOptionsId!=='5628812b569c57e001569c5a77f6a011'">
+                <div class="items">
+                    <ul class="clear">
+                        <li ng-repeat="item in model.marjorList"
+                            ng-click="events.tabMarjor(item)"
+                            ng-class="{'hover':item.id===model.coursePoolId}"
+                            ng-if="$index<6"
+                            title="{{item.name}}"
+                            ng-bind="item.shortName"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="itembody plr10">
+                <div id="con_two_1">
+                    <ul class="classlist-index">
+                        <li ng-repeat="item in model.courseList" ng-click="events.goCourseDetail(item)">
+                            <div class="img"><a href="javascript:void(0)"><img ng-src="{{item.iconPath}}" alt=" "></a></div>
+                            <div class="tit"><a href="javascript:void(0)" ng-bind="item.name"></a></div>
+                            <div class="info clear">
+                                <p>学时：<span ng-bind="item.hour"></span></p>
+                                <p class="price tr" ng-bind="'￥'+item.price"></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+
+    <div class="w840 fl">
+        <div class="white-bg">
+            <div class="tabheadtow">
+                <h2 class="title">最新培训班</h2>
+                <a href="javascript:void(0)"
+                   ng-click="events.goSignUpTraining('TRAINING_CLASS_GOODS')"
+                   class="more">MORE+</a>
+            </div>
+            <div class="tabbody h240">
+                <ul class="classlist-index ml10 clear">
+                    <li ng-repeat="item in model.newestTrainClass" ng-click="events.goTrainclassDetail(item)">
+                        <div class="img"><a href="javascript:void(0)"><img ng-src="{{item.photoPath}}" alt=" "></a>
+                        </div>
+                        <div class="tit"><a href="javascript:void(0)" ng-bind="item.saleTitle"></a></div>
+                        <div class="info clear">
+                            <p><span ng-bind="item.skuPropertyNameList[0].skuPropertyValueName"></span>年度 / <span
+                                    ng-bind="item.credit"></span>学时 / <span
+                                    ng-bind="item.skuPropertyNameList[1].skuPropertyValueName"></span></p>
+                            <p class="price tr">¥<span ng-bind="item.dealPrice"></span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="white-bg mt10">
+            <div class="tabheadtow">
+                <h2 class="title">精品课程</h2>
+                <a href="#" class="more">MORE+</a>
+            </div>
+            <div class="tabbody h240">
+                <ul class="classlist-index ml10 clear">
+                    <li>
+                        <div class="img"><a href="javascript:void(0)"><img src="kccs/kccsv2/images/course-pic-01.jpg"
+                                                                           alt=" "></a></div>
+                        <div class="tit"><a href="javascript:void(0)">剑桥同声传译 CAT-SIC</a></div>
+                        <div class="info clear">
+                            <p>2017年度 / 30学时 / 公需课</p>
+                            <p class="price tr">¥75.00</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="img"><a href="javascript:void(0)"><img src="kccs/kccsv2/images/course-pic-02.jpg"
+                                                                           alt=" "></a></div>
+                        <div class="tit"><a href="javascript:void(0)">ACCA特许公认会计师F1-F3 【学霸班】</a></div>
+                        <div class="info clear">
+                            <p>2017年度 / 30学时 / 公需课</p>
+                            <p class="price tr">¥75.00</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="img"><a href="javascript:void(0)"><img src="kccs/kccsv2/images/course-pic-03.jpg"
+                                                                           alt=" "></a></div>
+                        <div class="tit"><a href="javascript:void(0)">CFA+FRM国际金融双证班【学霸班】</a></div>
+                        <div class="info clear">
+                            <p>2017年度 / 30学时 / 公需课</p>
+                            <p class="price tr">¥75.00</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="white-bg mt10">
+            <div class="tabheadtow">
+                <h2 class="title">课程展示</h2>
+                <a href="javascript:void(0)"
+                   ng-click="events.goCourseShow()"
+                   class="more">MORE+</a>
+            </div>
+            <div class="tabbody h210">
+                <ul class="classlist-index ml10 clear">
+                    <li ng-repeat="item in model.newestCourse"
+                        style="position:relative">
+                        <div class="img"><a href="javascript:void(0)"><img ng-src="/mfs{{item.iconPath}}" alt=" "></a>
+                        </div>
+                        <div class="tit mt10"><a href="javascript:void(0)" ng-bind="item.name"></a></div>
+
+                        <a href="javascript:void(0)"
+                           ng-if="item.customeStatus===1"
+                           style="position:absolute;top:63px;left:100px;"
+                           ng-click="events.openListen(item)"
+                           class="btn-normal">试听</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="learning-time-panel white-bg mt10 clear">
+            <div class="tit fl">学时验证</div>
+            <div class="fl mt30">
+                <input type="text"
+                       ng-model="model.periodObj.idNum"
+                       class="ui-ipt iptform ml50"
+                       placeholder="请输入身份证号">
+                <input type="text"
+                       ng-model="model.periodObj.userName"
+                       class="ui-ipt iptform ml10"
+                       placeholder="请输入姓名">
+                <input class="ui-btn btn-r ml10"
+                       ng-click="events.findUserPeriod()"
+                       type="button"
+                       value="立即验证">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="w350  fr">
+        <div class="white-bg mb10 clear h300">
+            <div class="title-box mt18  clear"><h2 class="title">培训通知</h2><a href="#" ui-sref="states.accountant.notice"
+                                                                             class="more">MORE+</a></div>
+            <div class="plr10 clear pt10 pb10" style="height: 223px;">
+                <ul class="newslist">
+                    <li ng-repeat="item in model.pxtzList"><a href="javascript:void(0)"
+                                                              ng-click="$state.go('states.accountant.noticeViews',{id:item.id})"
+                                                              title="{{item.title}}"
+                                                              ng-bind="item.shortTitle"></a><span class="date"
+                                                                                                  ng-bind="item.publishTime"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="white-bg clear mb10 h300">
+            <div class="title-box mt18 clear"><h2 class="title">政策法规</h2><a href="#" ui-sref="states.accountant.laws"
+                                                                            class="more">MORE+</a></div>
+            <div class="plr10 clear pt10 pb10" style="height: 223px; overflow: hidden;">
+                <ul class="newslist-1">
+                    <li ng-repeat="item in model.zcfgList"><a
+                            ng-bind="item.shortTitle"
+                            ng-click="$state.go('states.accountant.laws.lawDetail',{id:item.id})"
+                            title="{{item.title}}"
+                            href="javascript:void(0)"></a><span class="date" ng-bind="item.publishTime"></span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="white-bg student-panel clear">
+            <div class="title-box mt18  clear"><h2 class="title">最新通过学员</h2><a href="javascript:void(0)" class="more">MORE+</a>
+            </div>
+            <div class="plr15 clear pt10 pb10">
+                <div class="panel-tit">
+                    <span class="sp1">学员</span>
+                    <span class="sp2 tc">培训内容</span>
+                    <span class="sp3">通过时间</span>
+                </div>
+                <ul class="panel-list">
+                    <li>
+                        <span class="sp1">学*员</span>
+                        <span class="sp2">《培训班名称名称名称》</span>
+                        <span class="sp3">2017-10-10</span>
+                    </li>
+                    <li>
+                        <span class="sp1">学*员</span>
+                        <span class="sp2">《培训班名称名称》</span>
+                        <span class="sp3">2017-10-10</span>
+                    </li>
+                    <li>
+                        <span class="sp1">学*员</span>
+                        <span class="sp2">《培训班名称名称名称》</span>
+                        <span class="sp3">2017-10-10</span>
+                    </li>
+                    <li>
+                        <span class="sp1">学*员</span>
+                        <span class="sp2">《培训班名称名称名称名称名称》</span>
+                        <span class="sp3">2017-10-10</span>
+                    </li>
+                    <li>
+                        <span class="sp1">学*员</span>
+                        <span class="sp2">《培训班名称名称》</span>
+                        <span class="sp3">2017-10-10</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="p-wrap-full white-bg clear mt10 mb10">
+    <div class="title-box mt18 clear mb10"><h2 class="title">友情链接</h2></div>
+    <div class="clear">
+        <ul class="linklist">
+            <li>
+                <a href="http://www.ah.hrss.gov.cn" target="_blank"><img src="kccs/kccsv2/images/linkpic1.jpg" alt=" "></a>
+            </li>
+            <li>
+                <a href="http://www.ahhfld.gov.cn/" target="_blank"><img src="kccs/kccsv2/images/linkpic2.jpg" alt=" "></a>
+            </li>
+            <li>
+                <a href="http://web.huangshan.gov.cn/JA012" target="_blank"><img src="kccs/kccsv2/images/linkpic3.jpg"
+                                                                                 alt=" "></a>
+            </li>
+            <li>
+                <a href="http://www.fyldbz.gov.cn/" target="_blank"><img src="kccs/kccsv2/images/linkpic4.jpg" alt=" "></a>
+            </li>
+            <li>
+                <a href="http://www.ahsz.hrss.gov.cn/" target="_blank"><img src="kccs/kccsv2/images/linkpic5.jpg"
+                                                                            alt=" "></a>
+            </li>
+
+
+        </ul>
+    </div>
+</div>

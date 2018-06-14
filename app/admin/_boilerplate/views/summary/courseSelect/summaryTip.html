@@ -1,0 +1,83 @@
+<div class="tips-box-1 clear">
+    <span class="t-r">班级开通统计报表查询的是日快照数据，日期可选范围为截止到前一天的时间！</span>列表数据按选课次数降序排！
+</div>
+<p class="mt10">
+    <span class="fs16 b">1.搜索条件的字段及详细说明</span>（以下各搜索条件若都填写相关数据，则查询的是满足这几项搜索条件的数据才会查出来，即是且的关系）
+</p>
+<table class="table table-3 table-nf mt10">
+    <thead>
+    <tr>
+        <th width="150">搜索字段</th>
+        <th>具体字段说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>课程提供商</td>
+        <td class="tl">
+            系统内置的课程提供商名称
+        </td>
+    </tr>
+    <tr>
+        <td>课程名称</td>
+        <td class="tl">
+            系统中的课程名称搜索，支持模糊搜索
+        </td>
+    </tr>
+    <tr>
+        <td>选课时间</td>
+        <td class="tl">
+            学员选课时间段搜索
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p class="mt10">
+    <span class="fs16 b">2.列表字段及详细说明</span>（列表下的数据显示受搜索条件的约束，统计单位：人次）
+</p>
+<table class="table table-3 table-nf mt10">
+    <thead>
+    <tr>
+        <th width="150">列表字段</th>
+        <th>具体字段说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>课程名称</td>
+        <td class="tl">
+            课程名称对应的课程提供商信息
+        </td>
+    </tr>
+    <tr>
+        <td>课程提供商</td>
+        <td class="tl">
+            课程名称对应的课程提供商信息
+        </td>
+    </tr>
+    <tr>
+        <td>选课人数</td>
+        <td class="tl">
+            统计搜索时间段内，课程被选的学员人数，如课程不限选课次数，则学员多次选人数只算1
+        </td>
+    </tr>
+    <tr>
+        <td>选课人次</td>
+        <td class="tl">
+            统计搜索时间段内，课程被学员所选的次数，如课程不限选课次数，若学员选多次则选课人次也为多次；选课次数=已学数量+未学数量
+        </td>
+    </tr>
+    <tr>
+        <td>已学数量</td>
+        <td class="tl">
+            统计搜索时间段内，被选课后，有在学习的课程数量，课程学习进度>0%
+        </td>
+    </tr>
+    <tr>
+        <td>未学数量</td>
+        <td class="tl">
+            统计搜索时间段内，被选课后，未进学习的课程数量，课程学习进度=0%
+        </td>
+    </tr>
+    </tbody>
+</table>

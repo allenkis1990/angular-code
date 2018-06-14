@@ -1,0 +1,34 @@
+<div class="header">
+    <div class="p-wrap-full clear">
+        <div class="logo fl">
+            <a href="javascript:void(0)" ng-click="goHome()" style="text-decoration: none;" class="rel">b{{porTitleName}}
+                <div class="hover-block">
+                    <div class="hover-bd" ng-if="!ieshow" style="width:137px;">
+                        <i class="arrowleft"></i>
+                        <div>点击进入门户首页</div>
+                    </div>
+                </div>
+            </a></div>
+        <div class="channel-name fl"
+             ng-if="$state.current.name==='states.myOrder.goPay'||$state.current.name==='states.myOrder.paySuccess'">支付台
+        </div>
+        <div class="channel-name fl" ng-if="$state.current.name==='states.myOrder.creatOrder'">结算台</div>
+        <div class="nav fr"
+             ng-if="!($state.current.name==='states.myOrder.creatOrder'||$state.current.name==='states.myOrder.goPay'||$state.current.name==='states.myOrder.paySuccess')">
+            <a href="javascript:void(0)" ng-click="goHome()"><span class="p-ico ico-index"></span><span class="nav-txt">门户</span></a>
+            <a href="javascript:void(0)" ng-class="{'current':$state.current.name==='states.home'}"
+               ng-click="goCenter()"><span class="p-ico ico-center"></span><span class="nav-txt">学习中心</span></a>
+            <a href="javascript:void(0)" ng-click="goOntrainingView()"><span class="p-ico ico-bmpx"></span><span
+                    class="nav-txt">报名培训</span></a>
+            <span class="p-ico ico-line"></span>
+            <a href="javascript:void(0)" ng-click="outOfLogin($event)"><span class="p-ico ico-exit"></span><span
+                    class="nav-txt">退出</span></a>
+        </div>
+        <div class="nav fr"
+             ng-if="$state.current.name==='states.myOrder.creatOrder'||$state.current.name==='states.myOrder.goPay'||$state.current.name==='states.myOrder.paySuccess'">
+            <a href="javascript:void(0)" ng-click="goHome()" class=""><span class="p-ico ico-index"></span><span
+                    class="nav-txt">首页</span></a>
+            <a href="#" ui-sref="states.myOrder"><span class="p-ico ico-order"></span><span class="nav-txt">我的订单</span></a>
+        </div>
+    </div>
+</div>

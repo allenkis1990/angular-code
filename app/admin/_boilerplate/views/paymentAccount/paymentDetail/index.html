@@ -1,0 +1,169 @@
+<div class="main-wrap-body">
+    <div class="column mt20">
+        <div class="col-tit">账号详情</div>
+        <ul class="ul-d-form  lh-1">
+            <li>
+                <span class="left-txt-4 fl">支付方式：</span>
+                <lable class="mr30" ng-if="params.firstType===1">线上</lable>
+                <lable class="mr30" ng-if="params.firstType===2">线下</lable>
+            </li>
+            <div ng-if="params.firstType===1 ">
+                <li>
+                    <span class="left-txt-4 fl">支付账号类型：</span>
+                    <span ng-bind="params.tradeChannelName"></span>
+                </li>
+            </div>
+            <li>
+                <span class="left-txt-4 fl">账户别名：</span>
+                <span ng-bind="params.accountAlias"></span>
+                <!--<span class="t-r ml20">帐户别名不可重复。</span>-->
+            </li>
+            <div ng-if="params.createType===2|| params.createType===4||params.createType===5">
+                <li>
+                    <span class="left-txt-4 fl">商户号：</span>
+                    <span ng-bind="params.accountNo"></span>
+
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">密钥：</span>
+                    <span ng-bind="params.merchantKey"></span>
+
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">公众帐号ID：</span>
+                    <span ng-bind="params.appId"></span>
+
+                </li>
+                <li>
+                    <span class="left-txt-4  fl">微信证书密钥：</span>
+                    <span ng-bind="params.privateKeyPwd"></span>
+
+                </li>
+                <li ng-if="params.privateKeyFileName!==''">
+                    <span class="left-txt-4  fl">微信证书：</span>
+                    <span ng-bind="params.privateKeyFileName"></span>
+                </li>
+
+            </div>
+
+
+            <div ng-if="params.createType===1">
+                <li>
+                    <span class="left-txt-4 fl">支付宝账号：</span>
+                    <span ng-bind="params.accountNo"></span>
+
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">支付宝密钥：</span>
+                    <span ng-bind="params.merchantKey"></span>
+
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">合作者身份ID：</span>
+                    <span ng-bind="params.appId"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">支付宝应用私钥：</span>
+                    <span ng-bind="params.alipayAppPrivateKey"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">支付宝公钥：</span>
+                    <span ng-bind="params.alipayPublicKey"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">支付宝应用id：</span>
+                    <span ng-bind="params.alipayAppId"></span>
+                </li>
+            </div>
+
+            <div ng-if="params.createType===3"><!--建行：柜台号就是柜台代码-->
+                <li>
+                    <span class="left-txt-4 fl">开户号：</span>
+                    <span ng-bind="params.accountNo"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">分行号：</span>
+                    <span ng-bind="params.branchBankId"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">柜台号：</span>
+                    <span ng-bind="params.posId"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">公钥：</span>
+                    <span title="b{{params.publicKey}}"
+                          style="display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"
+                          ng-bind="params.publicKey"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">操作员账号：</span>
+                    <span ng-bind="params.operator"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">操作员密码：</span>
+                    <span>******</span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">开户银行：</span>
+                    <span ng-bind="params.depositBank"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">开户户名：</span>
+                    <span ng-bind="params.merchantName"></span>
+                </li>
+                <!--<li>-->
+                <!--<span class="left-txt-4 fl">柜台号：</span>-->
+                <!--<span ng-bind="params.counterNumber"></span>-->
+                <!--</li>-->
+            </div>
+
+            <!--线下收款账号-->
+            <div ng-if="params.firstType===2">
+                <li>
+                    <span class="left-txt-4 fl">开户号：</span>
+                    <span ng-bind="params.accountNo"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">开户银行：</span>
+                    <span ng-bind="params.depositBank"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">开户户名：</span>
+                    <span ng-bind="params.merchantName"></span>
+                </li>
+                <li>
+                    <span class="left-txt-4 fl">柜台号：</span>
+                    <span ng-bind="params.counterNumber"></span>
+                </li>
+            </div>
+
+
+            <!--<li class="clear">-->
+            <!--<span class="left-txt-4 fl">备注：</span>-->
+            <!--<div class="w-9 fl">-->
+            <!--<span ng-bind="params.remark"></span>-->
+
+            <!--</div>-->
+            <!--</li>-->
+            <li ng-if="params.realSupportIssuingElectronInvoice">
+                <span class="left-txt-4  fl">纳税人识别号：</span>
+                <span ng-bind="params.taxPayerName"></span>
+                <span class="t-r ml20" ng-if="add.taxPayerId.$dirty&&add.taxPayerId.$error.required">必填项！</span>
+            </li>
+
+            <li>
+                <span class="left-txt-4 fl">创建单位：</span>
+                <lable class="mr30" ng-bind="params.createUnitName"></lable>
+            </li>
+            <li>
+                <span class="left-txt-4 fl">是否为授权账号：</span>
+                <lable class="mr30" ng-bind="params.fromAuthorize === true ? '是'  : '否'"></lable>
+            </li>
+        </ul>
+
+
+        <div class="dash-line-2"></div>
+    </div>
+
+
+</div>

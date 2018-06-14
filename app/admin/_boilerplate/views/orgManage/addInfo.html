@@ -1,0 +1,238 @@
+<div class="dialog w-textarea3" style="width:560px;">
+    <div class="dialog-body">
+        <form name="orgInfo" novalidate>
+            <div class="dialog-tit"><span ng-bind="title"></span> <a href="javascript:void(0);" class="ico ico-close"
+                                                                     ng-click="events.closeAddWin();orgInfo.$setPristine()"></a>
+            </div>
+            <div class="dialog-cont">
+                <div class="dialog-sub-tit" ng-if="validateOrgNameParam.type==1">机构信息</div>
+                <input type="hidden" ng-model="model.parentId">
+                <ul class="ul-d-form ml30">
+                    <li>
+                        <span class="left-txt"><i>*</i>名称：</span><input type="text" class="ipt ipt-medium"
+                                                                        ng-maxlength="150"
+                                                                        name="unitName"
+                                                                        ajax-data="validateOrgNameParam"
+                                                                        ajax-validate
+                                                                        ajax-url="/web/admin/organization/validateOrgName.action"
+                                                                        required
+                                                                        placeholder="请输入机构名称"
+                                                                        ng-model="model.unitName"
+                    />
+                        <span ng-show="orgInfo.unitName.$dirty &&
+              orgInfo.unitName.$error.required"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              请输入机构名称！
+            </span>
+                        <span ng-show="orgInfo.unitName.$dirty &&
+             !orgInfo.unitName.$error.required &&
+            orgInfo.unitName.$error.ajaxValidate"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              机构名称已被使用！
+            </span>
+                        <span ng-show="orgInfo.unitName.$error.maxlength"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+
+              </span>
+              机构名称长度不能超过150！
+            </span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">描述：</span><textarea
+                            class="textarea w-1 fl"
+                            ng-model="model.unitDis"
+                            ng-maxlength="1500"
+                            name="unitDis">
+                        </textarea>
+                        <span ng-show="orgInfo.unitDis.$error.maxlength"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              机构描述长度不能超过1500！
+            </span>
+                    </li>
+                </ul>
+
+                <div class="dialog-sub-tit mt20" ng-if="validateOrgNameParam.type==1">设置管理员帐号</div>
+                <ul class="ul-d-form ml30" ng-if="validateOrgNameParam.type==1">
+                    <li>
+                        <span class="left-txt"><i>*</i>帐号：</span><input type="text"
+                                                                        class="ipt ipt-medium"
+                                                                        placeholder="请输入管理员账号"
+                                                                        ng-model="model.account"
+                                                                        name="account"
+                                                                        ng-pattern="/^[a-zA-Z0-9_]{1,}$/"
+                                                                        ajax-data="validateAccountParam"
+                                                                        ajax-validate
+                                                                        ajax-url="/web/admin/organization/validateAccountOrEmail.action"
+                                                                        ng-maxlength="20"
+                                                                        required
+                    />
+                        <span ng-show="orgInfo.account.$dirty &&
+            orgInfo.account.$error.required"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              请输入账号！
+            </span>
+                        <span ng-show="orgInfo.account.$dirty &&
+            !orgInfo.account.$error.required &&
+            orgInfo.account.$error.maxlength"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              最大长度不能超过20！
+            </span>
+                        <span ng-show="
+            !orgInfo.account.$error.required &&
+            !orgInfo.account.$error.maxlength &&
+              orgInfo.account.$error.pattern"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              账号只能由字母、数字、下划线组成！
+            </span>
+                        <span ng-show="
+             !orgInfo.account.$error.required &&
+             !orgInfo.account.$error.pattern &&
+             !orgInfo.account.$error.maxlength &&
+             orgInfo.account.$error.ajaxValidate
+            "
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              账号已被使用！
+            </span>
+
+                    </li>
+                    <li>
+                        <span class="left-txt"><i>*</i>登录密码：</span><input type="password"
+                                                                          class="ipt ipt-medium"
+                                                                          placeholder="请输入密码"
+                                                                          ng-model="model.password"
+                                                                          name="password"
+                                                                          ng-minlength="6"
+                                                                          ng-maxlength="16"
+                                                                          required
+                    />
+                        <span ng-show="orgInfo.password.$dirty &&
+            orgInfo.password.$error.required"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              请输入密码！
+            </span>
+                        <span ng-show="orgInfo.password.$error.minlength||
+            orgInfo.password.$error.maxlength"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+
+              </span>
+              密码长度只能在6~16之间
+            </span>
+                    </li>
+                    <li>
+                        <span class="left-txt"><i>*</i>确认登录密码：</span><input type="password"
+                                                                            class="ipt ipt-medium"
+                                                                            placeholder="请再次输入密码"
+                                                                            ng-model="model.rePassword"
+                                                                            name="rePassword"
+                                                                            hb-compare="model.password"
+                                                                            required
+                    />
+                        <span ng-show="orgInfo.rePassword.$dirty &&
+            orgInfo.rePassword.$error.required"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+
+              </span>
+              请再次输入密码！
+            </span>
+                        <span ng-show="!orgInfo.rePassword.$error.required &&
+             orgInfo.rePassword.$error.compare"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              两次输入的密码不一致！
+            </span>
+                    </li>
+                    <li><span class="left-txt"><i>*</i>持有者姓名：</span><input type="text"
+                                                                           class="ipt ipt-medium"
+                                                                           placeholder="请输入管理员姓名"
+                                                                           ng-model="model.adminName"
+                                                                           name="adminName"
+                                                                           ng-maxlength="15"
+                                                                           required
+                    />
+                        <span ng-show="orgInfo.adminName.$dirty &&
+            orgInfo.adminName.$error.required" class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              请输入管理员姓名！
+            </span>
+                        <span ng-show="orgInfo.adminName.$error.maxlength"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              请输入管理员姓名长度不能超过15！
+            </span>
+                    </li>
+                    <li><span class="left-txt"><i>*</i>邮箱号：</span><input type="email"
+                                                                         class="ipt ipt-medium"
+                                                                         placeholder="请输入管理员邮箱"
+                                                                         ng-model="model.email"
+                                                                         name="email"
+                                                                         ajax-data="validateEmailParam"
+                                                                         ajax-validate
+                                                                         ajax-url="/web/admin/organization/validateAccountOrEmail.action"
+                                                                         ng-maxlength="30"
+                                                                         required
+                    />
+                        <span ng-show="orgInfo.email.$dirty &&
+            orgInfo.email.$error.required" class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              请输入邮箱!
+            </span>
+                        <span ng-show="orgInfo.email.$dirty &&
+             !orgInfo.email.$error.required &&
+            orgInfo.email.$error.ajaxValidate"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              邮箱已被使用！
+            </span>
+                        <span ng-show="orgInfo.email.$error.email" class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              请输入正确的邮箱号！
+            </span>
+                        <span ng-show="!orgInfo.email.$error.email &&
+            orgInfo.email.$error.maxlength"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              邮箱长度不能超过30！
+            </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-center">
+                <input type="button" ng-click="events.saveAdd();orgInfo.$setPristine()"
+                       ng-disabled="orgInfo.$invalid||showDisabled"
+                       ng-class="{'btn-g': !orgInfo.$valid || showDisabled, 'btn-r': orgInfo.$valid && !showDisabled}"
+                       class="btn" value="保存">
+                <!--<input type="button"  class="btn btn-r" ng-disabled="orgInfo.$invalid" value="保存" ng-click="events.saveAdd();orgInfo.$setPristine()"/>-->
+                <!--ng-disabled="orgInfo.$invalid"-->
+                <input type="button" class="btn btn-g ml10" value="取消"
+                       ng-click="events.closeAddWin();orgInfo.$setPristine()"/>
+            </div>
+            <!--{{orgInfo}}-->
+        </form>
+    </div>
+</div>
+

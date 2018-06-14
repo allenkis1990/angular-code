@@ -1,0 +1,200 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.exam'">
+
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li><input type="text" class="ipt ipt-medium" ng-model="model.examSearch.name" placeholder="请输入考试名称"
+                       ng-keydown="events.queryByEnter($event)"
+            />
+            </li>
+            <!--<li><input type="text" class="ipt ipt-medium" ng-model="model.examSearch.examPaperName"-->
+            <!--placeholder="请输入试卷名称"-->
+            <!--ng-keydown="events.queryByEnter($event)"-->
+            <!--/></li>-->
+            <!--&lt;!&ndash;<li><input type="text" class="ipt ipt-medium" placeholder="考试发布者姓名"/></li>&ndash;&gt;-->
+            <li><a href="" ng-click="events.searchExam()" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <!--<div class="zt-a mt10">考试类型：-->
+    <!--<a href="" ng-click="events.choiceExam(0)"-->
+    <!--ng-class="{'ml10':model.examSearch.examRange!='-1','ml10 current':model.examSearch.examRange=='-1'}">不限(b{{roundStatisticsInfo.count}})</a>-->
+    <!--<a href="" ng-click="events.choiceExam(1)"-->
+    <!--ng-class="{'ml10':model.examSearch.examRange!='1','ml10 current':model.examSearch.examRange=='1'}">考试(b{{roundStatisticsInfo.examCount}})</a>-->
+    <!--<a href="" ng-click="events.choiceExam(2)"-->
+    <!--ng-class="{'ml10':model.examSearch.examRange!='2','ml10 current':model.examSearch.examRange=='2'}">练习(b{{roundStatisticsInfo.practiceCount}})</a>-->
+    <!--</div>-->
+    <div class="zt-a mt10">考试状态：
+        <a href="" ng-click="events.choiceExam(3)"
+           ng-class="{'ml10':model.examSearch.state!='-1','ml10 current':model.examSearch.state=='-1'}">不限(b{{roundStatisticsInfo.count}})</a>
+        <a href="" ng-click="events.choiceExam(4)"
+           ng-class="{'ml10':model.examSearch.state!='0','ml10 current':model.examSearch.state=='0'}">已结束(b{{roundStatisticsInfo.endCount}})</a>
+        <a href="" ng-click="events.choiceExam(5)"
+           ng-class="{'ml10':model.examSearch.state!='1','ml10 current':model.examSearch.state=='1'}">进行中(b{{roundStatisticsInfo.ingCount}})</a>
+        <a href="" ng-click="events.choiceExam(6)"
+           ng-class="{'ml10':model.examSearch.state!='2','ml10 current':model.examSearch.state=='2'}">未开始(b{{roundStatisticsInfo.unbegun}})</a>
+    </div>
+    <div class="zt-a mt10">开考时间：
+        <a href="" ng-click="events.choiceExam(7)"
+           ng-class="{'ml10':model.examSearch.timeSection!='-1','ml10 current':model.examSearch.timeSection=='-1'}">全部</a>
+        <a href="" ng-click="events.choiceExam(8)"
+           ng-class="{'ml10':model.examSearch.timeSection!='1','ml10 current':model.examSearch.timeSection=='1'}">今天</a>
+        <a href="" ng-click="events.choiceExam(9)"
+           ng-class="{'ml10':model.examSearch.timeSection!='2','ml10 current':model.examSearch.timeSection=='2'}">昨天</a>
+        <a href="" ng-click="events.choiceExam(10)"
+           ng-class="{'ml10':model.examSearch.timeSection!='3','ml10 current':model.examSearch.timeSection=='3'}">本周</a>
+        <a href="" ng-click="events.choiceExam(11)"
+           ng-class="{'ml10':model.examSearch.timeSection!='4','ml10 current':model.examSearch.timeSection=='4'}">上周</a>
+        <a href="" ng-click="events.choiceExam(12)"
+           ng-class="{'ml10':model.examSearch.timeSection!='5','ml10 current':model.examSearch.timeSection=='5'}">本月</a>
+        <a href="" ng-click="events.choiceExam(13)"
+           ng-class="{'ml10':model.examSearch.timeSection!='6','ml10 current':model.examSearch.timeSection=='6'}">本年</a>
+        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+               ng-model="model.examSearch.beginTimeBegin" type="text" class="ipt ipt-s"
+               placeholder="考试开始时间"/> -
+        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+               ng-model="model.examSearch.beginTimeEnd" type="text" class="ipt ipt-s"
+               placeholder="考试开始时间"/>
+        <input type="button" class="btn btn-b ml10" value="确定" ng-click="events.choiceExam(14)">
+    </div>
+    <div class="dash-line-2"></div>
+
+    <div class="column">
+        <a href="" ng-click="$state.go('states.exam.release',{examRange:-1,comeForm:'2'});"
+           class="btn-r btn">安排考试</a>
+        <!--<a href="" ng-click="$state.go('states.exam.release',{examRange:2,comeForm:'2'});"-->
+        <!--class="btn-r btn ml10">安排练习</a>-->
+    </div>
+    <div class="column mt20">
+        <div kendo-grid="node.examGridInstance"
+             k-options="ui.grid.options">
+        </div>
+    </div>
+</div>
+
+<div ui-view></div>
+
+<div id="examView" class="dialog w-2" kendo-window="node.windows.examView" k-options="ui.windowOptions"
+>
+    <div class="dialog-body">
+        <div class="dialog-tit"> 查看考试<a href="" ng-click="node.windows.examView.close()" class="ico ico-close"></a>
+        </div>
+        <div class="dialog-cont">
+            <div class="dialog-sub-tit">考试基础信息</div>
+            <div class="rel udf-3">
+                <ul class="ul-d-form">
+                    <li>
+                        <span class="left-txt">考试名称：</span>b{{model.examView.name}}
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl">所用试卷：</span>b{{model.examView.examPaperName}}
+                    </li>
+                    <li>
+                        <span class="left-txt">考试总分：</span>b{{model.examView.totalScore}}分
+                    </li>
+                    <li>
+                        <span class="left-txt">考试及格分数：</span>b{{model.examView.passScore}} 分
+                    </li>
+                    <li>
+                        <span class="left-txt">考试时长：</span>b{{model.examView.examTimeLength}} 分钟
+                    </li>
+                    <li ng-if="model.examView.examModeType==1">
+                        <span class="left-txt txt-long">考试时间条件设置：</span>时间范围内都可进入考试
+                    </li>
+                    <li ng-if="model.examView.examModeType==2">
+                        <span class="left-txt txt-long">考试时间条件设置：</span>固定时间统一进入考试
+                    </li>
+                    <li>
+                        <span class="left-txt txt-long">考试起止时间范围：</span>b{{model.examView.beginTime}} 至
+                        b{{model.examView.endTime}}
+                    </li>
+                    <li ng-if="model.examView.examModeType==2">
+                        <span class="left-txt txt-long">开考多久不可考试：</span>b{{model.examView.lastEnterTimeLength}}分钟
+                    </li>
+                    <li ng-if="model.examView.examModeType==2">
+                        <span class="left-txt txt-long">开考多久内不许交卷：</span>b{{model.examView.minSubmitTimeLength}}分钟
+                    </li>
+                    <!--<li ng-if="model.examView.displayType==0">-->
+                    <!--<span class="left-txt txt-long">试卷试题显示方式：</span>全部显示-->
+                    <!--</li>-->
+                    <!--<li ng-if="model.examView.displayType==1">-->
+                    <!--<span class="left-txt txt-long">试卷试题显示方式：</span>单题显示-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<span class="left-txt txt-long">单题是否可回退：</span>是-->
+                    <!--</li>-->
+                    <li ng-if="model.examView.confusionQuestion">
+                        <span class="left-txt txt-long">是否打乱试题顺序：</span>是
+                    </li>
+                    <li ng-if="!model.examView.confusionQuestion">
+                        <span class="left-txt txt-long">是否打乱试题顺序：</span>否
+                    </li>
+                    <li ng-if="model.examView.confusionAnswer">
+                        <span class="left-txt txt-long-1">是否打乱试题选项顺序：</span>是
+                    </li>
+                    <li ng-if="!model.examView.confusionAnswer">
+                        <span class="left-txt txt-long-1">是否打乱试题选项顺序：</span>否
+                    </li>
+                    <!--<li>-->
+                    <!--<span class="left-txt txt-long">考完是否显示题析：</span>是-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<span class="left-txt txt-long">填空题是否系统阅卷：</span>是-->
+                    <!--</li>-->
+                    <li ng-if="model.examView.publishType==0">
+                        <span class="left-txt">成绩公布方式：</span>不公布
+                    </li>
+                    <li ng-if="model.examView.publishType==1">
+                        <span class="left-txt">成绩公布方式：</span>马上公布
+                    </li>
+                    <li ng-if="model.examView.publishType==2">
+                        <span class="left-txt">成绩公布方式：</span>限时公布
+                    </li>
+                    <li ng-if="model.examView.publishType==2">
+                        <span class="left-txt">成绩公布时间：</span>b{{model.examView.publishTime}}
+                    </li>
+                    <!--<li>-->
+                    <!--<span class="left-txt txt-long">是否启用错题库：</span>是-->
+                    <!--</li>-->
+                </ul>
+            </div>
+
+            <div class="column mt20">
+                <div class="col-tit">考试对象</div>
+                <div class="dash-line-1"></div>
+            </div>
+            <div class="column-block mt20">
+                <div class="col-body bt0">
+                    <div class="tab-cont">
+                        <div class="col-body-tit mt20">学员 (b{{model.examView.studentNames.length}}人)</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li ng-repeat="item in model.examView.studentNames">b{{item.studentName}}</li>
+                        </ul>
+                        <div class="col-body-tit mt20">岗位 (b{{model.examView.jobNames.length}}个)</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li ng-repeat="item in model.examView.jobNames">b{{item.jobName}}</li>
+                        </ul>
+                        <div class="col-body-tit mt20">组织机构 (b{{model.examView.organizationNames.length}}个)</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li ng-repeat="item in model.examView.organizationNames">b{{item.organizationName}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="column mt20">
+                <div class="col-tit">考试的全体学员</div>
+                <div class="dash-line-1"></div>
+            </div>
+            <div class="column-block mt20">
+                <div class="col-body bt0">
+                    <div class="tab-cont">
+                        <div class="col-body-tit mt20">学员 (b{{model.examView.allStudent.length}}人)</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li ng-repeat="item in model.examView.allStudent">b{{item.studentName}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

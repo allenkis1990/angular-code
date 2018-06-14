@@ -1,0 +1,10 @@
+<div>
+    <p><span class="w"> <span ng-bind="model.detailInfo.skuPropertyNameList[1].skuPropertyName"></span>： <span
+            ng-bind="model.detailInfo.skuPropertyNameList[1].skuPropertyValueName"></span></span
+    ><span class="w"
+           ng-if="model.detailInfo.coursePoolName"> 专业： {{model.detailInfo.coursePoolName}}</span>
+    </p>
+    <p><span ng-bind="model.detailInfo.skuPropertyNameList[0].skuPropertyName"></span>：<span
+            ng-bind="model.detailInfo.skuPropertyNameList[0].skuPropertyValueName?model.detailInfo.skuPropertyNameList[0].skuPropertyValueName:'-'"></span>
+    </p>
+</div>

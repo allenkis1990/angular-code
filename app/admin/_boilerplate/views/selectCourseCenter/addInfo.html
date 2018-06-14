@@ -1,0 +1,107 @@
+<div class="pos-nav-box" ng-click="events.closeTree($event)">
+    <div class="pos-nav"><a href="javascript:void(0)" ng-click="$state.go('states.selectCourseCenter')"
+                            class="ico return"></a>
+        <a href="javascript:void(0)" ng-click="$state.go('states.selectCourseCenter')" class="aw">选课中心</a> &gt
+        添加选修课
+    </div>
+</div>
+
+<div class="main-wrap-body">
+    <!--<div class="dialog-tit">添加选修课<a href="javascript:void(0);" class="ico ico-close"
+                                    ng-click="events.closeAddWindow();"></a></div>-->
+    <div class="dialog-cont">
+        <div class="column-block">
+            <div class="col-tit">待选课程</div>
+        </div>
+        <div class="column-block bt0 clear">
+            <div class="cb-left" style="overflow: auto;">
+                <div class="col-tit bl0" ng-click="events.queryAll($event);events.QueryAddSelectCourse()">全部课程</div>
+                <div class="col-body p0">
+                    <div kendo-tree-view="node.tree"
+                         k-options="ui.addPageTree.options"
+                         k-on-change="model.selectedItem = dataItem">
+                    <span k-template
+                          ng-click="events.addPageSelectCategory($event,dataItem);events.QueryAddSelectCourse()">
+                      <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <div class="cb-right">
+                <div class="search-bar">
+                    <ul class="ul-form li-fl clear">
+                        <li><input type="text"
+                                   ng-model="model.courseResourceQueryParam.courseName"
+                                   class="ipt ipt-small"
+                                   placeholder="请输入课程名称"
+                                   clear-operator
+                                   ng-keyup="events.addPagePressEnterKey($event)"
+                        /></li>
+                        <li><input type="text"
+                                   ng-model="model.courseResourceQueryParam.courseTeacherName"
+                                   ng-keyup="events.addPagePressEnterKey($event)"
+                                   class="ipt ipt-small"
+                                   clear-operator
+                                   placeholder="课程讲师名称"/></li>
+                        <li>
+                            <select class="select-small"
+                                    ng-model="model.courseResourceQueryParam.isSelfCreated"
+
+                            ><!--ng-change="events.QueryAddSelectCourse()"-->
+                                <option selected="selected" value="0">是否自建</option>
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </li>
+                        <li><a href="javascript:;" ng-click="events.QueryAddSelectCourse($event,0)"
+                               class="btn btn-b">查询</a></li>
+                        <li><a href="javascript:;" ng-click="events.selectManyCourse($event)"
+                               class="btn btn-b">选择</a></li>
+                    </ul>
+                </div>
+                <div class="dash-line-4"></div>
+                <div class="column mt20">
+                    <div id="addPageGrid" kendo-grid="node.addPageGridInstance" k-options="ui.addPageGrid.options">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column-block mt20">
+            <div class="col-tit clear">当前已选中：<span ng-bind="addPageSelected"></span><span
+                    ng-bind="model.totalSelected"></span>个知识<a
+                    href="javascript:void(0);" ng-click="events.clearAllSelected($event)"
+                    class="btn btn-g btn-1 fr">清空</a>
+            </div>
+            <div class="col-body">
+                <!--没有选择课程的默认图片-->
+                <div class="no-data clear" ng-show="hasNoSelectedCourse">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">暂时没有选择课程!</div>
+                </div>
+                <!--有选择课程的内容-->
+                <ul class="ul-course li-fl clear" id="selectedCourseDiv" ng-show="!hasNoSelectedCourse">
+                    <li ng-repeat="course in model.selectedCourses">
+                        <span ng-bind="course.courseName"></span>
+                        <a href="javascript:void(0);" class="ico"
+                           ng-click="events.CancelSelectOneCourse($event,course)"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="btn-center">
+            <input type="button" ng-click="events.saveAdd($event);$state.go('states.selectCourseCenter')"
+                   ng-disabled="!model.submitAble || showDisabled"
+                   ng-class="{'btn-g': !model.submitAble|| showDisabled, 'btn-r': model.submitAble && !showDisabled}"
+                   class="btn" value="保存">
+            <input type="button" ng-click="$state.go('states.selectCourseCenter')"
+                   class="btn btn-g ml10"
+                   value="取消">
+        </div>
+    </div>
+</div>
+
+<!--</div>-->
+
+
+
+

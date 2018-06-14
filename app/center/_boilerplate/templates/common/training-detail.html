@@ -1,0 +1,286 @@
+<div class="modules zoomInDown animated">
+    <div class="header">
+        <div class="wrap clearfix">
+            <!--<a ui-sref="^.home" class="h-btn btn-min" title="桌面" href="#/home"></a>-->
+            <a href="#" class="h-btn btn-back" ng-click="events.goBack($event)" title="上一步"></a>
+            <a ui-sref="^.home" class="h-btn btn-close" title="关闭" href="#/home"></a>
+
+            <div class="title"><span ng-bind="model.trainings.name"></span></div>
+        </div>
+    </div>
+    <div class="main-wrap-body">
+        <div class="main-wrap">
+            <div class="training-course-detail clearfix">
+                <div class="fl course-detail-img">
+                    <img src="@systemUrl@/images/training-pic.jpg" alt=" " ng-show="!model.trainings.picture">
+                    <img src="/mfsb{{model.trainings.picture}}" alt=" " ng-show="model.trainings.picture">
+                </div>
+                <div class="tcd-cont fl">
+                    <div class="tcd-tit">b{{model.trainings.name}}</div>
+                    <ul class="ul-tcd-cont">
+                        <!--<li>讲师：林健</li>-->
+                        <li ng-show="studyState==0 || register">开放报名时间：
+                            <span ng-bind="model.trainings.registerBeginDate"></span>
+                            至 <span ng-bind="model.trainings.registerEndDate"></span>
+                        </li>
+                        <li>培训起止时间：
+                            <span ng-bind="model.trainings.trainBeginDate"></span>
+                            至 <span ng-bind="model.trainings.trainEndDate"></span>
+                        </li>
+                        <!--<li>剩余学习天数：<span ng-bind="model.trainings.studyNum"></span> 天</li>-->
+                        <li>培训班人数：<span ng-bind="model.trainings.trainNum"></span>人</li>
+                        <li>总课程数：<span ng-bind="model.trainings.courseNum"></span> 门</li>
+                    </ul>
+                </div>
+
+                <div class="tcd-btn" ng-show="registerButton">
+                    <button type="button" ng-disabled="model.register" ng-class="{'btn-disable':model.register}"
+                            ng-click="events.registerTraining($event)" class="btn-lg btn-r">
+                        b{{model.register?'报名中':'立即报名'}}
+                    </button>
+                </div>
+                <div class="tcd-btn" ng-show="noregisterButton">
+                    <button type="button" class="btn-lg btn-g">报名成功</button>
+                </div>
+                <div class="tcd-btn" ng-show="noregisterState">
+                    <button type="button" class="btn-lg btn-g">尚未开始报名</button>
+                </div>
+                <div class="tcd-btn" ng-show="nostudyState">
+                    <button type="button" class="btn-lg btn-g">尚未开始培训</button>
+                </div>
+                <div class="tcd-btn" ng-show="startStudyState &&startStudyButton">
+                    <button type="button" ng-click="events.startStudy()"
+                            class="btn-lg btn-r">开始学习
+                    </button>
+                </div>
+                <div class="tcd-btn" ng-show="startStudyState && studyButton">
+                    <button type="button" ng-click="events.study()"
+                            class="btn-lg btn-r">继续学习
+                    </button>
+                </div>
+                <div class="tcd-btn" ng-show="endStudyState">
+                    <button type="button" class="btn-lg btn-g">培训班已结束</button>
+                </div>
+                <div ng-show="model.trainings.isPass&&studyState!=0" class="test-result t-pass"></div>
+            </div>
+            <div class="clearfix">
+                <div class="trd-left pull-left">
+                    <div class="wrap-title"><span class="ico"></span>班级考核条件</div>
+                    <div class="condition-cont mt10">您需在培训班<span ng-if="model.finishCourseNum>0">学习完成<span class="txt-r"
+                                                                                                           ng-bind="model.finishCourseNum"></span>门课程</span><span
+                            ng-if="model.trainingStatistics.itemList.length==2">b{{model.condition}}需</span><span
+                            ng-if="model.finishScoreNum>0">合格<span
+                            class="txt-r" ng-bind="model.finishScoreNum"></span>场考试</span>，方可考核通过，否则考核不通过！
+                    </div>
+                    <div class="wrap-title mt20"><span class="ico"></span>学习统计</div>
+                    <div class="sta-pic clearfix pl70">
+
+                        <div class="sp-cont fl hide">
+                            <div class="pic-show rel">
+                                <!-----------  top值计算方法为100%-当前百分数  -------------->
+                                <span class="circle-current" ng-style="studyRanking"></span>
+                                <span class="circle-mask"></span>
+
+                                <p><span>b{{studyState==0||!isRegister?'-':model.studyStatistics.studyRanking}}</span>/b{{studyState==0||!isRegister?'-':model.studyStatistics.studyAllNum}}
+                                </p>
+                            </div>
+                            <span class="sp-info">学习排名</span>
+                        </div>
+
+                        <div class="sp-cont fl">
+                            <div class="pic-show rel">
+                                <span class="circle-current" ng-style="studyPercent"></span>
+                                <span class="circle-mask"></span>
+
+                                <p><span>b{{studyState==0||!isRegister?'-':model.studyStatistics.studyPercent}}</span>%
+                                </p>
+                            </div>
+                            <span class="sp-info">课程完成占比</span>
+                        </div>
+
+                        <div class="sp-cont fl">
+                            <div class="pic-show rel">
+                                <span class="circle-current" ng-style="finishCourseNum"></span>
+                                <span class="circle-mask"></span>
+
+                                <p ng-show="studyState==0||!isRegister"><span>-</span>门</p>
+
+                                <p ng-show="studyState!=0&&isRegister" class="cu-p"
+                                   ng-click="events.getCourse($event, 0)">
+                                    <span>b{{model.studyStatistics.finishCourseNum}}</span>门</p>
+                            </div>
+                            <span class="sp-info">完成课程数</span>
+                        </div>
+
+                        <div class="sp-cont fl">
+                            <div class="pic-show rel">
+                                <span class="circle-current" ng-style="studyCourseNum"></span>
+                                <span class="circle-mask"></span>
+
+                                <p ng-show="studyState==0||!isRegister"><span>-</span>门</p>
+
+                                <p ng-show="studyState!=0&&isRegister" class="cu-p"
+                                   ng-click="events.getCourse($event, 1)">
+                                    <span>b{{model.studyStatistics.studyCourseNum}}</span>门
+                                </p>
+                            </div>
+                            <span class="sp-info">在学课程数</span>
+                        </div>
+
+                        <div class="sp-cont fl">
+                            <div class="pic-show rel">
+                                <span class="circle-current" ng-style="noStudyCourseNum"></span>
+                                <span class="circle-mask"></span>
+
+                                <p ng-show="studyState==0||!isRegister"><span>-</span>门</p>
+
+                                <p ng-show="studyState!=0&&isRegister" class="cu-p"
+                                   ng-click="events.getCourse($event, 2)">
+                                    <span>b{{model.studyStatistics.noStudyCourseNum}}</span>门
+                                </p>
+                            </div>
+                            <span class="sp-info">未学课程数</span>
+                        </div>
+                    </div>
+                    <div class="wrap-title mt20 clear" id="here"><span class="ico"></span>课程清单<a href="#"
+                                                                                                 ng-click="events.getAllCourse($event)"
+                                                                                                 class="refresh fr"><span
+                            class="ico ico-refresh"></span>全部课程</a></div>
+                    <table class="table table-list mt10">
+                        <thead>
+                        <tr>
+                            <th width="316">课程名称</th>
+                            <th width="100">讲师</th>
+                            <th width="100">学分</th>
+                            <!----------   递减排序时ico-up改为ico-down   ----------->
+                            <th width="100" class="cu-p">进度(%)<!--<a href="#" class="ico ico-up"></a>--></th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <div class="mah-1">
+                        <table class="table table-list">
+                            <tbody>
+                            <tr ng-repeat="trainingCourse in model.trainingCourses">
+                                <td width="300">
+                                    <div class="w-2 to"><span class="ico ico-play"></span><span
+                                            ng-bind="trainingCourse.courseName"></span></div>
+                                </td>
+                                <td width="100"><span ng-bind="trainingCourse.courseTeacherInfo"></span></td>
+                                <td width="100"><span ng-bind="trainingCourse.coursePeriod"></span></td>
+                                <td width="100">b{{studyState==0||!isRegister?'-':trainingCourse.ruleValue}}%</td>
+                                <td>
+                                    <button type="button" ng-disabled="studyState!=1||!isRegister"
+                                            ng-show="trainingCourse.startButton"
+                                            ng-click="events.onlinePlay(trainingCourse.courseId, $event)"
+                                            class="btn btn-sm btn-success mr10">开始学习
+                                    </button>
+                                    <button type="button" ng-show="trainingCourse.keepButton"
+                                            ng-click="events.onlinePlay(trainingCourse.courseId, $event)"
+                                            class="btn btn-sm btn-info mr10">继续学习
+                                    </button>
+                                    <button type="button" ng-show="trainingCourse.passButton"
+                                            ng-click="events.onlinePlay(trainingCourse.courseId, $event)"
+                                            class="btn btn-sm btn-warning mr10">重新学习
+                                    </button>
+                                    <button
+                                            ui-sref="states.courseDetail({courseId:trainingCourse.courseId, trainCategoryId: trainCategoryId,trainingId: trainId, register: register, courseResource: 4})"
+                                            type="button" class="btn btn-sm btn-default">课程详情
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="trd-more" ng-class="{'hide':more}" ng-click="events.getCourseAll($event);"><a
+                                href="#">查看更多>></a></div>
+                    </div>
+                    <div class="wrap-title mt10" ng-show="showExam"><span class="ico"></span>班级考试</div>
+                    <table ng-show="showExam" class="table table-list table-condensed mt10">
+                        <thead>
+                        <tr>
+                            <th width="220">考试名称</th>
+                            <th width="130" class="txt-r">考试前置条件</th>
+                            <th width="130">剩余考试次数</th>
+                            <th width="70">及格分</th>
+                            <th width="90">答题时长</th>
+                            <th width="100" class="txt-r">成绩/合格?</th>
+                            <th>操作</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="trainingExam in model.trainingExams">
+                        <tr>
+                            <td>
+                                <div class="w-6 to"><span class="ico ico-play"></span><span
+                                        ng-bind="trainingExam.name"></span></div>
+                            </td>
+                            <!--<td class="txt-r">学完b{{trainingExam.rule}}门课程</td>-->
+                            <td class="txt-r">b{{trainingExam.ruleValue?'学完'+trainingExam.ruleValue+'门课程':'-'}}</td>
+                            <td>b{{trainingExam.residueCount}}次/b{{trainingExam.examCount}}次</td>
+                            <td>b{{trainingExam.passScore}}分</td>
+                            <td>b{{trainingExam.examTimeLength}}分钟</td>
+                            <td class="txt-r">
+                                b{{!trainingExam.showExamResult?'-':(trainingExam.answerExamPaperCompleteInfoDto.passed?'合格':'不合格')}}
+                            </td>
+                            <td>
+                                <!----------------- 符合考试前置条件且时间到了 ----------------------->
+                                <!--<button type="button" ng-click="events.detail($event, trainingExam)" class="btn btn-sm btn-success" ng-class="{'hide':trainingExam.isRule}">进入考试</button>-->
+                                <!----------------- 考试时间未到，且不符合考试前置条件 ----------------------->
+                                <button type="button" class="btn btn-sm btn-default"
+                                        ng-click="events.detail($event, trainingExam)"
+                                        ng-disabled="!isRegister||!trainingExam.isRule || studyState!=1 || (trainingExam.answerExamPaperCompleteInfoDto.complete && (trainingExam.answerExamPaperCompleteInfoDto.finalPassed && !trainingExam.continueExam || trainingExam.residueCount < 1))"
+                                        ng-class="{'btn-success': (trainingExam.isRule && (!trainingExam.answerExamPaperCompleteInfoDto.complete || (trainingExam.answerExamPaperCompleteInfoDto.finalPassed && trainingExam.continueExam) || !trainingExam.answerExamPaperCompleteInfoDto || !trainingExam.answerExamPaperCompleteInfoDto.finalPassed && trainingExam.residueCount > 0))}">
+                                    进入考试
+                                </button>
+                                <!----------------- 已考 ----------------------->
+                                <!--<button type="button" ng-click="events.querybutton($event, trainingExam)" class="btn btn-sm btn-info hide">查看考试</button>-->
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-info"
+                                        ng-click="events.hideContent($event, $index);">b{{trainingExam.hide?'展开':'收起'}}
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-class="{'hide':trainingExam.hide}">
+                            <td colspan="8">
+                                <table class="table table-1 table-list">
+                                    <thead>
+                                    <tr>
+                                        <th width="60">序号</th>
+                                        <th>进入考试时间</th>
+                                        <th width="130">成绩</th>
+                                        <th width="100">是否合格</th>
+                                        <th width="80">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="answerExamPager in trainingExam.answerExamPaperCompleteInfoDto.answerInfoDtos track by $index">
+                                        <td>b{{$index+1}}</td>
+                                        <td>b{{answerExamPager.enterTime}}</td>
+                                        <td>b{{!trainingExam.showExamResult?'-':answerExamPager.score + '分'}}</td>
+                                        <td>b{{!trainingExam.showExamResult?'-':answerExamPager.passed?'合格':'不合格'}}</td>
+                                        <td>
+                                            <button type="button"
+                                                    ng-click="events.queryButton($event, trainingExam.answerExamPaperCompleteInfoDto.id, answerExamPager.id)"
+                                                    class="btn btn-sm btn-info">查看考试
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="trd-right pull-right">
+                    <div class="wrap-title"><span class="ico"></span>培训目的</div>
+                    <div class="comments-block cb-1 mt10">
+                        b{{model.trainings.comment}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

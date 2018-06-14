@@ -1,0 +1,35 @@
+<ul class="m-form-1" style="margin-top:10px;">
+    <li ng-if="showCreatOrAddBtn==='creat'">
+        <span class="left-txt b">留言类型</span>
+        <select class="ui-slt w1"
+                ng-model="model.problemCategoryModel"
+                ng-options="item.id as item.name for item in model.problemCategoryList">
+        </select>
+    </li>
+    <li class="clear">
+        <span class="left-txt b fl">留言内容</span>
+        <div class="fl ml4">
+            <textarea class="ui-textarea t-area-1"
+                      ng-model="model.descri"
+                      placeholder="请输入留言内容">
+            </textarea>
+        </div>
+    </li>
+    <li>
+        <span class="left-txt b"></span>
+        <a href="javascript:void(0)"
+           ng-click="events.closeDialog('wantToLeaveMessageDialog')"
+           class="btn-gs">取消</a>
+        <button class="btn-s ml10"
+                ng-if="showCreatOrAddBtn==='creat'"
+                ng-click="events.createLeaveMessage()"
+                ng-disabled="creatSubmitAble">确定
+        </button>
+
+        <button class="btn-s ml10"
+                ng-if="showCreatOrAddBtn==='add'"
+                ng-click="events.addLeaveMessage()"
+                ng-disabled="addSubmitAble">确定
+        </button>
+    </li>
+</ul>

@@ -1,0 +1,142 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="events.goBack($event)" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ng-click="events.goBackMain($event)">商户管理</a>&gt;
+        <a class="aw" href="javascript: void(0);" ng-click="events.goBack($event)">查看商户</a> &gt; 查看解决方案
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit">解决方案基本信息</div>
+        <div class="dash-line-1"></div>
+        <ul class="ul-d-form udf-10 li-fl pt10 clear">
+            <li><span class="left-txt">解决方案名称：</span>b{{solution.name}}</li>
+            <li><span class="left-txt">涵盖了哪些商品：</span>!未实现!</li>
+            <li><span class="left-txt">课程数量：</span>b{{solution.lessonCount}}门</li>
+            <li><span class="left-txt">岗位体系：</span>b{{solution.jobCount}}个岗位</li>
+            <li><span class="left-txt">能力项：</span>b{{solution.abilityCount}}个</li>
+            <li><span class="left-txt">在用企业数量：</span>b{{solution.useCount}}家</li>
+            <li><span class="left-txt">状态：</span>b{{solution.status == 1 ? '可用' : '不可用'}}</li>
+            <li><span class="left-txt">创建人：</span>b{{solution.creator}}</li>
+            <li><span class="left-txt">创建时间：</span>b{{solution.createTime}}</li>
+            <li><span class="left-txt">类型：</span>b{{solution.appType == 1 ? '体验' : '正式'}}</li>
+            <li ng-show="solution.appType == 1">
+                <span class="left-txt">关联解决方案：</span><a href="#">b{{solution.relatedSolutionName}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="column mt20">
+        <div class="col-tit">调整记录</div>
+        <div class="dash-line-1"></div>
+
+        <div ng-repeat="record in model.actionRecordList" class="mb5 clear">
+            <span class="mr20 fl">b{{record.content}}</span>
+        </div>
+        <!--<div class="mb5 clear"><span class="mr20 fl">2015/06/07  12:23</span><span class="wp-8 fl">NICK  修改了解决方案</span></div>-->
+    </div>
+
+    <div class="column mt20">
+        <div class="col-tit">解决方案具体内容</div>
+        <div class="dash-line-1"></div>
+        <div class="tab-tit">
+            <a href="#" ng-click="events.toggleDimension($event, 1)"
+               ng-class="{'current': model.currentDimension === 1}">岗位体系</a>
+            <a href="#" ng-click="events.toggleDimension($event, 2)"
+               ng-class="{'current': model.currentDimension === 2}">课程</a>
+            <!--<a href="#">能力项</a>-->
+        </div>
+
+        <!------  岗位体系  ------>
+        <div ng-show="model.currentDimension === 1" class="column-block clear">
+            <div class="cb-left">
+                <div class="col-tit">岗位体系</div>
+                <div class="p0" kendo-tree-view="node.electedUnitOrgTree" k-options="ui.selectedJobGradeTree"
+                     k-ng-delay="ui.selectedJobGradeTree"></div>
+            </div>
+            <div class="cb-right h-7 overflow-a">
+                <div class="search-bar">
+                    <ul class="ul-form li-fl lh-1 clear">
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入课程名称"
+                                   ng-model="model.jobGradeLessonName"
+                                   ng-keydown="events.queryByEnter($event, 1)"
+                            />
+                        </li>
+                        <li><a href="#" ng-click="events.loadJobGradeLesson($event)" class="btn btn-b">查询</a></li>
+                        <li class="fr">课程数量：b{{model.jobGradeLessonList.length}}门</li>
+                    </ul>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="30">No.</th>
+                        <th>课程名称</th>
+                        <th width="80">学分</th>
+                        <th width="100">课程分类</th>
+                        <th width="100">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="lesson in model.jobGradeLessonList">
+                        <td>b{{$index + 1}}</td>
+                        <td class="tl">b{{lesson.name}}</td>
+                        <td>b{{lesson.credit}}</td>
+                        <td>b{{lesson.lessonTypeName}}</td>
+                        <td class="op">
+                            <!--<a href="#">查看</a>-->
+                            <a href="#" ng-click="events.audit($event, lesson)">试听</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!------  课程  ------>
+        <div ng-show="model.currentDimension === 2" class="column-block clear">
+            <div class="cb-left">
+                <!--<div class="col-tit">销售岗位</div>-->
+                <div class="p0" kendo-tree-view="node.lessonTypeTree" k-options="ui.lessonTypeTree"
+                     k-ng-delay="ui.lessonTypeTree"></div>
+            </div>
+            <div class="cb-right h-7 overflow-a">
+                <div class="search-bar">
+                    <ul class="ul-form li-fl lh-1 clear">
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入课程名称"
+                                   ng-model="model.electedLessonName"
+                                   ng-keydown="events.queryByEnter($event, 2)"
+                            />
+                        </li>
+                        <li><a href="#" ng-click="events.loadElectiveLesson($event)" class="btn btn-b">查询</a></li>
+                        <li class="fr">课程数量：b{{model.totalLessonCount}}门</li>
+                    </ul>
+                </div>
+
+                <div kendo-grid="node.solutionLessonGrid" k-options="ui.solutionLessonGrid"
+                     k-ng-delay="ui.solutionLessonGrid"></div>
+            </div>
+        </div>
+
+        <!------  能力项  ------>
+        <!--<div class="column-block clear hide">-->
+        <!--<div class="col-body bt0 overflow-a">-->
+        <!--<ul class="ul-course uc-6 li-fl clear">-->
+        <!--<li><span class="num">1</span> 如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">2</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">3</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">4</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">5</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">6</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">7</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">8</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">9</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">10</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">11</span>如何成为顶天立地的内训师</li>-->
+        <!--<li><span class="num">12</span>如何成为顶天立地的内训师</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>

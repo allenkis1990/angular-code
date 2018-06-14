@@ -1,0 +1,18 @@
+<div class="sty">
+    <label class="sty-lab"><input type="checkbox"
+                                  ng-model="model.query.isAllLearningYears"
+                                  ng-true-value="1"
+                                  ng-false-value="-1"
+                                  ng-click="events.selectAll($event)">全选</label>
+    <div class="mt10 mb10">
+        <label class="sty-lab" ng-repeat="timeyear in model.timeYear">
+            <input type="checkbox"
+                   ng-model="model.tempLearningYears[$index]"
+                   ng-true-value="b{{timeyear.name}}"
+                   ng-false-value=""
+                   ng-click="events.chooseYear($event, timeyear, $index)"
+            >
+            b{{timeyear.name}}年
+        </label>
+    </div>
+</div>

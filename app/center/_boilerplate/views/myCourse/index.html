@@ -1,0 +1,56 @@
+<!-- 内容 -->
+<div class="p-wrap-full content-bd mt20 clear">
+    <!-- 左侧导航 -->
+    <div center-sider></div>
+    <!-- /左侧导航 -->
+    <div class="right-block fl posrel">
+        <div ng-if="!model.noData&&!model.hasNotBuy">
+            <ul class="class-list my-class clear">
+                <li ng-repeat="item in model.courseList"
+                    ng-mouseenter="events.classMouseEnter($event,item)"
+                    ng-mouseleave="events.classMouseLeave($event,item)">
+                    <div class="img">
+                        <img src="@systemUrl@/images/course-img.jpg" alt=" ">
+                        <div class="tit">
+                            <span class="tit-bg"></span>
+                            <div class="tit-txt"><span ng-bind="item.shortName"></span></div>
+                            <a href="javascript:void(0)"
+                               ng-click="events.goPlay(item)"
+                               class="hover-btn">学 习</a>
+                        </div>
+                    </div>
+                    <!--<div class="process"><span class="current" style="width: 43%;"></span></div>-->
+                    <div class="info info1">
+                        <p class="to">课程时长：<span ng-bind="item.timeLengthFormat" class="t-b"></span></p>
+                    </div>
+                </li>
+            </ul>
+            <div pagination
+                 ng-if="model.total>0"
+                 ng-change="events.findPageCourse()"
+                 ng-model="model.currentPage"
+                 total-items="model.total"
+                 items-per-page="model.itemsPerPage"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+        </div>
+
+
+        <div class="m-no-data tc" ng-if="model.noData===true">
+            <img src="@systemUrl@/images/no-data.png" alt="空数据">
+            <p class="txt">当前还没有课程哦</p>
+        </div>
+
+        <div class="m-no-data tc" ng-if="model.hasNotBuy===true">
+            <img src="@systemUrl@/images/no-data.png" alt="空数据">
+            <p class="txt">买班后才能学习兴趣课程</p>
+        </div>
+
+        <div class="lwhLoading" ng-if="lwhLoading===true">
+            <img src="@systemUrl@/images/loading.gif"/>
+        </div>
+
+    </div>
+</div>
+<!-- /内容 -->

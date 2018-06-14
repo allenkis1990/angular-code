@@ -1,0 +1,17 @@
+<div class="mask-bg-lwh" style="z-index:998"></div>
+<div class="dialog mt20" style="width: 492px;position:fixed;z-index:100;top:30%;left:38%;z-index:999; ">
+    <div class="dialog-body">
+        <div class="dialog-tit">切换年度
+            <button ng-click="closeYearDialog()" class="p-ico"></button>
+        </div>
+        <div class="dialog-cont" style="width: 453px;">
+            <div class="yearselectlist clear">
+                <a ng-class="{'select': model.Year===item.optionId}" ng-click="events.changeYear2(item)"
+                   ng-repeat="item in model.yearList">
+                    b{{item.name}}<span ng-if="model.Year===item.optionId" class="p-ico"></span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

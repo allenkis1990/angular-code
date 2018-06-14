@@ -1,0 +1,96 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')">必修包管理</a> &gt; 查看必修包
+    </div>
+</div>
+<div class="main-wrap-body">
+    <ul class="ul-d-form">
+        <li><span class="left-txt">必修课包名称：</span>b{{requiredPackageInfo.name}}</li>
+        <li><span class="left-txt">创建人：</span>b{{requiredPackageInfo.creator}}</li>
+        <li><span class="left-txt">创建时间：</span> b{{requiredPackageInfo.createTime}}</li>
+    </ul>
+    <div class="column mb20 mt50">
+        <div class="col-tit clear">已选课程（b{{requiredPackageInfo.lessonCount}}门）</span> </div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="mt10 clear">
+        <table class="table t-1 wp-6 fl">
+            <thead>
+            <tr>
+                <th width="30%">No.</th>
+                <th width="70%">课程名称</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="lesson in model.lessonGroupOne">
+                <td>b{{lesson.index}}</td>
+                <td><a href="javascript:void(0);" class="c-tit">b{{lesson.name}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table t-1 wp-6 fl">
+            <thead>
+            <tr>
+                <th width="30%">No.</th>
+                <th width="70%">课程名称</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="lesson in model.lessonGroupTwo">
+                <td>b{{lesson.index}}</td>
+                <td><a href="javascript:void(0);" class="c-tit">b{{lesson.name}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table wp-6 fl">
+            <thead>
+            <tr>
+                <th width="30%">No.</th>
+                <th width="70%">课程名称</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="lesson in model.lessonGroupThree">
+                <td>b{{lesson.index}}</td>
+                <td><a href="javascript:void(0);" class="c-tit">b{{lesson.name}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt10 clear">
+        <div class="pages fr" style="width: 500px; margin-right: 3px;">
+            <div kendo-pager k-options="ui.packageLessonGrid"></div>
+        </div>
+    </div>
+    <div class="column mb20 mt20">
+        <div class="col-tit clear">发布对象（共计b{{requiredPackageInfo.studyCount}}人）</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="clear">
+        <div class="wp-5 fl mr20">
+            <div class="tab-tit">
+                <a href="javascript:void(0);" class="current">学员</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div kendo-grid k-options="ui.employeeGrid"></div>
+            </div>
+        </div>
+        <div class="wp-5 fl mr20">
+            <div class="tab-tit">
+                <a href="javascript:void(0);" class="current">岗位</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div kendo-grid k-options="ui.jobGrid"></div>
+            </div>
+        </div>
+        <div class="wp-5 fl">
+            <div class="tab-tit">
+                <a href="javascript:void(0);" class="current">组织机构</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div kendo-grid k-options="ui.unitOrgGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>

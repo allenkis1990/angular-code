@@ -1,0 +1,75 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.areaPeriodLearnStatistic'">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+
+            <li>
+                <div hb-date-arrange
+                     template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                     config="timeConfig"
+                     start-date="model.chooseParams.startCreateTime"
+                     end-date="model.chooseParams.endCrateTime"
+                     start-placeholder="查询日期" end-placeholder="查询日期"></div>
+                <!--<input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"-->
+                <!--ng-model="model.chooseParams.startCreateTime" hb-readonly hb-clear-input type="text"-->
+                <!--class="ipt ipt-medium"-->
+                <!--placeholder="查询日期"/> - -->
+                <!--<input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"-->
+                <!--ng-model="model.chooseParams.endCrateTime" hb-readonly hb-clear-input type="text"-->
+                <!--class="ipt ipt-s"-->
+                <!--placeholder="查询日期"/>-->
+
+            </li>
+
+            <li style="margin-left:2px;">
+                <input type="text" name="type" class="ipt ipt-large"
+                       ng-click="events.openLessonTypeTree()"
+                       placeholder="请选择地区"
+                       ng-model="model.chooseParams.areaName" required
+                       ng-required="true" readonly="true" style="width: 150px;">
+
+                <div class="hide-block hb-1 mh-1" ng-show="areaShow" style="margin-left: -120px;width: 200px;">
+                    <div kendo-tree-view="node.tree"
+                         k-options="ui.tree.options"
+                         k-on-change="model.selectedItem = dataItem">
+                            <span k-template ng-click="events.getArea(dataItem)">
+                              <label style="width: 80px;"><span ng-bind="dataItem.name"></span></label>
+                            </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <select class="slt slt-small"
+                        ng-change="events.changeYear()"
+                        ng-options="item.optionId as item.name for item in model.yearList"
+                        ng-model="model.chooseParams.trainingYear">
+                </select>
+            </li>
+            <li>
+                <select class="slt slt-small"
+                        ng-options="item.optionId as item.name for item in model.subjectList"
+                        ng-model="model.chooseParams.subjectId"
+                        ng-change="events.changeSubject()">
+                </select>
+            </li>
+
+
+            <li><a href="javascript:void(0)" has-permission="areaPeriodLearnStatistic/query" ng-click="events.search()"
+                   class="btn btn-b">查询</a></li>
+            <li><a href="javascript:void(0)" ng-click="events.clearUserPageParams()" class="btn btn-b">重置条件</a></li>
+            <li>
+                <button href="javascript:void(0)" ng-disabled="submitExportarea===false"
+                        has-permission="areaPeriodLearnStatistic/exportCourseStatistics"
+                        ng-click="events.exportRegionPeriodStatistic()" class="btn btn-b">批量导出
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="tips-box-1 clear">
+        <span summary-desc view-name="OWN_VIEW_NAME"></span>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.areaPeriodGrid" k-options="ui.areaPeriodGrid.options">
+        </div>
+    </div>
+</div>
+<div ui-view></div>

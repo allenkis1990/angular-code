@@ -1,0 +1,168 @@
+<div class="p-wrap-full m-content clear">
+
+    <div center-sider></div>
+
+    <div class="m-right-block fr  mh576">
+        <div class="right-block-bd">
+            <div class="mb10"><span class="p-ico worm-ico-o"></span>注：请您在<span class="txt-o ">24</span>小时内完成支付，否则订单会被自动取消。
+            </div>
+            <div class="m-search">
+                <input type="text"
+                       ng-model="model.orderNo"
+                       class="ipt"
+                       placeholder="请输入商品名称/订单号">
+                <input type="text"
+                       ng-required="true"
+                       datepicker-popup
+                       ng-model="model.beginTime"
+                       close-text="关闭"
+                       current-text="今天"
+                       clear-text="清除"
+                       is-open="ui.datepicker.opened"
+                       ng-click="ui.datepicker.opened=!ui.datepicker.opened"
+                       readonly
+                       style="width:160px;"
+                       class="ipt ipt-m ml5"
+                       placeholder="下单时间"> - <input type="text"
+                                                    ng-required="true"
+                                                    datepicker-popup
+                                                    ng-model="model.endTime"
+                                                    close-text="关闭"
+                                                    current-text="今天"
+                                                    clear-text="清除"
+                                                    is-open="ui.datepicker2.opened"
+                                                    ng-click="ui.datepicker2.opened=!ui.datepicker2.opened"
+                                                    readonly
+                                                    style="width:160px;"
+                                                    class="ipt ipt-m" placeholder="下单时间">
+
+                <select class="ui-slt ml5"
+                        ng-model="model.orderStatus"
+                        style="width:160px;padding:8px;margin-top:-5px;">
+
+                    <option value="ALL" class="">订单状态</option>
+                    <option value="WAIT_FOR_PAYMENT">等待付款</option>
+                    <option value="PAYING">支付中</option>
+                    <option value="OPENING">开通中</option>
+                    <option value="TRADE_SUCCESS">交易成功</option>
+                    <option value="TRADE_CLOSE">交易关闭</option>
+                </select>
+                <button ng-disabled="lwhLoading"
+                        ng-click="events.searchOrderPage()"
+                        class="ui-btn btn-gr ml5">查 询
+                </button>
+            </div>
+            <div ng-if="model.orderList.length>0">
+                <table class="ui-table table-line mt10 lwh-th">
+                    <thead>
+                    <tr>
+                        <th class="tl">培训内容</th>
+                        <th width="100">学时</th>
+                        <th width="120">金额(元)</th>
+                        <th width="120">实付款(元)</th>
+                        <th width="120"><!--class="th-open"-->
+                            订单状态<!--<span class="p-ico ico-open"></span>-->
+                            <!--<ul class="th-slt">
+                                <li class="current">订单状态</li>
+                                <li>等待付款</li>
+                                <li>付款中</li>
+                                <li>开通中</li>
+                                <li>交易成功</li>
+                                <li>交易关闭</li>
+                            </ul>-->
+                        </th>
+                        <th width="100">操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody ng-repeat="item in model.orderList">
+                    <tr class="full-row-1">
+                        <td colspan="6"></td>
+                    </tr>
+                    <tr class="order-row">
+                        <td colspan="7" class="tl">
+                            订单号：<span ng-bind="item.orderNo"></span><span class="ml100">下单时间：<span
+                                ng-bind="item.createTime"></span></span> <span class="ml100">培训机构：<span
+                                title="b{{item.unitName}}"
+                                ng-bind="item.unitName.length>18?item.unitName.substr(0,18)+' ...':item.unitName"></span></span><span style="display:block">支付时间：<span
+                                ng-bind="item.payTime===null?'-':item.payTime"></span></span>
+                            <div class="fr change-label"
+                                 ng-if="(item.businessType==='SWAP_IN'&&item.swapInCommodityType[0]==='TRAINING_CLASS')||(item.businessType==='SWAP_IN_AND_OUT'&&item.swapInCommodityType[0]==='TRAINING_CLASS')">
+                                换班
+                            </div>
+                            <div class="fr change-label"
+                                 ng-if="(item.businessType==='SWAP_IN'&&(item.swapInCommodityType[0]==='PERIOD'||item.swapInCommodityType[0]==='COURSE'))||(item.businessType==='SWAP_IN_AND_OUT'&&(item.swapInCommodityType[0]==='PERIOD'||item.swapInCommodityType[0]==='COURSE'))">
+                                换课
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="subItem in item.subOrderList">
+                        <td class="tl">
+
+                            <div ng-bind="subItem.name"></div>
+                            <div>
+                                <span ng-repeat="graItem in subItem.skuPropertyNameList" style="margin-right:10px;">
+                                    <span ng-bind="graItem.skuPropertyName"></span>：
+                                    <span ng-bind="graItem.skuPropertyValueName?graItem.skuPropertyValueName:'-'"></span>
+                                </span>
+                                <span>
+                                    学习形式：
+                                    <span ng-if="subItem.coursePoolId">课程</span>
+                                    <span ng-if="!subItem.coursePoolId">培训班</span>
+                                </span>
+                            </div>
+
+
+                        </td>
+                        <td ng-bind="subItem.hour"></td>
+                        <td ng-bind="subItem.totalAmount"></td>
+                        <td rowspan="b{{item.subOrderList.length}}"
+                            ng-if="$index===0"
+                            ng-bind="item.totalAmount"></td>
+                        <td rowspan="b{{item.subOrderList.length}}"
+                            ng-if="$index===0"><span ng-if="item.status===1||item.status===2">等待付款</span
+                        ><span ng-if="item.status===3||item.status===4||item.status===5">开通中</span
+                        ><span ng-if="item.status===6">交易成功</span
+                        ><span ng-if="item.status===7">交易关闭</span
+                        ><span ng-if="item.status===8">支付中</span>
+                        </td>
+                        <td rowspan="b{{item.subOrderList.length}}"
+                            class="op-1"
+                            ng-if="$index===0"><a href="javascript:void(0)"
+                                                  ng-click="events.payRightNow(item)"
+                                                  ng-if="(item.status===1||item.status===8)&&item.tradeChannel!=='COLLECTIVE'"
+                                                  class="ui-btn btn-o">立即付款</a
+                        ><a href="javascript:void(0)"
+                            ng-click="$state.go('states.myOrder.detail',{orderNo:item.orderNo})">订单详情</a
+                        ><a href="javascript:void(0)"
+                            ng-click="events.cancelOrder(item)"
+                            ng-if="(item.status===1 || item.status===8)&&item.tradeChannel!=='COLLECTIVE'">取消订单</a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+
+                </table>
+                <div pagination
+                     class="mt10"
+                     ng-change="events.getOrderPage()"
+                     ng-model="model.currentPage"
+                     total-items="model.total"
+                     items-per-page="model.itemsPerPage"
+                     max-size="model.maxSize"
+                     previous-text="上一页"
+                     next-text="下一页"></div>
+            </div>
+            <div class="m-no-data tc" ng-if="model.orderList.length<=0">
+                <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                <p class="txt">您暂无符合条件的订单~~<br><a href="javascript:void(0)"
+                                                  ng-click="events.goChoseCourse()">前往报名培训选购！</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

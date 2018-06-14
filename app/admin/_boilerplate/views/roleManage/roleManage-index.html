@@ -1,0 +1,37 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.roleManage'"
+     ng-click="lessonTypeShow=false">
+    <div class="main-wrap-body1">
+        <div class="tab-tit mt10">
+            <a class="current" ng-class="{current: model.dimension == 1}" ng-click="events.toggleDimension($event, 1)"
+               href="#">本单位</a>
+            <a class="" ng-if="events.isSubProjectManager()" ng-class="{current: model.dimension == 2}" ng-click="events.toggleDimension($event, 2)" href="#">项目级</a>
+        </div>
+    </div>
+    <div class="main-wrap-body" ng-show="model.dimension == 1" class="column">
+    <div class="column">
+        <a href="#" ng-click="events.addRole($event)" class="btn-r btn" has-permission="roleManage/add">新增角色</a>
+    </div>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid.options">
+            </div>
+        </div>
+    </div>
+    <div class="main-wrap-body" ng-show="model.dimension == 2" class="column">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><div hb-unit-select unit-id="model.dimensionQuery.createUnitId"
+                         default-choose="true" default-txt="请选择创建单位" ng-if="events.isSubProjectManager()"></div>
+                </li>
+                <li><a href="javascript:void(0)" has-permission="administratorManage/detail"
+                       ng-click="events.searchAllRole($event)" class="btn btn-b">查询</a></li>
+            </ul>
+        </div>
+        <div class="dash-line-3"></div>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.allRoleGrid" k-options="ui.allRoleGrid.options">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div ui-view></div>

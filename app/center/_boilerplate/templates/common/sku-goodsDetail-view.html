@@ -1,0 +1,12 @@
+<div>
+    <p><span class="w" ng-if="detail.skuPropertyNameList[0].skuPropertyValueName"> <span
+            ng-bind="detail.skuPropertyNameList[0].skuPropertyName"></span>： <span
+            ng-bind="detail.skuPropertyNameList[0].skuPropertyValueName"></span>年</span><span class="w">
+                            学时：b{{detail.period}}学时</span></p>
+    <p><span class="w" ng-if="detail.skuPropertyNameList[1].skuPropertyValueName"> <span
+            ng-bind="detail.skuPropertyNameList[1].skuPropertyName"></span>：
+                             <span ng-bind="detail.skuPropertyNameList[1].skuPropertyValueName"></span>
+                           </span>
+        <span class="w" ng-if="detail.poolName&&detail.skuPropertyNameList[1].skuPropertyValueName!=='公需课'"> 专业： <span
+                ng-bind="detail.poolName"></span></span></p>
+</div>

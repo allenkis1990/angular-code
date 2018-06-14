@@ -1,0 +1,203 @@
+<div class="lwhLoading" ng-if="model.lwhLoading===true">
+    <img src="kccs/kccsv2/images/loading1.gif" alt=""/>
+</div>
+
+
+<div class="p-wrap-full pos-nav  clear"><a ui-sref="states.accountant">首页</a><span class="plr3">&gt;</span>用户注册</div>
+
+
+<div class="p-wrap-full white-bg  mb30 clear mh500 pt50">
+
+    <div class="tips-box w950 tc ma mb50">
+        如果您是已注册过得用户。请直接登录选课即可；如果您是新用户，请您认真填写注册信息。填写的信息必须真实准确，以便学习成果的记录。
+    </div>
+
+
+    <!--第一步-->
+    <div class="clear mb50" ng-if="model.registStatus===1">
+        <div class="w8 bor-r fl">
+            <form name="registForm">
+                <ul class="fhlist">
+                    <li><span class="title"><em class="fvx">*</em>真实姓名</span>
+                        <input type="text"
+                               ng-required="true"
+                               ng-model="model.name"
+                               name="name"
+                               class="ui-ipt iptform"
+                               placeholder="请填写真实姓名">
+                        <span class="formver"
+                              ng-if="registForm.name.$dirty&&registForm.name.$invalid"><span
+                                class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>请填写您的姓名</span>
+                    </li>
+                    <li><span class="title"><em class="fvx">*</em>身份证号</span>
+                        <input type="text"
+                               ajax-validate
+                               ajax-url="/web/login/login/checkExist"
+                               ng-required="true"
+                               name="loginInput"
+                               ng-pattern="/(^\d{6}(19|20)(\d{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])\d{3}([0-9]|X|x)$)/"
+                               ng-model="model.loginInput"
+                               class="ui-ipt iptform"
+                               placeholder="请填写18位身份证号">
+                        <span class="formver"
+                              ng-if="(registForm.loginInput.$dirty&&registForm.loginInput.$error.pattern) || (registForm.loginInput.$dirty&&registForm.loginInput.$error.required)"><span
+                                class="p-ico ico-formver"></span><span
+                                class="p-ico ico-worm "></span>请输入18位身份证！</span>
+                        <span class="formver"
+                              ng-if="!registForm.loginInput.$error.required&&!registForm.loginInput.$error.pattern&&registForm.loginInput.$error.ajaxValidate"><span
+                                class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>身份证号已存在</span>
+                    </li>
+                    <!-- 性别选男时样式 -->
+                    <li><span class="title"><em class="fvx">*</em>性别</span>
+                        <span class="sex"><a href="javascript:void(0)"
+                                             ng-click="events.changeSex('1')"
+                                             ng-class="{'selected':model.sex==='1'}"><span class="p-ico ico-man"></span>男</a
+                        ><a href="javascript:void(0)"
+                            ng-click="events.changeSex('2')"
+                            ng-class="{'selected':model.sex==='2'}"><span class="p-ico ico-woman"></span>女</a>
+                        </span>
+                    </li>
+                    <!--ng-pattern="/^[0-9A-Za-z!@#$%^&*]{6,18}$/"-->
+                    <li class="mb5"><span class="title"><em class="fvx">*</em>密码</span>
+                        <input type="password"
+                               ng-required="true"
+                               name="password"
+                               ng-pattern="/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{6,18}$/"
+                               ng-model="model.password"
+                               class="ui-ipt iptform"
+                               placeholder="请输入6~18位由字母、数字组合的登录密码">
+
+                        <span class="formver"
+                              style="width:300px;"
+                              ng-if="registForm.password.$dirty && registForm.password.$invalid"><span
+                                class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>请输入6~18位由字母、数字组合的登录密码
+                        </span>
+
+                    </li>
+
+                    <!-- 密码未激发样式 -->
+                    <li class="mb5"><span class="title">&nbsp;</span>
+                        <span class="code-case"><em
+                                ng-class="{'c1':passwordLevel==='sick'&&registForm.password.$valid,'c2':passwordLevel==='middle'&&registForm.password.$valid,'c3':passwordLevel==='strong'&&registForm.password.$valid}">低</em
+                        ><em ng-class="{'c2':passwordLevel==='middle'&&registForm.password.$valid,'c3':passwordLevel==='strong'&&registForm.password.$valid}">中</em
+                        ><em class="last" ng-class="{'c3':passwordLevel==='strong'&&registForm.password.$valid}">高</em></span>
+                    </li>
+                    <!-- 密码为弱时样式 1个c1 密码为中时样式2个c2 密码为强时样式3个c3-->
+
+                    <li><span class="title"><em class="fvx">*</em>确认密码</span>
+                        <input type="password"
+                               name="confirmPassword"
+                               validate-password
+                               pass="model.password"
+                               ng-model="model.confirmPassword"
+                               ng-required="true"
+                               class="ui-ipt iptform"
+                               placeholder="请填写登录密码">
+                        <span class="formver"
+                              ng-if="registForm.password.$valid && registForm.confirmPassword.$dirty && registForm.confirmPassword.$invalid"><span
+                                class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>前后密码不一致！</span>
+                    </li>
+                    <!--<li> <span class="title"><em class="fvx">*</em>电子邮箱</span>
+                        <input type="text"
+                               ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
+                               ng-required="true"
+                               name="email"
+                               ng-model="model.email"
+                               class="ui-ipt iptform"
+                               placeholder="请填写邮箱">
+                        <span class="formver" ng-if="registForm.email.$dirty&&registForm.email.$invalid"><span class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>邮箱格式有误！</span>
+                    </li>-->
+                    <li><span class="title"><em class="fvx">*</em>手机号码</span>
+                        <input type="text"
+                               ng-required="true"
+                               name="phoneNumber"
+                               ng-pattern="/^[\d]{11}$/"
+                               ng-model="model.phoneNumber"
+                               class="ui-ipt iptform"
+                               placeholder="请填写11位手机号">
+                        <span class="formver"
+                              ng-if="registForm.phoneNumber.$dirty&&registForm.phoneNumber.$invalid"><span
+                                class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>请输入正确的手机号</span>
+                    </li>
+                    <li ng-if="model.isSupportMobileVerifycode">
+                        <span class="title"><em class="fvx">*</em>短信验证码</span>
+                        <input type="text"
+                               ng-required="true"
+                               ng-minlength="6"
+                               ng-maxlength="6"
+                               name="smsValidateCode"
+                               ng-model="model.smsValidateCode"
+                               class="ui-ipt ipt-s"
+                               placeholder="手机验证码">
+                        <button  class="ui-btn btn-r" ng-click="events.sendMobileValidateCode()" ng-bind="model.phoneCodeText"
+                                 ng-disabled="sendAble|| registForm.phoneNumber.$invalid || registForm.uniqueData.$invalid">
+                        </button>
+                        <span class="formver" ng-if="registForm.smsValidateCode.$dirty&&registForm.smsValidateCode.$invalid">
+                            <span class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>请输入6位短信验证码
+                        </span>
+                    </li>
+                    <!--<li class="lwh-slt"><span class="title"><em class="fvx">*</em>所在地区</span>
+                        <span>安徽省</span><select class="ui-slt ml5"
+                                                validate-area
+                                                ng-required="true"
+                                                name="area"
+                                                area-model="model.regionPath"
+                                                class=""
+                                                ng-change="events.changeCity()"
+                                                ng-options="item.id as item.name for item in model.cityList"
+                                                ng-model="model.cityId" style="width:127px">
+                            <option value="" class="">请选择市</option>
+                        </select>
+                        <select class="ui-slt ml5 " style="width:127px"
+                                ng-options="item.regionPath as item.name for item in model.areaArr"
+                                ng-model="model.regionPath">
+                            <option value="" class="">请选择区县</option>
+                        </select>
+
+
+                        <span class="formver"
+                              ng-if="registForm.area.$dirty&&registForm.area.$invalid"><span class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>请选择所在地区</span>
+
+                    </li>-->
+                    <li><span class="title"><em class="fvx">*</em>工作单位</span>
+                        <input type="text"
+                               ng-required="true"
+                               name="workUnit"
+                               ng-model="model.workUnit"
+                               class="ui-ipt iptform"
+                               placeholder="请填写工作单位">
+
+                        <span class="formver"
+                              ng-if="registForm.workUnit.$dirty&&registForm.workUnit.$invalid"><span
+                                class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>请填写工作单位</span>
+
+
+                    </li>
+                    <!--ng-disabled="registForm.$invalid"-->
+                    <li><span class="title">&nbsp;</span>
+                        <button class="ui-btn btn-r"
+                                ng-disabled="registForm.$invalid || registAble"
+                                ng-click="events.regist()"
+                        >立即注册
+                        </button>
+                    </li>
+                </ul>
+            </form>
+
+        </div>
+        <div class="w3 fr tc"><img src="kccs/kccsv2/images/welcome-login.gif" alt="">
+            <div class="b pt20 fs16">已有帐号，请 <a href="javascript:void(0)" ng-click="events.openLoginDialog()"
+                                               class="t-b t-line">登录</a> ！
+            </div>
+        </div>
+    </div>
+
+
+    <!--第二步 注册成功-->
+    <div class="clear mb50" ng-if="model.registStatus===2">
+        <div class="w1 margin-auto pt30 clear">
+            <i class="p-ico ico-success fl"></i><span class="fl"><b class="fs24 t-b">注册成功！</b><br><b class="t-b fs18">{{model.count}}s</b> 之后自动登录并返回首页！</span>
+        </div>
+
+    </div>
+</div>

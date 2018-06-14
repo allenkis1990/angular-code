@@ -1,0 +1,232 @@
+<div class="p-wrap-full white-bg clear mt10">
+    <div class="title-box mt5 clear"><h2 class="title">继续教育流程</h2></div>
+    <ul class="lc-list">
+        <li><i class="p-ico ico-lc-1"></i><span>第一步<br><b class="fs16">注册登录</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-2"></i><span>第二步<br><b class="fs16">选择学习内容</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-3"></i><span>第三步<br><b class="fs16">在线学习</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-4"></i><span>第四步<br><b class="fs16">在线考核</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-5"></i><span>第五步<br><b class="fs16">考核通过</b></span></li>
+        <li class="w20"><span class="p-ico ico-arrow-right"></span></li>
+        <li><i class="p-ico ico-lc-6"></i><span>第六步<br><b class="fs16">打印证明</b></span></li>
+    </ul>
+</div>
+
+<div class="p-wrap-full pos-nav  clear"><a href="#" ui-sref="states.accountant">首页</a><span
+        class="plr3">&gt;</span><span ng-bind="$state.current.title"></span></div>
+
+<div class="p-wrap-full white-bg mb20  clear">
+    <div class="plr20 pb20 pt15 clear">
+
+
+        <div class="m-account">
+            <div class="account-tit">
+                <a href="javascript:void(0)"
+                   ng-click="events.tabStudyType(item)"
+                   ng-repeat="item in model.studyTypeArr"
+                   ng-bind="item.name"
+                   ng-class="{'current':model.categoryType===item.type}"></a>
+            </div>
+        </div>
+
+        <div class="m-screen">
+            <!--<div class="screen-style" style="min-height:42px;"><span class="style-name" style="width:95px;">学习形式：</span
+            ><a href="javascript:void(0)"
+                ng-click="events.tabStudyType(item)"
+                ng-bind="item.name"
+                ng-repeat="item in model.studyTypeArr"
+                ng-class="{'current':model.categoryType===item.type}"></a></div>-->
+
+
+            <!--not-need-item-params="yes"-->
+            <div hb-sku-directive
+                 clear-event="model.clearEvent"
+                 category-type="model.categoryType"
+                 lwh-loading="lwhLoading"
+                 callback="events.fn()"
+                 ng-model="skuParams"
+                 templateurl="kccs/kccsv2/templates/common/sku-searlist.html">
+
+                <a href="javascript:void(0)"
+                   ng-if="model.choseHourResult"
+                   class="conditions-btn "><span ng-bind="model.choseHourResult.name+'：'"></span><span class="txt"
+                                                                                                       ng-bind="model.choseHourResult.value"></span>
+                    <span class="p-ico close-ico"
+                          ng-click="events.cacelHourSearch()"></span></a>
+
+                <a href="javascript:void(0)"
+                   ng-if="model.choseMajorResult&&model.showMajor"
+                   class="conditions-btn "><span ng-bind="model.choseMajorResult.name+'：'"></span><span class="txt"
+                                                                                                        ng-bind="model.choseMajorResult.value"></span></a>
+
+
+                <a href="javascript:void(0)"
+                   ng-if="model.choseOrgnizationResult"
+                   class="conditions-btn "><span ng-bind="model.choseOrgnizationResult.name+'：'"></span><span class="txt"
+                                                                                                       ng-bind="model.choseOrgnizationResult.value"></span>
+                    <span class="p-ico close-ico"
+                          ng-click="events.cacelOrgnizationSearch()"></span></a>
+
+
+            </div>
+            <div class="screen-style" ng-if="model.showMajor&&model.categoryType==='COURSE_SUPERMARKET_GOODS'"
+                 style="min-height:42px;"><span class="style-name" style="width:95px;">专业：</span
+            ><a href="javascript:void(0)"
+                ng-click="events.tabMajor(item)"
+                title="{{item.name}}"
+                ng-bind="item.shortName"
+                ng-repeat="item in model.marjorList"
+                ng-class="{'current':model.currentMarjorId===item.id}"></a></div>
+
+            <!--ng-class="{'current':model.beginHour===item.begin&&model.endHour===item.end}"-->
+            <div class="screen-style" ng-if="model.categoryType==='COURSE_SUPERMARKET_GOODS'&&model.showHourResult"
+                 style="min-height:42px;"><span class="style-name" style="width:95px;">学时：</span
+            ><a href="javascript:void(0)"
+                ng-repeat="item in model.crditList"
+                ng-bind="item.name"
+                ng-click="events.tabCrdit(item.begin,item.end,item)"></a>
+            </div>
+
+
+
+            <div class="screen-style"
+                 ng-if="model.showOrgnization"
+                 style="min-height:42px;"><span class="style-name" style="width:95px;">培训机构：</span
+            ><a href="javascript:void(0)"
+                ng-click="events.tabOrgnization()">全部</a
+            ><a href="javascript:void(0)"
+                title="b{{item.unitName}}"
+                ng-repeat="item in model.orgnizationsList"
+                ng-bind="item.shortName"
+                ng-click="events.tabOrgnization(item)"></a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div class="p-wrap-full white-bg mb20 clear">
+    <div class="m-array-style">
+        <a href="javascript:void(0)"
+           ng-click="events.tabSort('')"
+           ng-class="{'current':model.sort.type===''}">默认</a>
+        <a href="javascript:void(0)"
+           ng-class="{'current':model.sort.type==='PERIOD'}"
+           ng-click="events.tabSort('PERIOD')">学时<span class="p-ico arrow-ico"
+                                                       ng-class="{'ico-down':model.sort.type==='PERIOD'&&model.sort.direction==='DESC','ico-up':model.sort.type==='PERIOD'&&model.sort.direction==='ASC'}"></span></a>
+        <a href="javascript:void(0)"
+           ng-if="model.categoryType==='values:TRAINING_CLASS_GOODS'"
+           ng-class="{'current':model.sort.type==='PRICE'}"
+           ng-click="events.tabSort('PRICE')">价格<span class="p-ico arrow-ico"
+                                                      ng-class="{'ico-down':model.sort.type==='PRICE'&&model.sort.direction==='DESC','ico-up':model.sort.type==='PRICE'&&model.sort.direction==='ASC'}"></span></a>
+    </div>
+</div>
+
+<div class="p-wrap-full mb20" ng-if="model.courseList.length>0">
+    <ul class="classlist clear">
+
+
+        <li ng-repeat="item in model.courseList" style="height:268px;">
+            <div ng-if="item.showTwo===false" style="position: relative">
+                <img class="buy-seal"
+                     ng-if="item.buy"
+                     src="kccs/kccsv2/images/buy-seal.png" alt=" ">
+                <div class="img">
+                    <div class="hover-block">
+                        <div class="mask"></div>
+                        <a href="javascript:void(0)"
+                           ng-bind="model.categoryType==='TRAINING_CLASS_GOODS'?'查看班级详情':'查看课程详情'"
+                           ng-click="events.goDetail(item)"
+                           class="btn-normal">查看班级详情</a>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="events.goDetail(item)">
+                        <img ng-src="{{item.photoPath}}" alt=" ">
+                    </a>
+                </div>
+                <div class="tit" style="line-height:31px;"><a class="to"
+                                                              title="{{item.name}}"
+                                                              href="javascript:void(0)"
+                                                              style="display:inline-block;width:100%"
+                                                              ng-click="events.goDetail(item)"
+                                                              ng-bind="item.saleTitle"></a></div>
+                <div class="info clear">
+                    <div hb-skuview-directive
+                         templateurl="kccs/kccsv2/templates/common/sku-goodsList-view.html">
+                    </div>
+
+                    <p ng-if="item.skuPropertyNameList[1].skuPropertyValueName!==null"><span class="p-ico c3"></span>{{item.credit}}学时
+                    </p>
+                    <!--<p ng-if="item.skuPropertyNameList[1].skuPropertyValueName!==null" class="price tr">
+                        ¥{{item.dealPrice}}</p>
+                    <p ng-if="item.skuPropertyNameList[1].skuPropertyValueName===null" class="price tr"
+                       style="text-align:right;float:right">¥{{item.dealPrice}}</p>-->
+                </div>
+                <!--<div class="op clear">
+                    <button ng-click="events.putIntoShoppingCart(item)"
+                            ng-disabled="shoppingSubmitAble"
+                            class="btn-dis">加入购物车
+                    </button
+                    >
+                    <button class="btn-normal"
+                            ng-click="events.buyNow(item)"
+                            ng-disabled="submitBuy"><span class="p-ico bug-ico"></span>购买
+                    </button>
+                </div>-->
+            </div>
+
+
+            <div class="buy-pop" ng-if="item.showTwo===true">
+                <div class="con">
+                    <div class="img"><a href="javascript:void(0)" ng-click="events.goDetail(item)"><img
+                            ng-src="{{item.photoPath}}" alt=" "></a></div>
+                    <div class="tit"><a href="javascript:void(0)" ng-click="events.goDetail(item)"
+                                        ng-bind="item.saleTitle"></a></div>
+                    <div class="info clear">
+                        <p><span class="p-ico c4"></span>{{item.coursePoolName}}</p>
+                        <p><span class="p-ico c3"></span>{{item.credit}}学时</p>
+                        <p><span class="p-ico c2"></span>继续教育年度<select class="ui-slt ml5 "
+                                                                       ng-change="events.doRightYearId(item.yearOptionsId)"
+                                                                       ng-model="item.yearOptionsId"
+                                                                       ng-options="item.optionId as item.name for item in model.yearListTwo"
+                                                                       style="width:142px">
+                            <option value="">请选择年度</option>
+                        </select></p>
+                        <p class="price"><span class="p-ico c5"></span>¥{{item.dealPrice}}</p>
+                    </div>
+                    <div class="op clear"><a href="javascript:void(0)"
+                                             ng-click="events.buyNowTwo(item)"
+                                             class="btn-normal mr10"><span class="p-ico bug-ico"></span>购买</a
+                    ><a href="javascript:void(0)"
+                        ng-click="item.showTwo=false"
+                        class="txt-green">取消</a>
+                    </div>
+                </div>
+                <div class="mask-bg"></div>
+            </div>
+        </li>
+
+    </ul>
+
+    <div pagination
+         ng-change="events.getCourseList()"
+         ng-model="model.currentPage"
+         total-items="model.total"
+         items-per-page="model.itemsPerPage"
+         max-size="model.maxSize"
+         previous-text="上一页"
+         next-text="下一页"></div>
+</div>
+
+<div class="p-wrap-full mb20" ng-if="model.courseList.length<=0">
+    <div class="m-no-data tc">
+        <img src="kccs/kccsv2/images/no-data.png" alt="空数据">
+        <p class="txt">当前分类下还没有数据哦</p>
+    </div>
+</div>
+
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="kccs/kccsv2/images/loading1.gif"/>
+</div>

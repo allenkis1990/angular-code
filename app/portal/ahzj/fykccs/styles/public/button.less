@@ -1,0 +1,79 @@
+@import "variables";
+/**********  button  ***************/
+
+button {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+
+  &:focus {
+    border: none;
+  }
+}
+
+.btn-normal {
+  .btn-size(80px, 30px, 14px);
+  .btn-style(@base, #fff);
+  &:focus {
+    color: #fff;
+  }
+}
+
+.btn-r {
+  .btn-size(80px, 30px, 14px);
+  .btn-style(@important, #fff);
+}
+
+.btn-g {
+  .btn-size(80px, 30px, 14px);
+  .btn-style(#aaa, #fff);
+}
+
+.btn-m {
+  .btn-size(145px, 40px, 16px);
+  .btn-style(@base, #fff);
+}
+
+.btn-s {
+  .btn-size(65px, 30px, 14px);
+  .btn-style(@base, #fff);
+}
+
+.btn-gs {
+  .btn-size(65px, 30px, 14px);
+  .btn-style(#aaa, #fff);
+}
+
+.btn-w {
+  .btn-size(auto, 28px, 14px);
+  .btn-style(#fff, @base);
+  border: 1px solid @base;
+  padding: 0 6px;
+}
+
+.ui-btn {
+  &:disabled {
+    background-color: #bbb;
+    color: #666;
+    border: 0;
+    cursor: no-drop;
+  }
+}
+
+a.btn-b-b {
+  color: #fff;
+  background: @base;
+  width: 150px;
+  text-align: center;
+  height: 38px;
+  line-height: 38px;
+  display: inline-block;
+
+  &:hover {
+    color: #fff;
+    background: #a90316;
+  }
+}

@@ -1,0 +1,47 @@
+<div class="wrap clear">
+    <div class="dialog w-textarea">
+        <div class="dialog-body mt30" style="padding: 15px;margin-top: 5px;">
+            <div class="dialog-tit">
+                选择角色<a href="javascript:void(0)" ng-click="events.cancelWindow($event);" class="ico ico-close"></a>
+            </div>
+            <div class="dialog-cont">
+
+                <table class="table tablezp mt-1">
+                    <thead>
+                    <tr>
+                        <th width="35">No</th>
+                        <th width="120">角色名称</th>
+                        <th>角色说明</th>
+                        <th width="160">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="role in model.allRoleList">
+                        <td ng-bind="$index+1"></td>
+                        <td ng-bind="role.name"></td>
+                        <td ng-bind="role.description"></td>
+                        <td>
+                            <a href="javascript:void(0)" ng-show="events.checked(role.roleId,true)"
+                               has-permission="administratorManage/editchooseRole"
+                               ng-click="events.checkQuestlibrary(role.roleId)" class="table-btn">选择</a>
+                            <a href="javascript:void(0)" ng-show="events.checked(role.roleId,false)"
+                               ng-click="events.cancleCheckQuestlibrary(role.roleId)" class="table-btn">取消选择</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="btn-center">
+                    <a href="javascript:void(0)" class="btn btn-r" ng-show="!noData"
+                       has-permission="administratorManage/cacelEditchooseRole"
+                       ng-click="events.confirmSelectRoleList($event);">确定</a>
+                    <a href="#" href="javascript:void(0)" ng-show="!noData" class="btn btn-g ml10"
+                       has-permission="administratorManage/cacelEditchooseRole" ng-click="events.cancelWindow($event);">取消</a>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

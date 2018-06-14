@@ -1,0 +1,638 @@
+<!--<div class="p-wrap-full pos-nav  clear"><a href="javascript:void(0)"
+                                           ng-click="$state.go('states.accountant.onTraining')"><i
+        class="p-ico return-ico"></i>返回继续教育</a></div>-->
+
+
+<!--<div class="p-wrap-full clear mb20">
+    <div class="w880  fl">
+        <div class="m-course-detail white-bg p10 mb10">
+            <div class="course-detail-hd rel clear">
+                <img class="buy-seal"
+                     ng-if="model.detailInfo.buy"
+                     src="ahzj/fykccs/images/buy-seal.png" alt=" ">
+                <div class="course-img fl"><img ng-src="{{model.detailInfo.photoPath}}" alt=" "></div>
+                <div class="course-info-block fr">
+                    <div class="course-name" title="{{model.detailInfo.saleTitle}}">{{model.detailInfo.shortTitle}}
+                        &lt;!&ndash;<a href="#" class="p-ico ico-share"></a>&ndash;&gt;</div>
+                    <div class="course-info">
+                        <p><span class="w"> 学时： {{model.detailInfo.credit}}学时</span><span class="w"
+                                                                                          ng-if="model.detailInfo.teacher"> 教师： {{model.detailInfo.teacher}}</span>
+                        </p>
+                        <div hb-skuview-directive
+                             templateurl="ahzj/fykccs/templates/common/sku-goodsDetail-view.html">
+                        </div>
+                        <p>价格：<b class="t-r fs18">¥{{model.detailInfo.labelPrice}}</b></p>
+                    </div>
+                    <div class="course-op clear"
+                    >
+                        <button class="btn-dis"
+                                ng-disabled="shoppingSubmitAble"
+                                ng-class="{'lwh-disabled':shoppingSubmitAble}"
+                                ng-click="events.putIntoShoppingCart()"
+                        ><span class="p-ico addshop-ico"></span>加入购物车
+                        </button
+                        >
+                        <button class="btn-normal"
+                                ng-click="events.buyNow()"
+                                ng-disabled="submitBuy"
+                                ng-class="{'lwh-disabled':submitBuy}"><span class="p-ico bug-ico"></span>立即购买
+                        </button>
+                    </div>
+                </div>
+                <div class="btn-block" ng-if="model.isListen">
+                    <a href="javascript:void(0)"
+                       ng-click="events.openFirstListenWindow()"
+                       class="ui-btn"><span class="p-ico play-ico"></span>点击播放试听</a>
+                </div>
+            </div>
+        </div>
+        <div class="m-course-detail white-bg clear">
+            <div class="course-detail-bd">
+                <div class="block-tit rel">
+                    <div class="tab-tit">
+                        <a href="javascript:void(0)"
+                           ng-click="events.tabTab('ml')"
+                           ng-class="{'current':model.tabShow==='ml'}">课程目录</a>
+                        <a href="javascript:void(0)"
+                           ng-if="$stateParams.goodsType==='goods'"
+                           ng-class="{'current':model.tabShow==='jj'}"
+                           ng-click="events.tabTab('jj')">课程简介</a>
+                    </div>
+                </div>
+
+
+                <div class="clear" ng-if="model.tabShow==='ml'">
+                    <ul class="m-course-ml" ng-if="$stateParams.goodsType==='goods'">
+                        <li ng-init="index=$index" ng-repeat="item in model.detailInfo.course.courseOutlineDtos">
+                            <div class="course-ml-tit to"><span class="p-ico ico-ml"></span><span class="mr10">第{{$index+1}}章</span>{{item.name}}
+                                <span ng-bind="item.timeLength" class="fr"></span></div>
+                            <div class="sub-course-ml-block">
+                                <ul class="sub-course-ml">
+                                    &lt;!&ndash;learn-ing可以试听   learn-lock 不可试听&ndash;&gt;
+                                    <li ng-repeat="subItem in item.subCourseOutlines"
+                                        ng-init="subIndex=$index"
+                                        ng-class="{'learn-ing':subItem.customeStatus===1,'learn-lock':subItem.customeStatus===0}">
+                                        <a href="javascript:void(0)"
+                                           ng-click="events.openListenWindow(item.id,subItem.cweId,subItem.customeStatus)"><span
+                                                href="#" class="p-ico ico-play"></span><span class="ml10 w to">{{index+1}}-{{subIndex+1}} {{subItem.name}}</span><span
+                                                class="p-ico openeye-ico"></span>
+                                            <span ng-bind="subItem.timeLength" class="fr"></span></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
+
+                    <div ng-if="$stateParams.goodsType==='trainClass'" class="lwh-trainClass-detail">
+                        <div class="m-screen">
+                            <div class="screen-style">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.chosePackage(item)"
+                                   ng-class="{'current':model.currentPackageId===item.packageId}"
+                                   ng-repeat="item in model.courseBagList"
+                                >【<span class="tag" ng-if="item.type===1">必修</span><span class="tag"
+                                                                                         ng-if="item.type===2">选修</span>】
+                                    <span title="{{item.packageName}}" ng-bind="item.shortName"></span></a>
+                            </div>
+                        </div>
+                        <ul class="m-course-ml">
+                            <li>
+                                &lt;!&ndash;
+                                                                <div class="course-ml-tit to"><span class="p-ico ico-ml"></span><span class="mr10 t-b">【必修】</span><span class="mr10">第1章</span>Java初体验 <span href="#" class="fr">4门</span></div>
+                                &ndash;&gt;
+                                <div class="sub-course-ml-block">
+                                    <ul class="sub-course-ml">
+                                        <li ng-class="{'learn-ing':item.listen,'learn-lock':!item.listen}"
+                                            ng-click="events.listenCourse(item)"
+                                            ng-repeat="item in model.courseList">
+                                            <a href="javascript:void(0)"><span class="p-ico ico-play"></span><span
+                                                    class="ml10 w to" ng-bind="item.name"></span><span
+                                                    class="p-ico openeye-ico"></span>
+                                                <span class="fr">学时：<span ng-bind="item.period"></span></span></a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </li>
+
+
+                        </ul>
+
+
+                        <div pagination
+                             ng-change="events.getCourseList()"
+                             ng-model="model.currentPage"
+                             total-items="model.total"
+                             items-per-page="model.itemsPerPage"
+                             max-size="model.maxSize"
+                             previous-text="上一页"
+                             next-text="下一页"></div>
+
+                    </div>
+
+
+                </div>
+                <div class="clear" ng-if="model.tabShow==='jj'">
+                    <div class="course-intro" ng-bind="model.detailInfo.courseInfo.abouts">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="w310 fr">
+        &lt;!&ndash;课程超市&ndash;&gt;
+        <div ng-if="$stateParams.goodsType==='goods'">
+            <div class="m-course-detail white-bg mb10">
+                <div class="block-tit"><span class="bor-l">班级报名及学习时间</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico date-ico mt30 fl"></span>
+                    <ul class="fl">
+                        <li>报名日期：<br><span ng-bind="model.detailInfo.registrationTimeBegin"></span> 至 <br/><span
+                                ng-bind="model.detailInfo.registrationTimeEnd?model.detailInfo.registrationTimeEnd:'-'"></span>
+                        </li>
+                        <li class="mt10">培训日期：<br><span ng-bind="model.detailInfo.trainingBeginTime"></span> 至
+                            <br/><span ng-bind="model.detailInfo.trainingEndTime"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="m-course-detail white-bg mb10">
+                <div class="block-tit"><span class="bor-l">课程考核条件</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico condition-ico mt20 fl"></span>
+                    <ul class="fl lh36">
+                        <li ng-class="{'mt16':!model.detailInfo.courseRequire.popupQuestionScore&&!model.detailInfo.courseRequire.practicePaperScore}">
+                            课程进度：<span
+                                ng-bind="model.detailInfo.courseRequire.rateOfProgress===null?'-':model.detailInfo.courseRequire.rateOfProgress+'%'"></span>
+                        </li>
+                        <li ng-if="model.detailInfo.courseRequire.popupQuestionScore">课程练习得分：&gt;=<span
+                                ng-bind="model.detailInfo.courseRequire.popupQuestionScore===null?'-':model.detailInfo.courseRequire.popupQuestionScore+'分'"></span>
+                        </li>
+                        <li ng-if="model.detailInfo.courseRequire.practicePaperScore">课程测验得分：&gt;=<span
+                                ng-bind="model.detailInfo.courseRequire.practicePaperScore===null?'-':model.detailInfo.courseRequire.practicePaperScore+'分'"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        &lt;!&ndash;课程超市&ndash;&gt;
+
+        &lt;!&ndash;培训班&ndash;&gt;
+
+
+        <div ng-if="$stateParams.goodsType==='trainClass'">
+            <div class="m-course-detail white-bg mb10">
+                <div class="block-tit"><span class="bor-l">班级报名及学习时间</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico date-ico mt30 fl"></span>
+                    <ul class="fl">
+                        <li>报名日期：<br><span ng-bind="model.detailInfo.registrationTimeBegin"></span> 至 <br/><span
+                                ng-bind="model.detailInfo.registrationTimeEnd?model.detailInfo.registrationTimeEnd:'-'"></span>
+                        </li>
+                        <li class="mt10">培训日期：<br><span ng-bind="model.detailInfo.trainingBeginTime"></span> 至
+                            <br/><span ng-bind="model.detailInfo.trainingEndTime"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="m-course-detail white-bg mb10">
+                <div class="block-tit"><span class="bor-l">班级考核要求</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico condition-ico mt20 fl"></span>
+                    <ul class="fl lh36">
+                        <li ng-class="{'mt16':!model.detailInfo.classRequire.popupQuestionScore&&!model.detailInfo.classRequire.examScoreScore}">
+                            班级课程进度：<span
+                                ng-bind="model.detailInfo.classRequire.rateOfProgress===null?'-':model.detailInfo.classRequire.rateOfProgress+'%'"></span>
+                        </li>
+                        <li ng-if="model.detailInfo.classRequire.popupQuestionScore">课程练习得分：&gt;=<span
+                                ng-bind="model.detailInfo.classRequire.popupQuestionScore===null?'-':model.detailInfo.classRequire.popupQuestionScore+'分'"></span>
+                        </li>
+                        <li ng-if="model.detailInfo.classRequire.examScoreScore">考试得分：&gt;=<span
+                                ng-bind="model.detailInfo.classRequire.examScoreScore===null?'-':model.detailInfo.classRequire.examScoreScore+'分'"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="m-course-detail white-bg mb10">
+                <div class="block-tit"><span class="bor-l">班级选课要求</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico require-ico mt35 fl"></span>
+                    <ul class="fl lh36">
+                        <li>班级考核要求学时 ≥ <span
+                                ng-bind="model.detailInfo.courseChooseRequire.classTotalPeriod?model.detailInfo.courseChooseRequire.classTotalPeriod:'-'"></span>
+                        </li>
+                        <li>其中必修课总学时 ≥ <span
+                                ng-bind="model.detailInfo.courseChooseRequire.requiredPackageTotalPeriod?model.detailInfo.courseChooseRequire.requiredPackageTotalPeriod:'-'"></span>
+                        </li>
+                        <li ng-if="model.detailInfo.courseChooseRequire.optionalPackageTotalPeriod">其中选修课总学时 ≥ <span
+                                ng-bind="model.detailInfo.courseChooseRequire.optionalPackageTotalPeriod?model.detailInfo.courseChooseRequire.optionalPackageTotalPeriod:'-'"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        &lt;!&ndash;培训班&ndash;&gt;
+
+
+    </div>
+</div>-->
+
+
+<div class="mask-bg"
+     ng-if="model.detailInfo.showTwo===true" style="z-index:999">
+</div>
+<div class="m-dialog"
+     ng-if="model.detailInfo.showTwo===true"
+     style="position:fixed;top:30%;left:40%;z-index:1000">
+    <div class="dialog-box w1">
+        <div class="dialog-hd"><span class="title">请选择继续教育年度</span><a href="javascript:void(0)"
+                                                                      ng-click="model.detailInfo.showTwo=false"
+                                                                      class="p-ico close"></a></div>
+        <div class="dialog-bd">
+            <div class="pt20 pb20"><select class="ui-slt"
+                                           ng-model="model.detailInfo.trainingYearId"
+                                           ng-options="item.optionId as item.name for item in model.yearListTwo"
+                                           style="width:200px">
+            </select>
+            </div>
+        </div>
+        <div class="dialog-ft tc"><a href="javascript:void(0)"
+                                     ng-click="events.buyNowTwo()"
+                                     class="btn-normal btn mr20">立即购买
+        </a><a href="javascript:void(0)"
+               ng-click="model.detailInfo.showTwo=false"
+               class="btn-normal btn btn-g">取消</a></div>
+    </div>
+</div>
+
+<div class="main-wrap  main-wrap-2 mh500">
+    <div class="pt15">
+        <!-- 位置导航 -->
+        <div class="pos-nav pos-nav-2 clear box-shadow">
+            <span class="p-ico"></span>当前位置：<a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span>报班培训
+        </div>
+        <!-- /位置导航 -->
+    </div>
+
+
+    <div class="w1170 margin-auto clear mb50">
+        <div class="w880  fl">
+            <div class="m-course-detail w-bg-c p10 mb15 box-shadow">
+                <div class="course-detail-hd rel clear">
+                    <img class="buy-seal"
+                         ng-if="model.detailInfo.buy"
+                         src="ahzj/fykccs/images/buy-seal.png" alt=" ">
+                    <div class="course-img fl"><img ng-src="{{model.detailInfo.photoPath}}" alt=" "></div>
+                    <div class="course-info-block fr">
+                        <div class="course-name" title="{{model.detailInfo.saleTitle}}">{{model.detailInfo.shortTitle}}
+                            <!--<a href="#" class="p-ico ico-share"></a>--></div>
+                        <div class="course-info">
+                            <p><span class="w"> 学时： {{model.detailInfo.credit}}学时</span><span class="w"
+                                                                                              ng-if="model.detailInfo.teacher"> 教师： {{model.detailInfo.teacher}}</span>
+                            </p>
+                            <div hb-skuview-directive
+                                 templateurl="ahzj/fykccs/templates/common/sku-goodsDetail-view.html">
+                            </div>
+                            <p>价格：<b class="t-r fs18">¥{{model.detailInfo.labelPrice}}</b></p>
+                        </div>
+                        <div class="course-op clear"
+                        >
+                            <button class="btn-dis"
+                                    ng-disabled="shoppingSubmitAble"
+                                    ng-class="{'lwh-disabled':shoppingSubmitAble}"
+                                    ng-click="events.putIntoShoppingCart()"
+                            ><span class="p-ico addshop-ico"></span>加入购物车
+                            </button
+                            >
+                            <button class="btn-normal"
+                                    ng-click="events.buyNow()"
+                                    ng-disabled="submitBuy"
+                                    ng-class="{'lwh-disabled':submitBuy}"><span class="p-ico bug-ico"></span>立即购买
+                            </button>
+                        </div>
+                    </div>
+                    <div class="btn-block" ng-if="model.isListen">
+                        <a href="javascript:void(0)"
+                           ng-click="events.openFirstListenWindow()"
+                           class="btn-b-b">点击播放试听</a>
+                        <!--<a href="javascript:void(0)"
+                           ng-click="events.openFirstListenWindow()"
+                           class="ui-btn"><span class="p-ico play-ico"></span>点击播放试听</a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="m-course-detail w-bg-c box-shadow clear">
+                <div class="course-detail-bd">
+                    <div class="block-tit rel">
+                        <div class="tab-tit">
+                            <a href="javascript:void(0)"
+                               ng-click="events.tabTab('ml')"
+                               ng-class="{'current':model.tabShow==='ml'}">课程目录</a>
+                            <a href="javascript:void(0)"
+                               ng-if="$stateParams.goodsType==='goods'"
+                               ng-class="{'current':model.tabShow==='jj'}"
+                               ng-click="events.tabTab('jj')">课程简介</a>
+                        </div>
+                    </div>
+
+
+                    <div class="clear" ng-if="model.tabShow==='ml'">
+                        <ul class="m-course-ml" ng-if="$stateParams.goodsType==='goods'">
+                            <li ng-init="index=$index" ng-repeat="item in model.detailInfo.course.courseOutlineDtos">
+                                <div class="course-ml-tit to"><span class="p-ico ico-ml"></span><span class="mr10">第{{$index+1}}章</span>{{item.name}}
+                                    <span ng-bind="item.timeLength" class="fr"></span></div>
+                                <div class="sub-course-ml-block">
+                                    <ul class="sub-course-ml">
+                                        <!--learn-ing可以试听   learn-lock 不可试听-->
+                                        <li ng-repeat="subItem in item.subCourseOutlines"
+                                            ng-init="subIndex=$index"
+                                            ng-class="{'learn-ing':subItem.customeStatus===1,'learn-lock':subItem.customeStatus===0}">
+                                            <a href="javascript:void(0)"
+                                               ng-click="events.openListenWindow(item.id,subItem.cweId,subItem.customeStatus)"><span
+                                                    href="#" class="p-ico ico-play"></span><span class="ml10 w to">{{index+1}}-{{subIndex+1}} {{subItem.name}}</span><span
+                                                    class="p-ico openeye-ico"></span>
+                                                <span ng-bind="subItem.timeLength" class="fr"></span></a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+
+
+                        <div ng-if="$stateParams.goodsType==='trainClass'" class="lwh-trainClass-detail">
+                            <div class="m-screen">
+                                <div class="screen-style">
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.chosePackage(item)"
+                                       ng-class="{'current':model.currentPackageId===item.packageId}"
+                                       ng-repeat="item in model.courseBagList"
+                                    >【<span class="tag" ng-if="item.type===1">必修</span><span class="tag"
+                                                                                             ng-if="item.type===2">选修</span>】
+                                        <span title="{{item.packageName}}" ng-bind="item.shortName"></span></a>
+                                </div>
+                            </div>
+                            <ul class="m-course-ml">
+                                <li>
+                                    <!--
+                                                                    <div class="course-ml-tit to"><span class="p-ico ico-ml"></span><span class="mr10 t-b">【必修】</span><span class="mr10">第1章</span>Java初体验 <span href="#" class="fr">4门</span></div>
+                                    -->
+                                    <div class="sub-course-ml-block">
+                                        <ul class="sub-course-ml">
+                                            <li ng-class="{'learn-ing':item.listen,'learn-lock':!item.listen}"
+                                                ng-click="events.listenCourse(item)"
+                                                ng-repeat="item in model.courseList">
+                                                <a href="javascript:void(0)"><span class="p-ico ico-play"></span><span
+                                                        class="ml10 w to" ng-bind="item.name"></span><span
+                                                        class="p-ico openeye-ico"></span>
+                                                    <span class="fr">学时：<span ng-bind="item.period"></span></span></a>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+
+
+                            <div pagination
+                                 ng-change="events.getCourseList()"
+                                 ng-model="model.currentPage"
+                                 total-items="model.total"
+                                 items-per-page="model.itemsPerPage"
+                                 max-size="model.maxSize"
+                                 previous-text="上一页"
+                                 next-text="下一页"></div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="clear" ng-if="model.tabShow==='jj'">
+                        <div class="course-intro" ng-bind="model.detailInfo.course.abouts">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="w310 fr">
+            <!--课程超市-->
+            <div ng-if="$stateParams.goodsType==='goods'">
+                <div class="m-course-detail w-bg-c box-shadow mb10">
+                    <div class="block-tit"><span class="bor-l">班级报名及学习时间</span></div>
+                    <div class="course-test-bd plr20 pt10 pb20 clear">
+                        <span class="p-ico date-ico mt30 fl"></span>
+                        <ul class="fl">
+                            <li>报名日期：<br><span ng-bind="model.detailInfo.registrationTimeBegin"></span> 至 <br/><span
+                                    ng-bind="model.detailInfo.registrationTimeEnd?model.detailInfo.registrationTimeEnd:'-'"></span>
+                            </li>
+                            <li class="mt10">培训日期：<br><span ng-bind="model.detailInfo.trainingBeginTime"></span> 至
+                                <br/><span ng-bind="model.detailInfo.trainingEndTime"></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="m-course-detail w-bg-c box-shadow mb10">
+                    <div class="block-tit"><span class="bor-l">课程考核条件</span></div>
+                    <div class="course-test-bd plr20 pt10 pb20 clear">
+                        <span class="p-ico condition-ico mt20 fl"></span>
+                        <ul class="fl lh36">
+                            <li ng-class="{'mt16':!model.detailInfo.courseRequire.popupQuestionScore&&!model.detailInfo.courseRequire.practicePaperScore}">
+                                课程进度：<span
+                                    ng-bind="model.detailInfo.courseRequire.rateOfProgress===null?'-':model.detailInfo.courseRequire.rateOfProgress+'%'"></span>
+                            </li>
+                            <li ng-if="model.detailInfo.courseRequire.popupQuestionScore">课程练习得分：&gt;=<span
+                                    ng-bind="model.detailInfo.courseRequire.popupQuestionScore===null?'-':model.detailInfo.courseRequire.popupQuestionScore+'分'"></span>
+                            </li>
+                            <li ng-if="model.detailInfo.courseRequire.practicePaperScore">课程测验得分：&gt;=<span
+                                    ng-bind="model.detailInfo.courseRequire.practicePaperScore===null?'-':model.detailInfo.courseRequire.practicePaperScore+'分'"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--课程超市-->
+
+            <!--培训班-->
+
+
+            <div ng-if="$stateParams.goodsType==='trainClass'">
+                <div class="m-course-detail w-bg-c box-shadow mb10">
+                    <div class="block-tit"><span class="bor-l">班级报名及学习时间</span></div>
+                    <div class="course-test-bd plr20 pt10 pb20 clear">
+                        <span class="p-ico date-ico mt30 fl"></span>
+                        <ul class="fl">
+                            <li>报名日期：<br><span ng-bind="model.detailInfo.registrationTimeBegin"></span> 至 <br/><span
+                                    ng-bind="model.detailInfo.registrationTimeEnd?model.detailInfo.registrationTimeEnd:'-'"></span>
+                            </li>
+                            <li class="mt10">培训日期：<br><span ng-bind="model.detailInfo.trainingBeginTime"></span> 至
+                                <br/><span ng-bind="model.detailInfo.trainingEndTime"></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="m-course-detail w-bg-c box-shadow mb10">
+                    <div class="block-tit"><span class="bor-l">班级考核要求</span></div>
+                    <div class="course-test-bd plr20 pt10 pb20 clear">
+                        <span class="p-ico condition-ico mt20 fl"></span>
+                        <ul class="fl lh36">
+                            <li ng-class="{'mt16':!model.detailInfo.classRequire.popupQuestionScore&&!model.detailInfo.classRequire.examScoreScore}">
+                                班级课程进度：<span
+                                    ng-bind="model.detailInfo.classRequire.rateOfProgress===null?'-':model.detailInfo.classRequire.rateOfProgress+'%'"></span>
+                            </li>
+                            <li ng-if="model.detailInfo.classRequire.popupQuestionScore">课程练习得分：&gt;=<span
+                                    ng-bind="model.detailInfo.classRequire.popupQuestionScore===null?'-':model.detailInfo.classRequire.popupQuestionScore+'分'"></span>
+                            </li>
+                            <li ng-if="model.detailInfo.classRequire.examScoreScore">考试得分：&gt;=<span
+                                    ng-bind="model.detailInfo.classRequire.examScoreScore===null?'-':model.detailInfo.classRequire.examScoreScore+'分'"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="m-course-detail w-bg-c box-shadow mb10">
+                    <div class="block-tit"><span class="bor-l">班级选课要求</span></div>
+                    <div class="course-test-bd plr20 pt10 pb20 clear">
+                        <span class="p-ico require-ico mt35 fl"></span>
+                        <ul class="fl lh36">
+                            <li>班级考核要求学时 ≥ <span
+                                    ng-bind="model.detailInfo.courseChooseRequire.classTotalPeriod?model.detailInfo.courseChooseRequire.classTotalPeriod:'-'"></span>
+                            </li>
+                            <li>其中必修课总学时 ≥ <span
+                                    ng-bind="model.detailInfo.courseChooseRequire.requiredPackageTotalPeriod?model.detailInfo.courseChooseRequire.requiredPackageTotalPeriod:'-'"></span>
+                            </li>
+                            <li ng-if="model.detailInfo.courseChooseRequire.optionalPackageTotalPeriod">其中选修课总学时 ≥ <span
+                                    ng-bind="model.detailInfo.courseChooseRequire.optionalPackageTotalPeriod?model.detailInfo.courseChooseRequire.optionalPackageTotalPeriod:'-'"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--培训班-->
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <!--<div class="w1170 margin-auto clear mb50">
+        <div class="w880  fl ">
+            <div class="m-course-detail w-bg-c p10 mb15 box-shadow">
+                <div class="course-detail-hd rel clear">
+                    <img class="buy-seal" src="../fykccs/images/buy-seal.png" alt=" ">
+                    <div class="course-img fl"><img src="../fykccs/images/course-pic-03.jpg" alt=" "></div>
+                    <div class="course-info-block fr">
+                        <div class="course-name to">劳动关系协调员基础知识劳动关系协调员基础知识劳动关系协调员基础知识</div>
+                        <div class="course-info">
+                            <p><span class="w"> 学时： 10学时</span><span class="w"> 继续教育年度：2016</span></p>
+                            <p><span class="w"> 科目： 专业课</span><span class="w"> 专业： 会记类</span></p>
+                            <p>价格：<b class="t-r fs18">¥75.00</b></p>
+                        </div>
+                        <div class="course-op clear"><a href="#" class="btn-dis"><span class="p-ico addshop-ico"></span>加入购物车</a><a href="#" class="btn-normal"><span class="p-ico bug-ico"></span>立即购买</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-course-detail w-bg-c box-shadow clear">
+                <div class="course-detail-bd">
+                    <div class="block-tit rel">
+                        <div class="tab-tit ml30">
+                            <a href="#" class="current">课程目录</a>
+                        </div>
+                    </div>
+                    <div class="clear">
+                        <ul class="m-course-ml">
+                            <li>
+                                <div class="course-ml-tit to"><span class="p-ico ico-ml"></span><span class="mr10 t-b">【必修】</span><span class="mr10">第1章</span>Java初体验 <span href="#" class="fr">4门</span></div>
+                                <div class="sub-course-ml-block">
+                                    <ul class="sub-course-ml">
+                                        <li class="learn-ing">
+                                            <a href="#"><span href="#" class="p-ico ico-play"></span><span class="ml10 w to">1-1 Java简介</span><span class="p-ico openeye-ico"></span>
+                                                <span href="#" class="fr">学时：3</span></a>
+                                        </li>
+                                        <li class="learn-ing">
+                                            <a href="#"><span href="#" class="p-ico ico-play"></span><span class="ml10 w to">1-1 Java简介</span><span class="p-ico openeye-ico"></span>
+                                                <span href="#" class="fr">学时：3</span></a>
+                                        </li>
+                                        <li class="learn-lock">
+                                            <span href="#" class="p-ico ico-play"></span><span class="ml10 w to">1-1 Java简介</span><span class="p-ico openeye-ico"></span>
+                                            <span href="#" class="fr">学时：3</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="course-ml-tit to"><span class="p-ico ico-ml"></span><span class="mr10 t-b">【选修】</span><span class="mr10">第2章</span>Java初体验 <span href="#" class="fr">4门</span></div>
+                                <div class="sub-course-ml-block">
+                                    <ul class="sub-course-ml">
+                                        <li class="learn-lock">
+                                            <span href="#" class="p-ico ico-play"></span><span class="ml10 w to">1-1 Java简介</span><span class="p-ico openeye-ico"></span>
+                                            <span href="#" class="fr">学时：3</span>
+                                        </li>
+                                        <li class="learn-lock">
+                                            <span href="#" class="p-ico ico-play"></span><span class="ml10 w to">1-1 Java简介</span><span class="p-ico openeye-ico"></span>
+                                            <span href="#" class="fr">学时：3</span>
+                                        </li>
+                                        <li class="learn-lock">
+                                            <span href="#" class="p-ico ico-play"></span><span class="ml10 w to">1-1 Java简介</span><span class="p-ico openeye-ico"></span>
+                                            <span href="#" class="fr">学时：3</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="w310 fr ">
+            <div class="m-course-detail w-bg-c box-shadow  mb15">
+                <div class="block-tit"><span class="bor-l">班级报名及学习时间</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico date-ico mt30 fl"></span>
+                    <ul class="fl">
+                        <li>报名日期：<br>2017-10-10 至 2018-10-10</li>
+                        <li class="mt10">学习时间：<br>2017-10-10 至 2018-10-10</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-course-detail w-bg-c box-shadow  mb15">
+                <div class="block-tit"><span class="bor-l">课程考核条件</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico condition-ico mt20 fl"></span>
+                    <ul class="fl lh36">
+                        <li>课程进度 ≥ 100%</li>
+                        <li>课程测验 ≥ 80分</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-course-detail w-bg-c box-shadow  mb15">
+                <div class="block-tit"><span class="bor-l">班级选课要求</span></div>
+                <div class="course-test-bd plr20 pt10 pb20 clear">
+                    <span class="p-ico require-ico mt35 fl"></span>
+                    <ul class="fl lh36">
+                        <li>班级考核要求学时 ≥ 35</li>
+                        <li>其中必修课总学时 ≥ 15</li>
+                        <li>其中选修课总学时 ≥ 15</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>

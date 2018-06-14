@@ -1,0 +1,544 @@
+<div class="lwhLoading" ng-if="model.imgLoding===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>
+
+<div click-element show-model="model.changeClass"></div>
+
+<!-- 位置导航 -->
+<!--<div class="p-wrap-full pos-nav m-content">
+    <a ui-sref="states.home" class="btn-return"><span class="p-ico"></span>返回</a>
+    <span class="p-ico"></span>
+    <span class="st"><span ng-bind="model.myRelClass.trainingYearCredit"></span>学时</span>
+    <span class="name to" ng-bind="model.myRelClass.className"></span>
+    <div class="change-class fr">
+        <a href="javascript:void (0);" class="btn-normal" ng-click="events.changeClassList($event)">切换班级<span
+                class="p-ico"></span></a>
+        <div class="hover-block" ng-if="model.changeClass&&model.changeClassInfo.length>0">
+            <ul class="class-more">
+                <li ng-click="events.changeClassEvent($event,item)" ng-repeat="item in model.changeClassInfo">
+                    <a href="javascript:void (0);" ng-class="{'wch-grey-text':item.createType === 4}"
+                       ng-bind="item.className"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>-->
+<div class="p-wrap-full m-return-block">
+    <a ui-sref="states.myStudy.trainClass"><span class="p-ico"></span>返回我的培训班列表</a>
+    <span class="st"><span ng-bind="model.myRelClass.trainingYearCredit"></span>学时</span>
+    <span class="name to" ng-bind="model.myRelClass.className"></span>
+</div>
+
+<!-- /位置导航 -->
+<div class="p-wrap-full content-bd-1 clear" ng-click="model.changeClass = false">
+    <div class="content-tit clear">
+        培训进度
+        <!---- 有更改时添加 new ---->
+        <a class="fr intro" ng-click="events.dialogRequirements($event)">
+            本班选课及考核要求<span class="p-ico qus"></span>
+        </a>
+    </div>
+    <div class="training-date clear lwhHasPop">
+
+        <ul ng-if="model.jkIsOk" class="date-bd fl" jquery-knob value="mapValue" num="model.getClassNum"
+            needhoure="model.myRelClass.needSelectedHour">
+            <!-- 进度为100%时，添加full -->
+            <li ng-class="{'full':model.myRelClass.courseLearningSchedule === 100}">
+                <div class="date-cont">
+                    <div class="date-info" style="position: absolute; z-index: 1">
+
+                        <p class="fs16 mt40">已学<span class="num"
+                                                     ng-bind="model.myRelClass.courseLearningSchedule"></span>%</p>
+                        <p class="">已学 <span ng-bind="model.myRelClass.haveLearnedHour"></span>学时</p>
+
+                    </div>
+                    <input class="knob">
+                </div>
+                <div class="hover-block" style="z-index: 10">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="hd">已学 <span ng-bind="model.myRelClass.courseLearningSchedule"></span>% | 已选 <span
+                                ng-bind="model.myRelClass.haveSelectedHour"></span> 学时</p>
+                        <p class="tl mt20">学习进度：<br>已学 <span ng-bind="model.myRelClass.courseLearningSchedule"></span>%
+                            | 需学 100%</p>
+                        <p class="tl mt10">选课要求：<br>已选 <span ng-bind="model.myRelClass.haveSelectedHour"></span> 学时 | 需选
+                            <span ng-bind="model.myRelClass.needSelectedHour"></span> 学时</p>
+                    </div>
+                </div>
+                <p class="name">班级课程</p>
+            </li>
+
+            <li ng-show="model.hasExamAssess"
+                ng-class="{'full':model.myRelClass.paperGetScore>=model.myRelClass.trainingPassScore}">
+                <div class="date-cont">
+                    <div class="date-info" style="position:absolute;z-index:1;">
+                        <p class="fs16 mt25">已得<span class="num" ng-bind="model.myRelClass.paperGetScore"></span>分</p>
+                        <p class="mt10">历史最高分</p>
+                        <p class="">已答 <span ng-bind="model.myRelClass.paperHaveAnswerTime"></span> 次</p>
+                    </div>
+
+                    <input class="knob">
+                </div>
+                <p class="name">考试</p>
+                <!-- 不可考试 -->
+                <!-- <div class="hover-block" ng-if="model.myRelClass.isAllowExam===false" style="z-index: 10">
+                     <div class="hover-bg"></div>
+                     <div class="hover-bd">
+                         <p class="hd">课程进度达100%后才可考试</p>
+                         <p class="mt50">请先完成课程进度</p>
+                     </div>
+                 </div>-->
+                <!-- 已考试 -->
+                <div class="hover-block" style="z-index: 10">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd"
+                         ng-if="(model.myRelClass.courseLearningSchedule>=model.myRelClass.courseLearningRequireSchedule) && model.myRelClass.paperHaveAnswerTime>0">
+                        <p class="hd">可答 <span
+                                ng-bind="model.myRelClass.paperCanAnswerTime===-1?'无限':model.myRelClass.paperCanAnswerTime"></span>
+                            次 | 已答 <span
+                                    ng-bind="model.myRelClass.paperHaveAnswerTime"></span> 次</p>
+                        <p class="mt50">历史最高得<span class="num ml15" ng-bind="model.myRelClass.paperGetScore"></span>分
+                        </p>
+                        <p ng-if="model.hasPopQuestionAssess">考试历史最高分<span
+                                ng-bind="model.myRelClass.paperOriginalGetScore"></span>分，其中考试成绩考核占比<span
+                                ng-bind="model.myRelClass.paperScorePercent*100"></span>%，考核历史最高得分<span
+                                ng-bind="model.myRelClass.paperGetScore"></span>分</p>
+                    </div>
+
+                    <div class="hover-bd"
+                         ng-if="(model.myRelClass.courseLearningSchedule>=model.myRelClass.courseLearningRequireSchedule)&&model.myRelClass.paperHaveAnswerTime<=0">
+                        <p class="hd">可答 <span
+                                ng-bind="model.myRelClass.paperCanAnswerTime===-1?'无限':model.myRelClass.paperCanAnswerTime"></span>
+                            次 | 已答 <span
+                                    ng-bind="model.myRelClass.paperHaveAnswerTime"></span> 次</p>
+                        <p class="mt50">历史最高得<span class="num ml15" ng-bind="model.myRelClass.paperGetScore"></span>分
+                        </p>
+                    </div>
+
+                    <div class="hover-bd"
+                         ng-if="model.myRelClass.courseLearningSchedule<model.myRelClass.courseLearningRequireSchedule">
+                        <p style="margin-top:30px;">考试前置条件</p>
+                        <p style="padding-top:40px;">班级考核要求的学时课程进度达<span
+                                ng-bind="model.myRelClass.courseLearningRequireSchedule"></span>%后才能考试，请先完成班级课程进度</p>
+                    </div>
+
+                </div>
+            </li>
+
+
+            <!--课程练习-->
+            <li ng-show="model.hasPopQuestionAssess"
+                ng-class="{'full':model.myRelClass.paperGetScore>=model.myRelClass.trainingPassScore}">
+                <div class="date-cont">
+                    <div class="date-info" style="position:absolute;z-index:1;">
+                        <p class="fs16 mt25">已答<span class="num"
+                                                     ng-bind="model.myRelClass.popAnsweredQuestionNum"></span>题</p>
+                        <p>需答<span class="num" ng-bind="model.myRelClass.popTotalQuestionNum"></span>题</p>
+                        <p class="">已得 <span ng-bind="model.myRelClass.popQuestionGetScore"></span> 分</p>
+                    </div>
+
+                    <input class="knob">
+                </div>
+                <p class="name">课程练习</p>
+                <!-- 不可考试 -->
+                <!-- <div class="hover-block" ng-if="model.myRelClass.isAllowExam===false" style="z-index: 10">
+                     <div class="hover-bg"></div>
+                     <div class="hover-bd">
+                         <p class="hd">课程进度达100%后才可考试</p>
+                         <p class="mt50">请先完成课程进度</p>
+                     </div>
+                 </div>-->
+                <!-- 已考试 -->
+                <div class="hover-block" style="z-index: 10">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="hd">共 <span ng-bind="model.myRelClass.popTotalQuestionNum"></span> 题 | 已答 <span
+                                ng-bind="model.myRelClass.popAnsweredQuestionNum"></span> 题 答对 <span
+                                ng-bind="model.myRelClass.popCorrectQuestionNum"></span></p>
+
+                        <div ng-if="model.myRelClass.courseLearningSchedule>0">
+                            <p class="mt50">得分<span class="num ml15"
+                                                    ng-bind="model.myRelClass.popQuestionGetScore"></span>分</p>
+                            <p>考核分数<span class="num ml15" ng-bind="model.myRelClass.popQuestionRequireScore"></span>分
+                            </p>
+                        </div>
+
+                        <div ng-if="model.myRelClass.courseLearningSchedule<=0">
+                            <p class="mt50">请认真学习课程并完成课程中的练习题</p>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+
+            <li class="bor-r"></li>
+            <!-- 培训结果有三种情况 1未考试：no-score，2已考未及格：no-pass，3考试通过：full -->
+            <li ng-class="{'no-score':model.myRelClass.paperHaveAnswerTime<1 && model.myRelClass.examinationResult === -1,'no-pass':model.myRelClass.paperHaveAnswerTime>=1 && model.myRelClass.examinationResult === -1,'full':model.myRelClass.examinationResult !== -1}">
+                <div class="date-cont">
+                    <div class="date-info di-2" style="position: absolute;z-index: 1">
+                        <span class="p-ico test"></span>
+                        <p class="test-score"
+                           ng-if="model.myRelClass.totalScore"><span class="num" style="font-size: 40px"
+                                                                     ng-bind="model.myRelClass.totalScore"></span>分
+                        </p>
+                        <p class="fs16"
+                           ng-class="{'mt68':!model.myRelClass.totalScore}"
+                           ng-if="model.myRelClass.examinationResult === 1">已通过</p>
+                        <p class="fs16"
+                           ng-class="{'mt68':!model.myRelClass.totalScore}"
+                           ng-if="model.myRelClass.examinationResult !== 1">未通过</p>
+                    </div>
+                    <input class="knob">
+                </div>
+                <p class="name">培训结果</p>
+                <!-- 培训尚未完成 -->
+                <div class="hover-block"
+                     ng-if="model.myRelClass.examinationResult === -1"
+                     style="z-index: 10">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="mt50">培训尚未完成<br>继续努力!</p>
+                    </div>
+                </div>
+                <!-- 培训尚未通过 -->
+                <!--考试次数有限+考试次数不为0+考试没过+整体没过//继续参加考试-->
+                <div class="hover-block" style="z-index: 10"
+                     ng-if="!model.myRelClass.examHasPass&&model.myRelClass.examinationResult === 0 &&model.myRelClass.limitExamCount===true && model.myRelClass.paperHaveAnswerTime<model.myRelClass.paperCanAnswerTime">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="mt50">培训尚未通过</p>
+                        <p class="hd">考试考核成绩：<span ng-bind="model.myRelClass.trainingPassScore"></span>分</p>
+                        <p class="mt50">建议：继续参加考试</p>
+                    </div>
+                </div>
+
+
+                <!--考试次数无限+考试没过+整体没过-->
+                <div class="hover-block"
+                     style="z-index: 10"
+                     ng-if="!model.myRelClass.examHasPass&&model.myRelClass.examinationResult === 0 &&model.myRelClass.limitExamCount===false">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="mt50">培训尚未通过</p>
+                        <p class="hd">考试考核成绩：<span ng-bind="model.myRelClass.trainingPassScore"></span>分</p>
+                        <p class="mt50">建议：继续参加考试</p>
+                    </div>
+                </div>
+
+
+                <!--考试已通过+整体没过-->
+                <div class="hover-block" ng-if="model.myRelClass.examHasPass&&model.myRelClass.examinationResult === 0"
+                     style="z-index: 10">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="mt50">培训尚未通过</p>
+                        <p class="hd">考试考核成绩：<span ng-bind="model.myRelClass.trainingPassScore"></span>分</p>
+                        <p class="mt50"
+                           ng-if="model.classRelearn">
+                            <button type="button"
+                                    ng-click="events.classRelearn()"
+                                    class="ui-btn btn-normal relearnBtn">整班重学
+                            </button>
+                    </div>
+                </div>
+
+
+                <!--考试次数有限+考试次数为0+考试没过+整体没过-->
+                <div class="hover-block" style="z-index: 10"
+                     ng-if="!model.myRelClass.examHasPass&&model.myRelClass.examinationResult === 0 &&model.myRelClass.limitExamCount===true&&model.myRelClass.paperHaveAnswerTime>=model.myRelClass.paperCanAnswerTime ">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="mt50">培训尚未通过</p>
+                        <p class="hd">考试考核成绩：<span ng-bind="model.myRelClass.trainingPassScore"></span>分</p>
+                        <!--<p class="mt50">已无法继续学习</p>-->
+                        <p class="mt50"
+                           ng-if="model.classRelearn">
+                            <button type="button"
+                                    ng-click="events.classRelearn()"
+                                    class="ui-btn btn-normal relearnBtn">整班重学
+                            </button>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 培训已通过 -->
+                <div class="hover-block"
+                     ng-if="model.myRelClass.examinationResult === 1"
+                     style="z-index: 10"
+                     ng-class="{'hide':model.myRelClass.examinationResult !== 1}">
+                    <div class="hover-bg"></div>
+                    <div class="hover-bd">
+                        <p class="hd">培训已通过</p>
+                        <p class="mt40">好棒！<br>您已通过本年度考核</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <!--<div class="intro fr">
+            <div class="intro-txt" style="font-size:13px">
+                说明：<br>本次培训需选满<span class="b" ng-bind="model.myRelClass.needSelectedHour"></span>学时，目前已选<span class="b"
+                                                                                                              ng-bind="model.myRelClass.haveSelectedHour"></span>学时，
+                <span ng-if="model.myRelClass.needSelectedHour > model.myRelClass.haveSelectedHour" class="t-r">还需选<span
+                        class="b"
+                        ng-bind="(model.myRelClass.needSelectedHour - model.myRelClass.haveSelectedHour)"></span>学时</span>
+                <span ng-if="model.myRelClass.needSelectedHour > model.myRelClass.haveSelectedHour">，请继续选课。</span>
+                <span ng-if="model.myRelClass.needSelectedHour <= model.myRelClass.haveSelectedHour">无需继续选课</span>
+            </div>
+            <div class="tc">
+                <input type="button"
+                       ng-disabled="model.myRelClass.needSelectedHour <= model.myRelClass.haveSelectedHour || model.imgLoding"
+                       ng-click="events.goChooseLesson($event)" class="ui-btn btn-normal" value="去选课">
+            </div>
+        </div>-->
+
+        <!--只有必修包 按钮灰态-->
+        <div class="intro fr" ng-if="ruleType===1&&surplusHour<=0">
+            <div class="intro-txt">
+                说明：<br>本次培训需选满<span class="b">b{{model.myRelClass.needSelectedHour}}</span>学时，目前已选<span class="b">b{{model.myRelClass.haveSelectedHour}}</span>学时，无须选课。
+            </div>
+            <div class="tc">
+                <button ng-disabled="true" class="ui-btn btn-normal choseBtnDis">去选课</button>
+            </div>
+        </div>
+
+        <!--非只有必修包 按钮灰态-->
+        <div class="intro fr" ng-if="ruleType!==1&&surplusHour<=0">
+            <div class="intro-txt">
+                说明：<br>本次培训需选满<span class="b">b{{model.myRelClass.needSelectedHour}}</span>学时，累计已选<span class="b">b{{model.myRelClass.haveSelectedHour}}</span>学时，无须继续选课。
+            </div>
+            <div class="tc">
+                <button class="ui-btn btn-normal choseBtnDis"
+                        ng-disabled="true">去选课
+                </button>
+            </div>
+        </div>
+
+        <!--非只有必修包 按钮可点-->
+        <div class="intro fr" ng-if="ruleType!==1&&surplusHour>0">
+            <div class="intro-txt">
+                说明：<br>已选择<span ng-bind="model.myRelClass.haveSelectedHour"></span>学时，还需选<span
+                    ng-bind="surplusHour"></span>学时，请前往对应课程包继续选课。
+            </div>
+            <div class="tc">
+                <button class="ui-btn btn-normal"
+                        ng-click="events.goChooseLesson($event)">去选课
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="p-wrap-full content-bd-1 p0 mt-1" ng-click="model.changeClass = false">
+    <div class="content-tit tab-tit">
+        <a href="javaScript:void(0);"
+           ng-class="{'current':model.currentTab ==='trainClass'}"
+           ng-click="model.currentTab='trainClass'">培训班课程</a>
+
+        <a href="javaScript:void(0);"
+           ng-if="model.hasPractice"
+           ng-class="{'current':model.currentTab ==='practice'}"
+           ng-click="events.toPractice()">练习</a>
+
+        <a href="javaScript:void(0);"
+           ng-if="model.hasExamAssess"
+           ng-class="{'current':model.currentTab ==='exam'}"
+           ng-click="events.testPaper($event, 'exam')">考试</a>
+        <a ng-click="events.toIntrest()"
+           ng-if="model.hasInterestCourse || model.hasInterestCourseCount"
+           class="ui-btn btn-o fr">兴趣课程</a>
+
+
+    </div>
+    <!-- 培训班课程 -->
+    <div class="tab-bd pb20" ng-if="model.currentTab ==='trainClass'">
+        <div class="sub-tab-tit mt5">
+            <a href="javascript:void (0);"
+               ng-class="{'current':!model.ifLearned}"
+               ng-click="events.chooseLearned(1)">正在学习</a>
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.ifLearned}"
+               ng-click="events.chooseLearned(2)">已经学完</a>
+        </div>
+        <!-- 正在学习 -->
+        <div class="p10" ng-if="!model.ifLearned">
+            <div class="ml20 mr20 mt10" ng-if="model.lessonIsLearning.length === 0">
+                <div class="m-no-data tc">
+                    <img src="@systemUrl@/images/null-data.png" alt="空数据">
+                    <p class="txt" ng-if="model.myRelClass.courseLearningSchedule !== 100 ">暂无在学课程，请选择课程<!--<br>快去<a class="t-b"
+                                                                                                            ng-click="events.goChooseLesson($event)">选课</a>吧-->
+                    </p>
+                    <p class="txt" ng-if="model.myRelClass.courseLearningSchedule === 100">所选课程已学完</p>
+                </div>
+            </div>
+            <table class="ui-table table-class" ng-if="model.lessonIsLearning.length !== 0">
+                <thead>
+                <tr>
+                    <th width="30">NO.</th>
+                    <th class="tl">课程名称</th>
+                    <th width="200"
+                        ng-if="model.hasPopQuestionAssess"
+                        class="tl">课程练习答题结果
+                    </th>
+                    <th width='60'>类型</th>
+                    <th width="50">学时</th>
+                    <th width="200">学习进度</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.lessonIsLearning">
+                    <td ng-bind="($index+1)"></td>
+                    <td class="tl" title="b{{item.courseName}}" ng-bind="item.courseNameShort"></td>
+                    <td class="tl" ng-if="model.hasPopQuestionAssess">对：<span
+                            ng-bind="item.correctAnswer"></span>，错：<span ng-bind="item.wrongAnswer"></span>，<span
+                            class="txt-r">未答：<span ng-bind="item.notAnswer"></span></span></td>
+                    <td><span ng-if="item.type===1">必修</span><span ng-if="item.type===2">选修</span></td>
+                    <td ng-bind="item.period"></td>
+                    <td>
+                        <div class="process"><span class="current" ng-style="{width:item.schedule+'%'}"></span><span
+                                class="process-num" ng-bind="item.schedule+'%'"></span></div>
+                    </td>
+                    <td class="op"><a href="javascript:void (0);"
+                                      style="margin:0"
+                                      ng-click="events.tryListen($event,item.courseId)">播放</a>
+                        <button style="margin:0"
+                                class="op-btn-green"
+                                ng-if="model.courseRelearn"
+                                ng-disabled="!item.courseRelearn"
+                                ng-class="{'disabled':!item.courseRelearn}"
+                                ng-click="events.reLearn($event,item)">重学
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /正在学习 -->
+
+        <!-- 已经学完 -->
+        <div class="p10" ng-if="model.ifLearned">
+            <div class="ml20 mr20 mt10" ng-if="model.lessonIsLearned.length === 0">
+                <div class="m-no-data tc">
+                    <img src="@systemUrl@/images/null-data.png" alt="空数据">
+                    <p class="txt">暂无已学完课程，请先在“正在学”页面学习课程</p>
+                </div>
+            </div>
+            <table class="ui-table table-class" ng-if="model.lessonIsLearned.length !== 0">
+                <thead>
+                <tr>
+                    <th width="30">NO.</th>
+                    <th class="tl">课程名称</th>
+                    <th width="200"
+                        ng-if="model.hasPopQuestionAssess"
+                        class="tl">课程练习答题结果
+                    </th>
+                    <th width='60'>类型</th>
+                    <th width="50">学时</th>
+                    <th width="200">学习进度</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.lessonIsLearned">
+                    <td ng-bind="($index+1)"></td>
+                    <td class="tl" title="b{{item.courseName}}" ng-bind="item.courseNameShort"></td>
+                    <td class="tl" ng-if="model.hasPopQuestionAssess">对：<span
+                            ng-bind="item.correctAnswer"></span>，错：<span ng-bind="item.wrongAnswer"></span>，<span
+                            class="txt-r">未答：<span ng-bind="item.notAnswer"></span></span></td>
+                    <td><span ng-if="item.type===1">必修</span><span ng-if="item.type===2">选修</span></td>
+                    <td ng-bind="item.period"></td>
+                    <td>
+                        <div class="process"><span class="current" ng-style="{width:item.schedule+'%'}"></span><span
+                                class="process-num" ng-bind="item.schedule+'%'"></span></div>
+                    </td>
+                    <td class="op"><a href="javascript:void (0);"
+                                      style="margin:0"
+                                      ng-click="events.tryListen($event,item.courseId)">播放</a>
+                        <button style="margin:0"
+                                class="op-btn-green"
+                                ng-if="model.courseRelearn"
+                                ng-disabled="!item.courseRelearn"
+                                ng-class="{'disabled':!item.courseRelearn}"
+                                ng-click="events.reLearn($event,item)">重学
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /已经学完 -->
+    </div>
+    <!-- /培训班课程 -->
+
+    <!-- 练习 -->
+    <div ng-if="model.currentTab ==='practice'" class="tab-bd pb20">
+        <div class="m-tips mt5">
+            练习次数不限，已答 <span class="t-r" ng-bind="model.donePracticeCount"></span> 题
+        </div>
+        <div class="mt20">
+            <!--<a href="#" class="ui-btn btn-gr test-btn ml20">做练习</a>-->
+            <a href="javascript:void(0)"
+               ng-click="events.goPractice('practice')"
+               class="ui-btn btn-w test-btn ml20">做练习</a>
+            <a href="javascript:void(0)"
+               ng-click="events.goPractice('history')" class="ui-btn btn-w test-btn ml20"
+               ng-bind="'历史练习 ('+ model.donePracticeCount+' )'"></a>
+        </div>
+    </div>
+    <!-- /练习 -->
+
+    <!-- 试卷 -->
+    <div ng-if="model.currentTab ==='exam'" class="tab-bd pb20">
+        <div class="m-tips mt5">
+            试卷共<span ng-bind="model.textPaperInfo.length"></span> 份，可答
+            <span ng-if="model.textPaperInfo[0].limitExamCount===false">无限</span
+            ><span ng-if="model.textPaperInfo[0].limitExamCount===true"
+                   ng-bind="model.textPaperInfo[0].surplusExamCount"></span>次，已答 <span class="t-r"><span
+                ng-bind="model.textPaperInfo[0].userExamCount"></span>次</span>
+        </div>
+        <div class="p10">
+            <table class="ui-table table-class">
+                <thead>
+                <tr>
+                    <th width="30">NO.</th>
+                    <th class="tl">考试名称</th>
+                    <th width="100">考试时长</th>
+                    <th width="120">剩余考试次数</th>
+                    <th width="100">总分</th>
+                    <!--<th width="100">及格分</th>-->
+                    <th width="100">历史最高分</th>
+                    <th width="150">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.textPaperInfo">
+                    <td ng-bind="($index+1)"></td>
+                    <td class="tl" title="b{{item.examRoundName}}" ng-bind="item.examRoundName"></td>
+                    <td><span ng-bind="item.examTimeLength"></span>分钟</td>
+                    <!--限制次数-->
+                    <td class="t-r" ng-if="item.limitExamCount===true" ng-bind="item.surplusExamCount"></td>
+                    <!--不限次-->
+                    <td class="t-r" ng-if="item.limitExamCount===false">无限次</td>
+                    <td ng-bind="item.totalScore"></td>
+                    <!--<td ng-bind="item.qualifiedScore"></td>-->
+                    <td ng-bind="item.score"></td>
+                    <td class="op" ng-if="model.myRelClass.examinationResult !== 1"><a href="javascript:void (0);"
+                                                                                       ng-click="events.goTextHtml($event,item)">进入</a>
+                    </td>
+                    <td class="op" ng-if="model.myRelClass.examinationResult === 1"><a href="javascript:void (0);"
+                                                                                       ng-click="events.goTextHtml($event,item)"
+                                                                                       style="color: grey">进入</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="tc mt20">
+                <button ng-disabled="lookExamSubmit"
+                        ng-click="events.historyExamDialog()"
+                        class="ui-btn btn-auto">查看历史考试记录
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- /试卷 -->
+</div>

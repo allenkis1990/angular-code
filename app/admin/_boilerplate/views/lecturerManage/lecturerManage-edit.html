@@ -1,0 +1,114 @@
+<div class="m-box-3">
+    <div class="pos-nav-box">
+        <div class="pos-nav">
+            <a href="javascript:void(0)" class="ico return" ng-click="events.goAdministratorManage($event)"></a>
+            <a class="aw" href="javascript:void(0)" ng-click="events.goAdministratorManage($event)">教师管理</a>
+            &gt; 修改教师
+        </div>
+    </div>
+    <div class="main-wrap-body">
+        <form name="administratorValidate" novalidate>
+            <div class="column rel">
+                <div class="col-tit">帐号信息</div>
+                <div class="dash-line-1"></div>
+                <ul class="ul-d-form pt20 lh-1">
+                    <li class="clear">
+                        <span class="left-txt fl"><i>*</i>教师姓名：</span>
+                        <input type="text" class="ipt slt-medium" placeholder="请输入教师姓名"
+                               name="name"
+                               ng-model="model.userMessage.name"
+                               required ng-required="true">
+                        <span class="li-prompt" ng-show="administratorValidate.name.$dirty&&administratorValidate.name.$error.required">
+                            <span class="ico ico-prompt"></span>教师姓名不可为空</span>
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl"><i>*</i>帐号：</span>
+                        <span ng-bind="model.userMessage.loginInput"></span>
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl"><i>*</i>性别：</span>
+                        <lable class="mr30"><input type="radio" checked="checked" ng-model="model.userMessage.sex" value="1">男</lable>
+                        <lable><input type="radio" ng-model="model.userMessage.sex" value="2">女</lable>
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl"><i>*</i>手机号：</span>
+                        <input type="text" class="ipt slt-medium" placeholder="请输入11位手机号"
+                               name="phoneNumber"
+                               ng-model="model.userMessage.phoneNumber"
+                               ng-pattern=/^[0-9]{11}$/ >
+                        <span class="li-prompt" ng-show="administratorValidate.phoneNumber.$dirty&&administratorValidate.phoneNumber.$error.pattern">
+                            <span class="ico ico-prompt"></span>请输入11位由数字组成的手机号！</span>
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl">邮箱：</span>
+                        <input type="text" class="ipt slt-medium" placeholder="请输入邮箱"
+                               name="email"
+                               ng-model="model.userMessage.email">
+                        <span class="li-prompt" ng-show="administratorValidate.email.$dirty&&administratorValidate.email.$error.email">
+                            <span class="ico ico-prompt"></span>请输入正确邮箱格式！</span>
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl"><i>*</i>启用状态：</span>
+                        <lable class="mr30"><input type="radio" checked="checked" value="1" ng-model="model.userMessage.status">启用</lable>
+                        <lable><input type="radio" value="2" ng-model="model.userMessage.status">禁用</lable>
+                    </li>
+                </ul>
+                <div class="upload-photo">
+                    <div class="pic"><img src="b{{model.imgSrc}}" alt="选择照片上传"/>
+                        <a href="javascript:void(0)"
+                           style="top:5px;right: 5px;"
+                           class="ico info-pic-up"
+                           ng-click="events.deletePhotoUrl($event)"></a></div>
+                    <div class="op"><a href="javascript:void(0)" class="btn btn-b" ng-click="model.uploadHead = true">上传照片</a></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="col-tit">教师信息</div>
+                <div class="dash-line-1"></div>
+                <ul class="ul-d-form pt20 lh-1">
+                    <li class="clear">
+                        <span class="left-txt fl"><i>*</i>教师简述：</span>
+                        <div class="w-11 fl">
+                            <textarea class="textare wp-m-full fl" placeholder="请填写教师概述"
+                                      name="simpleDescription"
+                                      ng-model="model.userMessage.simpleDescription"
+                                      required ng-required="true"></textarea>
+                        </div>
+                        <span class="li-prompt" ng-show="administratorValidate.simpleDescription.$dirty&&administratorValidate.simpleDescription.$error.required">
+                            <span class="ico ico-prompt"></span>请填写教师概述
+                        </span>
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl">教师详细简介：</span>
+                        <div class="w-11 fl">
+                            <textarea class="textare wp-m-full fl" placeholder="请填写教师简介"
+                                      kendo-editor
+                                      k-options="ui.editor"
+                                      name="remark"
+                                      ng-model="model.userMessage.remark">教师详细简介</textarea>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <div class="bor-t mt30">
+            <div class="mt20 ml150">
+                <a href="javascript:void(0)" class="btn btn-r"
+                   ng-class="{'btn-disable':!administratorValidate.$valid||!model.save}"
+                   has-permission="lecturerManage/editSaveUserRole"
+                   ng-click="events.editAdministrator($event)">保存</a>
+                <a href="javascript:void(0)" class="btn btn-g ml10"
+                   has-permission="lecturerManage/editCancelUserRole"
+                   ng-click="events.cancel($event)">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="model.uploadHead">
+    <div upload-head
+         aspect-ratio="aspectRatio"
+         template-url="@systemUrl@/templates/tpls/tpl-upload-images-img-tpl.html"
+         ng-model="model.uploader"
+         close="model.uploadHead" style="display: none;">
+    </div>
+</div>

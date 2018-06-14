@@ -1,0 +1,98 @@
+<div class="account-tab-bd">
+
+    <div select-orgnizations
+         request-url="/web/front/trainingCertify/findTrainningOrgnizations"
+         ng-show="model.totalArchives.length>0"
+         templateurl="@systemUrl@/views/studyArchives/orgnizations-trainclass.html"
+         unit-id="model.unitId"></div>
+
+    <div class="m-screen" ng-if="model.offerMerge&&model.canSelect">
+        <div class="screen-style screen-style-2 clear">
+            <span class="style-name"><span class="p-ico step-num">1</span>请选择合并打印的证明 <span
+                    class="txt-o">（注：灰色的为不开放打印的）</span></span>
+            <div class="fr">
+                <label class="ui-label "
+                       ng-class="{'checked':(model.archivesAjaxData.length>0&&(model.archivesAjaxData.length===model.totalArchives.length))||(model.archivesAjaxData.length>0&&model.selectAll)}">
+                    <input type="checkbox"
+                           ng-checked="(model.archivesAjaxData.length>0&&(model.archivesAjaxData.length===model.totalArchives.length))||(model.archivesAjaxData.length>0&&model.selectAll)"
+                           ng-click="events.selectArchiveAllOrNone($event)"
+                           class="checkbox">
+                    <a href="javascript:void(0)" class="checkbox-a"></a>
+                    <span class="ipt-txt">全选</span>
+                </label>
+                <a href="javascript:void(0)"
+                   ng-click="events.returnPre()"
+                   class="ui-btn btn-gr btn-big ml20">返回上级</a>
+            </div>
+        </div>
+    </div>
+
+    <ul class="m-course-list clear mt10" ng-if="model.totalArchives.length>0">
+        <li ng-repeat="item in model.totalArchives"
+            ng-class="{'selected':model.canSelect&&item.ischecked}"
+            ng-click="events.selectArchive(item)">
+            <div class="course-bd">
+                <div class="course-img">
+                    <img src="@systemUrl@/images/archives-img.jpg" alt=" ">
+                    <div class="year-label" ng-bind="item.year"></div>
+                </div>
+                <a href="javascript:void(0)" class="course-name" ng-bind="item.name"></a>
+                <div class="course-info clear">
+                    <div class="w1 fl"
+                         style="width:60%"
+                         ng-bind="item.subject"></div>
+                    <div class="fr"><span class="txt-gr" ng-bind="item.credit"></span>学时</div>
+                </div>
+
+                <span ng-if="model.canSelect" class="p-ico select-label"></span>
+
+            </div>
+        </li>
+    </ul>
+    <div pagination
+         ng-if="model.totalArchives.length>0"
+         ng-change="events.getCertifiedList()"
+         ng-model="model.currentPage"
+         total-items="model.total"
+         items-per-page="model.itemsPerPage"
+         max-size="model.maxSize"
+         previous-text="上一页"
+         next-text="下一页"></div>
+    <div class="m-sum-bar m-screen mt10 clear"
+         ng-if="model.totalArchives.length>0"
+         study-archives-nav-fixed>
+
+        <div class="screen-style screen-style-2 fl mt5 ml10" ng-if="model.offerMerge&&model.canSelect"><span
+                class="style-name"><span class="p-ico step-num">2</span>合并打印 <span class="t-b"
+                                                                                   ng-bind="model.archivesAjaxData.length"></span> 份学时证明</span>
+        </div>
+
+        <p ng-if="!model.offerMerge||!model.canSelect" class="fl ml10">共 <span class="t-b"
+                                                                               ng-bind="model.totalArchives.length"></span>
+            份学时证明</p>
+        <div class="fr">
+            <button ng-disabled="submitAble"
+                    ng-if="model.offerMerge"
+                    ng-click="events.mergePrintArchives()"
+                    class="ui-btn btn-gr">
+                合并打印学时证明
+            </button>
+            <button ng-disabled="submitAble"
+                    ng-if="!model.offerMerge"
+                    ng-click="events.printArchives()"
+                    class="ui-btn btn-gr">打印学时证明
+            </button>
+        </div>
+    </div>
+</div>
+
+<!--空数据-->
+<div class="m-no-data tc mh391" ng-if="model.totalArchives.length<=0">
+    <img src="@systemUrl@/images/no-data.png" alt="空数据">
+    <p class="txt">当前分类下还没有数据</p>
+
+</div>
+
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

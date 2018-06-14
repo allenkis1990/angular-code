@@ -1,0 +1,39 @@
+<div class="main-wrap-body">
+    <div class="column mt30">
+        <div class="col-tit">批次缴费</div>
+        <div class="dash-line-2"></div>
+        <div class="block-white mt10">
+            <ul class="ul-d-form mt10">
+                <li>
+                    <span class="left-txt b">缴费批次号</span> b{{model.batchInfo.no}}
+                    <span class="left-txt b">购买人</span>b{{model.batchInfo.buyerName}}
+                    <span class="left-txt b">帐号</span>b{{model.batchInfo.buyerAccount}}
+                </li>
+                <li><span class="left-txt b"></span><a ng-click="events.goOrderManage()"  has-permission="batchDetail/goOrderManage"  class="a-b">购买清单详情</a></li>
+                <li class="bor-dt"><span class="left-txt b">总计费用</span><span class="b fs20 t-r">￥b{{model.batchInfo.totalMoney}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="column mt30">
+        <div class="col-tit">支付方式</div>
+        <div class="dash-line-2"></div>
+        <div class="ml20 mr20">
+            <div class="content-sub-tit mt10"><span>在线支付</span></div>
+            <p class="mt10">您还需支付 <span class="t-r">b{{model.batchInfo.totalMoney}}</span>元 ,请选择支付方式：</p>
+            <ul class="pay-style clear" >
+                <li ng-class="{current:model.payWay.id===item.id}" ng-click="model.payWay.id=item.id" ng-repeat="item in model.payWayList" >
+                    <label class="ui-label">
+                        <label class="ui-label">
+                            <span class="ipt-txt" style="padding-left:10px;"><img ng-src="b{{item.logoPath}}"
+                                                                                  alt=""></span>
+                        </label>
+                    </label>
+                    <span class="p-ico"></span>
+                </li>
+            </ul>
+
+            <a ng-click="events.toPayBatch()" has-permission="goPay/toPayBatch" class="btn btn-b mt20">立即支付</a>
+        </div>
+    </div>
+</div>

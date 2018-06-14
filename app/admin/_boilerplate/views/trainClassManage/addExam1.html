@@ -1,0 +1,52 @@
+<div class="dialog wp-m-full" ng-click="examTypeShow1=false">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择发布考试的试卷<a href="javascript:void(0)"
+                                            ng-click="examTypeShow=false;node.windows.addExam1.close();"
+                                            class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" class="ipt ipt-small"
+                               hb-clear-input
+                               ng-model="model.paperSearch.name"
+                               ng-keyup="events.queryByEnter($event)"
+                               placeholder="请输入试卷名称"/></li>
+                    <li>
+                        <input type="text" name="type" class="ipt ipt-medium"
+                               ng-click="examTypeShow1=!examTypeShow1;events.openExamTree($event)"
+                               placeholder="请选择试卷分类"
+                               ng-model="model.examTypeName">
+                        <div class="hide-block hb-2 mh-1" ng-show="examTypeShow1" ng-click="events.openTree($event)">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getExamTypeInfo(dataItem,$event)">
+                      <label style="width: 100px;"> <span ng-bind="dataItem.name"></span></label>
+                    </span></div>
+                        </div>
+                    </li>
+                    <!--<li>-->
+                    <!--<select class="slt slt-medium" ng-model="model.paperSearch.examRange">-->
+                    <!--<option value="-1">请选择试卷类型</option>-->
+                    <!--<option value="1">考试</option>-->
+                    <!--<option value="2">练习</option>-->
+                    <!--</select>-->
+                    <!--</li>-->
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.paperSearch.configType">
+                            <option value="-1">请选择组卷方式</option>
+                            <option value="1">手动组卷</option>
+                            <option value="4">智能组卷</option>
+                        </select>
+                    </li>
+                    <li><a href="javascript:void(0);" class="btn btn-b" ng-click="events.serachPaper($event)">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-body mt20">
+                <div kendo-grid="node.examGrid" k-options="ui.examGrid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

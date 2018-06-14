@@ -1,0 +1,287 @@
+<div class="p-wrap-full m-return-block">
+    <a href="javascript:void(0)"
+       style="text-decoration: none;"
+       ng-click="$state.go('states.myStudy.goods');"><span class="p-ico"></span>返回我的课程列表</a>
+</div>
+<div class="p-wrap-full clear">
+    <div class="w880 fl">
+        <div class="m-course-detail white-bg p10 mb10">
+            <div class="course-detail-hd rel clear">
+                <div class="course-img fl"><img ng-src="b{{detail.iconPath}}" alt=" "></div>
+                <div class="course-info-block fr">
+                    <!-- <div class="course-name to" >b{{detail.name}}
+                      &lt;!&ndash;   <a href="javascript:void(0)" class="p-ico ico-share"></a>&ndash;&gt;
+                     </div>-->
+                    <div class="course-name" title="b{{detail.name}}"
+                         style="height: 57px;width: 480px;overflow: hidden">
+                        <!--.length>43?(detail.name| limitTo :40 )+'...':detail.name-->
+                        <p>b{{detail.name}}</p>
+
+
+                    </div>
+                    <div class="course-info">
+                        <p>教师：<span ng-repeat="item in detail.teacherNameList"
+                                    ng-bind="item+($last?'':'、')"></span>
+                        </p>
+                        <div hb-skuview-directive
+                             templateurl="@systemUrl@/templates/common/sku-goodsDetail-view.html">
+                        </div>
+                    </div>
+                    <div class="learn-process">
+                        <div class="process-cont">课程进度：
+                            <div class="process">
+                            <span class="current" ng-style="{width: detail.schedule+'%'}">
+
+                            </span>
+                            </div>
+                            <span class="process-num">b{{detail.schedule}}%</span>
+                        </div>
+                        <p class="learn-history" ng-if="detail.lastPlayInfo!==null">
+                            上一次学习到：b{{detail.lastPlayInfo.courseWareName}}
+                        </p>
+                    </div>
+                </div>
+                <div class="btn-block">
+                    <a href="javascript:void(0)" style="text-decoration: none;" class="ui-btn"
+                       ng-click="events.openFirstListenWindow()" ng-if="detail.schedule===0">开始学习</a>
+                    <a href="javascript:void(0)" style="text-decoration: none;" class="ui-btn"
+                       ng-click="events.openFirstListenWindow()" ng-if="detail.schedule>0&&detail.schedule<100">继续学习</a>
+                    <a href="javascript:void(0)" style="text-decoration: none;" class="ui-btn"
+                       ng-click="events.openFirstListenWindow()" ng-if="detail.schedule===100">复习回顾</a>
+                    <!--<a href="javascript:void(0)" style="text-decoration: none;"  class="ui-btn btn-dis hide">.</a>-->
+                </div>
+            </div>
+        </div>
+        <div class="m-course-detail white-bg clear">
+            <div class="course-detail-bd">
+                <div class="block-tit rel">
+                    <div class="tab-tit">
+                        <a href="javascript:void(0)" style="text-decoration: none;border-top:none;"
+                           ng-class="{'current':model.currrnt===1}" ng-click="model.currrnt=1">课程目录</a>
+                        <a href="javascript:void(0)" style="text-decoration: none;border-top:none;"
+                           ng-class="{'current':model.currrnt===2}" ng-click="model.currrnt=2">课程简介</a>
+                    </div>
+                </div>
+                <div class="clear" ng-if="model.currrnt===1">
+                    <ul class="m-course-ml-1">
+                        <li ng-repeat="(x,item) in detail.courseOutlineDtos">
+                            <div class="course-ml-tit to" ng-click="events.hide(item)">
+                                <span class="p-ico ico-ml"></span>
+                                <span class="mr10">第b{{x+1}}章</span>
+                                b{{item.name}}
+                                <a href="javascript:void(0)" class="p-ico "
+                                   ng-class="{'ico-open':item.hide===false ||item.hide===undefined,'ico-close':item.hide===true}"></a>
+
+                            </div>
+                            <div class="sub-course-ml-block" ng-class="{'hide':item.hide===true}">
+                                <!-- ng-class="hide" -->
+                                <ul class="sub-course-ml">
+                                    <li style="margin-bottom:10px;cursor: pointer"
+                                        ng-click="events.openListenWindow(item1.cweId)"
+                                        ng-class="{'learn-ing':item1.schedule>0&&item1.schedule<100,'learn-ed':item1.schedule===100}"
+                                        ng-repeat="(y,item1) in item.subCourseOutlines">
+                                        <span class="p-ico ico-pro"></span>b{{x+1}}-b{{y+1}}<span class="ml10 w to">b{{item1.name}}</span>
+                                        b{{item1.timeLength}}<span class="ml100">b{{item1.schedule}}%</span>
+                                        <a href="javascript:void(0)" class="ml100 p-ico ico-play"></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="clear" ng-if="model.currrnt===2">
+                    <a id="a1" name="a1"></a>
+                    <!-- <div class="block-tit rel">
+                         <h1 class="title-b">课程简介</h1>
+                     </div>-->
+                    <div class="course-intro" ng-bind="detail.abouts">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="w310 m-course-detail fr">
+        <div class="m-course-detail white-bg mb10">
+            <div class="block-tit"><span class="bor-l">课程考核条件</span></div>
+            <div class="course-test-bd plr20 pt10 pb20 clear rel">
+                <span class="p-ico condition-ico"></span>
+                <span class="lh36 display-i">
+                            <span>课程进度：≥<span ng-bind="detail.assessmentStandard.rateOfProgress"></span>%</span><br/>
+                            <span ng-if="detail.assessmentStandard.popupQuestionScore">课程练习得分：≥<span
+                                    ng-bind="detail.assessmentStandard.popupQuestionScore"></span>分</span><br
+                        ng-if="detail.assessmentStandard.popupQuestionScore"/>
+                            <span ng-if="detail.assessmentStandard.examScoreScore">课后测验得分：≥<span
+                                    ng-bind="detail.assessmentStandard.examScoreScore"></span>分</span>
+                        </span>
+
+
+                <span class="p-ico pass-ico" ng-if="detail.assessmentResult"></span>
+            </div>
+        </div>
+        <!--<div class="course-test white-bg mb10" ng-if="RelationInfo.coursePracticeId!==null">
+            <div class="block-tit "><span class="bor-l">课后测验</span></div>
+            <div class="course-test-bd">
+                <span class="course-text-btn sel" ng-if="RelationInfo.assessmentResult===false&&detail.schedule==100&&RelationInfo.coursePracticeRecordId===null">
+                    <button ng-disabled="test===false" ng-click="events.classTest()">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip" style="width: 109px" >
+                        <i class="p-ico"></i>
+                        请进入测验！
+                    </span>
+                    </button>
+                </span>
+                <span  class="course-text-btn mt10 sel"  ng-if="detail.schedule< RelationInfo.assessCourseSchedule&&RelationInfo.practiceConditionSet===true">
+                    <button ng-disabled="test===false" ng-click="events.classTest()">
+                        <span class="p-ico ico-1"></span>课后测验
+                        <span class="ico-tip ico-tip2"><i class="p-ico"></i>课程进度未达到b{{RelationInfo.assessCourseSchedule}}%,无法测验</span>
+                    </button>
+                </span>
+                <span  class="course-text-btn mt10 sel"  ng-if="RelationInfo.practiceConditionSet===false ">
+                    <button ng-disabled="test===false" ng-click="events.classTest()">
+                     <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip" style="width: 109px" >
+                        <i class="p-ico"></i>
+                        请进入测验！
+                    </span>
+                    </button>
+                </span>
+                <span  ng-if="RelationInfo.assessmentResult===false&&detail.schedule>=RelationInfo.assessCourseSchedule&&RelationInfo.coursePracticeRecordId!==null"  class="course-text-btn mt10 sel">
+                    <button ng-disabled="test===false" ng-click="events.classTest()">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip ico-tip2"><i class="p-ico"></i>课后测验未达标，请继续测验！</span>
+                    </button>
+                </span>
+                <span   class="course-text-btn mt10 sel" ng-if="RelationInfo.assessmentResult===true&&detail.schedule>=RelationInfo.assessCourseSchedule" >
+                    <button ng-disabled="test===false" ng-click="events.classTest()">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip" style="width: 109px"><i class="p-ico"></i>课后测验已达标</span>
+                    </button>
+                </span>
+                <span href="javascript:void(0)"  ng-if="RelationInfo.coursePracticeRecordId!==null" class="course-text-btn mt10 sel" style="text-decoration: none;"  ng-click="events.log()" ng-class="{'dis-btn': RelationInfo.schedule<100}">
+                    <span class="p-ico ico-2"></span>课后测验记录
+                    <span ng-if="RelationInfo.practicePassDefault===false" class="score " title="课后练习最高分">最高分<span style="font-size: 25px">b{{RelationInfo.practiceHighestScore}}</span>分</span>
+                </span>
+            </div>
+        </div>-->
+
+        <div class="course-test white-bg mb10" ng-if="detail.coursePracticeResult.status!==1">
+            <div class="block-tit"><span class="bor-l">课后测验</span></div>
+            <div class="course-test-bd rel">
+                <div class="course-text-btn" ng-if="!detail.assessmentResult">
+                    <span class="p-ico ico-1"></span>剩余测验次数
+                    <span class="score"
+                          ng-if="detail.coursePracticeResult.limitPracticeNum&&detail.coursePracticeResult.remainTimes>=0"><span
+                            ng-bind="detail.coursePracticeResult.remainTimes"></span>次
+                    </span>
+
+                    <span class="score"
+                          ng-if="!detail.coursePracticeResult.limitPracticeNum"><span style="font-size:20px;">无限次</span>次
+                    </span>
+                </div>
+                <div class="course-text-btn">
+                    <span class="p-ico ico-1"></span>测验合格分
+                    <span class="score"><span ng-bind="detail.coursePracticeResult.passScore"></span>分</span>
+                </div>
+                <a href="javascript:void(0)"
+                   ng-click="events.doTesting(detail,$event)"
+                   class="course-text-btn"
+                   ng-if="detail.coursePracticeResult.status===3">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip"><i class="p-ico"></i>请进入测验</span>
+                </a>
+                <a href="javascript:void(0)"
+                   ng-click="events.doTesting(detail,$event)"
+                   class="course-text-btn"
+                   ng-if="detail.coursePracticeResult.status===2">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip ico-tip2"><i class="p-ico"></i>课程进度未达到100%,无法测验</span>
+                </a>
+                <a href="javascript:void(0)"
+                   ng-click="events.doTesting(detail,$event)"
+                   class="course-text-btn"
+                   ng-if="detail.coursePracticeResult.status===4">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip ico-tip2"><i class="p-ico"></i>课后测验未达标，请继续测验！</span>
+                </a>
+                <a href="javascript:void(0)"
+                   ng-click="events.doTesting(detail,$event)"
+                   class="course-text-btn"
+                   ng-if="detail.coursePracticeResult.status===5">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip"><i class="p-ico"></i>课后测验已达标</span>
+                </a>
+                <a href="javascript:void(0)"
+                   ng-click="events.doTesting(detail,$event)"
+                   class="course-text-btn"
+                   ng-if="detail.coursePracticeResult.status===6">
+                    <span class="p-ico ico-1"></span>课后测验
+                    <span class="ico-tip"><i class="p-ico"></i>课后测验次数已用完</span>
+                </a>
+                <!--- 已达到进度 ---->
+                <a href="javascript:void(0)"
+                   ng-click="events.openTestHistory()"
+                   ng-if="detail.coursePracticeResult.hasPracticeRecord||(!detail.coursePracticeResult.hasPracticeRecord&&detail.coursePracticeResult.historyBestScore!==null)"
+                   class="course-text-btn">
+                    <span class="p-ico ico-2"></span>测验记录
+                    <span class="score"
+                          style="right:10px"
+                          title="b{{'课后练习最高分：'+detail.coursePracticeResult.historyBestScore}}">最高分<span
+                            ng-bind="detail.coursePracticeResult.historyBestScore"></span>分</span>
+                </a>
+                <!--- 未达到进度 ---->
+                <a href="javascript:void(0)"
+                   ng-if="!detail.coursePracticeResult.hasPracticeRecord"
+                   class="course-text-btn dis-btn mt10">
+                    <span class="p-ico ico-2"></span>课后测验记录
+                </a>
+                <span ng-if="detail.coursePracticeResult.status===5"
+                      class="p-ico pass-ico pass-ico-1"></span>
+            </div>
+        </div>
+
+
+        <div class="course-test white-bg mb10" ng-if="detail.popQuestionPracticeResult.hasPopQuestionPractice">
+            <div class="block-tit"><span class="bor-l">课程练习</span><span class="t-b">（课程学习过程中答题）</span></div>
+            <div class="course-test-bd rel">
+                <div class="course-text-btn">
+                    <span class="p-ico ico-1"></span>已答
+                    <span class="score"><span ng-bind="detail.popQuestionPracticeResult.hasAnswerCount"></span>题</span>
+                </div>
+                <div class="course-text-btn">
+                    <span class="p-ico ico-1"></span>未答
+                    <span class="score"><span ng-bind="detail.popQuestionPracticeResult.unAnswerCount"></span>题</span>
+                </div>
+                <div class="course-text-btn">
+                    <span class="p-ico ico-1"></span>得分
+                    <span class="score"><span
+                            ng-bind="detail.popQuestionPracticeResult.score===null?'-':detail.popQuestionPracticeResult.score"></span>分</span>
+                </div>
+                <div class="course-text-btn">
+                    <span class="p-ico ico-1"></span>合格分
+                    <span class="score"><span ng-bind="detail.popQuestionPracticeResult.passScore"></span>分</span>
+                </div>
+
+                <div class="course-text-btn"
+                     ng-if="!detail.popQuestionPracticeResult.hasPopQuestion&&detail.popQuestionPracticeResult.autoPass&&detail.assessmentResult"
+                     style="background:#ff7c7c;color:#fff;height:inherit;line-height:inherit;padding:10px 20px;">
+                    当前课程无课程练习试题，系统自动将课程练习得分设置为合格！
+                </div>
+
+                <div class="course-text-btn"
+                     ng-if="!detail.popQuestionPracticeResult.hasPopQuestion&&!detail.popQuestionPracticeResult.autoPass&&!detail.assessmentResult"
+                     style="background:#ff7c7c;color:#fff;height:inherit;line-height:inherit;padding:10px 20px;">
+                    当前课程无课程练习试题，请联系平台管理员或向客服反馈此问题！
+                </div>
+
+
+                <span ng-if="detail.popQuestionPracticeResult.hasPass" class="p-ico pass-ico pass-ico-1"></span>
+            </div>
+
+        </div>
+
+    </div>
+</div>

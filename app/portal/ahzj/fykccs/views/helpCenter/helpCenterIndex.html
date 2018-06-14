@@ -1,0 +1,53 @@
+<div class="p-wrap-full pos-nav  clear"><a href="#">首页</a><span class="plr3">&gt;</span>帮助中心</div>
+<div class="p-wrap-full clear mb20">
+    <div class="helpwrap clear">
+        <div class="left mh500 rel">
+            <div class="helptitle"><i class="p-ico help-ico"></i>帮助中心</div>
+            <ul class="help-navlist">
+                <li ng-class="{'current':model.categoryId===item.id}" ng-click="events.getCourseList(item)"
+                    ng-repeat="item in model.sort">
+                    <a><i class="p-ico arrow-left"></i>{{item.name}}</a></li>
+            </ul>
+        </div>
+        <div class="right mh500 ">
+            <div class="p20">
+                <ul class="newslist-2 mb20">
+                    <li ng-repeat="item in model.help">
+                        <span class="p-ico talk-ico"></span>
+                        <a href="javascript:void(0)" ng-click="events.detail(item)" ng-bind="item.title"> </a>
+                        <span class="date" ng-bind="item.publishTime"> </span>
+                    </li>
+                    <!--     <li ng-repeat="item in model.laws">
+                             <span class="dot" ng-if="item.showRed===true"></span>
+                             <a href="javascript:void(0)" ng-click="events.detail(item)" ng-bind="item.title"> </a>
+                             <span class="date" ng-bind="item.publishTime"> </span>
+                         </li>-->
+                </ul>
+                <!--        <div class="m-pages">
+                            <a href="#" class="prev"><span class="p-ico"></span>上一页</a>
+                            <div class="pages-num">
+                                <a href="#" class="current">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                                <a href="#">...</a>
+                                <a href="#">10</a>
+                            </div>
+                            <a href="#" class="next">下一页<span class="p-ico"></span></a>
+                            <span class="slt-num">到第 <input type="text" class="ui-ipt"> 页</span>
+                            <a href="#" class="go">跳转</a>
+                        </div>-->
+                <div pagination
+                     ng-change="events.getCourseList()"
+                     ng-model="model.currentPage"
+                     total-items="model.total"
+                     items-per-page="model.itemsPerPage"
+                     max-size="model.maxSize"
+                     previous-text="上一页"
+                     next-text="下一页"></div>
+            </div>
+        </div>
+    </div>
+
+</div>

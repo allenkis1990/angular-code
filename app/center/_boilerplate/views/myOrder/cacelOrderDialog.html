@@ -1,0 +1,19 @@
+<div class="dialog-body lwh-dialog">
+    <div class="dialog-cont ml30">
+        <p>您确定要取消该订单吗？取消订单后，不能恢复。</p>
+        <p class="mt10">请选择取消订单的理由：</p>
+        <select class="slt mt5" ng-model="model.message">
+            <option value="我不想买了">我不想买了</option>
+            <option value="信息填写错误，重新购买">信息填写错误，重新购买</option>
+            <option value="购买错误">购买错误</option>
+            <option value="其他原因">其他原因</option>
+        </select>
+    </div>
+    <div class="btn-bar">
+        <button class="ui-btn btn-o"
+                ng-disabled="cacelSubmitAble"
+                ng-click="events.confirmCancelOrder()">确 定
+        </button>
+        <button class="ui-btn btn-g ml10" i="close">取 消</button>
+    </div>
+</div>

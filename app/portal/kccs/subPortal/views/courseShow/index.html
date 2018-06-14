@@ -1,0 +1,49 @@
+<div class="p-wrap-full pos-nav  clear"><a href="#">首页</a><span class="plr3">&gt;</span>帮助中心</div>
+<div class="p-wrap-full clear mb20">
+    <div class="helpwrap clear">
+        <div class="left mh500 rel">
+            <div class="helptitle">课程分类</div>
+            <ul class="help-navlist">
+                <li ng-class="{'current':model.currentCourseCategoryId===item.id}"
+                    ng-click="events.tabCourseCategory(item)"
+                    ng-repeat="item in model.courseCategory">
+                    <a href="javascript:void(0)"><i class="p-ico arrow-left"></i><span ng-bind="item.name"></span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="right mh500 ">
+            <ul class="classlist-index classlist-index-1 clear" ng-if="model.courseList.length>0">
+                <li ng-repeat="item in model.courseList" style="position:relative">
+                    <div class="img" style="position: relative">
+                        <a href="javascript:void(0)"><img ng-src="/mfs{{item.iconPath}}" alt=" "></a>
+                    </div>
+                    <a href="javascript:void(0)"
+                       ng-if="item.customeStatus===1"
+                       style="position:absolute;top:63px;left:100px;"
+                       ng-click="events.openListen(item)"
+                       class="btn-normal">试听</a>
+                    <div class="tit mt10"><a href="javascript:void(0)" ng-bind="item.name"></a></div>
+                </li>
+            </ul>
+            <div pagination
+                 ng-change="events.findCourseList()"
+                 ng-model="model.currentPage"
+                 total-items="model.total"
+                 items-per-page="model.itemsPerPage"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+
+            <div class="lwhLoading" ng-if="lwhLoading===true">
+                <img src="kccs/subPortal/images/loading1.gif"/>
+            </div>
+            <div class="m-no-data tc" ng-if="model.courseList.length<=0">
+                <img src="kccs/subPortal/images/no-data.png" alt="空数据">
+                <p class="txt">当前分类下还没有数据哦</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

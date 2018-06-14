@@ -1,0 +1,1 @@
+define(function() {"use strict"; return  {"modules":[{"reconfig":true,"name":"app.subPortal.states.index","files":["kccs/subPortal/js/states/index-state"]}],"futureStates":[{"module":"app.subPortal.states.index","stateName":"states.index","url":"/index","type":"ocLazyLoad"}]}    });

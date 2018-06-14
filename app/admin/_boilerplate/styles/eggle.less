@@ -1,0 +1,169 @@
+html, body {
+  font-family: "微软雅黑";
+  font-size: 12px;
+  //text-shadow: 0px 0px 0px #000000;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+hr {
+  color: black;
+  border: 1px solid;
+  box-shadow: 0px 0px 6px;
+}
+
+.eggle-100-percent {
+  height: 100%;
+  width: 100%;
+}
+
+.reveal-animation {
+  height: 100%;
+}
+
+.reveal-animation.ng-enter {
+  -webkit-animation: enter_sequence .5s linear;
+  animation: enter_sequence .5s linear;
+}
+
+@-webkit-keyframes enter_sequence {
+  from {
+    opacity: 0;
+    margin-top: 10px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+
+@keyframes enter_sequence {
+  from {
+    opacity: 0;
+    margin-top: 10px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+
+/**解决tree在页面上面显示如果tree的宽度没有设置够并且高度高于浏览器的时候，
+ 下面的滚动条要滚到最下面
+ 才能滚动横条滚动*/
+
+.k-treeview {
+  overflow: initial !important;
+}
+
+td {
+  padding: 5px;
+}
+
+.wpf-tab {
+  width: 100%;
+  height: 100%;
+}
+
+.active {
+  background: #FF8EA4 !important;
+  color: black !important;
+}
+
+.hidden {
+  display: none;
+}
+
+.wpf-tab-content {
+  width: 100%;
+  clear: both;
+  overflow: auto;
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  .wpf-tab-content-inner {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.wpf-close {
+  position: relative;
+  top: 12px;
+}
+
+.wpf-tab-title {
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  li {
+    height: 40px;
+    cursor: pointer;
+    color: white;
+    float: left;
+    background: #3f51b5;
+    width: 130px;
+    span {
+      line-height: 40px;
+      float: left;
+      display: inline-block;
+      text-align: center;
+    }
+    .con {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 90px;
+      padding: 0 10px;
+    }
+  }
+}
+
+.wpf-title-container {
+  position: absolute;
+  width: 100%;
+  .wpf-arrow {
+    z-index: 1;
+    display: none;
+    position: absolute;
+    line-height: 40px;
+    cursor: pointer;
+    height: 32px;
+    background-repeat: no-repeat;
+    top: 7px;
+    width: 32px;
+  }
+  .wpf-arrow-left {
+    position: absolute;
+    background-image: url("../../../@systemUrl@/images/tab_bar_left_arrow.ico");
+  }
+  .wpf-arrow-right {
+    right: 0;
+    background-image: url("../../../@systemUrl@/images/tab_bar_right_arrow.ico");
+  }
+}
+
+.content-top {
+  position: absolute;
+  height: 80px;
+  width: 100%;
+}
+
+.content-main {
+  width: 100%;
+  position: absolute;
+  top: 80px;
+  overflow: auto;
+  bottom: 0;
+}
+
+.wpf-title-slider {
+  width: 100%;
+  overflow: hidden;
+  background: #3f51b5;
+}

@@ -1,0 +1,66 @@
+<p class="b fs16">考核要求</p>
+<div class="m-tips-important mt10" ng-if="model.hasExamAssess&&!model.hasPopQuestionAssess">
+    1 在本班学习中，必须学满 <span ng-bind="model.myRelClass.needSelectedHour"></span>学时（含：必修课<span
+        ng-bind="model.myRelClass.optionalPackageRequiresHour"></span>学时）<br>
+    2 最终的考核结果由 课程进度（课程学习进度=<span ng-bind="model.myRelClass.courseLearningRequireSchedule"></span>%）和在线考试（考试成绩&gt;=<span
+        ng-bind="model.myRelClass.paperRequireGetScore"></span>分）两部分决定<br>
+    3 考试成绩达到 <span ng-bind="model.myRelClass.paperRequireGetScore"></span>分为及格
+</div>
+
+<div class="m-tips-important mt10" ng-if="model.hasExamAssess&&model.hasPopQuestionAssess">
+    1 在本班学习中，必须学满 <span ng-bind="model.myRelClass.needSelectedHour"></span>学时（含：必修课<span
+        ng-bind="model.myRelClass.optionalPackageRequiresHour"></span>学时）<br>
+    2 最终的考核结果由 课程进度（课程学习进度=<span ng-bind="model.myRelClass.courseLearningRequireSchedule"></span>%），在线考试（考试成绩&gt;=<span
+        ng-bind="model.myRelClass.paperRequireGetScore"></span>分）和课程练习（课程练习题&gt;=<span
+        ng-bind="model.myRelClass.popQuestionRequireScore"></span>分）三部分决定<br>
+    3 考试成绩达到 <span ng-bind="model.myRelClass.paperRequireGetScore"></span>分为及格，课程练习得分达到 <span
+        ng-bind="model.myRelClass.popQuestionRequireScore"></span>分为及格
+</div>
+
+
+<div class="m-tips-important mt10" ng-if="model.hasPopQuestionAssess&&!model.hasExamAssess">
+    1 在本班学习中，必须学满 <span ng-bind="model.myRelClass.needSelectedHour"></span>学时（含：必修课<span
+        ng-bind="model.myRelClass.optionalPackageRequiresHour"></span>学时）<br>
+    2 最终的考核结果由 课程进度（课程学习进度=<span ng-bind="model.myRelClass.courseLearningRequireSchedule"></span>%）和课程练习（课程练习题&gt;=<span
+        ng-bind="model.myRelClass.popQuestionRequireScore"></span>分）两部分决定<br>
+    3 课程练习得分达到 <span ng-bind="model.myRelClass.popQuestionRequireScore"></span>分为及格
+</div>
+
+<div class="m-tips-important mt10" ng-if="!model.hasExamAssess&&!model.hasPopQuestionAssess">
+    1 在本班学习中，必须学满 <span ng-bind="model.myRelClass.needSelectedHour"></span>学时（含：必修课<span
+        ng-bind="model.myRelClass.optionalPackageRequiresHour"></span>学时）<br>
+    2 最终的考核结果由 课程进度（课程学习进度=<span ng-bind="model.myRelClass.courseLearningRequireSchedule"></span>%）决定<br>
+</div>
+
+
+<p class="b fs16" style="margin-top:10px;">选课要求</p>
+<div class="m-tips-important mt10">
+    选课学时数须 &gt;=<span ng-bind="model.myRelClass.needSelectedHour"></span>学时
+</div>
+<div class="m-tips-important mt10" ng-if="model.hasChoseLesson.length<=0">您暂时还没有选中的课程！</div>
+<table class="ui-table table-line mt10" ng-if="model.hasChoseLesson.length>0">
+    <thead>
+    <tr>
+        <th>NO.</th>
+        <th class="tl">已选课程</th>
+        <th>类型</th>
+        <th>来源课程包</th>
+        <th width="80">学时</th>
+        <th width="120">累计已选学时</th>
+        <th width="120">还需再选学时</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in model.hasChoseLesson">
+        <td ng-bind="$index+1"></td>
+        <td class="tl" ng-bind="item.name"></td>
+        <td ng-bind="item.type===1?'必修':'选修'"></td>
+        <td ng-bind="item.packageName"></td>
+        <td class="td-rb" ng-bind="item.period"></td>
+        <td rowspan="b{{model.hasChoseLesson.length}}" class="td-rb v-t1" ng-if="$index === 0"
+            ng-bind="model.dialogTimeLen.chosenTimeLength"></td>
+        <td rowspan="b{{model.hasChoseLesson.length}}" class="t-r v-t1 b" ng-if="$index === 0"
+            ng-bind="model.dialogTimeLen.needTimeLength"></td>
+    </tr>
+    </tbody>
+</table>

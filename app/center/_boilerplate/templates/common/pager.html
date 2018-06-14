@@ -1,0 +1,11 @@
+<div class="col-body mt20 clear">
+    <div class="pages fr">
+        <span class="page-info" ng-if="showPageDirection">第b{{page.currentPageIndex}}/b{{page.totalPageSize}}页 总共b{{page.totalDataSize}}条</span>
+        <a href="#" class="a-1" ng-click="changePage($event, 0);">首页</a>
+        <a href="#" class="a-1" ng-click="changePage($event);">上一页</a>
+        <a href="#" ng-click="changePage($event, pageNumber)"
+           ng-class="{'current': page.currentPageIndex  === pageNumber }" ng-repeat="pageNumber in page.pageArea">b{{pageNumber}}</a>
+        <a href="#" class="a-1" ng-click="changePage($event)">下一页</a>
+        <a href="#" class="a-1" ng-click="changePage($event, page.lastPageIndex);">尾页</a>
+    </div>
+</div>

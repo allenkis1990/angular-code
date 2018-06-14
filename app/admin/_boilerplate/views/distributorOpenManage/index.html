@@ -1,0 +1,107 @@
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input type="text" ng-model="model.query.name" placeholder="学员姓名" class="ipt ipt-medium"
+                           hb-clear-input>
+                </li>
+                <li>
+                    <input type="text" ng-model="model.query.loginInput" placeholder="学员帐号" class="ipt ipt-medium"
+                           hb-clear-input>
+                </li>
+                <!--<li style="position:relative;">-->
+                <!--<input type="text" ng-model="model.query.trainClassName" ng-click="events.openKendoWindow('classWindow')" class="ipt ipt-middle" placeholder="请选择培训班">-->
+                <!--<span style="position:absolute;right:3px;top:9px;cursor:pointer" ng-click="events.clearTextContent()" class="k-icon k-i-close" role="button">select</span>-->
+                <!--</li>-->
+                <li>
+                    <div select-goods scheme-id="model.query.trainClassId" category-id="model.categoryId"></div>
+                </li>
+                <li>
+                    <select class="select-small" ng-model="model.query.processStatus">
+                        <option selected="selected" value="-1">处理状态</option>
+                        <option value="1">处理中</option>
+                        <option value="2">已完成</option>
+                    </select>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="导入开始时间"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.startDate"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.query.startDate"
+                    /> -
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="导入结束时间"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.endDate"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.query.endDate"
+                    />
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" ng-click="events.togglePlaceOrderFail($event)" class="chk">
+                        订单创建失败
+                    </label>
+                </li>
+                <li class="clear">
+                    <a href="javascript:void(0);" class="btn btn-b" ng-click="events.query($event)">查询</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="dash-line-4"></div>
+    <div kendo-grid="node.grid" k-options="ui.grid.options" data-role="grid" class="k-grid k-widget"></div>
+</div>
+
+
+<!--培训班弹窗-->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="classWindow" style="width:1200px;">
+    <div class="dialog-body mt30">
+        <div class="dialog-tit">选择班级<a href="javascript:void(0)" class="ico ico-close"
+                                       ng-click="events.closeKendoWindow('classWindow')"></a></div>
+
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <select class="slt slt-small"
+                                ng-options="item.optionId as item.name for item in model.yearList"
+                                ng-model="model.configedQueryParam.trainingYear">
+                        </select>
+                    </li>
+                    <li>
+                        <select class="slt slt-small"
+                                ng-change="events.changeTitleLevel(model.configedQueryParam.titleLevel)"
+                                ng-options="item.optionId as item.name for item in model.titleLevelList"
+                                ng-model="model.configedQueryParam.titleLevel">
+                        </select>
+                    </li>
+                    <li>
+                        <select class="slt slt-small lwh-ipt"
+                                ng-disabled="learningTypeDisable"
+                                ng-options="item.optionId as item.name for item in model.learningTypeList"
+                                ng-model="model.configedQueryParam.learningType">
+                        </select>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"
+                           ng-click="events.mainPageQueryList($event,'classGridInstance','classPage')"
+                           class="btn btn-b">搜索</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div kendo-grid="kendoPlus.classGridInstance" k-options="ui.classGrid.options"></div>
+        </div>
+
+        <div class="btn-center">
+            <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="events.closeKendoWindow('classWindow')">取消</a>
+        </div>
+    </div>
+</div>

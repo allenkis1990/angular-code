@@ -1,0 +1,192 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.practicePaperConfig'"
+     ng-click="events.treeHide($event)">
+    <div class="tab-tit mt10" ng-if="events.isSubProjectManager()">
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.myself.code}"
+           ng-click="events.chooseTab($event,tabMap.myself.code)"
+           ng-bind="tabMap.myself.name"
+        ></a>
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.all.code}"
+           ng-click="events.chooseTab($event,tabMap.all.code)"
+           ng-bind="tabMap.all.name"
+        ></a>
+    </div>
+    <!-- 本单位 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.myself.code">
+        <br/>
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text" class="ipt ipt-small" ng-model="model.myselfPaperSearch.name"
+                           placeholder="请输入试卷名称"
+                           hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                /></li>
+
+                <li><input type="text" class="ipt ipt-small" ng-model="model.myselfPaperSearch.createUserName"
+                           placeholder="请输入创建人姓名"
+                           hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                /></li>
+                <li>
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="请选择试卷分类"
+                           ng-model="model.myselfParentName"
+                           ng-click="events.openTree($event)"
+                           name="parentId"
+                           required ng-required="true">
+
+                    <div class="column-block w-tree fl" ng-show="examTypeTreeShows" ng-click="$event.stopPropagation()"
+                         style="position: absolute;
+                   z-index: 10;
+                   left: 0px;
+                   width:195px;
+                   max-height: 250px;
+                   overflow: auto;"
+                    >
+                        <div class="col-body">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getOrgInfo(dataItem)">
+                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <select class="slt slt-medium" disabled ng-model="model.myselfPaperSearch.configType">
+                        <option value="-1">智能组卷</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.myselfPaperSearch.enable">
+                        <option value="false">停用</option>
+                        <option value="true">启用</option>
+                    </select>
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.myselfPaperSearch.createStartTime" type="text" class="ipt ipt-small"
+                           placeholder="试卷创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.myselfPaperSearch.createEndTime" type="text" class="ipt ipt-small"
+                           placeholder="试卷创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    />
+
+                </li>
+                <li><a href="" has-permission="practicePaperConfig/findQuestionPage" ng-click="events.search()"
+                       class="btn btn-b">查询</a></li>
+            </ul>
+        </div>
+        <div class="dash-line-2"></div>
+        <div class="column">
+            <a href="" class="btn-r btn" ng-click="events.toManualAddPaper()"
+               has-permission="practicePaperConfig/toAddPaper">新建试卷</a>
+            <!--     <a href="" ng-click="events.copyPaper()" class="btn-r btn ml10" has-permission="practicePaperConfig/copyPaper">复制试卷</a>
+                 <a href="" ng-click="events.setEnable(1)" class="btn-r btn ml10" has-permission="practicePaperConfig/enablePaper">启用试卷</a>
+                 <a href="" ng-click="events.setEnable(2)" class="btn-r btn ml10" has-permission="practicePaperConfig/ensureDisablePaper">停用试卷</a>
+                 <a href="" class="btn-r btn ml10" ng-click="events.batchDelete()" has-permission="practicePaperConfig/deletePaper">删除试卷</a>
+            --> </div>
+        <div class="column table-box mt20">
+
+            <div kendo-grid="node.myselfGridInstance"
+                 k-options="ui.myselfGrid.options">
+            </div>
+        </div>
+    </div>
+    <!-- /本单位 -->
+    <!-- 全部 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.all.code">
+        <br/>
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                <div unit-id="model.allPaperSearch.unitId" hb-unit-select default-choose="true"
+                     unit-set-callback="events.unitSetCallback(unitId)"
+                     default-txt="请选择查看单位"   ></div>
+                </li>
+                <li><input type="text" class="ipt ipt-small" ng-model="model.allPaperSearch.name"
+                           placeholder="请输入试卷名称"
+                           hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                /></li>
+
+                <li><input type="text" class="ipt ipt-small" ng-model="model.allPaperSearch.createUserName"
+                           placeholder="请输入创建人姓名"
+                           hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                /></li>
+                <li>
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="请选择试卷分类"
+                           ng-model="model.allParentName"
+                           ng-click="events.openTree($event)"
+                           name="parentId"
+                           required ng-required="true">
+
+                    <div class="column-block w-tree fl" ng-show="examTypeTreeShows" ng-click="$event.stopPropagation()"
+                         style="position: absolute;
+                   z-index: 10;
+                   left: 0px;
+                   width:195px;
+                   max-height: 250px;
+                   overflow: auto;"
+                    >
+                        <div class="col-body">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getOrgInfo(dataItem)">
+                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <select class="slt slt-medium" disabled ng-model="model.allPaperSearch.configType">
+                        <option value="-1">智能组卷</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.allPaperSearch.enable">
+                        <option value="false">停用</option>
+                        <option value="true">启用</option>
+                    </select>
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.allPaperSearch.createStartTime" type="text" class="ipt ipt-small"
+                           placeholder="试卷创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.allPaperSearch.createEndTime" type="text" class="ipt ipt-small"
+                           placeholder="试卷创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    />
+
+                </li>
+                <li><a href="" has-permission="practicePaperConfig/findQuestionPage" ng-click="events.search()"
+                       class="btn btn-b">查询</a></li>
+            </ul>
+        </div>
+        <div class="dash-line-2"></div>
+        <div class="column table-box mt20">
+
+            <div kendo-grid="node.allGridInstance"
+                 k-options="ui.allGrid.options">
+            </div>
+        </div>
+    </div>
+    <!-- /全部 -->
+
+</div>
+<div ui-view></div>
+<div class="dialog w-2" kendo-window="node.paperViewWindow" k-options="ui.paperViewWindowOptions"
+     k-ng-delay="ui.paperViewWindowOptions"></div>

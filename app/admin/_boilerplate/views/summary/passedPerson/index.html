@@ -1,0 +1,66 @@
+<div class="main-wrap-body">
+    <div class="search-bar mt10">
+        <ul class="ul-form li-fl lh-1 clear">
+            <li>
+                <div select-class-input model="model.query" permission="permission"></div>
+            </li>
+
+
+            <div hb-sku-directive
+                 lwhif="!model.query.trainClass"
+                 lwhmodel="skuParamsPassedPerson"
+                 ng-model="skuParamsPassedPerson"
+                 templateurl="@systemUrl@/templates/common/hb-sku-tjtpl.html"></div>
+
+            <!--<li has-permission="permission.learnTimeYear" exp="true" >
+                <div ng-hide="model.query.trainClass.commodityName!==undefined"
+                     query-learn-time-year model="model.query"
+                     exp="true"></div>
+            </li>-->
+
+
+            <li style="margin-left:-28px;" ng-if="model.query.trainClass">
+                <input type="text" class="ipt ipt-medium" ng-model="model.query.userAccount"
+                       placeholder="请输入学员账号" hb-clear-input
+                />
+            </li>
+
+            <li style="margin-left:15px;" ng-if="!model.query.trainClass">
+                <input type="text" class="ipt ipt-medium" ng-model="model.query.userAccount"
+                       placeholder="请输入学员账号" hb-clear-input
+                />
+            </li>
+            <li>
+                <input type="text" class="ipt ipt-medium" ng-model="model.query.userIdNum"
+                       placeholder="请输入学员身份证" hb-clear-input
+                />
+            </li>
+
+            <li>
+                <div hb-date-arrange
+                     ng-if="model.query.userAccount===undefined&&model.query.userIdNum===undefined||model.query.userAccount===null&&model.query.userIdNum===null"
+                     sb-mode="false"
+                     template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                     start-placeholder="合格时间"
+                     end-placeholder="合格时间"
+                     start-date="model.query.startTime"
+                     end-date="model.query.endTime"></div>
+            <li>
+                <div command-tool
+                     lwh-sku-model="skuParamsPassedPerson"
+                     is-not-sb-mode="true"
+                     report-query="events.genReportQuery()"
+                     model="model.query"
+                     grid="node.grid"
+                     permission="permission"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="column mt10">
+        <div class="tips-box-1 clear">
+            <span summary-desc view-name="OWN_VIEW_NAME"></span>
+        </div>
+        <div class="table mt10" kendo-grid="node.grid" k-options="mainGridOptions">
+        </div>
+    </div>
+</div>

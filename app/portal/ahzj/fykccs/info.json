@@ -1,0 +1,9 @@
+{
+  "name": "courseSupermarket",
+  "themes": {
+    "default": "ahzj/fykccs/styles/default/webstyle.css",
+    "red": "ahzj/fykccs/styles/red/webstyle.css"
+  },
+  "main": "ahzj/fykccs/portal.app.js",
+  "version": "0.0.1"
+}

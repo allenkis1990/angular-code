@@ -1,0 +1,33 @@
+下架后，商品上架时间将默认置为“暂不上架”。
+<ul class="ul-d-form pt10 lh-1">
+    <li class="clear">
+        <span class="fl">商品下架时间：</span>
+
+        <div class="fl">
+            <p><label><input class="rad"
+                             ng-model="model.offShelvesState"
+                             name="offShelvesState"
+                             value="1"
+                             type="radio">立即下架</label></p>
+
+            <p><label><input class="rad"
+                             ng-model="model.offShelvesState"
+                             name="offShelvesState"
+                             value="2"
+                             type="radio">同培训结束时间</label></p>
+
+            <p><label class="mr10"><input class="rad"
+                                          ng-model="model.offShelvesState"
+                                          name="offShelvesState"
+                                          value="3"
+                                          type="radio">指定时间</label
+            ><input type="text"
+                    k-options="kendoPlus.timeOptions"
+                    ng-model="model.executeTime"
+                    kendo-date-time-picker="kendoPlus.timeModel"
+                    hb-readonly
+                    class="ipt ipt-middle">
+            </p>
+        </div>
+    </li>
+</ul>

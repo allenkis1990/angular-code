@@ -1,0 +1,94 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.userManage'">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+
+            <!--    <li style="margin-left:2px;">
+                    <input type="text" name="type" class="ipt ipt-large"
+                           ng-click="events.openLessonTypeTree()"
+                           placeholder="请选择地区"
+                           ng-model="model.userPageParams.areaName" required
+                           ng-required="true" readonly="true" style="width: 150px;">
+
+                    <div class="hide-block hb-1 mh-1" ng-show="areaShow" style="margin-left: -120px;width: 200px;">
+                        <div kendo-tree-view="node.tree"
+                             k-options="ui.tree.options"
+                             k-on-change="model.selectedItem = dataItem">
+                                <span k-template ng-click="events.getArea(dataItem)">
+                                  <label style="width: 80px;"><span ng-bind="dataItem.name"></span></label>
+                                </span>
+                        </div>
+                    </div>
+                </li>-->
+
+            <li style="margin-left: 1px;"><input style="width:145px" type="text" class="ipt ipt-medium"
+                                                 ng-model="model.userPageParams.name"
+                                                 hb-clear-input
+                                                 placeholder="请输入姓名" ng-keyup="events.search($event)"/></li>
+            <li style="margin-left: 1px;" has-permission="userManage/test">
+                <select class="select-small" ng-model="model.userPageParams.loginInputType">
+                    <option selected="selected" value="-1">账号类型</option>
+                    <option value="0">非测试</option>
+                    <option value="1">测试</option>
+                </select>
+            </li>
+
+            <li style="margin-left: 1px;"><input style="width:170px" type="text" class="ipt ipt-medium"
+                                                 ng-model="model.userPageParams.identify"
+                                                 hb-clear-input
+                                                 placeholder="请输入学员身份证" ng-keyup="events.search($event)"/></li>
+
+            <li style="margin-left: 1px;"><input style="width:170px" type="text" class="ipt ipt-medium"
+                                                 ng-model="model.userPageParams.phoneNumber"
+                                                 hb-clear-input
+                                                 placeholder="请输入学员手机号" ng-keyup="events.search($event)"/></li>
+
+            <!--     <li style="margin-left: 1px;"><input style="width:170px" type="text" class="ipt ipt-medium" ng-model="model.userPageParams.email"
+                                                      hb-clear-input
+                                                      placeholder="请输入学员邮箱" ng-keyup="events.search($event)"/></li>-->
+
+            <!--            <li style="margin-left: 1px;">
+                            <select class="slt slt-medium" ng-model="model.userPageParams.activated" style="width:145px">
+                                <option ng-selected="" value="0">激活状态</option>
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </li>-->
+
+            <li>
+                <input kendo-date-picker="node.createBeginDate" k-options="ui.datePicker.begin"
+                       ng-model="model.userPageParams.createBeginDate" type="text" class="ipt ipt-medium"
+                       placeholder="创建时间"
+                       hb-readonly hb-clear-input
+                       ng-keydown="events.queryByEnter($event)"
+                /> -
+                <input kendo-date-picker="node.createEndDate" k-options="ui.datePicker.end"
+                       ng-model="model.userPageParams.createEndDate" type="text" class="ipt ipt-s"
+                       placeholder="创建时间"
+                       hb-readonly hb-clear-input
+                       ng-keydown="events.queryByEnter($event)"
+                />
+            </li>
+
+            <li><a href="javascript:void(0)" has-permission="userManage/find" ng-click="events.searchLesson($event)"
+                   class="btn btn-b">查询</a></li>
+            <li><a href="javascript:void(0)" has-permission="userManage/resetFilter"
+                   ng-click="events.clearUserPageParams($event)" class="btn btn-b">重置</a></li>
+            <li><a href="javascript:void(0)" has-permission="userManage/exportUser"
+                   ng-click="events.exportUserInfo($event)" class="btn-r btn">导出学员数据</a></li>
+        </ul>
+    </div>
+    <div class="column">
+        <div class="dash-line-3"></div>
+        <!--<a href="javascript:void(0)" ng-click="events.exportUserInfo($event)" has-permission="userManage/exportUser" class="btn-r btn">导出</a>-->
+    </div>
+
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.userGrid" k-options="ui.userGrid.options">
+        </div>
+    </div>
+
+</div>
+
+<div ui-view></div>
+
+

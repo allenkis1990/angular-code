@@ -1,0 +1,114 @@
+<div class="dialog-body">
+    <div class="dialog-tit">选择培训方案<a href="javascript:void(0)"
+                                     ng-click="events.closeKendoWindow('selectGoodsWindow')"
+                                     class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+
+
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <!--<div hb-sku-directive-->
+                <!--category-id="model.queryParam.categoryId"-->
+                <!--lwhmodel="skuParamsWin"-->
+                <!--ng-model="skuParamsWin"-->
+                <!--templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>-->
+
+                <!--<li ng-class="{'margin-left15':model.queryParam.categoryId}">-->
+                <!--<select class="slt slt-small"-->
+                <!--ng-model="model.queryParam.categoryId">-->
+                <!--<option value="">培训方案形式</option>-->
+                <!--<option value="35f84aea57d24cc299a397c1">培训班学习</option>-->
+                <!--<option ng-if="!hideGoodOption" value="35f84aea57d24cc299a397c2">自主选课学习</option>-->
+                <!--</select>-->
+                <!--</li>-->
+
+                <li ng-if="!hideGoodOption">
+                    <select class="slt slt-small"
+                            ng-model="model.queryParam.categoryType">
+                        <option value="">培训方案形式</option>
+                        <option value="TRAINING_CLASS_GOODS">培训班学习</option>
+                        <option value="COURSE_SUPERMARKET_GOODS">自主选课学习</option>
+                    </select>
+                </li>
+
+                <div ng-if="!hideGoodOption" hb-sku-directive
+                     category-type="model.queryParam.categoryType"
+                     lwhmodel="skuParamsWin"
+                     ng-model="skuParamsWin"
+                     templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+
+                <li ng-class="{'margin-left15':model.queryParam.categoryType}">
+                    <select class="slt slt-small"
+                            ng-model="model.queryParam.trainingSchemeEnabled">
+                        <option value="-1">培训方案状态</option>
+                        <option value="0">停用</option>
+                        <option value="1">正常</option>
+                    </select>
+                </li>
+
+
+                <li>
+                    <input type="text"
+                           class="ipt ipt-medium"
+                           ng-keyup="events.pressEnterKey($event)"
+                           ng-model="model.queryParam.commoditySkuName"
+                           placeholder="请输入培训方案名称"/>
+                </li>
+
+
+                <li>
+                    <select class="slt slt-small"
+                            ng-model="model.queryParam.commoditySkuState">
+                        <option value="-1">销售状态</option>
+                        <option value="1">已上架</option>
+                        <option value="2">待上架</option>
+                        <option value="3">已下架</option>
+                    </select>
+                </li>
+
+                <!--<li>
+                    <select class="slt slt-small"
+                            ng-model="model.queryParam.saleState">
+                        <option value="-1">是否售出</option>
+                        <option value="1">未售</option>
+                        <option value="2">已售</option>
+                    </select>
+                </li>-->
+
+
+                <!--<li>
+                    <input type="text"
+                           class="ipt ipt-middle"
+                           hb-clear-input
+                           ng-model="model.queryParam.firstUpTimeMin"
+                           k-options="kendoPlus.timeOptions"
+                           kendo-date-picker="kendoPlus.timeModel"
+                           hb-readonly
+                           placeholder="首次上架时间"/> -
+                    <input type="text"
+                           hb-clear-input
+                           ng-model="model.queryParam.firstUpTimeMax"
+                           k-options="kendoPlus.timeOptions"
+                           kendo-date-picker="kendoPlus.timeModel"
+                           hb-readonly
+                           class="ipt ipt-middle"
+                           placeholder="首次上架时间"/>
+                </li>-->
+                <li><a href="javascript:void(0)"
+                       ng-click="events.MainPageQueryList($event)"
+                       class="btn btn-b">查询</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div kendo-grid="kendoPlus.goodsManagerGridInstance"
+             k-options="goodsManagerGrid.options">
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('selectGoodsWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

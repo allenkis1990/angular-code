@@ -1,0 +1,36 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.paperConfig" class="ico return"></a>
+        <a href="javascript: void(0);" ui-sref="states.paperConfig" class="aw">试卷管理</a> >
+        新增试卷
+    </div>
+</div>
+<!--手动组卷第三部分-->
+<div class="main-wrap-body">
+    <div class="steps mb30">
+        <div class="bg-line rd3"><span class="bg-l-current rd3" style="margin-left:66.66%;"></span>
+        </div>
+        <ul class="ul-step li-fl clear">
+            <li class="ed"><span class="ico s-1"></span>
+
+                <p class="step-name">填写试卷基本信息</p></li>
+            <li class="ed"><span class="ico s-2"></span>
+
+                <p class="step-name">配置考题</p></li>
+            <li class="current"><span class="ico s-3"></span>
+
+                <p class="step-name">保存试卷</p></li>
+        </ul>
+    </div>
+    <div class="prompt-box">
+        <div class="p-img fl"><img src="@systemUrl@/images/img-complete.png"></div>
+        <div class="p-txt fr">
+            <p>新建试卷完成并保存成功!</p>
+            <span>是否继续新建试卷?<a href="javascript:void(0)" has-permission="paperConfig/continueAddPaper"
+                              ng-click="$state.go('states.paperConfig.add')">继续新建试卷</a></span>
+            <span>是否返回试卷列表?<a href="" has-permission="paperConfig/backPaperPage"
+                              ng-click="events.reload()">返回试卷列表</a></span>
+        </div>
+    </div>
+</div>
+

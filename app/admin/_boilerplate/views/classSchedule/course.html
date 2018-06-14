@@ -1,0 +1,52 @@
+<div class="tab-tit">
+    <a href="javascript:void(0);" class="current">课程分类</a>
+</div>
+<div class="column-block clear">
+    <div class="cb-left">
+        <!-----  课程分类  ----->
+        <div class="column">
+            <div kendo-tree-view="node.tree"
+                 id="courseCategoryTree"
+                 k-options="tree.options"
+                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.selectCategory($event,dataItem)">
+                      <label><span ng-bind="dataItem.name"></span></label>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="cb-right-1">
+        <div class="col-body bt0">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" class="ipt ipt-large"
+                               ng-model="model.courseParams.name" placeholder="课程名称"/>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="btn btn-b" ng-click="events.queryCourse($event)">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dash-line-4"></div>
+            <div kendo-grid="node.courseGrid" k-options="courseGrid.options"></div>
+        </div>
+    </div>
+</div>
+<div class="dialog-body">
+    <div class="dialog-tit">已选参考材料</div>
+    <dl class="ftf-list">
+        <dt>
+            <span class="tit2">课程名称</span>
+            <span class="gs2">课程分类</span>
+            <span class="op2">操作</span>
+        </dt>
+        <dd ng-repeat="course in model.courseSelectedList">
+            <span class="tit2" ng-bind="course.name"></span>
+            <span class="gs2" ng-bind="course.resourceData.categoryName"></span>
+            <span class="op2">
+                <a href="javascript:void(0)" ng-click="events.deleteSelectedCourse($event,$index)">取消选择</a>
+            </span>
+        </dd>
+    </dl>
+</div>

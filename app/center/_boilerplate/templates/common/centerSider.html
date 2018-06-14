@@ -1,0 +1,41 @@
+<div class="m-left-block fl lwh-sider">
+    <div class="user-block" style="width:150px;cursor:pointer"
+         ng-click="$state.go('states.accountSetting')">
+        <img style="width:152px;height:152px"
+             ng-show="b{{$$userInfo.sex==1}}" ng-src="b{{$$userInfo.photo===null?'@systemUrl@/images/user-man.jpg':'/mfs'+$$userInfo.photo}}" alt=""
+             class="user-img">
+        <img style="width:152px;height:152px"
+             ng-show="b{{$$userInfo.sex==2}}" ng-src="b{{$$userInfo.photo===null?'@systemUrl@/images/user-woman.jpg':'/mfs'+$$userInfo.photo}}" alt=""
+             class="user-img">
+        <p class="user-name" style="margin-top: 10px;margin-bottom: -8px;" ng-bind="$$userInfo.userName"></p>
+    </div>
+    <ul class="m-left-list">
+        <li ng-repeat="item in frontSiderList"
+            ng-class="{'li-1':item.different,'current':$state.current.name==item.stateName||$state.includes(item.stateName)}"
+        ><a href="javascript:void(0)" style="text-decoration: none;" ng-click="goState(item.stateName)"><span
+                class="p-ico b{{item.styleClass}}"></span>b{{item.name}}</a>
+
+            <div class="sub-list"
+                 ng-if="item.subList">
+                <a ng-repeat="subItem in item.subList"
+                   ng-click="goSubState(subItem.stateName)"
+                   ng-class="{'current':$state.current.name===subItem.stateName}"
+                   ng-bind="subItem.name"
+                   href="javascript:void(0)"></a>
+
+            </div>
+
+        </li>
+    </ul>
+    <!--<ul class="m-left-list">
+
+        <li><a href="#" ng-class="{'current':$state.current.name==='states.home'}"><span class="p-ico ico-course"></span>我的课程</a></li>
+        <li><a href="#"><span class="p-ico ico-files"></span>学习档案</a></li>
+        <li><a href="#" ui-sref="states.signUpTraining" ng-class="{'current':$state.current.name==='states.signUpTraining'}"><span class="p-ico ico-class"></span>选课中心</a></li>
+        <li><a href="#" ui-sref="states.shoppingCart" ng-class="{'current':$state.current.name==='states.shoppingCart'}"><span class="p-ico ico-car"></span>我的购物车<span class="p-ico ico-new"></span></a></li>
+        <li><a href="#"><span class="p-ico ico-order"></span>我的订单<span class="p-ico ico-new"></span></a></li>
+        <li class="li-1"><a href="#"><span class="p-ico ico-news"></span>通知<span class="p-ico ico-new"></span></a>
+        </li>
+        <li><a href="#"><span class="p-ico ico-set"></span>帐号设置</a></li>ui-sref="b{{item.stateName}}"
+    </ul>-->
+</div>

@@ -1,0 +1,118 @@
+<div class="main-wrap-body">
+
+    <div class="tab-tit mt10">
+        <a class="current" ng-class="{current: flagModel.tabType === 'OWN'}" ng-click="events.tabClick($event,'OWN')">本单位</a>
+        <a class="" ng-class="{current: flagModel.tabType === 'PROJECT'}" ng-click="events.tabClick($event, 'PROJECT')" ng-if="events.isSubProjectManager()">项目级</a>
+    </div>
+    <!--<p class="ml10 b">本配置适用于所有培训班级</p>-->
+
+    <!--本单位-->
+    <div ng-if="flagModel.tabType === 'OWN'">
+
+        <div class="ul-d-form mt10">
+            <div class="bg-g">
+                <span class="left-txt fl">机构提供的配送方式：</span>
+                <label class="ml20">
+                    <input class="chk" type="checkbox" ng-checked="model.postChecked" ng-click="events.isPost()">快递</label>
+                <label>
+                    <input class="chk" type="checkbox" ng-checked="model.pickUpChecked"
+                           ng-click="events.isPickUp()">自取</label>
+            </div>
+        </div>
+
+        <div class="tab-tit">
+            <a href="javascript:void(0)"
+               ng-click="events.tabConfig('configed','OWN')"
+               ng-class="{'current':model.configState=='configed'}">自取点</a>
+            <a href="javascript:void(0)"
+
+               ng-click="events.tabConfig('configing','OWN')"
+               ng-class="{'current':model.configState=='configing'}">快递服务商</a>
+        </div>
+
+        <div class="tab-bd" ng-show="model.configState=='configed'">
+            <div class="tab-bd mt10">
+                <a href="javascript:void(0)"
+                   class="btn btn-b"
+                   ng-click="events.addPhysicsStorage()">+ 添加自取点</a>
+
+            </div>
+            <div class="column mt10">
+                <div kendo-grid="kendoPlus.configedGridInstance"
+                     k-options="configedGrid.options">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-bd" ng-show="model.configState=='configing'">
+        <div class="tab-bd mt10">
+            <a href="javascript:void(0)"
+               class="btn btn-b"
+               ng-click="events.addCommonCarrier()">+ 添加服务商</a>
+        </div>
+
+        <div class="column mt10">
+            <div kendo-grid="kendoPlus.configingGridInstance"
+                 k-options="configingGrid.options">
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--项目级-->
+    <div ng-if="flagModel.tabType === 'PROJECT'">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <div  hb-unit-select
+                          default-choose="true"
+                          default-txt="请选择查看单位"
+                          unit-set-callback = "events.unitSetCallback(unitId)">
+                    </div>
+                </li>
+
+                <li><a class="btn btn-b" ng-click="events.loadAgain($event)">查询</a></li>
+            </ul>
+        </div>
+
+        <div class="ul-d-form mt10">
+            <div class="bg-g">
+                <span class="left-txt fl">机构提供的配送方式：</span>
+                <label class="ml20">
+                    <input class="chk" type="checkbox" ng-checked="model.postChecked" disabled>快递</label>
+                <label>
+                    <input class="chk" type="checkbox" ng-checked="model.pickUpChecked" disabled>自取</label>
+            </div>
+        </div>
+
+        <div class="tab-tit">
+            <a href="javascript:void(0)"
+               ng-click="events.tabConfig('configed','PROJECT')"
+               ng-class="{'current':model.projectConfigState=='configed'}">自取点</a>
+            <a href="javascript:void(0)"
+
+               ng-click="events.tabConfig('configing','PROJECT')"
+               ng-class="{'current':model.projectConfigState=='configing'}">快递服务商</a>
+        </div>
+
+        <div class="tab-bd" ng-show="model.projectConfigState=='configed'">
+            <div class="column mt10">
+                <div kendo-grid="kendoPlus.configedGridInstance"
+                     k-options="configedGrid.options">
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-bd" ng-show="model.projectConfigState=='configing'">
+
+            <div class="column mt10">
+                <div kendo-grid="kendoPlus.configingGridInstance"
+                     k-options="configingGrid.options">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

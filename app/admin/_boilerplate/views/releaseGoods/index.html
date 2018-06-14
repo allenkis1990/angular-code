@@ -1,0 +1,1047 @@
+<div class="main-wrap-body">
+    <div class="rel udf-2">
+        <div class="tab-tit mt20">
+            <a href="javascript:void(0)"
+               ng-click="events.tabConfigState('base')"
+               ng-class="{'current':model.config=='base'}">填写基础信息</a>
+            <a href="javascript:void(0)"
+               ng-click="events.tabConfigState('studyContent')"
+               ng-class="{'current':model.config=='studyContent'}">配置学习内容</a>
+            <a href="javascript:void(0)"
+               ng-click="events.tabConfigState('price')"
+               ng-class="{'current':model.config=='price'}">配置定价</a>
+        </div>
+        <!-- 填写基础信息 -->
+        <div class="tab-bd" ng-show="model.config=='base'">
+            <ul class="ul-d-form pt20 lh-1">
+
+
+                <!--<div hb-sku-directive ng-model="skuParams"></div>
+                <li><button ng-click="fn()">1111</button></li>-->
+
+
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>培训方案形式：</span>
+                    <div class="fl w-textarea">
+                        <input class="rad"
+                               ng-model="model.submitType"
+                               value="trainingClass"
+                               name="submitType"
+                               type="radio">培训班学习
+                        <input style="margin-left:50px;"
+                               ng-model="model.submitType"
+                               value="goods"
+                               class="rad"
+                               name="submtType"
+                               type="radio">自主选课学习
+                    </div>
+                </li>
+
+
+                <li class="clear" ng-if="model.submitType==='trainingClass'">
+                    <span class="left-txt fl"><i>*</i>培训班图片：</span>
+                    <img width="260" height="146"
+                         ng-src="b{{submitData.commodityImg=='@systemUrl@/images/pic.jpg'?'@systemUrl@/images/pic.jpg':'/mfs'+submitData.commodityImg}}"
+                         style="margin-left:-51px;"/>
+                    <a href="javascript:void(0)"
+                       ng-click="model.uploadHead = true"
+                       style="margin-right:58px;"
+                       class="btn btn-r fl">上传图片</a>
+                    <div style="margin-top:-4px;" class="t-i t-i-1 fl">说明：优质的班级图片有助于提升销量，建议规格 260*146 ，文件大小 小于等于100KB
+                    </div>
+                </li>
+
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i><span
+                            ng-bind="model.submitType==='trainingClass'?'培训班名称':'培训方案名称'"></span>：</span>
+                    <div class="w-textarea fl">
+                        <input type="text"
+                               ng-model="submitData.trainingSchemeName"
+                               class="ipt w-textarea"
+                               placeholder="b{{model.submitType==='trainingClass'?'请填写培训班名称':'请填写培训方案名称'}}">
+                    </div>
+                </li>
+
+
+                <div hb-sku-directive
+                     category-type="model.categoryType"
+                     lwhmodel="releaseGoods"
+                     ng-model="skuParams"
+                     ajax-info="submitData.skuPropertyList"></div>
+
+
+                <li class="bor-t pt10">
+                    <span class="left-txt"><i>*</i>培训开始时间：</span><input type="text"
+                                                                        k-options="kendoPlus.timeOptions"
+                                                                        kendo-date-time-picker="kendoPlus.timeModel"
+                                                                        hb-readonly
+                                                                        ng-model="submitData.trainingBeginTime"
+                                                                        ng-required="true">
+                    <span class="ml50"><i style="color:#f00;vertical-align:-2px;">*</i> 培训结束时间：</span> <input
+                        type="text"
+                        k-options="kendoPlus.timeOptions"
+                        kendo-date-time-picker="kendoPlus.timeModel"
+                        hb-readonly
+                        ng-model="submitData.trainingEndTime"
+                        ng-required="true">
+                </li>
+            </ul>
+        </div>
+        <!-- 填写基础信息 -->
+
+        <!-- 配置学习内容 -->
+        <div class="tab-hd" ng-show="model.config=='studyContent'">
+            <div class="column">
+                <div class="col-tit">学习内容配置<span class="t-i fs14">（请按顺序，分别配置培训内容，不提供对应的学习内容，可不选择！）</span></div>
+            </div>
+
+            <div class="column-block clear">
+                <div class="cb-left">
+                    <div class="col-body-tit-1 ml10">请选择学习方式</div>
+                </div>
+                <div class="cb-right cb-right-1">
+                    <div class="col-body-tit-1">配置<span ng-bind="model.currentArea"></span>区域</div>
+                </div>
+            </div>
+
+            <div class="column-block clear">
+                <div class="cb-left">
+                    <div class="column">
+                        <div class="col-body p0">
+                            <ul class="ul-tab-tit ul-tab-tit-1">
+                                <li ng-class="{'current':item.type===model.currentStudyType}"
+                                    ng-if="item.show"
+                                    ng-repeat="item in model.studyTypeArr"
+                                    ng-click="events.tabStudyType(item)"
+                                ><span class="ico ico-check"
+                                       ng-click="events.choseStudyType(item)"
+                                       ng-class="{'ico-checked':item.ischecked}"></span><span
+                                        ng-bind="item.name"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 课程学习 -->
+                <div class="cb-right cb-right-3" ng-show="model.currentStudyType==='courseStudy'">
+                    <div class="column clear" ng-if="model.submitType==='goods'">
+
+                        <div>
+                            <div class="cb-tit clear">课程包内容
+                                <div class="fr" ng-if="submitData.courseLearning.poolList.length>0">
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.openEditCourseBagDialog()"
+                                       class="txt-b">[编辑] </a>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)"
+                               ng-if="submitData.courseLearning.poolList.length<=0"
+                               ng-click="events.opencourseBagKendoDialog()"
+                               class="add-box mt10">+ 请添加课程包</a>
+
+
+                            <div class="lwh-interCourse clear">
+                                <div ng-repeat="item in submitData.courseLearning.poolList"
+                                     ng-class="{'item-nobor':$last}"
+                                     class="bg-b item">b{{item.coursePackageName}}<a href="javascript:void(0)"
+                                                                                     ng-click="events.spliceCourseBag($index,item)"
+                                                                                     class="txt-b fr">【删除】</a></div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="cb-tit mt20 clear">课程学习要求</div>
+                        <div class="mt10 pl10">
+                            <div class="mtb10">
+                                <p>前置条件-配置开始培训内容的前提条件</p>
+                                <p class="txt-g pt5">无</p>
+                            </div>
+                            <div class="mtb10">
+                                <p class="dash-line-6">考核判断-配置培训内容通过条件</p>
+                                <p class="txt-g pt5" ng-if="submitData.courseLearning.poolList.length<=0">无</p>
+
+                                <p class="pt5"
+                                   ng-if="submitData.courseLearning.poolList.length>0"
+                                   style="color:red;">课程学习进度&gt;=<span
+                                        ng-bind="submitData.courseLearning.rateOfProgress"></span>%</p>
+
+
+                            </div>
+                            <div class="mtb10">
+                                <p class="dash-line-6">通过成果-配置培训内容通过后所得成果</p>
+                                <p class="txt-g pt5">无</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="column clear" ng-if="model.submitType==='trainingClass'">
+                        <div class="cb-tit clear">
+                            选课规则
+                            <div class="fr"
+                                 ng-if="model.modViewList.length>0&&(submitData.courseLearning.ruleId!==null&&submitData.courseLearning.ruleId!==undefined&&submitData.courseLearning.ruleId!=='')">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.modEditTrueOrFalse(true)"
+                                   class="txt-b">[编辑]</a>
+                            </div>
+                        </div>
+                        <div class="bg-b mt10" ng-repeat="item in model.modViewList"
+                             ng-if="model.modViewList.length>0&&(submitData.courseLearning.ruleId!==null&&submitData.courseLearning.ruleId!==undefined&&submitData.courseLearning.ruleId!=='')">
+                            <p>选课模板：<span ng-bind="item.ruleName"></span></p>
+                            <p class="bor-t mt5 pt5">
+                                整体选课要求：选课程总学时=
+                                <span class="txt-b" ng-bind="item.requiredPeriod"></span><br>
+                                包内选课要求：<span class="txt-b" style="margin-right:10px;"
+                                             ng-repeat="subItem in item.coursePackageNames">b{{subItem.coursePackageName}}=b{{subItem.requiredPeriod}}学时</span><br>
+                                已添加的课程包：<span class="txt-b" style="margin-right:10px;"
+                                              ng-repeat="subItem in item.coursePackageNames">b{{subItem.coursePackageName}}(<span
+                                    ng-if="subItem.requiredPackage===true">必修包</span><span
+                                    ng-if="subItem.requiredPackage===false">选修包</span>,b{{subItem.totalPeriod}}学时)</span>
+                            </p>
+                        </div>
+                        <!-- 添加选课规则模板 -->
+                        <a href="javascript:void(0)"
+                           ng-if="model.modViewList.length==0||(submitData.courseLearning.ruleId===null||submitData.courseLearning.ruleId===undefined||submitData.courseLearning.ruleId==='')"
+                           class="add-box mt10"
+                           ng-click="events.opencourseRuleKendoDialog()">+ 添加选课规则模板</a>
+                        <!-- /添加选课规则模板 -->
+                        <div class="cb-tit mt20 clear">
+                            课程学习要求
+                        </div>
+                        <div class="mt10 pl10">
+                            <p>
+                                <span class="b pb10">前置条件 —— 配置开始培训内容的前提要求</span><br>
+                                无
+                            </p>
+                            <!--只有必修包-->
+                            <p class="bor-t pt10 mt10"
+                               ng-if="model.modViewList.length>0&&model.modViewList[0].ruleType===1">
+                                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                                <label>满足各包内选课要求</label><br>
+                                <label>课程学习进度&gt;=<span
+                                        class="txt-b">b{{submitData.courseLearning.rateOfProgress}}%</span></label><br>
+                                <label>累计获得学时数=<span
+                                        class="txt-b">b{{model.modViewList[0].requiredPeriod}}</span></label><br>
+                            </p>
+                            <!--只有选修包-->
+                            <p class="bor-t pt10 mt10"
+                               ng-if="model.modViewList.length>0&&model.modViewList[0].ruleType===2">
+                                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                                <label>满足各包内选课要求</label><br>
+                                <label>课程学习进度&gt;=<span
+                                        class="txt-b">b{{submitData.courseLearning.rateOfProgress}}%</span></label><br>
+                                <label>累计获得学时数=<span
+                                        class="txt-b">b{{model.modViewList[0].requiredPeriod}}</span></label><br>
+                                <label ng-repeat="item in model.modViewList[0].coursePackageNames">获得<span
+                                        class="txt-b">[b{{item.coursePackageName}}]</span>学时数=<span class="txt-b">b{{item.totalPeriod}}</span>;</label><br>
+                            </p>
+                            <!--选修包 选修包-->
+                            <p class="bor-t pt10 mt10"
+                               ng-if="model.modViewList.length>0&&model.modViewList[0].ruleType===3">
+                                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                                <label>满足各包内选课要求</label><br>
+                                <label>课程学习进度&gt;=<span
+                                        class="txt-b">b{{submitData.courseLearning.rateOfProgress}}%</span></label><br>
+                                <label>累计获得学时数=<span
+                                        class="txt-b">b{{model.modViewList[0].requiredPeriod}}</span></label><br>
+                                <!--
+                                                                <label ng-repeat="item in model.modViewList[0].coursePackageNames">获得必修课学时数=<span class="txt-b">b{{item.requiredPeriod}}</span>;</label><br>
+                                -->
+                                <label ng-repeat="item in model.modViewList[0].coursePackageNames">获得<span
+                                        class="txt-b">[b{{item.coursePackageName}}]</span>学时数=<span class="txt-b">b{{item.totalPeriod}}</span>;</label><br>
+                            </p>
+
+
+                            <p class="bor-t pt10 mt10" ng-if="model.modViewList.length==0">
+                                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                                -
+                            </p>
+                            <p class="bor-t pt10 mt10"><span class="b pb10">通过成果 —— 配置培训内容通过后所得成果</span><br><span
+                                    class="txt-g">无</span></p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <!-- /课程学习 -->
+
+
+                <!-- 考试 -->
+                <div class="cb-right cb-right-3" ng-show="model.currentStudyType==='exam'">
+                    <div class="column clear">
+                        <div class="cb-tit clear">考场配置</div>
+                        <div class="bg-b mt10"
+                             ng-if="submitData.examRound.examPaperId!==''&&submitData.examRound.examPaperId!==null&&submitData.examRound.examPaperId!==undefined">
+                            <div class="cb-tit clear">
+                                场次
+                                <div class="fr">
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.addOrEditExam()"
+                                       class="txt-b">编辑</a>
+                                </div>
+                            </div>
+                            <p class="mt10" ng-bind="submitData.examRound.roundName"></p>
+                            <p class="bor-t mt5 pt5">
+                            <p>前置条件： 通过<span class="txt-b">课程学习</span>考核判断且通过整体培训考核要求后<span class="txt-b">不可再</span>参加本场次考试
+                            </p>
+                            <p>考核要求： 无</p>
+                            <p>通过成果： 无</p>
+                            </p>
+                        </div>
+                        <a href="javascript:void(0)"
+                           ng-if="!(submitData.examRound.examPaperId!==''&&submitData.examRound.examPaperId!==null&&submitData.examRound.examPaperId!==undefined)"
+                           class="add-box mt10"
+                           ng-click="events.addOrEditExam('add')">+ 添加场次</a>
+                        <div class="cb-tit mt20 clear">场次培训要求</div>
+                        <div class="mt10 pl10">
+                            <p>
+                                <span class="b pb10">前置条件 —— 配置开始培训内容的前提要求</span><br>
+                                <span style="display:block;cursor:pointer">
+                                    <label><!--<input type="checkbox" class="chk">-->通过<span class="txt-b">课程学习</span>考核判断</label>
+                                    <label class="ml20"><!--<input type="checkbox" class="chk">-->通过整体培训考核要求后<span
+                                            class="txt-b">不可再</span>参加本场次考试</label>
+                                </span>
+
+                            </p>
+                            <p class="bor-t pt10 mt10">
+                                <span class="b pb10">考核要求 —— 配置培训内容通过条件</span><br>
+                                <span class="txt-g">无</span>
+                            </p>
+                            <p class="bor-t pt10 mt10"><span class="b pb10">通过成果 —— 配置培训内容通过后所得成果</span><br><span
+                                    class="txt-g">无</span></p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- 考试 -->
+
+                <!-- 兴趣课程 -->
+                <div class="cb-right cb-right-3" ng-show="model.currentStudyType==='inter'">
+                    <div class="column clear">
+                        <div class="cb-tit clear">兴趣课程配置
+
+                            <div class="fr" ng-if="submitData.interestCourse.interestCourses.length>0">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.editInter()"
+                                   class="txt-b">编辑</a>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)"
+                           ng-if="submitData.interestCourse.interestCourses.length<=0"
+                           class="add-box mt10"
+                           ng-click="events.openInterKendoDialog()">+ 请选择兴趣课程包</a>
+
+
+                        <div class="lwh-interCourse clear">
+                            <div ng-repeat="item in submitData.interestCourse.interestCourses"
+                                 ng-class="{'item-nobor':$last}"
+                                 class="item">b{{item.coursePoolName}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- 兴趣课程 -->
+
+
+                <!-- 弹窗题 -->
+                <div class="cb-right cb-right-3" ng-show="model.currentStudyType==='dialog'">
+                    <div class="column clear">
+                        <div class="cb-tit clear">弹窗题考核配置
+                            <div class="fr" ng-if="model.hasEditPop">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.openPopQuestionDialog()"
+                                   class="txt-b">[编辑] </a>
+                                <a href="javascript:void(0)"
+                                   ng-click="events.deletePop()"
+                                   class="txt-b ml5">[删除]</a>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)"
+                           ng-if="!model.hasEditPop"
+                           class="add-box mt10"
+                           ng-click="events.openPopQuestionDialog()">+ 配置弹窗题考核</a>
+
+                        <div class="mt10 pl10" ng-if="model.hasEditPop">
+                            <div class="mtb10">
+                                <p>弹窗题纳入考核：<span class="lwh-txt-red">纳入考核</span></p>
+                            </div>
+                            <div class="mtb10">
+                                <p>弹窗题来源：<span class="lwh-txt-red">课件知识点弹窗</span></p>
+                            </div>
+                            <!--<div class="mtb10">
+                                <p>弹窗题数量：<span class="lwh-txt-red">1111</span></p>
+                            </div>-->
+                            <div class="mtb10">
+                                <p>每个课程弹窗题答题次数：<span class="lwh-txt-red"
+                                                     ng-bind="submitData.popupQuestionConfig.popupQuestionAnswerCount">1111</span>
+                                </p>
+                            </div>
+                            <div class="mtb10" ng-if="model.categoryType==='TRAINING_CLASS_GOODS'">
+                                <p>是否提供课程重学：<span class="lwh-txt-red"
+                                                  ng-bind="submitData.popupQuestionConfig.courseRelearn==='true'?'提供重学':'不提供重学'"></span>
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- 弹窗题 -->
+
+
+                <!-- 班级练习题 -->
+                <div class="cb-right cb-right-3" ng-show="model.currentStudyType==='excrise'">
+                    <div class="column clear">
+                        <div class="cb-tit clear">班级练习题配置</div>
+                        <div class="bg-b mt10" ng-if="model.hasEditExcrise">
+                            <div class="cb-tit clear">
+                                练习<span class="b txt-b ml20">已开启</span>
+                                <div class="fr">
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.openExcriseDialog()"
+                                       class="txt-b">编辑</a>
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.deleteExcrise()"
+                                       class="txt-b">删除</a>
+                                </div>
+                            </div>
+                            <p class="mt10">练习试题来源：<span
+                                    ng-if="submitData.exerciseConfig.questionSource==='EXAM_PAPER'">与考试相同</span>
+                                <span ng-if="submitData.exerciseConfig.questionSource==='CLASS_LESSON'">按本班级学员课程ID出题</span>
+                                <span ng-if="submitData.exerciseConfig.questionSource==='QUESTION_LIBRARY'">来自题库</span>
+                            </p>
+                            <p class="bor-t mt5 pt5">
+                            </p>
+                            <p>前置条件： 若试题来源于课程ID，则须有课程被选；若试题来源于题库，则无前置条件</p>
+                            <p>考核要求： 无</p>
+                            <p>通过成果： 无</p>
+                            <p></p>
+                        </div>
+                        <a href="javascript:void(0)"
+                           ng-if="!model.hasEditExcrise"
+                           ng-click="events.openExcriseDialog()"
+                           class="add-box mt10">+ 配置班级练习题</a>
+                    </div>
+                </div>
+                <!-- 班级练习题 -->
+
+
+                <!-- 课后测验 -->
+                <div class="cb-right cb-right-3" ng-show="model.currentStudyType==='afterTest'">
+                    <div class="column clear">
+                        <div>
+                            <div class="cb-tit clear">课后测验配置
+                                <div class="fr" ng-if="submitData.practicePaperConfig.practicePaperId">
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.openAfterTestDialog()"
+                                       class="txt-b">编辑</a>
+                                </div>
+                            </div>
+
+                            <a href="javascript:void(0)"
+                               ng-if="!submitData.practicePaperConfig.practicePaperId"
+                               ng-click="events.openExcriseKendoDialog()"
+                               class="add-box mt10">+ 请添加课后测验</a>
+                            <a href="javascript:void(0)"
+                               ng-if="submitData.practicePaperConfig.practicePaperId"
+                               class="add-box mt10 clear">课后测验名称：<span ng-bind="model.practicePaperName"></span>
+                                <span class="fr" ng-click="events.deleteAfterTest()">[删除]</span>
+                            </a>
+                        </div>
+                        <div class="fl w-textarea">
+                            <input class="rad"
+                                   ng-model="submitData.practicePaperConfig.addPracticePaperAssess"
+                                   ng-click="events.addPracticePaperAssessConfig($event)"
+                                   value="true"
+                                   name="addPracticePaperAssess"
+                                   type="radio">纳入考核
+                            <input style="margin-left:50px;"
+                                   ng-model="submitData.practicePaperConfig.addPracticePaperAssess"
+                                   ng-click="events.deletePracticePaperAssessConfig($event)"
+                                   value="false"
+                                   class="rad"
+                                   name="addPracticePaperAssess"
+                                   type="radio">不纳入考核
+                        </div>
+
+                        <div class="cb-tit mt20 clear">课后测验要求</div>
+                        <div class="mt10 pl10">
+                            <div class="mtb10">
+                                <p>前置条件-配置开始培训内容的前提条件</p>
+                                <p class="txt-g pt5" ng-if="!submitData.practicePaperConfig.practicePaperId">无</p>
+                                <p class="pt5" style="color:red;"
+                                   ng-if="submitData.practicePaperConfig.practicePaperId">
+                                    通过课程学习考核判断，才可参加课后测验</p>
+                                <p class="pt5" style="color:red;"
+                                   ng-if="submitData.practicePaperConfig.practicePaperId">
+                                    通过整体培训考核要求后不可再参加课后测验</p>
+                            </div>
+                            <div class="mtb10">
+                                <p class="dash-line-6">考核判断-配置培训内容通过条件</p>
+                                <p class="txt-g pt5">无</p>
+                            </div>
+                            <div class="mtb10">
+                                <p class="dash-line-6">通过成果-配置培训内容通过后所得成果</p>
+                                <p class="txt-g pt5">无</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 课后测验 -->
+
+
+            </div>
+
+
+            <div>
+            </div>
+
+            <div>
+                <div class="column">
+                    <div class="col-tit">培训要求配置</div>
+                </div>
+
+                <ul class="ul-d-form lh-1" ng-if="model.submitType==='trainingClass'">
+                    <li class="clear bg-g no-m">
+                        <span class="left-txt fl lwh-txt-style"><i>*</i>考核规则：</span>
+                        <div class="fl w-textarea">
+                            <p>1.课程学习进度=<span ng-bind="submitData.courseLearning.rateOfProgress"></span>%</p>
+
+                            <!--单考试-->
+                            <p ng-if="model.studyTypeArr[1].ischecked&&!model.studyTypeArr[3].ischecked">2.考试考核成绩&gt;=
+                                <input type="text"
+                                       ng-keyup="events.testPassScore($event)"
+                                       ng-model="model.trainClassTrainingConfigRequire.passScore"
+                                       class="ipt ipt-mini"> 分（满分：<span ng-bind="model.examTotalScore"></span>分,这里总分为选择的考试卷的总分）
+                            </p>
+                            <!--单弹窗-->
+                            <p ng-if="!model.studyTypeArr[1].ischecked&&model.studyTypeArr[3].ischecked">2.弹窗题考核成绩&gt;=
+                                <input type="text"
+                                       ng-keyup="events.testPassScore($event)"
+                                       ng-model="model.trainClassTrainingConfigRequire.passScore"
+                                       class="ipt ipt-mini"> 分（满分：100分）</p>
+
+                            <!--考试+弹窗-->
+                            <p ng-if="model.studyTypeArr[1].ischecked&&model.studyTypeArr[3].ischecked">2.培训考核成绩&gt;=
+                                <input type="text"
+                                       ng-model="model.trainClassTrainingConfigRequire.passScore"
+                                       ng-keyup="events.testPassScore($event)"
+                                       class="ipt ipt-mini"> 分（满分：100分），其中所有课程的弹窗题成绩占比
+
+                                <input type="text"
+                                       ng-keyup="events.testNum($event,'trainClassTrainingConfigRequire','popupQuestionPercent')"
+                                       ng-model="model.trainClassTrainingConfigRequire.popupQuestionPercent"
+                                       class="ipt ipt-mini">%，为<span style="color:red"
+                                                                     ng-bind="events.parseNum(model.trainClassTrainingConfigRequire.popupQuestionPercent,(model.trainClassTrainingConfigRequire.passScore/100))?events.parseNum(model.trainClassTrainingConfigRequire.popupQuestionPercent,(model.trainClassTrainingConfigRequire.passScore/100)):'-'"
+                                ></span>分
+                                ，考试成绩占比 <input type="text"
+                                               ng-keyup="events.testNum($event,'trainClassTrainingConfigRequire','examScorePercent')"
+                                               ng-model="model.trainClassTrainingConfigRequire.examScorePercent"
+                                               class="ipt ipt-mini">%，为<span style="color:red"
+                                                                             ng-bind="events.parseNum(model.trainClassTrainingConfigRequire.examScorePercent,(model.trainClassTrainingConfigRequire.passScore/100))?events.parseNum(model.trainClassTrainingConfigRequire.examScorePercent,(model.trainClassTrainingConfigRequire.passScore/100)):'-'"></span>分
+                            </p>
+
+                        </div>
+                    </li>
+
+
+                    <li class="clear bg-g no-m"
+                        ng-if="model.studyTypeArr[1].ischecked&&submitData.examRound.examPaperId&&submitData.examRound.limitExamTimes==='true'">
+                        <span style="line-height:30px;" class="left-txt fl lwh-txt-style"><i>*</i>整班重学：</span>
+                        <div class="fl w-textarea">
+                            <input class="rad"
+                                   name="trainingClassRelearn"
+                                   ng-model="model.trainClassTrainingConfigRequire.trainingClassRelearn"
+                                   value="true"
+                                   type="radio">提供
+                            <input class="rad"
+                                   ng-model="model.trainClassTrainingConfigRequire.trainingClassRelearn"
+                                   value="false"
+                                   name="trainingClassRelearn"
+                                   style="margin-left:15px;" type="radio">不提供
+
+
+                            <div class="qus-ico">
+                                <a href="javascript:void(0)" class="a-info mr20"><span class="instructions"></span></a>
+                                <span class="qus-txt qus-txt-1">
+                                                    提供：勾选提供则考试次数用完且考核未通过，由学员发起整班重学（清空学习及考试记录） 不提供：则考试次数用完即产生考核结果
+                                                    </span>
+                            </div>
+
+                        </div>
+                    </li>
+
+
+                    <li class="clear bg-g no-m">
+                        <span class="left-txt fl lwh-txt-style"><i>*</i>通过成果：</span>
+                        <div class="fl w-textarea">
+                            获得本次培训，继续教育年度下 <input type="text"
+                                                  ng-model="model.trainClassTrainingConfigRequire.credit"
+                                                  class="ipt ipt-mini"> 学时
+
+
+                            <br/>
+                            <label>获得培训证明（可选配） <a href="javascript:void(0)"
+                                                  ng-if="model.trainClassTrainingConfigRequire.trainingProofId==='' || model.trainClassTrainingConfigRequire.trainingProofId===null || model.trainClassTrainingConfigRequire.trainingProofId===undefined||model.trainClassTrainingConfigRequire.trainingProofId==='-1'"
+                                                  class="txt-b"
+                                                  ng-click="events.openTrainProofKendoDialog()">配置培训证明</a>
+
+                                <!-- 配置后样式 -->
+                                <a href="javascript:void(0)"
+                                   ng-if="model.trainClassTrainingConfigRequire.trainingProofId!=='' && model.trainClassTrainingConfigRequire.trainingProofId!==null && model.trainClassTrainingConfigRequire.trainingProofId!==undefined&& model.trainClassTrainingConfigRequire.trainingProofId!=='-1'"
+                                   style="padding: 4px 24px 4px 10px;"
+                                   class="txt-b prove-box"
+                                ><span ng-bind="model.trainClassTrainingConfigRequire.trainingProofName"></span><span
+                                        class="ico"
+                                        style="top:8px;"
+                                        ng-click="events.deleteTrain('trainClassTrainingConfigRequire')"></span>
+                                </a>
+
+                            </label>
+
+
+                            <br/>
+
+
+                            <!--<label ng-if="model.trainClassTrainingConfigRequire.trainingProofId">
+                                <span class="left-txt" style="text-align:left;width:135px;"><i>*</i>是否开放学员打印：</span>
+                                <input class="rad"
+                                       name="openPrint"
+                                       value="true"
+                                       ng-model="model.trainClassTrainingConfigRequire.openPrint"
+                                       type="radio">开放
+                                <input class="rad"
+                                       name="openPrint"
+                                       value="false"
+                                       ng-model="model.trainClassTrainingConfigRequire.openPrint"
+                                       style="margin-left:15px;"
+                                       type="radio">不开放
+                            </label>
+
+
+                            <br />-->
+
+
+                            <!--<label ng-if="model.trainClassTrainingConfigRequire.trainingProofId">
+                                <span class="left-txt" style="text-align:left;width:135px;"><i>*</i>证明配送：</span>
+                                <input class="rad"
+                                       name="certificateIsDelivery"
+                                       value="false"
+                                       ng-model="model.trainClassTrainingConfigRequire.certificateIsDelivery"
+                                       type="radio">不提供配送
+                                <input class="rad"
+                                       name="certificateIsDelivery"
+                                       value="false"
+                                       ng-model="model.trainClassTrainingConfigRequire.certificateIsDelivery"
+                                       style="margin-left:15px;"
+                                       type="radio">线上配送
+                            </label>-->
+
+
+                        </div>
+                    </li>
+
+                </ul>
+
+
+                <ul class="ul-d-form lh-1" ng-if="model.submitType==='goods'">
+                    <li class="clear bg-g no-m">
+                        <span class="left-txt fl lwh-txt-style"><i>*</i>考核规则：</span>
+                        <div class="fl w-textarea">
+                            <p>1.课程学习进度=<span ng-bind="submitData.courseLearning.rateOfProgress"></span>%</p>
+
+
+                            <!--只选测验-->
+                            <div ng-if="model.studyTypeArr[5].ischecked&&!model.studyTypeArr[3].ischecked && submitData.practicePaperConfig.addPracticePaperAssess">
+                                <p>2.课程课后测验成绩&gt;= <input type="text"
+                                                          ng-keyup="events.testPracticeScore()"
+                                                          ng-model="model.goodsTrainingConfigRequire.practicePaperPassScore"
+                                                          class="ipt ipt-mini"> 分（满分：<span
+                                        ng-bind="model.practiceTotalScore"></span>分，满分值读取添加课后测验的配置的总分）</p>
+                                <p><input class="chk"
+                                          ng-checked="model.goodsTrainingConfigRequire.lackPracticeThenPass"
+                                          ng-click="events.toggleLack($event,'lackPracticeThenPass')"
+                                          type="checkbox">若课程试题数无法满足生成课后测验卷，则达到课程学习进度即为课程考核通过<span style="color:red">（已购买的学员该规则无效）</span>
+                                </p>
+                            </div>
+
+
+                            <!--只选弹窗-->
+                            <div ng-if="!model.studyTypeArr[5].ischecked&&model.studyTypeArr[3].ischecked">
+                                <p>2.课程弹窗题成绩&gt;= <input type="text"
+                                                         ng-model="model.goodsTrainingConfigRequire.popupQuestionPassScore"
+                                                         class="ipt ipt-mini"> 分（满分：100分）</p>
+                                <div><input class="chk"
+                                            ng-checked="model.goodsTrainingConfigRequire.lackPopupQuestionThenPass"
+                                            ng-click="events.toggleLack($event,'lackPopupQuestionThenPass')"
+                                            type="checkbox">若课程无弹窗题，则课程弹窗题考核自动考核通过<span
+                                        style="color:red">（已购买的学员该规则无效）</span>
+                                </div>
+                            </div>
+
+
+                            <!--弹窗 测验都选-->
+                            <div ng-if="model.studyTypeArr[5].ischecked&&model.studyTypeArr[3].ischecked">
+
+
+                                <p>2.课程课后测验成绩&gt;= <input type="text"
+                                                          ng-keyup="events.testPracticeScore()"
+                                                          ng-model="model.goodsTrainingConfigRequire.practicePaperPassScore"
+                                                          class="ipt ipt-mini"> 分（满分：<span
+                                        ng-bind="model.practiceTotalScore"></span>分，此分数为测验卷总分）</p>
+
+                                <p>3.课程弹窗题成绩>= <input type="text"
+                                                      ng-model="model.goodsTrainingConfigRequire.popupQuestionPassScore"
+                                                      class="ipt ipt-mini"> 分（满分：100分）</p>
+                                <div><input class="chk"
+                                            ng-checked="model.goodsTrainingConfigRequire.lackBothThenPass"
+                                            ng-click="events.toggleLack($event,'lackBothThenPass')"
+                                            type="checkbox">若课程试题数无法满足生成课后测验卷或课程无弹窗题，则对应的考核项目自动考核通过<span
+                                        style="color:red">（已购买的学员该规则无效）</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </li>
+
+
+                    <li class="clear bg-g no-m" ng-if="model.studyTypeArr[3].ischecked || model.limitPracticeNum">
+                        <span style="line-height:30px;width:135px;"
+                              class="left-txt fl lwh-txt-style"><i>*</i>是否提供课程重学：</span>
+                        <div class="fl w-textarea" style="width:630px;">
+                            <input class="rad"
+                                   name="trainingClassRelearn"
+                                   ng-model="model.goodsTrainingConfigRequire.courseRelearn"
+                                   value="true"
+                                   type="radio">提供
+                            <input class="rad"
+                                   ng-model="model.goodsTrainingConfigRequire.courseRelearn"
+                                   value="false"
+                                   name="trainingClassRelearn"
+                                   style="margin-left:15px;" type="radio">不提供
+
+
+                            <div class="qus-ico">
+                                <a href="javascript:void(0)" class="a-info mr20"><span class="instructions"></span></a>
+                                <span class="qus-txt qus-txt-1">
+                                                        提供课程重学，则支持在课程进度>0%的情况下，由学员侧发起重学操作
+                                                    </span>
+                            </div>
+
+                        </div>
+                    </li>
+
+
+                    <li class="clear bg-g no-m">
+                        <span class="left-txt fl lwh-txt-style"><i>*</i>通过成果：</span>
+                        <div class="fl w-textarea">
+                            获得对应的课程学时
+                            <br/>
+                            <label>获得培训证明（可选配） <a href="javascript:void(0)"
+                                                  ng-if="model.goodsTrainingConfigRequire.trainingProofId==='' || model.goodsTrainingConfigRequire.trainingProofId===null || model.goodsTrainingConfigRequire.trainingProofId===undefined||model.goodsTrainingConfigRequire.trainingProofId==='-1'"
+                                                  class="txt-b"
+                                                  ng-click="events.openTrainProofKendoDialog()">配置培训证明</a>
+
+                                <!-- 配置后样式 -->
+                                <a href="javascript:void(0)"
+                                   ng-if="model.goodsTrainingConfigRequire.trainingProofId!=='' && model.goodsTrainingConfigRequire.trainingProofId!==null && model.goodsTrainingConfigRequire.trainingProofId!==undefined&&model.goodsTrainingConfigRequire.trainingProofId!=='-1'"
+                                   style="padding: 4px 24px 4px 10px;"
+                                   class="txt-b prove-box"
+                                ><span ng-bind="model.goodsTrainingConfigRequire.trainingProofName"></span><span
+                                        class="ico"
+                                        style="top:8px;"
+                                        ng-click="events.deleteTrain('goodsTrainingConfigRequire')"></span>
+                                </a>
+
+                            </label>
+
+                        </div>
+                    </li>
+
+                </ul>
+
+
+            </div>
+
+
+        </div>
+        <!-- 配置学习内容 -->
+
+
+        <!-- 配置定价 -->
+        <div class="tab-hd" ng-show="model.config=='price'">
+
+
+            <div>
+                <div class="column">
+                    <div class="col-tit">配置销售信息
+                    </div>
+                </div>
+
+                <div class="ul-d-form clear">
+
+                    <ul class="ul-d-form lh-1">
+                        <li class="clear bg-g no-m">
+
+                            <div ng-if="model.submitType==='trainingClass'"><span
+                                    style="margin-left:14px;">班级报名方式：</span><input class="chk"
+                                                                                   ng-checked="submitData.justImportOpen"
+                                                                                   style="margin-left:8px;"
+                                                                                   ng-click="events.tottleJustImportOpen($event)"
+                                                                                   type="checkbox"/>仅支持导入开通
+
+
+                                <div class="qus-ico">
+                                    <a href="javascript:void(0)" class="a-info mr20"><span class="instructions"></span></a>
+                                    <span class="qus-txt qus-txt-1">
+                                                    仅导入开通：仅支持通过管理人员导入开通的方式报班
+                                                    </span>
+                                </div>
+                            </div>
+
+
+                            <span class="left-txt fl"><i>*</i>上架销售时间：</span>
+                            <div class="fl w-textarea">
+                                <label><input class="rad"
+                                              ng-model="submitData.onSale"
+                                              value="true"
+                                              type="radio"
+                                              name="onSale">配置上架时间</label>
+                                <label class="ml50"><input class="rad"
+                                                           ng-model="submitData.onSale"
+                                                           value="false"
+                                                           type="radio"
+                                                           name="onSale"
+                                >暂不上架</label>
+                                <div class="bor-t pt10" ng-if="submitData.onSale==='true'">
+                                    <label><input class="rad"
+                                                  type="radio"
+                                                  name="onSaleImmediately"
+                                                  value="true"
+                                                  ng-model="submitData.onSaleImmediately"
+                                    >立即上架</label>
+                                    <label class="ml50"><input class="rad"
+                                                               type="radio"
+                                                               name="onSaleImmediately"
+                                                               value="false"
+                                                               ng-model="submitData.onSaleImmediately"
+                                    >指定时间上架</label>
+
+                                    <span ng-if="submitData.onSaleImmediately==='false'">
+                                    <input type="text"
+                                           ng-model="submitData.onSaleTime"
+                                           k-options="kendoPlus.timeOptions"
+                                           kendo-date-time-picker="kendoPlus.timeModel"
+                                           ng-required="true">
+                                </span>
+
+                                    <!--假-->
+                                    <!--<span ng-if="commodityAndClassInfo.onSaleImmediately=='true'">
+                                        <input type="text"
+                                               k-options="kendoPlus.timeOptions"
+                                               style="background:#ccc"
+                                               readonly
+                                               kendo-date-time-picker="kendoPlus.timeModel"
+                                               ng-required="true">
+                                    </span>-->
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="clear bg-g" ng-if="submitData.onSale==='true'">
+                            <span class="left-txt fl"> <i>*</i>下架销售时间：</span>
+                            <div class="fl">
+                                <!--<input type="text"
+                                       k-options="kendoPlus.timeOptions"
+                                       ng-model="commodityAndClassInfo.futureOffShelvesTime"
+                                       kendo-date-time-picker="kendoPlus.timeModel"
+                                       ng-required="true">-->
+
+
+                                <label><input class="rad"
+                                              type="radio"
+                                              name="futureOffShelves"
+                                              value="false"
+                                              ng-model="submitData.futureOffShelves"
+                                >无下架时间</label>
+                                <label class="ml50"><input class="rad"
+                                                           type="radio"
+                                                           name="futureOffShelves"
+                                                           value="true"
+                                                           ng-model="submitData.futureOffShelves"
+                                >指定下架时间</label>
+
+                                <span ng-if="submitData.futureOffShelves==='true'">
+                                    <input type="text"
+                                           ng-model="submitData.futureOffShelvesTime"
+                                           k-options="kendoPlus.timeOptions"
+                                           kendo-date-time-picker="kendoPlus.timeModel"
+                                           ng-required="true">
+                                </span>
+
+
+                            </div>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+
+
+            <div ng-if="model.submitType==='goods'">
+                <div class="column">
+                    <div class="col-tit">配置定价策略
+                        <a href="javascript:void(0)"
+                           ng-click="events.findMultiPriceCourseList()"
+                           class="fr fs14 txt-b">检测同一门课程存在不同的学时定价情况</a>
+                    </div>
+                </div>
+
+                <div class="ul-d-form clear">
+                    <div class="bg-g clear">
+                        <div class="fl b"><i style="color:red;">*</i>按每学时定价</div>
+                        <a href="javascript:void(0)"
+                           ng-click="events.openEditCoursePoolPeriodDialog('add')"
+                           class="fr txt-b">+ 添加定价</a>
+                    </div>
+                    <div class="bg-w p10" ng-if="submitData.coursePoolPeriodPrices.length>0">
+                        <table class="table table-nf table-2">
+                            <thead>
+                            <tr>
+                                <th width="250">定价销售名称</th>
+                                <th width="100">学时单价</th>
+                                <th class="tl">涵盖的课程包</th>
+                                <th width="100">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in submitData.coursePoolPeriodPrices">
+                                <td ng-bind="item.saleTitle"></td>
+                                <td><span class="b fs16" ng-bind="item.price"></span>元/学时</td>
+                                <td class="tl">
+                                    <div ng-repeat="subItem in item.poolList" ng-bind="subItem.name"></div>
+                                </td>
+                                <td class="op">
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.editPriceCourseTemp(item,'edit')">编辑</a>
+                                    <a href="javascript:void(0)" ng-click="events.lookPriceCourseBag(item)">查看</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="bg-w p10" ng-if="submitData.coursePoolPeriodPrices.length<=0">
+                        <p class="txt-g fs16 tc p20">请配置学时定价</p>
+                    </div>
+
+                </div>
+
+                <div class="ul-d-form mt20 clear">
+                    <div class="bg-g clear">
+                        <div class="fl b">个别课程独立定价</div>
+                        <a href="javascript:void(0)"
+                           ng-click="events.openEditCourseIndividualDialog('add')"
+                           class="fr txt-b">+ 添加定价</a>
+                    </div>
+
+
+                    <div class="bg-w p10" ng-if="submitData.courseIndividualPrices.length>0">
+                        <table class="table table-nf table-2">
+                            <thead>
+                            <tr>
+                                <th width="250">定价销售名称</th>
+                                <th width="100">课程价格</th>
+                                <th class="tl">涵盖的课程</th>
+                                <th width="100">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in submitData.courseIndividualPrices">
+                                <td ng-bind="item.saleTitle"></td>
+                                <td><span class="b fs16" ng-bind="item.price"></span>元/门</td>
+                                <td class="tl">
+                                    <div ng-repeat="subItem in item.courseList" ng-bind="subItem.courseName"></div>
+                                </td>
+                                <td class="op">
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.editCourseIndividualTemp(item,'edit')">编辑</a>
+                                    <a href="javascript:void(0)" ng-click="events.lookPriceCourse(item)">查看</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bg-w p10" ng-if="submitData.courseIndividualPrices.length<=0">
+                        <p class="txt-g fs16 tc p20">请配置个别课程独立定价</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div ng-if="model.submitType==='trainingClass'">
+                <div class="column">
+                    <div class="col-tit">配置定价策略
+                    </div>
+                </div>
+
+                <ul class="ul-d-form lh-1">
+                    <li class="clear bg-g no-m">
+                        <span class="left-txt fl"><i>*</i>培训班价格：</span>
+                        <div class="fl w-textarea">
+                            <input type="text"
+                                   ng-model="submitData.price"
+                                   class="ipt ipt-mini"> 元/班
+                        </div>
+                    </li>
+                </ul>
+
+
+            </div>
+
+
+        </div>
+        <!-- 配置定价 -->
+
+
+        <div class="btn-center">
+            <button ng-disabled="submitAble"
+                    ng-click="events.submit()"
+                    class="btn btn-r">发布销售
+            </button>
+            <a href="javascript:void(0)"
+               ng-click="events.closeTab()"
+               class="btn btn-g ml10">取消</a>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<div ng-if="model.uploadHead">
+    <div upload-head
+         self-defined-height="200"
+         self-defined-width="200"
+         self-defined="true"
+         aspect-ratio="aspectRatio"
+         template-url="@systemUrl@/templates/tpls/tpl-upload-images-img-tpl.html"
+         ng-model="model.uploader"
+         close="model.uploadHead" style="display: none;">
+
+    </div>
+</div>
+
+
+
+

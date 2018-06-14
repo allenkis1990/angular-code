@@ -1,0 +1,203 @@
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="ahzj/fykccs/images/loading1.gif" alt=""/>
+</div>
+
+<!-- 位置导航 -->
+<div class="pos-nav mb30"><a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span>我要留言</div>
+<!-- /位置导航 -->
+<div class="p-wrap-full" ng-if="model.hasMessageData===false&&copyMessageLen<=0">
+    <div class="p20 clear">
+        <ul class="m-form">
+            <li>
+                <span class="left-txt b">留言类型</span>
+                <select class="ui-slt w1"
+                        ng-model="model.problemCategoryModel"
+                        ng-options="item.id as item.name for item in model.problemCategoryList">
+                </select>
+            </li>
+            <li class="clear">
+                <span class="left-txt b fl">留言内容</span>
+                <div class="w8 fl ml4">
+                    <textarea class="ui-textarea t-area"
+                              ng-model="model.descri"
+                              placeholder="请输入留言内容"></textarea>
+                </div>
+            </li>
+            <li>
+                <span class="left-txt b"></span>
+                <a href="#" class="btn-gs">取消</a>
+                <button ng-click="events.createLeaveMessage()"
+                        ng-disabled="creatSubmitAble"
+                        class="btn-s ml10">确定
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<!--有留过言-->
+<div class="p-wrap-full" ng-class="{'lmNoDataMinHeight':model.hasMessageData===false}" ng-if="copyMessageLen>0">
+    <div class="p20">
+        <ul class="search-bar clear">
+            <li class="fl">
+                留言类型：
+                <select class="ui-slt"
+                        ng-model="model.categoryId"
+                        ng-options="item.id as item.name for item in model.problemCategoryList">
+                </select>
+            </li>
+            <li class="fl ml20">
+                是否回复：
+                <select class="ui-slt" ng-model="model.messageType">
+                    <option value="-1">全部</option>
+                    <option value="1">未回复</option>
+                    <option value="2">已回复</option>
+                </select>
+            </li>
+            <li class="fl ml20">
+                留言时间：
+                <input
+                        name="bornDate"
+                        ng-required="true"
+                        datepicker-popup
+                        type="text"
+                        min-date="model.minDate"
+                        minuteStep="5"
+                        ng-model="model.messageTimeStart"
+                        close-text="关闭"
+                        current-text="今天"
+                        clear-text="清除"
+                        is-open="ui.datepicker.start"
+                        class="ui-ipt ipt-s"
+                        readonly
+                        ng-click="ui.datepicker.start = true"
+                        placeholder="开始时间"/> -
+                <input
+                        min-date="model.maxDate"
+                        name="bornDate"
+                        ng-required="true"
+                        datepicker-popup
+                        type="text"
+                        minuteStep="5"
+                        ng-model="model.messageTimeEnd"
+                        close-text="关闭"
+                        current-text="今天"
+                        clear-text="清除"
+                        is-open="ui.datepicker.end"
+                        class="ui-ipt ipt-s"
+                        readonly
+                        ng-click="ui.datepicker.end = true"
+                        placeholder="结束时间"/>
+            </li>
+            <!--<li class="f1 ml20" ng-click="ui.datepicker.opened = true">-->
+            <!--<input-->
+            <!--name="bornDate"-->
+            <!--ng-required="true"-->
+            <!--datepicker-popup-->
+            <!--type="text"-->
+            <!--minuteStep="5"-->
+            <!--ng-model="model.bornDateObj"-->
+            <!--close-text="关闭"-->
+            <!--current-text="今天"-->
+            <!--clear-text="清除"-->
+            <!--is-open="ui.datepicker.opened"-->
+            <!--class="ui-ipt ipt-s"-->
+            <!--readonly-->
+            <!--placeholder="结束时间" />-->
+            <!--&lt;!&ndash;<input class="ui-ipt ipt-s"&ndash;&gt;-->
+            <!--&lt;!&ndash;timepicker&ndash;&gt;-->
+            <!--&lt;!&ndash;style="width: 180px"&ndash;&gt;-->
+            <!--&lt;!&ndash;ng-model="model.sdsds" />&ndash;&gt;-->
+
+            <!--</li>-->
+            <li class="btn-bar">
+                <button class="btn-normal ml10"
+                        style="width:75px;height:35px;"
+                        ng-click="events.searchLeaveMessage()"
+                        ng-disabled="searchSubmitAble">查询
+                </button>
+                <a href="javascript:void(0)"
+                   ng-click="events.wantToLeaveMessage()"
+                   class="btn-r ml5">我要留言</a>
+            </li>
+        </ul>
+
+        <div class="leave-msg-block">
+            <div class="column">
+                <div class="user-message-box mt10" ng-repeat="item in model.leaveMessageList">
+                    <div class="message-info">
+                        <p class="mt20">留言类型：<span ng-bind="item.categoryName"></span></p>
+                    </div>
+                    <div class="message-bd">
+                        <div class="message-block"
+                             ng-if="subItem.lessThanFour"
+                             ng-init="subIndex=$index"
+                             ng-repeat="subItem in item.leaveMessages">
+                            <div class="msg-cont"><span class="b"
+                                                        ng-if="subIndex!==item.leaveMessages.length-1">【追加留言】</span><span
+                                    ng-bind="subItem.content"></span></div>
+                            <div class="msg-info clear">
+                                <div class="fl" ng-bind="subItem.createTime"></div>
+                                <div class="fr mr10"
+                                     ng-if="item.leaveMessages.length===1&&item.leaveMessages[0].reply===false"
+                                ><a href="javascript:void(0)"
+                                    ng-click="events.deleteLeaveMessage(subItem)"
+                                    class="btn-g">删除留言
+                                </a>
+                                </div>
+                            </div>
+                            <div class="reply-block" ng-if="subItem.replies.length>0">
+                                <div class="reply-cont">
+                                    <span class="t-r b">【客服回复】</span>回复留言：<span
+                                        ng-bind="subItem.replies[0].content"></span>
+                                </div>
+                                <div class="reply-info clear">
+                                    <div class="fl mt5 mb5" ng-bind="subItem.replies[0].createTime"></div>
+                                    <div class="fr"><input type="button"
+                                                           ng-click="events.openAddLeaveDialog(subItem,item)"
+                                                           ng-if="subItem.reply===true&&subIndex===0"
+                                                           class="btn-r"
+                                                           value="追加留言">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if="item.leaveMessages.length>3">
+                            <a href="javascript:void(0)"
+                               ng-if="model.showAllMessage===false"
+                               ng-click="events.showMessage()"
+                               class="ab pt10 ml10">还有<span ng-bind="item.leaveMessages.length-3"></span>个留言被隐藏
+                            </a>
+                            <a href="javascript:void(0)"
+                               ng-if="model.showAllMessage===true"
+                               ng-click="events.hideMessage()"
+                               class="ab pt10 ml10">收起留言
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="m-no-data tc" ng-if="model.hasMessageData===false&&copyMessageLen>0">
+            <img src="ahzj/fykccs/images/no-data.png" alt="空数据">
+            <p class="txt">没有查询到相关留言</p>
+        </div>
+
+
+    </div>
+    <div class="m-pages" ng-if="model.hasMessageData===true&&copyMessageLen>0" style="margin-bottom: 30px;">
+        <div pagination
+             ng-change="events.pageChange()"
+             ng-model="model.currentPage"
+             total-items="model.total"
+             items-per-page="model.itemsPerPage"
+             max-size="model.maxSize"
+             previous-text="上一页"
+             next-text="下一页"></div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<!-- /头部 -->
+<div class="p-wrap-full pos-nav  clear"><a href="#">首页</a><span class="plr3">&gt;</span>政策法规</div>
+<!--政策法规列表 -->
+<div class="p-wrap-full clear mb20">
+    <div class="w880 fl" style="width: 1180px">
+        <div class="p20 white-bg mh500">
+            <ul class="newslist-2 mb20">
+                <li ng-repeat="item in model.laws">
+                    <!--     ng-if="item.showRed===true" --><span class="dot"></span>
+                    <a href="javascript:void(0)" ng-click="events.detail(item)" ng-bind="item.title">
+                    </a>
+                    <span class="date" ng-bind="item.publishTime"></span>
+                </li>
+            </ul>
+
+            <div pagination
+                 ng-change="events.getCourseList()"
+                 ng-model="model.currentPage"
+                 total-items="model.total"
+                 items-per-page="model.itemsPerPage"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+        </div>
+    </div>
+    <!--<div class="w310 fr">
+        <div class="white-bg clear">
+            <div class="title-box mt18  clear"><h2 class="title">推荐政策</h2></div>
+            <div class="plr10 pt10 pb20">
+                <ul class="newslist clear ">
+                    <li><a href="#" class="wfull">关于更换“每月论坛2017年第3讲”主讲嘉宾的紧急通知</a></li>
+                    <li><a href="#"  class="wfull">2017年教育部各部门有哪些大动作?</a></li>
+                    <li><a href="#"  class="wfull">商学院教育改革 MBA教学体系需稳步向前</a></li>
+                    <li><a href="#"  class="wfull">教育部公布16年研究生招生考试复试分数线</a></li>
+                    <li><a href="#" class="wfull">新《财政总预算会计制度》讲解</a></li>
+                    <li><a href="#" class="wfull">关于更换“每月论坛2017年第3讲”主讲嘉宾的紧急通知</a></li>
+                    <li><a href="#"  class="wfull">2017年教育部各部门有哪些大动作?</a></li>
+                    <li><a href="#"  class="wfull">商学院教育改革 MBA教学体系需稳步向前</a></li>
+                    <li><a href="#"  class="wfull">教育部公布16年研究生招生考试复试分数线</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>-->
+</div>
+<!-- /课程列表 -->

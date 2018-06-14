@@ -1,0 +1,72 @@
+<!--tab按钮-->
+<div class="main-wrap-body" ng-show="$state.is('states.coursePoolRuleManager')">
+    <div class="tab-tit mt10">
+        <a class="current" ng-class="{current: flagModel.tabType === 'OWN'}" ng-click="events.tabClick($event,'OWN')">本单位</a>
+        <a class="" ng-class="{current: flagModel.tabType === 'PROJECT'}" ng-click="events.tabClick($event, 'PROJECT')"
+           ng-if="events.isSubProjectManager()">全部</a>
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.coursePoolRuleManager'"
+     ng-click="lessonTypeShow=false">
+    <!--本单位-->
+    <div ng-if="flagModel.tabType === 'OWN'">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.queryParams.name"
+                           placeholder="请输入选课规则名称" hb-clear-input
+                           ng-keyup="events.search($event)"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.queryParams.hasReference">
+                        <option ng-selected="" value="-1">是否被班级引用</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </li>
+                <li><a href="javascript:void(0)" has-permission="coursePoolRuleManager/find"
+                       ng-click="events.searchCoursePackage($event)" class="btn btn-b">查询</a></li>
+            </ul>
+        </div>
+        <div class="column">
+            <div class="dash-line-3"></div>
+            <a href="javascript:void(0);" has-permission="coursePoolRuleManager/create"
+               ng-click="events.addCoursePoolRule($event)" class="btn-r btn">新建选课规则</a>
+        </div>
+        当前已添加<span ng-bind="model.totalSum"></span>个选课规则
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.coursePoolRuleGrid" k-options="ui.coursePoolRuleGrid.options">
+            </div>
+        </div>
+    </div>
+
+    <!--项目级-->
+    <div ng-if="flagModel.tabType === 'PROJECT'">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <div hb-unit-select unit-id="model.queryParams.unitId"
+                         default-choose="true" default-txt="请选要查看的单位" ng-if="events.isSubProjectManager()"></div>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.queryParams.name"
+                           placeholder="请输入选课规则名称" hb-clear-input
+                           ng-keyup="events.search($event)"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.queryParams.hasReference">
+                        <option ng-selected="" value="-1">是否被班级引用</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </li>
+                <li><a href="javascript:void(0)" has-permission="coursePoolRuleManager/find"
+                       ng-click="events.searchCoursePackage($event)" class="btn btn-b">查询</a></li>
+            </ul>
+        </div>
+        当前已添加<span ng-bind="model.totalSum"></span>个选课规则
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.coursePoolRuleGrid" k-options="ui.coursePoolRuleGrid.options">
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view></div>

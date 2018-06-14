@@ -1,0 +1,64 @@
+<div class="main-wrap-body">
+    <div class="rel udf-16">
+        <div class="column">
+            <div class="col-tit clear">基础信息</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <table class="table table-nf">
+            <thead>
+            <tr>
+                <th width="150">资源授权方案名称</th>
+                <th width="150">涵盖的资源数量</th>
+                <th width="60">创建时间</th>
+                <th width="50">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="list-items" ng-repeat="item in model.selectSchemeArray">
+                <td>b{{item.name}}</td>
+                <td>课程 <span class="t-b b">b{{item.courseCount}}</span> 门；
+                    课程包 <span class="t-b b">b{{item.coursePoolCount}}</span> 个；
+                    题库 <span class="t-b b">b{{item.questionLibraryCount}}</span> 个；
+                    考试卷 <span class="t-b b">b{{item.examPaperCount}}</span> 份</td>
+                <td>b{{item.createTime}}</td>
+                <td class="op"><a href="javascript:void(0)" ng-click="events.removeScheme(item)">取消选择授权</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="column mt50">
+            <div class="col-tit">请选择授权资源机构</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <div kendo-grid="authorizedUnitGridInstance"
+             k-options="authorizedUnitGrid.options">
+        </div>
+        <div class="column mt50">
+            <div class="col-tit">待授权机构名单（<i class="txt-r">*</i>）</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <table class="table table-nf">
+            <thead>
+            <tr>
+                <th width="200">施教机构名称</th>
+                <th width="60">组织机构代码</th>
+                <th width="60">入驻时间</th>
+                <th width="50">管理员账号</th>
+                <th width="50">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in model.selectedAuthorizeUnit">
+                <td>b{{item.unitName}}</td>
+                <td>b{{item.organizationCode}}</td>
+                <td>b{{item.createTime}}</td>
+                <td>b{{item.unitManagerDto.loginAccount}}</td>
+                <td class="op"><a href="javascript:void(0)" ng-click="events.cancelSelectItem($event,item)">取消选择</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="tc dash-line-6 mt20">
+            <a href="javascript:void(0)" class="btn btn-r" ng-click="events.submitAuthorize($event)">提交并授权</a>
+            <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="events.goAuthorizeManage($event)">取消</a>
+        </div>
+    </div>
+</div>

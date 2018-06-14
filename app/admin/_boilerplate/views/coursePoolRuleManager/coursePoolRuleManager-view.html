@@ -1,0 +1,149 @@
+<div class="pos-nav-box">
+    <div class="pos-nav" ng-show="!model.showSuccess">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goCoursePoolRuleManager($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goCoursePoolRuleManager($event)">选课规则管理</a>
+        &gt; 选课规则详情
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="rel udf-2">
+        <div class="column">
+            <div class="col-tit">基本信息</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <ul class="ul-d-form">
+            <li>
+                <span class="left-txt" style="width: 119px;">规则被引用班级：</span>
+                <span title="b{{model.trainingClassScheme}}"
+                      style="margin-bottom:-6px; width:400px;overflow:hidden;text-overflow:ellipsis; white-space: nowrap;"
+                      ng-bind="model.trainingClassScheme==null?'-':model.trainingClassScheme+';'"></span>
+            </li>
+            <li><span class="left-txt" style="width: 119px;">选课规则：</span><span
+                    ng-bind="model.coursePoolRuleDto.ruleName"></span></li>
+            <li><span class="left-txt" style="width: 119px;">选课类型：</span><span
+                    ng-bind="model.coursePoolRuleDto.ruleType==1?'仅必修包':model.coursePoolRuleDto.ruleType==2?'仅选修包':model.coursePoolRuleDto.ruleType==3?'必修包+选修包':'未知'"></span>
+            </li>
+
+            <li>
+                <span class="left-txt" style="width: 119px;">整体选课要求：</span><span class="txt-r"
+                                                                                 ng-bind="model.coursePoolRuleDto.requiredPeriod"></span>学时
+            </li>
+            <li class="clear">
+                <span class="left-txt fl" style="width: 119px;">选课规则说明：</span>
+                <div class="tips-box w-textarea1 fl">
+                    <span ng-if="model.coursePoolRuleDto.ruleType==1">
+                        <span ng-if="model.coursePoolRuleDto.repeatChoose==true">1.允许重复选课，表示本平台内不同培训班的课程可允许重复使用，学员可重复选课，课程进度独立计算。</span>
+                        <span ng-if="model.coursePoolRuleDto.repeatChoose!=true">1.不允许重复选课，表示本平台内不同培训班的课程不允许重复使用，学员不可重复选课。</span><br>
+                        2.必修包课程为系统推送，学员无需选课。<br>
+                        3.必修包的选课学时为包内已添加课程的总学时数<span class="txt-r"
+                                                     ng-bind="model.coursePoolRuleDto.requiredPeriod"></span>
+                    </span>
+                    <span ng-if="model.coursePoolRuleDto.ruleType==2">
+                        <span ng-if="model.coursePoolRuleDto.repeatChoose==true">1.允许重复选课，表示本平台内不同培训班的课程可允许重复使用，学员可重复选课，课程进度独立计算。</span>
+                        <span ng-if="model.coursePoolRuleDto.repeatChoose!=true">1.不允许重复选课，表示本平台内不同培训班的课程不允许重复使用，学员不可重复选课。</span><br>
+                        2.整体选课学时要求为<span class="txt-r" ng-bind="model.coursePoolRuleDto.requiredPeriod"></span>学时；包内可独立配置具体的选课要求
+                        ，各选修包的包内学时要求之和=<span class="txt-r"
+                                             ng-bind="model.coursePoolRuleDto.requiredPeriod"></span>学时。<br>
+                        3.各选修包内的课程需按包内设定的要求选课，各选修包可允许在添加最后一门课程时超出要求学时，但整体选课要求不验证学时超出限制。<br>
+                    </span>
+                    <span ng-if="model.coursePoolRuleDto.ruleType==3">
+                        1.必修包和选修包的整体选课要求为<span class="txt-r" ng-bind="model.coursePoolRuleDto.requiredPeriod"></span>学时
+                        ，其中必修包<span class="txt-r" ng-bind="utils.getRequiredPeriod()"></span>学时
+                        ，选修包<span class="txt-r" ng-bind="utils.getOptionalPeriod()"></span>学时<br>
+                        2.必修包课程直接推送，无需选课；<br>
+                        3.选修包选课学时要求=整体选课学时-必修包课程总学时；各选修包的包内学时要求之和=<span class="txt-r"
+                                                                        ng-bind="utils.getOptionalPackageRequire()"></span>学时。<br>
+                        4.各选修包内的课程需按包内设定的要求选课，各选修包可允许在添加最后一门课程时超出要求学时，但整体选课要求不验证学时超出限制。
+                    </span>
+                </div>
+            </li>
+            <li class="clear" ng-if="model.coursePoolRuleDto.ruleType!=2">
+                <span class="left-txt fl" style="width: 119px;"><i>*</i>已添加必修包：</span>
+                <div class="w-textarea1 fl">
+                    <table class="table mt10">
+                        <thead>
+                        <tr>
+                            <th class="tl">课程包名称</th>
+                            <th width="70">内含课程数</th>
+                            <th width="70">总学时</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-show="model.requiredPackageList.length!=0">
+                        <tr ng-repeat="requiredPackage in model.requiredPackageList">
+                            <td class="tl"><span ng-bind="requiredPackage.packageName"></span></td>
+                            <td><span ng-bind="requiredPackage.courseCount"></span></td>
+                            <td><span ng-bind="requiredPackage.totalPeriod"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div ng-show="model.requiredPackageList.length==0" class="no-data clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">暂时没有数据!</div>
+                    </div>
+                </div>
+            </li>
+            <li class="clear" ng-if="model.coursePoolRuleDto.ruleType!=1">
+                <span class="left-txt fl" style="width: 119px;"><i>*</i>已添加选修包：</span>
+                <span class="ml10">选修包整体最少选课学时为
+                        <i ng-if="model.coursePoolRuleDto.ruleType==2" class="txt-r"
+                           ng-bind="model.coursePoolRuleDto.requiredPeriod"></i>
+                        <i ng-if="model.coursePoolRuleDto.ruleType==3" class="txt-r"
+                           ng-bind="utils.getOptionalPackageRequire()"></i>
+                    </span>
+            </li>
+            <li class="clear" ng-if="model.coursePoolRuleDto.ruleType!=1">
+                <span class="left-txt" style="width: 119px;">允许重复选课：</span>
+                <label><input type="checkbox" ng-checked="model.coursePoolRuleDto.repeatChoose==true"
+                              disabled>
+                    允许</label>
+                <div class="qus-ico">
+                    <span class="ico"></span>
+                    <span class="qus-txt">
+                        允许重复选课，表示本平台内不同的培训班可允许添加相同的课程，课程进度各自独立计算；但同一培训班内的课程不允许重复添加
+                    </span>
+                </div>
+            </li>
+            <li class="clear" ng-if="model.coursePoolRuleDto.ruleType!=1">
+                <span class="left-txt">&nbsp</span>
+                <label><input type="checkbox" ng-checked="model.coursePoolRuleDto.forbidOptionalPackageRequires===false"
+                              disabled> 包内存在选课要求</label>
+            </li>
+            <li class="clear" ng-if="model.coursePoolRuleDto.ruleType!=1">
+                <span class="left-txt">&nbsp</span>
+                <span>
+                <div class="w-textarea1 fl">
+                    <table class="table mt10">
+                        <thead>
+                        <tr>
+                            <th class="tl">课程包名称</th>
+                            <th width="70">内含课程数</th>
+                            <th width="70">总学时</th>
+                            <th width="90"
+                                ng-if="model.coursePoolRuleDto.forbidOptionalPackageRequires===false">包内选课要求</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-show="model.coursePoolRuleDto.optionalPackageRequires.length!=0">
+                        <tr ng-repeat="optionalPackage in model.coursePoolRuleDto.optionalPackageRequires">
+                            <td class="tl"><span ng-bind="optionalPackage.packageName"></span></td>
+                            <td><span ng-bind="optionalPackage.courseCount"></span></td>
+                            <td><span ng-bind="optionalPackage.totalPeriod"></span></td>
+                            <td ng-if="model.coursePoolRuleDto.forbidOptionalPackageRequires===false">
+                                <span ng-bind="optionalPackage.requiredPeriod"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div ng-show="model.coursePoolRuleDto.optionalPackageRequires.length==0" class="no-data clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">暂时没有数据!</div>
+                    </div>
+                </div>
+               </span>
+            </li>
+            <li><span class="left-txt">&nbsp</span><span class="left-txt-3">创建时间：</span><span
+                    ng-bind="model.coursePoolRuleDto.createTime"></span></li>
+            <li><span class="left-txt">&nbsp</span><span class="left-txt-3">创建人：</span><span
+                    ng-bind="model.coursePoolRuleDto.creator"></span></li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="prompt-window-box animated"
+     ng-if="messages.length>0"
+     style="z-index: 6000;"
+     ng-class="{'fadeInUp':showMessageContent, 'fadeOutDown': !showMessageContent}">
+    <div class="pw-tit">消息提示<span class="ico pw-close" ng-click="close($event)"></span></div>
+    <div class="pw-cont" ng-repeat="msg in messages" ng-if="currentMessageIndex===$index">
+        b{{msg.content}}
+    </div>
+    <div class="more clear">
+        <div class="page-num txt-g fl">
+            <a href="#" class="ico ico-prev" ng-click="prev($event)"></a>
+            <span class="txt-gr">b{{currentMessageIndex+1}}</span>/b{{msgNumberShown}}
+            <a href="#" class="ico ico-next" ng-click="next($event)"></a>
+        </div>
+        <a href="#" class="fr">查看详情</a>
+    </div>
+</div>

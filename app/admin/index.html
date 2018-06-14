@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>福建华博继续教育平台管理端</title>
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <link href="/bower_components/KendoUI/dist/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="/bower_components/KendoUI/dist/styles/kendo.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/bower_components/sweetalert/dist/sweetalert.css"/>
+    <script src="/bower_components/es5-shim/es5-shim.js"></script>
+    <script type="text/javascript">
+        var protocol = window.location.href.match(/http:\/\/|https:\/\//),
+            head = document.getElementsByTagName('head')[0],
+            base = document.createElement('base'),
+            replaceReg = 'seoadminseo'.split('seo')[1],
+            suffix = replaceReg ? '/' : '';
+        base.href = protocol + window.location.host + '/' + replaceReg + suffix;
+        head.appendChild(base);
+    </script>
+    <style>
+        .title-view .ng-leave {
+            display: none;
+        }
+    </style>
+</head>
+<body ng-controller="topController">
+<div hb-side-menu hide-on-some-op="showMenu"></div>
+<div class="main-wrap fr">
+    <div class="main-wrap-pos" ng-style="contentStyle">
+        <div class="abs" ng-class="{top: showApp_$$}">
+            <div ui-view="topView"></div>
+        </div>
+        <div hb-tab></div>
+    </div>
+</div>
+<script src="/bower_components/requirejs/require.js"
+        data-main="./main.config.js"></script>
+<script id="app_config_info">define("_app_config_infos_", function () {"use strict"; return [{"main":"ahzj\\kccs\\main.app.js","name":"ahzj\\kccs","theme":"ahzj/kccs/styles/webstyle.css"},{"main":"kccs\\kccsv2\\main.app.js","name":"kccs\\kccsv2","theme":"kccs/kccsv2/styles/webstyle.css"}] }) </script>
+</body>
+</html>

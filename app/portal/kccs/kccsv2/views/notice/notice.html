@@ -1,0 +1,27 @@
+<div class="lwhLoading" ng-if="model.lwhLoading===true">
+    <img src="kccs/kccsv2/images/loading1.gif" alt=""/>
+</div>
+<!-- /头部 -->
+<div class="p-wrap-full pos-nav  clear"><a href="#">首页</a><span class="plr3">&gt;</span>培训通知</div>
+<!-- 培训通知列表 -->
+<div class="p-wrap-full clear mb20">
+    <div class="w880 fl" style="width: 1180px">
+        <div class="p20 white-bg mh500">
+            <ul class="newslist-2 mb20">
+                <!--ng-class="{'unread': item.showRed===false}"  -->
+                <li ng-repeat="item in model.notice">
+                    <span class="dot"></span>
+                    <a href="javascript:void(0)" ng-click="events.detail(item)">{{item.title}}</a>
+                    <span class="date">{{item.publishTime}}</span></li>
+            </ul>
+            <div pagination
+                 ng-change="events.getCourseList()"
+                 ng-model="model.currentPage"
+                 total-items="model.total"
+                 items-per-page="model.itemsPerPage"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+        </div>
+    </div>
+</div>

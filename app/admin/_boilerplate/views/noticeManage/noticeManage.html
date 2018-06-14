@@ -1,0 +1,71 @@
+<div class="main-wrap-body" ng-click="events.mainPageCloseTree($event)"
+     ng-show="$state.current.name === 'states.noticeManage'">
+    <div class="column">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text" class="ipt ipt-medium"
+                           clear-operator placeholder="请输入公告的标题"
+                           ng-keyup="events.pressEnterKey($event)"
+                           ng-model="model.queryParam.title"
+                /></li>
+                <li><input type="text"
+                           class="ipt ipt-medium"
+                           ng-click="events.mainPageOpenTree($event)"
+                           ng-model="model.queryParam.publishObjectName"
+                           hb-readonly
+                           hb-clear-input
+                           placeholder="请选择发布对象"/></li>
+                <div class="column-block w-tree hide-block fl"
+                     ng-click="events.mainPageOpenTree($event)"
+                     ng-show="pageVar.mainPageShowTree"
+                     style="position: absolute;
+                   z-index: 10;
+                   left: 244px;
+                   width:194px;
+                   top:45px;
+                   max-height: 250px;
+                   overflow: auto;"
+                >
+                    <div kendo-tree-view="node.tree"
+                         k-options="ui.mainPageTree.options"
+                         k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.mainPageGetPublishObject($event,dataItem);">
+                      <label style="width: 140px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                    </div>
+                </div>
+                <li>
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="发布日期开始"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.publishBeginTime"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParam.publishBeginTime"
+                    /> -
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="发布日期结束"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.publishEndTime"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParam.publishEndTime"
+                    />
+                </li>
+                <li><a href="javascript:void(0);" class="btn btn-b" ng-click="events.MainPageQueryList()">查询</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="dash-line-1"></div>
+    <div class="column">
+        <a href="javascript:void(0);" class="btn-r btn" ng-click="events.openAdd($event)"
+           has-permission="noticeManage/add">发布公告</a>
+    </div>
+    <div class="column mt20">
+        <div kendo-grid="node.gridInstance" k-options="ui.grid.options">
+        </div>
+    </div>
+</div>
+<div ui-view></div>
+<div kendo-window="node.windows.addWindow" k-options="ui.windows.addWindow"></div>
+

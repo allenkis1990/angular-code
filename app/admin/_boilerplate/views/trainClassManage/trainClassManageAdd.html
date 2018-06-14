@@ -1,0 +1,627 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goTrainClassManage($event)"></a>
+        <a class="aw" href="javascript:void(0);" ng-click="events.goTrainClassManage($event)">培训班管理</a>
+        &gt; 新建培训班
+    </div>
+</div>
+<div class="m-box-2">
+    <div class="m-box-3">
+        <div class="main-wrap-body">
+            <div class="steps mb10">
+                <!-----------  margin-left的值为（步骤数-1）*20%  --------------->
+                <div class="bg-line rd3"><span class="bg-l-current bg-l-c-1 rd3"
+                                               ng-style="{'margin-left':model.step+'%'}"></span></div>
+                <ul class="ul-step ul-step-1 li-fl clear">
+                    <!---------  当前步骤添加 current  ------------>
+                    <li ng-class="{'current':model.step==0,'ed':model.step!=0}"><span class="ico s-1"></span>
+
+                        <p class="step-name">填写培训班基本信息</p></li>
+                    <!---------  已完成步骤添加 ed  ------------>
+                    <li ng-class="{'current':model.step==20,'ed':model.step!=20}"><span class="ico s-2"></span>
+
+                        <p class="step-name">选择培训班课程</p></li>
+                    <!---------  跳过的步骤添加 pass  ------------>
+                    <li ng-class="{'current':model.step==40,'ed':model.step!=40}"><span class="ico s-3"></span>
+
+                        <p class="step-name"></p>培训班考核
+                    </li>
+                    <li ng-class="{'current':model.step==60,'ed':model.step!=60}"><span class="ico s-4"></span>
+
+                        <p class="step-name"> 配置考试</p></li>
+                    <li ng-class="{'current':model.step==80}"><span class="ico s-5"></span>
+
+                        <p class="step-name">培训班发布</p></li>
+                </ul>
+            </div>
+
+            <!-----------------  步骤1    -------------->
+            <!-----------------
+                各个步骤在不是当前转态时，调用block-pos，
+                在当前转态时，步骤1和步骤6分别改成调用block-pos-1和block-pos-3，其他步骤改成调用block-pos-2
+            ---------------->
+            <div class="rel udf-2" ng-class="{'block-pos':model.step!=0,'block-pos-1':model.step==0}">
+                <form name="trainClassValidate" novalidate>
+                    <ul class="ul-d-form udf-2 lh-1">
+                        <li><span class="left-txt"><i>*</i>培训班名称：</span><input type="text" class="ipt ipt-large"
+                                                                               ng-model="model.trainClass.name"
+                                                                               name="name"
+                                                                               placeholder="培训班名称"
+                                                                               ajax-data="validateParams"
+                                                                               ng-maxlength="30"
+                                                                               required
+                                                                               ajax-validate
+                                                                               ajax-url="/web/admin/trainClass/validate"/>
+                            <span class="li-prompt"
+                                  ng-show="trainClassValidate.name.$dirty&&trainClassValidate.name.$error.required"><span
+                                    class="ico ico-prompt"></span>培训班名称不能为空。</span>
+                            <span class="li-prompt"
+                                  ng-show="trainClassValidate.name.$dirty && trainClassValidate.name.$error.ajaxValidate&&!trainClassValidate.name.$error.maxlength&&!trainClassValidate.name.$error.required"><span
+                                    class="ico ico-prompt"></span>培训班名称不能重复。</span>
+                            <span ng-show="trainClassValidate.name.$dirty && trainClassValidate.name.$error.maxlength"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>培训班名称长度不能超过30</span>
+                        </li>
+                        <li><span class="left-txt"><i>*</i>培训班分类：</span><input type="text" name="type"
+                                                                               class="ipt ipt-large"
+                                                                               ng-click="events.opentrainClassTypeTree()"
+                                                                               placeholder="请选择培训班分类"
+                                                                               ng-model="model.trainClass.trainingTypeName"
+                                                                               required
+                                                                               readonly="true"/>
+                            <span class="li-prompt"
+                                  ng-show="trainClassValidate.type.$dirty&&trainClassValidate.type.$error.required"><span
+                                    class="ico ico-prompt"></span>请选择培训班分类</span>
+
+                            <div class="hide-block hb-1 mh-1" ng-show="trainClassTypeShow">
+                                <div kendo-tree-view="node.trainTypeTree"
+                                     k-options="ui.trainTypeTree.options"
+                                     k-on-change="model.selectedItem = dataItem">
+                                    <span k-template ng-click="events.getTypeInfo(dataItem)"><label
+                                            style="width: 100px;"><span ng-bind="dataItem.name"></span></label></span>
+                                </div>
+                            </div>
+                        </li>
+                        <!--<li><span class="left-txt"><i>*</i>培训班班主任：</span><input type="text" class="ipt ipt-large"><a href="javascript:void(0);" class="btn btn-r ml10">添加</a></li>-->
+                        <li><span class="left-txt"><i>*</i>培训班类型：</span><label><input type="radio"
+                                                                                      ng-checked="model.trainClass.registrationType==0"
+                                                                                      ng-click="model.trainClass.registrationType=0;model.validateDate = true"/>非公开
+                            <span class="instructions-1">
+                                                        <span class="i-hover-block">
+                                                            <span class="t-arrow"></span>发起人在创建培训班中就将需要学习的人员拉到培训班中了，同时，没有开放学员报名的入口。
+                                                        </span>
+                                                    </span>
+                        </label>
+                            <label class="ml20"><input type="radio" ng-checked="model.trainClass.registrationType==1"
+                                                       ng-click="model.trainClass.registrationType=1;model.trainClass.registerMode=1"/>公开报名<span
+                                    class="instructions-1">
+                                                        <span class="i-hover-block">
+                                                            <span class="t-arrow"></span>公开报名，培训班有开放给学员报名的入口，学员按照报名时间去报名培训班。
+                                                        </span>
+                                                    </span>
+                            </label>
+                        </li>
+                        <li ng-if="model.trainClass.registrationType==1">
+                            <span class="left-txt"><i>*</i>培训参加方式：</span>
+                            <label><input type="radio" ng-click="events.setValue(0)"
+                                          ng-checked="model.trainClass.registerMode==0"/>固定报名时间
+                                <span class="instructions-1">
+                                                        <span class="i-hover-block">
+                                                            <span class="t-arrow"></span>培训班有固定的报名时间，该报名是在培训班开班之前截至的。只有报名结束之后，培训班可正式开班。
+                                                        </span>
+                                                         </span>
+                            </label>
+                            <label class="ml20"><input type="radio" ng-checked="model.trainClass.registerMode==1"
+                                                       ng-click="events.setValue(1)"/>随到随报名培训
+                                <span class="instructions-1">
+                                                        <span class="i-hover-block">
+                                                            <span class="t-arrow"></span>随到随报名的报名时间是跟着培训班的开班与结束时间，只要培训班在开班中，学员都可报名。
+                                                        </span>
+                                                    </span>
+                            </label>
+                        </li>
+                        <li ng-if="model.trainClass.registrationType==1&&model.trainClass.registerMode==0"><span
+                                class="left-txt"><i>*</i>报名起止时间：</span><input kendo-date-picker="node.registrationStart"
+                                                                              k-options="ui.datePicker.registrationStart.options"
+                                                                              ng-model="model.trainClass.registrationStartTime"
+                                                                              hb-readonly hb-clear-input type="text"
+                                                                              required
+                                                                              class="ipt ipt-medium"
+                                                                              placeholder="报名开始时间"/> -
+                            <input kendo-date-picker="node.registrationEnd"
+                                   k-options="ui.datePicker.registrationEnd.options"
+                                   ng-model="model.trainClass.registrationEndTime" hb-readonly hb-clear-input
+                                   type="text" class="ipt ipt-s" placeholder="报名结束时间"/></li>
+                        <li><span class="left-txt"><i>*</i>允许报名人数：</span><span ng-if="!model.notNumber"><input
+                                type="text" name="registrationNumber"
+                                ng-model="model.trainClass.registrationNumber"
+                                ng-blur="events.checkNumber(model.trainClass.registrationNumber)"
+                                class="ipt ipt-small"
+                                ng-pattern="/^[1-9]\d*$/"> 人</span>
+                            <span class="li-prompt"
+                                  ng-show="trainClassValidate.registrationNumber.$dirty&&trainClassValidate.registrationNumber.$error.pattern">
+                <span class="ico ico-prompt"></span>请输入正整数。</span><label class="ml20"><input type="checkbox"
+                                                                                             ng-checked="model.notNumber"
+                                                                                             ng-click="events.selectRegistrationNumber()">不限制人数</label>
+                        </li>
+                        <!--<li><span class="left-txt"><i>*</i>设置报名范围：</span><label><input type="radio">全部</label>-->
+                        <!--<label class="ml20"><input type="radio">特定范围</label>-->
+                        <!--</li>-->
+                        <!--<li class="clear">-->
+                        <!--<span class="left-txt fl">设定范围：</span>-->
+                        <!--<div class="fl">-->
+                        <!--<div class="w-textarea clear">-->
+                        <!--<div class="select-block">-->
+                        <!--<ul class="ul-course uc-5 fl li-fl">-->
+                        <!--<li class="w-7">福州市地方税务局、福州市地方税务局<a href="javascript:void(0);" class="btn-r btn-delete-2 m0">...</a></li>-->
+                        <!--</ul>-->
+                        <!--<ul class="ul-course uc-5 fl li-fl">-->
+                        <!--<li class="w-7">稽查科、稽查科<a href="javascript:void(0);" class="btn-r btn-delete-2 m0">...</a></li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <!--<a href="javascript:void(0);" class="btn btn-r mb10 fl">选择组织机构</a>-->
+                        <!--</div>-->
+                        <!--<div class="w-textarea clear">-->
+                        <!--<ul class="ul-course uc-5 li-fl">-->
+                        <!--<li class="w-7">销售岗位、销售岗位<a href="javascript:void(0);" class="btn-r btn-delete-2 m0">...</a></li>-->
+                        <!--</ul>-->
+                        <!--<a href="javascript:void(0);" class="btn btn-r mb10 mr10 fl">选择岗位</a>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                        <!--</li>-->
+                        <li><span class="left-txt"><i>*</i>培训起止时间：</span> <input kendo-date-picker="node.workBeginTime"
+                                                                                 k-options="ui.datePicker.begin.options"
+                                                                                 ng-model="model.trainClass.beginTime"
+                                                                                 hb-readonly hb-clear-input type="text"
+                                                                                 class="ipt ipt-medium"
+                                                                                 placeholder="培训班开始时间" required
+                        /> - <input
+                                kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                                ng-model="model.trainClass.endTime" hb-readonly hb-clear-input type="text"
+                                class="ipt ipt-s"
+                                placeholder="培训结束时间" required
+                        /></li>
+                        <!--<li><span class="left-txt">设置提醒：</span>一旦学员课程完成占比与计划进度相差 <input type="text" class="ipt ipt-mini"> %，系统将每-->
+                        <!--<input type="text" class="ipt ipt-mini">天进行邮件间隔提醒。-->
+                        <!--</li>-->
+                        <li class="clear"><span class="left-txt fl">培训班简介：</span><textarea
+                                class="textarea w-textarea fl" ng-model="model.trainClass.comment"></textarea></li>
+                    </ul>
+                    <div class="course-pic cp-1" ng-mouseleave="imgShow=false"
+                         ng-mouseenter="imgShow=!imgShow"
+                         style="left: 520px;">
+                        <img ng-src="b{{model.image}}">
+
+                        <div class="pic-hover" ng-class="{'visibility-hide': !imgShow,'visibility-show':imgShow}">
+                            <span class="pic-mask"></span>
+
+                            <div class="upload upload-1">
+                                <div upload-image
+                                     ng-model="model.uploadImage"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-center">
+                        <div class="btn-center">
+                            <a href="javascript:void(0);"
+                               ng-class="{'btn-disable':!trainClassValidate.$valid||!model.saveInfo||!model.validateDate||!model.validateNumber}"
+                               ng-click="events.saveTrainClassInfo($event)" class="btn btn-r">保存并下一步</a>
+                            <!--<a href="javascript:void(0);"-->
+                            <!--ng-class="{'btn-disable':!trainClassValidate.$valid||!model.saveInfo||!model.validateDate||!model.validateNumber}"-->
+                            <!--ng-click="events.saveTrainClassInfoDraft($event)" class="btn btn-r ml10">保存为草稿</a>-->
+                            <a href="javascript:void(0);" class="btn btn-g ml10" ng-click="events.cancel($event)">取消</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-----------------  步骤2    -------------->
+            <div class="main-wrap-body-1 mt0 clear"
+                 ng-class="{'block-pos':model.step!=20,'block-pos-2':model.step==20}">
+                <div class="clear">
+                    <div class="wp-2 fl">
+                        <div class="tab-tit">
+                            <a href="javascript:void(0);" class="current">课程分类</a>
+                            <!--<a href="javascript:void(0);">能力项</a>-->
+                        </div>
+                        <div class="column-block clear">
+                            <div class="cb-left">
+                                <!-----  能力项  ----->
+                                <!--<div class="column" ng-show="model.lessonDimension == 2">-->
+                                <!--<div id="ability" class="col-body p0">-->
+                                <!--<ul class="ul-tab-tit">-->
+                                <!--<li ng-repeat="ability in model.abilityList">-->
+                                <!--<a href="javascript:void(0);" ng-click="events.refreshLessonGridByAbility($event, $index, ability.id)" ng-class="{'current': $index==model.abilityCursor}">b{{ability.name}}<span ng-class="{'ico': $index==model.abilityCursor}"></span></a>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!-----  课程分类  ----->
+                                <div class="column">
+                                    <div id="lesson_type" kendo-tree-view="node.lessonTypeTree"
+                                         k-options="ui.lessonType" k-ng-delay="ui.lessonType"
+                                         class="col-body p0 ul-tab-tit">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cb-right-1">
+                                <div class="col-body bt0 h-1">
+                                    <div class="search-bar">
+                                        <ul class="ul-form uf-3 li-fl clear">
+                                            <li><input type="text" class="ipt ipt-medium"
+                                                       ng-keydown="events.queryLessonByEnter($event)"
+                                                       ng-model="model.lessonGridParams.name" placeholder="课程名称"/></li>
+                                            <li><a href="javascript:void(0);" class="btn btn-b"
+                                                   ng-click="events.queryLessonGrid($event, 0)">查询</a></li>
+                                            <li><a href="javascript:void(0);" class="btn btn-r"
+                                                   ng-click="events.batchSelect($event)">全选</a></li>
+                                        </ul>
+                                        <ul class="ul-form zt-a uf-3 li-fl clear">
+                                            <li><a href="javascript:void(0);" class="ml10"
+                                                   ng-class="{'current': model.lessonGridParams.resourceType == 0}"
+                                                   ng-click="events.queryLessonGrid($event, 0)">不限(b{{model.unlimitCount}})</a>
+                                            </li>
+                                            <li><a href="javascript:void(0);" class="ml10"
+                                                   ng-class="{'current': model.lessonGridParams.resourceType == 4}"
+                                                   ng-click="events.queryLessonGrid($event, 4)">运营推送(b{{model.operatorSendCount}})</a>
+                                            </li>
+                                            <li ng-if="model.userLevel != 431000 && model.userLevel != 432000"><a
+                                                    href="javascript:void(0);" class="ml10"
+                                                    ng-class="{'current': model.lessonGridParams.resourceType == 1}"
+                                                    ng-click="events.queryLessonGrid($event, 1)">集团(b{{model.blocCount}})</a>
+                                            </li>
+                                            <li><a href="javascript:void(0);" class="ml10"
+                                                   ng-class="{'current': model.lessonGridParams.resourceType == 2}"
+                                                   ng-click="events.queryLessonGrid($event, 2)">自建(b{{model.selfCount}})</a>
+                                            </li>
+                                            <!--<li><a href="javascript:void(0);" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 3}" ng-click="events.queryLessonGrid($event, 3)">子单位(b{{model.subordinateCount}})</a></li>-->
+                                        </ul>
+                                    </div>
+                                    <div class="dash-line-4" style="margin-bottom: 8px"></div>
+                                    <!--<div class="zt-a mt10">-->
+                                    <!--课程提供方：-->
+                                    <!--<a href="javascript:void(0);" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 0}" ng-click="events.queryLessonGrid($event, 0)">不限(b{{model.unlimitCount}})</a>-->
+                                    <!--<a href="javascript:void(0);" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 1}" ng-click="events.queryLessonGrid($event, 1)">集团(b{{model.blocCount}})</a>-->
+                                    <!--<a href="javascript:void(0);" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 2}" ng-click="events.queryLessonGrid($event, 2)">自建(b{{model.selfCount}})</a>-->
+                                    <!--</div>-->
+                                    <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid"
+                                         k-ng-delay="ui.lessonGrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wp-3 fr">
+                        <div class="tab-tit clear">
+                            <a href="javascript:void(0);" class="current">已选课程</a>
+                            <span>已选b{{model.selectedLessonList.length}}门，共b{{model.creditCount}}学分</span>
+                            <a href="javascript:void(0);" ng-click="events.empty($event)" class="btn btn-b fr">清空</a>
+                        </div>
+                        <div class="column-block bt0 clear">
+                            <div class="col-body bt0 h-1">
+                                <div class="search-bar">
+                                    <ul class="ul-form uf-3 li-fl clear">
+                                        <li><input ng-model="editLessonNameFilter" type="text" class="ipt ipt-medium"
+                                                   placeholder="课程名称"/></li>
+                                        <li><a href="javascript:void(0);" ng-click="events.reloadResource($event)"
+                                               class="btn btn-b">查询</a></li>
+                                    </ul>
+                                </div>
+                                <div class="dash-line-4"></div>
+                                <table class="table mt10">
+                                    <thead>
+                                    <tr>
+                                        <th width="20">No.</th>
+                                        <th>课程名称</th>
+                                        <th width="110">课程分类</th>
+                                        <th width="60">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="lesson in model.selectedLessonList | filter: {name: editLessonNameFilter}">
+                                        <td>b{{$index + 1}}</td>
+                                        <td class="tl"><a href="javascript: void(0)" class="c-tit">b{{lesson.name}}</a>
+                                        </td>
+                                        <td>b{{lesson.lessonTypeName}}</td>
+                                        <td class="op">
+                                            <a href="javascript:void(0);"
+                                               ng-click="events.remove($event, $index, lesson.id)">取消选择</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-center">
+                    <div class="btn-center">
+                        <a href="javascript:void(0);"
+                           ng-class="{'btn-disable':model.selectedLessonIdList.length==0||!model.saveCourse}"
+                           class="btn btn-r"
+                           ng-click="events.createTrainClassLesson($event)">保存并下一步</a>
+                        <a href="javascript:void(0);"
+                           ng-class="{'btn-disable':model.selectedLessonIdList.length==0||!model.saveCourse}"
+                           class="btn btn-r ml10" ng-click="events.createTrainClassLessonDraft($event)">保存为草稿</a>
+                        <a href="javascript:void(0);" class="btn btn-r ml10"
+                           ng-click="events.comeBack($event)">返回上一步</a>
+                        <a href="javascript:void(0);" class="btn btn-g ml10" ng-click="events.cancel($event)">取消</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------------  步骤3   -------------->
+            <div class="main-wrap-body-1 mt0 clear"
+                 ng-class="{'block-pos':model.step!=40,'block-pos-2':model.step==40}">
+                <form name="trainClassAssessValidate" novalidate>
+                    <div class="col-tit">班级考核(课程b{{model.selectedLessonIdList.length}}门)</div>
+                    <div class="dash-line-1"></div>
+                    <ul class="ul-form mt30 mb30 w-4 auto">
+                        <li><input type="checkbox"
+                                   ng-click="events.setCompleteCourseQuantityValue(model.completeCourse);model.completeCourse=!model.completeCourse"
+                                   ng-checked="model.completeCourse"> 学员学完的课程数，需达到 <input type="text"
+                                                                                          name="completeCourseQuantity"
+                                                                                          ng-class="{'ipt-disabled':!model.completeCourse}"
+                                                                                          ng-readonly="!model.completeCourse"
+                                                                                          ng-blur="events.checkCompleteCourseQuantity(model.trainClassAssess.completeCourseQuantity)"
+                                                                                          class="ipt ipt-mini"
+                                                                                          ng-pattern="/^[1-9]\d*$/"
+                                                                                          ng-model="model.trainClassAssess.completeCourseQuantity"/>
+                            门，才算考核通过。
+                        </li>
+                        <li><input type="checkbox"
+                                   ng-click="events.setpassExamQuantityValue(model.passExam);model.passExam=!model.passExam"
+                                   ng-checked="model.passExam"> 学员考试成绩需合格 <input type="text" class="ipt ipt-mini"
+                                                                                 name="passExamQuantity"
+                                                                                 ng-class="{'ipt-disabled':!model.passExam}"
+                                                                                 ng-pattern="/^[1-9]\d*$/"
+                                                                                 ng-blur="events.checkPassExamQuantity(model.trainClassAssess.passExamQuantity)"
+                                                                                 ng-readonly="!model.passExam"
+                                                                                 ng-model="model.trainClassAssess.passExamQuantity"/>
+                            场 ，才算考核通过。
+                        </li>
+                        <div class="dash-line-4"></div>
+                        <div ng-if="model.completeCourse&&model.passExam">
+                            <li><label><input type="radio" ng-checked="model.trainClassAssess.assessType==1"
+                                              ng-click="model.trainClassAssess.assessType=1">以上两条件是“或”的关系 </label>
+                            </li>
+                            <li><label><input type="radio" ng-checked="model.trainClassAssess.assessType==2"
+                                              ng-click="model.trainClassAssess.assessType=2">以上两条件是“且”的关系</label>
+                            </li>
+                        </div>
+                    </ul>
+                </form>
+                <div class="btn-center">
+                    <div class="btn-center">
+                        <a href="javascript:void(0);" class="btn btn-r"
+                           ng-class="{'btn-disable':!trainClassAssessValidate.$valid||!model.savetrainClassAssess||!model.examQuantityValidateDate}"
+                           ng-click="events.checkCompleteCourseQuantity(model.trainClassAssess.completeCourseQuantity);events.releaseTrainClassAssess($event)">保存并下一步</a>
+                        <a href="javascript:void(0);" class="btn btn-r ml10"
+                           ng-class="{'btn-disable':!trainClassAssessValidate.$valid||!model.savetrainClassAssess||!model.examQuantityValidateDate}"
+                           ng-click="events.checkCompleteCourseQuantity(model.trainClassAssess.completeCourseQuantity);events.saveDraft($event)">保存为草稿</a>
+                        <a href="javascript:void(0);" class="btn btn-r ml10"
+                           ng-click="events.comeBack($event)">返回上一步</a>
+                        <a href="javascript:void(0);" class="btn btn-g ml10" ng-click="events.cancel($event)">取消</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------------  步骤4    -------------->
+            <div class="main-wrap-body-1 mt0 clear "
+                 ng-class="{'block-pos':model.step!=60,'block-pos-2':model.step==60}">
+                <div class="column" ng-if="model.exams.length>0">
+                    <a href="javascript:void(0);" class="btn-r btn" ng-click="events.addExam($event)">添加考试</a>
+                    <table class="table table-f mt10">
+                        <thead>
+                        <tr>
+                            <th width="40">No.</th>
+                            <th>考试名称</th>
+                            <th width="80">试卷类型</th>
+                            <th width="60">考试总分</th>
+                            <th width="100">考试及格分数</th>
+                            <th width="100">考试时长(分钟)</th>
+                            <th width="100">考试前置条件</th>
+                            <th width="150">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="exam in model.exams">
+                            <td><span ng-bind="$index+1"></span></td>
+                            <td><span ng-bind="exam.name"></span></td>
+                            <td><span ng-bind="exam.examRange==1?'考试':(exam.examRange == 2?'练习':'模拟')"></span></td>
+                            <td><span ng-bind="exam.totalScore"></span></td>
+                            <td><span ng-bind="exam.passScore"></span></td>
+                            <td><span ng-bind="exam.examTimeLength"></span></td>
+                            <td><span ng-bind="exam.completeQuantity?'学完'+exam.completeQuantity+'门':'暂无条件'"></span></td>
+                            <td class="op">
+                                <a href="javascript:void(0);" ng-click="events.preview($event,exam)">预览试卷</a>
+                                <!--<a href="javascript:void(0);" ng-click="events.updateExam($event,$index,exam)">修改</a>-->
+                                <a href="javascript:void(0);" ng-click="events.operatingExam($event,$index,exam)">b{{exam.released?'停用':'启用'}}</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn-center">
+                        <div class="btn-center">
+                            <a href="javascript:void(0)" class="btn btn-r"
+                               ng-class="{'btn-disable': !model.publishTrain||model.trainClassAssess.passExamQuantity>model.exams.length}"
+                               ng-click="events.publishTrain($event)">发布培训班</a>
+                            <a href="javascript:void(0);" class="btn btn-r ml10"
+                               ng-click="events.cancel($event)">保存为草稿</a>
+                            <a href="javascript:void(0);" class="btn btn-r ml10" ng-click="events.comeBack($event)">返回上一步</a>
+                            <a href="javascript:void(0);" class="btn btn-g ml10" ng-click="events.cancel($event)">取消</a>
+                        </div>
+                    </div>
+                </div>
+                <!----------  空数据样式  ------------->
+                <div class="column w-4 auto mt20" ng-if="model.exams.length==0">
+                    <p class="tc">是否配置培训班考试，如果需要，点击“添加考试”按钮，如果不需要，点击“发布培训班”按钮！</p>
+
+                    <div class="btn-center">
+                        <div class="btn-center">
+                            <a href="javascript:void(0);" class="btn btn-r" ng-click="events.addExam($event)">添加考试</a>
+                            <a href="javascript:void(0);" class="btn btn-r ml10" ng-click="events.comeBack($event)">返回上一步</a>
+                            <a href="javascript:void(0);" class="btn btn-r ml10"
+                               ng-class="{'btn-disable': !model.publishTrain||model.trainClassAssess.passExamQuantity>model.exams.length}"
+                               ng-click="events.publishTrain($event)">发布培训班</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------------  步骤5    -------------->
+            <div class="prompt-box block-pos" ng-class="{'block-pos':model.step!=80,'block-pos-3':model.step==80}">
+                <div class="p-img fl"><img src="@systemUrl@/images/img-complete.png"></div>
+                <div class="p-txt fr">
+                    <p>培训班已成功发布!</p>
+                    <span>是否继续发布新培训班? <a href="javascript:void(0);"
+                                         ng-click="events.continuePost($event)">立即发布</a></span>
+                    <span>返回培训班列表<a href="javascript:void(0);"
+                                    ng-click="events.goTrainClassManage($event)">立即返回</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div kendo-window="node.windows.addExam1" k-options="ui.windows.addExam1"></div>
+<!--<div kendo-window="node.windows.addExam2" k-options="ui.windows.addExam2"></div>-->
+<div kendo-window="node.windows.addExam2" k-options="ui.windows.addExam2">
+    <div class="dialog wp-m-full">
+        <div class="dialog-body">
+            <div class="dialog-tit">b{{model.addExam?'添加考试':'修改考试'}}<a href="javascript:void(0)"
+                                                                       ng-click="node.windows.addExam2.close()"
+                                                                       class="ico ico-close"></a></div>
+            <div class="dialog-cont">
+                <form name="examValidate" novalidate>
+                    <div class="rel udf-6">
+                        <ul class="ul-d-form udf-2 lh-1">
+                            <li>
+                                <span class="left-txt"><i>*</i>考试名称：</span>
+                                <input type="text" class="ipt ipt-large"
+                                       name="name"
+                                       ng-model="model.releaseExam.name"
+                                       ng-maxlength="30"
+                                       required
+                                >
+                                <span class="li-prompt"
+                                      ng-show="examValidate.name.$dirty&&examValidate.name.$error.required"><span
+                                        class="ico ico-prompt"></span>考试名称不能为空。</span>
+                                <span ng-show="examValidate.name.$dirty && examValidate.name.$error.maxlength"
+                                      class="li-prompt">
+                                        <span class="ico ico-prompt"></span>考试名称长度不能超过30</span>
+                            </li>
+                            <li class="clear">
+                                <span class="left-txt fl"><i>*</i>所用试卷：</span><span
+                                    ng-bind="model.releaseExam.paperName"></span>
+                            </li>
+                            <li>
+                                <span class="left-txt">考试总分：</span>
+                                <span ng-bind="model.releaseExam.totalScore"></span>
+                            </li>
+                            <li>
+                                <span class="left-txt"><i>*</i>考试及格分数：</span>
+                                <input type="text" class="ipt ipt-large" ng-model="model.releaseExam.passScore"
+                                       name="passScore"
+                                       ng-pattern="/^[1-9]\d*$/"
+                                       required
+                                /><span class="ml5">分</span>
+                                <span class="li-prompt"
+                                      ng-show="examValidate.passScore.$dirty&&examValidate.passScore.$error.required">
+                          <span class="ico ico-prompt"></span>考试及格分数不能为空。
+                            </span>
+                                <span class="li-prompt"
+                                      ng-show="model.releaseExam.passScore>model.releaseExam.totalScore">
+                          <span class="ico ico-prompt"></span>考试及格分数不能大于总分数
+                            </span>
+                                <span class="li-prompt"
+                                      ng-show="examValidate.passScore.$dirty&&examValidate.passScore.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                            </li>
+                            <li>
+                                <span class="left-txt"><i>*</i>考试时长：</span>
+                                <input type="text" class="ipt ipt-large" ng-model="model.releaseExam.examTimeLength"
+                                       name="examTimeLength"
+                                       ng-pattern="/^[1-9]\d*$/"
+                                       required
+                                />
+                                <span class="ml5">分钟</span>
+                                <span class="li-prompt"
+                                      ng-show="examValidate.examTimeLength.$dirty&&examValidate.examTimeLength.$error.required">
+                    <span class="ico ico-prompt"></span>考试时长不能为空。</span>
+                                <span class="li-prompt"
+                                      ng-show="examValidate.examTimeLength.$dirty&&examValidate.examTimeLength.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                            </li>
+                            <li ng-if="model.completeCourse">
+                                <span class="left-txt">考试前置条件：</span>
+                                学员需学完 <input type="text" class="ipt ipt-mini"
+                                             ng-model="model.releaseExam.completeQuantity"
+                                             name="completeQuantity" ng-pattern="/^[1-9]\d*$/"/> 门课程，方可开放考试。
+                                <span class="li-prompt"
+                                      ng-show="examValidate.completeQuantity.$dirty&&examValidate.completeQuantity.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                                <span class="li-prompt"
+                                      ng-show="model.releaseExam.completeQuantity>model.selectedLessonIdList.length">
+                                   <span class="ico ico-prompt"></span>课程数必须小于课程总数b{{model.selectedLessonIdList.length}}门。</span>
+                            </li>
+                            <!--<li>
+                                <span class="left-txt"><i>*</i>考试次数：</span>
+                                该场考试允许学员考 <input type="text" class="ipt ipt-mini"
+                                                 name="examCount"
+                                                 ng-pattern="/^[1-9]\d*$/"
+                                                 ng-model="model.releaseExam.examCount"
+                                                 required
+                                                 /> 次
+                                        <span class="li-prompt"
+                                              ng-show="examValidate.examCount.$dirty&&examValidate.examCount.$error.required"
+                                            >
+                    <span class="ico ico-prompt"></span>考试次数不能为空。</span>
+                      <span class="li-prompt"
+                            ng-show="examValidate.examCount.$dirty&&examValidate.examCount.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                            </li>-->
+                            <!--<li><span class="left-txt">考试通过后是否可以继续考试：</span><select class="slt slt-small"
+                                                                                    ng-model="model.releaseExam.continueExam">
+                                <option value="1" selected>是</option>
+                                <option value="0">否</option>
+                            </select>
+                            </li>-->
+
+                            <li>
+                                <span class="left-txt">成绩公布方式：</span>
+                                <span class="mr30"><input type="radio" value="0"
+                                                          ng-model="model.releaseExam.publishType"/>不公布</span>
+                                <span class="mr30" ng-if="!model.examPaperIncludeSubjective"><input type="radio"
+                                                                                                    value="1"
+                                                                                                    ng-model="model.releaseExam.publishType"/>考完公布</span>
+                                <input type="radio" value="2" ng-model="model.releaseExam.publishType"/>限时公布
+                            </li>
+                            <li ng-if="model.examPaperIncludeSubjective">
+                                <span class="left-txt"></span>
+                                <span style="color:red">选择的试卷包含主观题，不能选择考完公布</span>
+                            </li>
+
+                            <li ng-if="model.releaseExam.publishType=='2'"><span
+                                    class="left-txt"><i>*</i>公布时间：</span><input kendo-date-picker="node.publishTime"
+                                                                                k-options="ui.datePicker.publishDate.options"
+                                                                                ng-model="model.releaseExam.publishTime"
+                                                                                hb-readonly hb-clear-input type="text"
+                                                                                required
+                                                                                class="ipt ipt-medium"
+                                                                                placeholder="公布时间"/>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="btn-center">
+                <a href="javascript:void(0);" class="btn btn-r"
+                   ng-class="{'btn-disable':!examValidate.$valid||!model.saveReleaseExam||model.releaseExam.completeQuantity>model.selectedLessonIdList.length||model.releaseExam.passScore>model.releaseExam.totalScore}"
+                   ng-click="events.releaseExam($event)">b{{model.addExam?'发布考试':'修改考试'}}</a>
+                <a href="javascript:void(0);" class="btn btn-r" ng-click="events.returnExamList($event)">返回上一步</a>
+                <a href="javascript:void(0);" class="btn btn-g ml10" ng-click="events.cancelReleaseExam($event)">取消</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,174 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.resAuthorizedUnitInfo" class="ico return"></a>
+        <a href="javascript: void(0);" ui-sref="states.resAuthorizedUnitInfo" class="aw">机构资源授权情况</a> >
+        <span>查看资源明细</span>
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="rel udf-16" style="width: 1200px">
+        <div class="column mt20 fs16">
+            <span class="b">现有在用资源数统计：</span>
+            课程   <span class="t-b b" ng-bind="model.resourceCount.course"></span> 门；
+            课程包 <span class="t-b b" ng-bind="model.resourceCount.coursePool"></span> 个；
+            题库   <span class="t-b b" ng-bind="model.resourceCount.questionLibrary"></span> 个；
+            考试卷 <span class="t-b b" ng-bind="model.resourceCount.examPaper"></span> 份
+            <span class="t-r ml10">（同一个资源去重统计）</span>
+        </div>
+        <div class="column mt20">
+            <div class="col-tit">资源清单</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <div class="mt20">
+            请选择查看的方案：
+            <select class="slt slt-medium"
+                    ng-options="item.id as item.name for item in model.listResourceBag"
+                    ng-model="model.resourceBagId">
+            </select>
+
+        </div>
+        <div class="tab-tit mt20">
+            <a href="" class="current" ng-class="{current: flagModel.currentTabType === 'COURSE'}"
+            ng-click="events.toggleTab('COURSE')">
+                课程（<span ng-bind="model.resourceCount.course">></span>门）
+            </a>
+            <a href="" ng-class="{current: flagModel.currentTabType === 'COURSE_POOL'}"
+               ng-click="events.toggleTab('COURSE_POOL')">
+                课程包（<span ng-bind="model.resourceCount.coursePool">></span>个）
+            </a>
+            <a href="" ng-class="{current: flagModel.currentTabType === 'QUESTION_LIBRARY'}"
+               ng-click="events.toggleTab('QUESTION_LIBRARY')">
+                题库（<span ng-bind="model.resourceCount.questionLibrary">></span>个）
+            </a>
+            <a href="" ng-class="{current: flagModel.currentTabType === 'PAPER_EXAM'}"
+               ng-click="events.toggleTab('PAPER_EXAM')">
+                考试卷（<span ng-bind="model.resourceCount.examPaper">></span>份）
+            </a>
+        </div>
+        <!--课程-->
+        <div class="column" ng-show="flagModel.currentTabType === 'COURSE'">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入课程名称" ng-model="model.courseArg.name">
+                    </li>
+                    <li>
+                        <select class="slt slt-small"
+                                ng-options="item.value as item.type for item in model.authorizeStatusOption"
+                                ng-model="model.courseArg.authorizationState">
+                        </select>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadCourseGrid()">查询</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="column table-box mt20">
+
+                <div kendo-grid="node.courseGridInstance"
+                     k-options="grid.courseGrid">
+                </div>
+            </div>
+        </div>
+        <!--课程包-->
+        <div class="column" ng-show="flagModel.currentTabType === 'COURSE_POOL'">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入课程包名称" ng-model="model.coursePoolArg.name">
+                    </li>
+                    <li>
+                        <select class="slt slt-small"
+                                ng-options="item.value as item.type for item in model.authorizeStatusOption"
+                                ng-model="model.coursePoolArg.authorizationState">
+                        </select>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadCoursePoolGrid()">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column table-box mt20">
+
+                <div kendo-grid="node.coursePoolGridInstance"
+                     k-options="grid.coursePoolGrid">
+                </div>
+            </div>
+        </div>
+        <!--题库-->
+        <div class="column" ng-show="flagModel.currentTabType === 'QUESTION_LIBRARY'">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" class="ipt ipt-medium"
+                               ng-click="events.openQuestionLibraryTree($event)"
+                               placeholder="请选择题库"
+                               ng-model="model.libraryName">
+
+                        <div class="column-block w-tree fl"
+                             ng-show="flagModel.questionLibraryTreeShow"
+                             ng-click="$event.openTree($event)"
+                             style="  position: absolute;z-index: 10; width:193px;max-height: 200px">
+                            <div class="col-body">
+                                <div kendo-tree-view="node.tree"
+                                     k-options="tree.questionLibraryTree.options"
+                                     k-on-change="model.selectedItem = dataItem">
+                                    <span k-template ng-click="events.bindQuestionLibraryTree(dataItem,$event)">
+                                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <select class="slt slt-small"
+                                ng-options="item.value as item.type for item in model.questionTypeOption"
+                                ng-model="model.questionArg.questionType">
+                        </select>
+                    </li>
+                    <li>
+                        <select class="slt slt-small"
+                                ng-options="item.value as item.type for item in model.authorizeStatusOption"
+                                ng-model="model.questionArg.authorizationState">
+                        </select>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadQuestionGrid()">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column table-box mt20">
+
+                <div kendo-grid="node.questionGridInstance"
+                     k-options="grid.questionGrid">
+                </div>
+            </div>
+        </div>
+        <!--试卷-->
+        <div class="column" ng-show="flagModel.currentTabType === 'PAPER_EXAM'">
+            <div class="column table-box mt20">
+                <div class="search-bar mt10">
+                    <ul class="ul-form li-fl clear">
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入考试卷名称" ng-model="model.paperExamArg.name">
+                        </li>
+                        <li>
+                            <select class="slt slt-small"
+                                    ng-options="item.value as item.type for item in model.authorizeStatusOption"
+                                    ng-model="model.paperExamArg.authorizationState">
+                            </select>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadPaperExamGrid()">查询</a>
+                        </li>
+                    </ul>
+                </div>
+                <div kendo-grid="node.paperExamGridInstance"
+                     k-options="grid.paperExamGrid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

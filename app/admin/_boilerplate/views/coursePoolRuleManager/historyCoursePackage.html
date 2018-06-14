@@ -1,0 +1,38 @@
+<div class="dialog w-10">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择课程包<a href="javascript:void(0);" class="ico ico-close"
+                                        ng-click="events.toClosePage($event)"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <div hb-authorized-option query-params = "model.authorizeQuery" lock-range-for-res = "coursePool"></div>
+                    </li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium" ng-model="model.coursePackageParams.poolName"
+                               placeholder="请输入课程包名称"
+                               ng-keyup="events.search($event)"/>
+                    </li>
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.coursePackageParams.createStartTime" hb-readonly hb-clear-input type="text"
+                               class="ipt ipt-medium"
+                               placeholder="课程包创建时间"/> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.coursePackageParams.createEndTime" hb-readonly hb-clear-input type="text"
+                               class="ipt ipt-s"
+                               placeholder="课程包创建时间"/>
+
+                    </li>
+                    <li><a href="javascript:void(0);" class="btn btn-b"
+                           ng-click="events.searchCoursePackage($event)">查询</a></li>
+                </ul>
+            </div>
+            <div class="column table-box mt10">
+                <div kendo-grid="node.coursePackageGrid"
+                     k-options="ui.coursePackageGrid.options">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

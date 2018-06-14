@@ -1,0 +1,92 @@
+<div class="main-wrap main-wrap-2">
+
+    <div class="w-bg clear mb50">
+        <!-- 位置导航 -->
+        <div class="pos-nav clear">
+            <span class="p-ico"></span>当前位置：<a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span><a href="javascript:void(0)">培训指南</a><span>&gt;</span>{{events.getTypeName()}}
+        </div>
+        <!-- /位置导航 -->
+        <div class="clear mt15">
+            <div class="w307 fl blk-box mb15">
+                <span class="blk-top-left p-ico"></span>
+                <span class="blk-top-right p-ico"></span>
+                <span class="blk-bottom-left p-ico"></span>
+                <span class="blk-bottom-right p-ico"></span>
+                <div class="blk-con" style="height: 447px;">
+                    <h2 class="p-ico pxzn-t-ico">培训指南</h2>
+                    <ul class="pxzn-list">
+                        <li class="img-1" ng-click="$state.go('states.accountant.trainDirection',{type:1})">
+                            <a href="javascript:void(0)"><span class="p-ico pxzn-ico-1"></span>培训须知</a>
+                        </li>
+                        <li class="img-2" ng-click="$state.go('states.accountant.trainDirection',{type:2})">
+                            <a href="javascript:void(0)"><span class="p-ico pxzn-ico-2"></span>培训流程</a>
+                        </li>
+                        <li class="img-3" ng-click="$state.go('states.accountant.trainDirection',{type:3})">
+                            <a href="javascript:void(0)"><span class="p-ico pxzn-ico-3"></span>操作演示</a>
+                        </li>
+                        <li class="img-4" ng-click="$state.go('states.accountant.trainDirection',{type:4})">
+                            <a href="javascript:void(0)"><span class="p-ico pxzn-ico-4"></span>常见问题</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="w780 fr mr15">
+                <div class="m-article" ng-if="model.type==='1'">
+                    <div class="article-top-2">
+                        <h1>培训须知</h1>
+                    </div>
+                    <div class="article-text-2">
+                        <p class="b">一、学习须知</p>
+                        <p>对培训平台操作和使用上有疑问您可拨打客服电话0551-65329081转614进行咨询。<br>
+                            视频暂不支持谷歌、火狐、遨游以及极速等浏览器播放视频；建议使用IE浏览器，IE8以上版本请使用兼容模式。</p>
+                        <p class="b">二、缴费须知</p>
+                        <p>平台仅支持在线网银缴费，学员根据缴费向导完成缴费后，系统将自动为您开通学习权限。</p>
+                    </div>
+                </div>
+
+
+                <div class="m-article" ng-if="model.type==='2'">
+                    <div class="article-top-2">
+                        <h1>培训流程</h1>
+                    </div>
+                    <div class="article-text-2">
+                        <p class="b">一、学习须知</p>
+                        <p>对培训平台操作和使用上有疑问您可拨打客服电话0551-65329081转614进行咨询。<br>
+                            视频暂不支持谷歌、火狐、遨游以及极速等浏览器播放视频；建议使用IE浏览器，IE8以上版本请使用兼容模式。</p>
+                        <p class="b">二、缴费须知</p>
+                        <p>平台仅支持在线网银缴费，学员根据缴费向导完成缴费后，系统将自动为您开通学习权限。</p>
+                    </div>
+                </div>
+
+
+                <div class="m-article" ng-if="model.type==='3'">
+                    <div class="article-top-2">
+                        <h1>操作演示</h1>
+                    </div>
+                    <div class="article-text-2">
+                        <p class="b">一、学习须知</p>
+                        <p>对培训平台操作和使用上有疑问您可拨打客服电话0551-65329081转614进行咨询。<br>
+                            视频暂不支持谷歌、火狐、遨游以及极速等浏览器播放视频；建议使用IE浏览器，IE8以上版本请使用兼容模式。</p>
+                        <p class="b">二、缴费须知</p>
+                        <p>平台仅支持在线网银缴费，学员根据缴费向导完成缴费后，系统将自动为您开通学习权限。</p>
+                    </div>
+                </div>
+
+                <div class="m-article" ng-if="model.type==='4'">
+                    <div class="article-top-2">
+                        <h1>常见问题</h1>
+                    </div>
+                    <div class="article-text-2">
+                        <p class="b">一、学习须知</p>
+                        <p>对培训平台操作和使用上有疑问您可拨打客服电话0551-65329081转614进行咨询。<br>
+                            视频暂不支持谷歌、火狐、遨游以及极速等浏览器播放视频；建议使用IE浏览器，IE8以上版本请使用兼容模式。</p>
+                        <p class="b">二、缴费须知</p>
+                        <p>平台仅支持在线网银缴费，学员根据缴费向导完成缴费后，系统将自动为您开通学习权限。</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

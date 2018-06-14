@@ -1,0 +1,152 @@
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+    <div class="m-right-block fr">
+        <div class="right-block-bd">
+            <div class="m-screen">
+                <div class="screen-style" style="min-height:40px;height:auto"><span class="style-name"
+                                                                                    style="width: 100px">科目</span
+                ><a href="javascript:void(0)"
+                    style="text-decoration: none;margin-left: 10px"
+                    ng-click="events.tabSubject(item)"
+                    ng-bind="item.name"
+                    ng-repeat="item in model.subjectList"
+                    ng-class="{'current':model.subjectOptionsId===item.optionId}"></a>
+                </div>
+                <div ng-if="model.yearOptionsId!==null" style="min-height:40px;height:auto" class="screen-style"><span
+                        class="style-name" style="width: 100px">继续教育年度</span
+                ><a href="javascript:void(0)"
+                    style="text-decoration: none;margin-left: 10px"
+                    ng-repeat="item in model.yearList"
+                    ng-class="{'current':model.yearOptionsId===item.optionId}"
+                    ng-bind="item.name"
+                    ng-click="events.tabYear(item)"></a>
+                </div>
+                <div class="screen-style" style="min-height:40px;height:auto" ng-if="model.coursePoolId!==null"><span
+                        class="style-name" style="width: 100px">专业</span
+                ><a href="javascript:void(0)"
+                    style="text-decoration: none;margin-left: 10px"
+                    ng-click="events.tabMarjor(item)"
+                    title="b{{item.name}}"
+                    ng-repeat="item in model.marjorList"
+                    ng-class="{'current':model.coursePoolId===item.id}"
+                    ng-bind="item.shortName"></a>
+                </div>
+                <div class="screen-style" style="min-height:40px;height:auto"><span class="style-name"
+                                                                                    style="width: 100px">学时</span
+                ><a href="javascript:void(0)"
+                    style="text-decoration: none;margin-left: 10px"
+                    ng-repeat="item in model.crditList"
+                    ng-class="{'current':model.beginHour===item.begin&&model.endHour===item.end}"
+                    ng-bind="item.name"
+                    ng-click="events.tabCrdit(item.begin,item.end)"></a>
+                </div>
+            </div>
+            <div class="m-array-style mt10 clear">
+                <a href="javascript:void(0)"
+                   ng-click="events.tabSortDefault()"
+                   ng-class="{'current':model.sortMark==='1'}">默认</a>
+                <a href="javascript:void(0)"
+                   ng-class="{'current':model.sortMark==='2'}"
+                   ng-click="events.tabSort('2','hourSort')">学时<span class="p-ico arrow-ico"
+                                                                     ng-class="{'ico-down':model.hourSort===2,'ico-up':model.hourSort===1}"></span></a>
+                <a href="javascript:void(0)"
+                   ng-class="{'current':model.sortMark==='3'}"
+                   ng-click="events.tabSort('3','priceSort')">价格<span class="p-ico arrow-ico"
+                                                                      ng-class="{'ico-down':model.priceSort===2,'ico-up':model.priceSort===1}"></span></a>
+
+            </div>
+
+
+            <div ng-if="model.courseList.length>0">
+                <div class="clear mh391">
+                    <ul class="classlist mt10">
+                        <li ng-repeat="item in model.courseList">
+
+                            <div ng-if="item.showTwo===false">
+                                <div class="img"><a href="javascript:void(0)"
+                                                    ng-click="$state.go('states.signUpTraining.introduction',{commoditySkuId:item.commoditySkuId,coursePoolId:item.coursePoolId,courseId:item.courseId,fromWhere:'signUpTraining'})"><img
+                                        ng-src="b{{item.iconPath}}" alt=" "></a></div>
+                                <div class="tit" style="line-height:28px;"><a href="javascript:void(0)"
+                                                                              title="b{{item.name}}"
+                                                                              class="to"
+                                                                              style="display:inline-block;width:100%"
+                                                                              ng-click="$state.go('states.signUpTraining.introduction',{commoditySkuId:item.commoditySkuId,coursePoolId:item.coursePoolId,courseId:item.courseId,fromWhere:'signUpTraining'})"
+                                                                              ng-bind="item.name"></a></div>
+                                <div class="info clear">
+                                    <p><span class="p-ico c1"></span>b{{item.subjectName}}</p>
+                                    <p class="tr"><span class="p-ico c2"></span>b{{item.year}}</p>
+                                    <p><span class="p-ico c3"></span>b{{item.hour}}学时</p>
+                                    <p class="price tr">¥b{{item.price}}</p>
+                                </div>
+                                <div class="op clear"
+                                >
+                                    <button ng-click="events.putIntoShoppingCart(item)"
+                                            ng-disabled="shoppingSubmitAble"
+                                            class="btn-dis">加入购物车
+                                    </button
+                                    >
+                                    <button class="btn-gr"
+                                            ng-disabled="submitBuy"
+                                            ng-click="events.buyNow(item)"><span class="p-ico bug-ico"></span>购买
+                                    </button>
+                                </div>
+                            </div>
+                            <div ng-if="item.showTwo===true" class="buy-pop">
+                                <div class="con">
+                                    <div class="img"><a href="javascript:void(0)"
+                                                        ng-click="$state.go('states.signUpTraining.introduction',{commoditySkuId:item.commoditySkuId,coursePoolId:item.coursePoolId,courseId:item.courseId,fromWhere:'signUpTraining'})"><img
+                                            ng-src="b{{item.iconPath}}" alt=" "></a></div>
+                                    <div class="tit"><a href="javascript:void(0)"
+                                                        ng-click="$state.go('states.signUpTraining.introduction',{commoditySkuId:item.commoditySkuId,coursePoolId:item.coursePoolId,courseId:item.courseId,fromWhere:'signUpTraining'})"
+                                                        ng-bind="item.name"></a></div>
+                                    <div class="info clear">
+                                        <p><span class="p-ico c4"></span>b{{item.subjectName}}/b{{item.coursePoolName}}
+                                        </p>
+                                        <p><span class="p-ico c3"></span>b{{item.hour}}学时</p>
+                                        <p><span class="p-ico c2"></span>继续教育年度<select class="ui-slt ml5 "
+                                                                                       ng-model="item.yearOptionsId"
+                                                                                       ng-change="events.doRightYearId(item.yearOptionsId)"
+                                                                                       ng-options="item.optionId as item.name for item in model.yearListTwo"
+                                                                                       style="width:105px">
+                                        </select></p>
+                                        <p class="price"><span class="p-ico c5"></span>¥b{{item.price}}</p>
+                                    </div>
+                                    <div class="op clear"><a href="javascript:void(0)"
+                                                             ng-click="events.buyNowTwo()"
+                                                             class="btn-gr mr10"><span
+                                            class="p-ico bug-ico"></span>购买</a><a href="javascript:void(0)"
+                                                                                  ng-click="item.showTwo=false"
+                                                                                  class="txt-green">取消</a>
+                                    </div>
+                                </div>
+                                <div class="mask-bg"></div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <div pagination
+                     class="mt10"
+                     ng-change="events.getCourseList()"
+                     ng-model="model.currentPage"
+                     total-items="model.total"
+                     items-per-page="model.itemsPerPage"
+                     max-size="model.maxSize"
+                     previous-text="上一页"
+                     next-text="下一页"></div>
+            </div>
+
+            <div ng-if="model.courseList.length<=0">
+                <div class="m-no-data tc mh391">
+                    <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                    <p class="txt">当前分类下还没有数据哦</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

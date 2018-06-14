@@ -1,0 +1,53 @@
+<div class="login-form-container">
+    <div class="mark"></div>
+    <div class="dialog z3000">
+        <div class="dialog-body mt10">
+            <div class="dialog-tit">登录
+                <span ng-style="model.loginResult.style">b{{model.loginResult.message}}</span>
+                <a href="#" ng-click="handler.closeLoginForm($event);" class="ico ico-close"></a></div>
+            <div class="dialog-cont">
+                <div class="login-box">
+                    <div class="login">
+                        <div class="login-cont">
+                            <!--------------  普通登录  ---------------->
+                            <div class="login-form">
+                                <form ng-submit="handler.login($event)" novalidate name="theLoginForm">
+                                    <ul class="ul-login-form">
+                                        <li><span class="ico ico-1"></span>
+                                            <input type="text"
+                                                   name="username"
+                                                   ng-model="model.userName"
+                                                   ng-required="true"
+                                                   class="ipt ipt-large"
+                                                   placeholder="帐号/手机号/邮箱"></li>
+                                        <li><span class="ico ico-2"></span>
+                                            <input type="password"
+                                                   name="password"
+                                                   ng-model="model.password"
+                                                   ng-required="true"
+                                                   ng-keyup="handler.enterKeyDo($event)"
+                                                   class="ipt ipt-large"
+                                                   placeholder="请输入密码">
+                                        </li>
+                                        <li class="clear">
+                                            <label>
+                                                <input type="checkbox" class="chk" ng-model="model.rememberPass">记住密码
+                                            </label>
+                                            <a href="#" class="forget fr" ng-click="handler.forgotPass($event)">忘记密码</a>
+                                        </li>
+                                        <li>
+                                            <input type="submit"
+                                                   ng-disabled="theLoginForm.$invalid"
+                                                   class="btn btn-large"
+                                                   value="登 录">
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

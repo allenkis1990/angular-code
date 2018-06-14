@@ -1,0 +1,17 @@
+<div class="dialog-bd" style="width:500PX;">
+    <p>
+        哎呀，您选购的以下班级已失效，无法继续购买。请放弃提交并重新报名。
+    </p>
+    <div class="gray-box mt10">
+        <p class="b">已失效的班级</p>
+        <ul class="ul-class">
+            <li ng-if="item.saleTitle" ng-repeat="item in failGoodsList">b{{item.saleTitle}}</li>
+            <li ng-if="item.name" ng-repeat="item in failGoodsList">b{{item.name}}</li>
+        </ul>
+    </div>
+</div>
+
+<div class="dialog-ft" style="margin-top:10px;"><a href="javascript:void(0)"
+                                                   ng-click="failGoodsDialog.remove()"
+                                                   class="btn-normal btn">放弃提交</a>
+</div>

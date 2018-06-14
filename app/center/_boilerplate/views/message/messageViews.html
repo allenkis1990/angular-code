@@ -1,0 +1,25 @@
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+
+    <div class="m-right-block fr mh576">
+        <div class="right-block-bd">
+            <div class="tr">
+                <a class="ui-btn btn-gr btn-m" ng-click="$state.go('states.message')">返回</a>
+            </div>
+            <div class="m-notice-detail">
+                <p class="notice-tit tc">b{{model.detail.title}}</p>
+                <p class="notice-info tc">发布时间：b{{model.detail.publishTime}}<span class="ml30">浏览次数：b{{model.detail.readCount}}</span>
+                </p>
+
+                <!-- <p>b{{model.detail.content}}</p>-->
+                <div ng-bind-html="model.detail.content| trustHtml" style="padding:20px 10px 0px 0px;line-height:25px;">
+                </div>
+
+                <!--  <div class="clear mt20">
+                      <a href="#" class="ui-btn btn-o btn-m fl">上一条</a>
+                      <a href="#" class="ui-btn btn-dis btn-m fr">下一条</a>
+                  </div>-->
+            </div>
+        </div>
+    </div>
+</div>

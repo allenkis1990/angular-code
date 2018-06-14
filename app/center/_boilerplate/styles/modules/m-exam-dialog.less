@@ -1,0 +1,132 @@
+.m-exam-dialog {
+  padding: 20px;
+  .d-qus-label {
+    display: inline-block;
+    background-color: #bae2fc;
+    color: #3ca2e2;
+    height: 30px;
+    width: 50px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .d-qus-tit, .d-qus-slt, .d-qus-ans {
+    position: relative;
+  }
+  .d-qus-body {
+    padding-left: 60px;
+    margin-bottom: 20px;
+
+    .ico {
+      width: 16px;
+      height: 16px;
+      background: url("../../../@systemUrl@/images/ce-icon.png") no-repeat;
+      position: relative;
+      left: 0;
+      top: -2px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .ico-r {
+      background-position: 0 -90px;
+    }
+    .ico-w {
+      background-position: 0 -70px;
+    }
+  }
+
+  .d-slt {
+    margin-bottom: 8px;
+    background-color: #f2f2f2;
+    border: 1px solid #f2f2f2;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid #3ca2e2;
+    }
+  }
+
+  .slt-ed {
+    border: 1px solid #3ca2e2;
+    color: #3ca2e2;
+  }
+  .slt-r {
+    border: 1px solid #9cd770;
+    color: #9cd770;
+
+    &:hover {
+      border-color: #9cd770
+    }
+  }
+  .slt-w {
+    border: 1px solid #f66969;
+    color: #f66969;
+
+    &:hover {
+      border-color: #f66969
+    }
+  }
+  .slt-txt {
+    padding-left: 5px;
+  }
+
+  .d-qus-ans {
+    padding-top: 5px;
+    .slt-r, .slt-w {
+      display: inline-block;
+      padding: 0 10px;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      color: #fff;
+    }
+    .slt-r {
+      background-color: #9cd770;
+    }
+    .slt-w {
+      background-color: #f66969;
+    }
+  }
+  .bor-t {
+    padding-top: 20px;
+    border-top: 1px dashed #ddd;
+  }
+  .align-center {
+    text-align: center;
+  }
+
+  .btn {
+    border: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    width: auto;
+    text-decoration: none;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+  }
+  .btn-m {
+    width: 100px;
+    height: 36px;
+    line-height: 36px;
+  }
+  .btnblue {
+    background-color: #3ca2e2;
+    color: #fff;
+  }
+  .btnblue:hover {
+    background-color: #4aacea;
+    color: #fff;
+  }
+  .btnblue:active {
+    background-color: #3ca2e2;
+  }
+}

@@ -1,0 +1,42 @@
+<!--<div class="m-dialog" >
+    <div class="dialog-bd">
+        <h1 class="tc">通知</h1>
+        <p class="t-r fs20 mt30">尊敬的学员：</p>
+        <p class="t-r fs20 ti mt10" ng-bind-html="model.dialogContent.content | trustHtml"></p>
+    </div>
+    <div class="dialog-ft mt50 tc">
+        <div style="padding-bottom: 10px;position: relative">
+            <input type="checkbox"
+                   style="margin: -1.5% 43%" ng-model="model.dialogNextShow">
+            <span style="font-size: 14px">下次不再提示</span>
+        </div>
+        <a i="close" href="javascript:void (0);"
+        class="btn-normal btn" ng-click="events.closeDialogNotice()">关闭</a>
+    </div>
+</div>-->
+
+
+<div class="m-dialog ">
+    <div class="dialog-box  w620">
+        <div class="dialog-hd"><span class="title">欢迎访问平台继续教育</span><a i="close" href="#" class="p-ico close"></a></div>
+        <div class="dialog-bd">
+            <div class="tc fs20 b">
+                通知标题
+            </div>
+            <div class="fs16 mt10">
+                尊敬的学员：<br/>
+                <p ng-bind-html="model.dialogContent.content | trustHtml"></p>
+            </div>
+        </div>
+        <div class="dialog-bottom tc rel">
+            <a i="close" href="javascript:void (0);" ng-click="events.closeDialogNotice()" class="btn-normal btn">关闭</a>
+            <label class="check-box">
+                <input type="checkbox" class="checkbox" ng-model="model.dialogNextShow" checked="">
+                <a href="#"></a>
+                <span class="ipt-txt">下次不再提示</span>
+            </label>
+        </div>
+
+    </div>
+</div>
+</div>

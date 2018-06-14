@@ -1,0 +1,153 @@
+<!--<div class="main-wrap-body-1 clear" ng-show="$state.current.name === 'states.home'">
+    <div class="column-block w-5 fl">
+        <div class="col-tit clear">学习之星<span class="ct-2 fr mr10"></span></div>
+        <div class="col-body h-4">
+            <div class="learning-star-tab mr5">
+                <a href="javascript:void(0);" ng-class="{'current':dataType=='day'}"
+                   ng-click="events.getLearningStar($event,'day')">今日</a>
+                <a href="javascript:void(0);" ng-class="{'current':dataType=='week'}"
+                   ng-click="events.getLearningStar($event,'week')">本周</a>
+                <a href="javascript:void(0);" ng-class="{'current':dataType=='month'}"
+                   ng-click="events.getLearningStar($event,'month')">本月</a>
+                <a href="javascript:void(0);" ng-class="{'current':dataType=='year'}"
+                   ng-click="events.getLearningStar($event,'year')">今年</a>
+            </div>
+            <ul class="ul-learning-star ml5 mt10 li-fl">
+                <li ng-repeat="student in model.learningStar" class=b{{student.showClass}}>
+                    <div class="ls-block">
+                        <img ng-src="b{{student.photoAddress?'/mfs/'+student.photoAddress:'@systemUrl@/images/user-img.jpg'}}">
+                        <span class="ico course-num" ><span ng-bind="student.courseCount"></span>门</span>
+                        <p class="name">
+                            <span class="ico ico-1" ng-if="student.sort===1"></span>
+                            <span class="ico ico-2" ng-if="student.sort===2"></span>
+                            <span class="ico ico-3" ng-if="student.sort===3"></span>
+                            <span ng-bind="student.studentShortName"></span>
+                        </p>
+                        <p class="info">
+                            <b><span ng-bind="student.studentName"></span></b><br><span ng-bind="student.unitName"></span><br><span ng-bind="student.orgName"></span><br><span ng-bind="student.post"></span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="no-data clear" ng-show="!pageVar.hasLearningStar">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂无学习之星</div>
+            </div>
+        </div>
+    </div>
+    <div class="right-pre fl">
+        <div class="column-block w-pre-1">
+            <div class="col-tit clear">
+                公告通知
+                <a href="javascript:void(0);" class="ico ico-set fr mr10"
+                   title="公告管理" ng-click="globle.stateGo('states.noticeManage','公告管理')">
+
+                </a>
+            </div>
+            <div class="col-body h-3">
+                <ul class="ul-announce">
+                    <li ng-repeat="notice in model.notice">
+                        <a href="javascript:void(0);" ng-click="events.viewNotice($event,notice.id)"
+                           title=b{{notice.title}}>
+                            <span ng-bind="notice.title"></span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="no-data clear" ng-show="!pageVar.hasNotice">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">暂无公告通知</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.home'">
+    <div class="column-block">
+        <div class="col-tit">受欢迎课程<span class="ct-2 ml10">每天0:00更新</span>&lt;!&ndash;<a href="#" class="current">&ndash;&gt;
+            <div class="tab-num fr mr20">
+                &lt
+                <a href="javascript:void(0);"
+                   ng-repeat="popularCoursePageNo in model.popularCourse.pageNumbers"
+                   ng-click="events.toPage1($event,popularCoursePageNo)"
+                   ng-class="{'current':popularCoursePageNo==model.popularCourse.currentPage}"
+                        >
+                    <span ng-bind="popularCoursePageNo"></span>
+                </a>
+                &gt
+            </div>
+        </div>
+        <div class="col-body">
+            <div class="no-data clear" ng-show="!pageVar.hasPopularCourse">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂无受欢迎课程</div>
+            </div>
+            <ul class="ul-course-block li-fl clear">
+                <li ng-repeat="popularCourse in model.popularCourse.datas">
+                    <div class="img-co-tainer">
+                        <img ng-src="b{{hotChooseCourse.photoAddress?'/mfs/'+hotChooseCourse.photoAddress:'@systemUrl@/images/afei.jpg'}}" alt="" ng-click="events.getDetails(popularCourse.courseId)"/>
+                    </div>
+
+                    <div class="cont">
+                        <div class="name" title=b{{popularCourse.courseName}}>《<span ng-bind="popularCourse.courseName"></span>》</div>
+                        <div class="info">被<span ng-bind="popularCourse.goodTimes"></span>赞<span class="ml10 mr10">|</span><span ng-bind="popularCourse.teacherName" title="讲师"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="column-block mt30">
+        <div class="col-tit">热门选修课程<span class="ct-2 ml10">每天0:00更新</span>&lt;!&ndash;<a href="#" class="current">&ndash;&gt;
+            <div class="tab-num fr mr20">
+                &lt
+                <a href="javascript:void(0);"
+                   ng-repeat="hotChooseCoursePageNo in model.hotChooseCourse.pageNumbers"
+                   ng-click="events.toPage2($event,hotChooseCoursePageNo)"
+                   ng-class="{'current':hotChooseCoursePageNo==model.hotChooseCourse.currentPage}"
+                        >
+                    <span ng-bind="hotChooseCoursePageNo"></span>
+                </a>
+                &gt
+            </div>
+        </div>
+        <div class="col-body">
+            <div class="no-data clear" ng-show="!pageVar.hasHotSelectCourse">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂无热门选修课</div>
+            </div>
+            <ul class="ul-course-block li-fl clear">
+                <li ng-repeat="hotChooseCourse in model.hotChooseCourse.datas">
+                    <div class="img-co-tainer">
+                        <img ng-src="b{{hotChooseCourse.photoAddress?'/mfs/'+hotChooseCourse.photoAddress:'@systemUrl@/images/afei.jpg'}}" alt="" ng-click="events.getDetails(hotChooseCourse.courseId)"/>
+                    </div>
+                    <div class="cont">
+                        <div class="name" title=b{{hotChooseCourse.courseName}}>《<span ng-bind="hotChooseCourse.courseName"></span>》
+                        </div>
+                        <div class="info">被<span ng-bind="hotChooseCourse.selectedTimes"></span>人选修<span class="ml10 mr10">|</span><span ng-bind="hotChooseCourse.teacherName" title="讲师"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div ui-view></div>-->
+<div class="login-success">
+    <img src="@systemUrl@/images/success.png" alt=" "/>
+
+    <div style="background:#f2f2f2;
+    width:800px;
+    height:86px;
+    position:absolute;
+    left:181px;
+    top:90px;font-size:25px;font-weight:bold;color:rgb(153,153,153)">
+        成功登录<span ng-bind="porTitleName"></span>
+    </div>
+
+
+
+</div>
+
+
+

@@ -1,0 +1,46 @@
+<form name="modifyForm" novalidate>
+    <ul class="ul-d-form lh-1">
+        <li>
+            <span class="left-txt"><i class="t-r">*</i>课程名称：</span>
+            <input type="text" name="name" class="ipt ipt-large" placeholder="请输入课程名称" maxlength="50"
+                   ng-model="model.itemTemplateDto.name" required ng-required="true">
+        </li>
+        <li>
+            <span class="left-txt"><i class="t-r">*</i>课程时长：</span>
+            <input type="number" name="timeLength" class="ipt ipt-large"
+                   ng-model="model.itemTemplateDto.timeLength" required ng-required="true">
+            <span>分钟</span>
+        </li>
+        <li class="clear">
+            <span class="left-txt fl">课件简介：</span>
+            <div class="fl w-2">
+            <textarea kendo-editor ng-model="model.itemTemplateDto.abouts"
+                      k-options="ui.editor"
+                      class="textarea w-textarea fl"
+                      name="content"></textarea>
+            </div>
+        </li>
+        <li ng-if="model.selectTeacherType==1">
+            <span class="left-txt fl"><i class="t-r">*</i>授课教师：</span>
+            <a class="btn btn-r" ng-click="events.addTeacherWindow($event)">选择教师</a>
+        </li>
+        <li class="clear">
+            <span class="left-txt fl">教师姓名：</span>
+            <div class="fl">
+                <label ng-bind="model.selectTeacherInfo.name">显示教师名称</label>
+            </div>
+        </li>
+        <li class="clear">
+            <span class="left-txt fl">教师简介：</span>
+            <div class="fl w-2">
+                <label ng-bind="model.selectTeacherInfo.description"></label>
+            </div>
+        </li>
+    </ul>
+    <div class="btn-center">
+        <a href="javascript:void(0)" class="btn btn-r ml10"
+           ng-click="events.updateItemTemplate($event)">提交</a>
+        <a href="javascript:void(0)" ng-click="events.closeWindow('modifyItemTemplateWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</form>

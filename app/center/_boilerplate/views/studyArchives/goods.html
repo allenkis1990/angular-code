@@ -1,0 +1,171 @@
+<div class="account-tab-bd">
+    <div class="tr" ng-if="model.offerMerge&&model.canSelect">
+        <a href="javascript:void(0)"
+           ng-click="events.returnPre()"
+           class="ui-btn btn-gr btn-m">返回上级</a>
+    </div>
+    <div class="m-screen">
+        <!--<div hb-sku-directive
+             category-type="model.categoryType"
+             lwh-loading="lwhLoading"
+             callback="events.fn()"
+             ng-model="skuParams"
+             templateurl="@systemUrl@/templates/common/sku-archives-searlist.html"></div>-->
+
+
+        <div hb-sku-directive
+             url-chunk="learningfiles"
+             category-type="model.categoryType"
+             lwh-loading="lwhLoading"
+             spectial-fn="events.skuSpecialDo(params)"
+             callback="events.fn()"
+             ng-model="skuParams"
+             templateurl="@systemUrl@/templates/common/sku-searlist.html">
+
+        </div>
+
+        <div select-orgnizations
+             ng-show="model.totalArchives.length>0"
+             request-url="/web/front/learningfiles/findTrainningOrgnizations"
+             templateurl="@systemUrl@/views/studyArchives/orgnizations-goods.html"
+             unit-id="model.unitId"></div>
+
+        <div ng-if="model.offerMerge&&model.canSelect"
+             class="screen-style screen-style-1"><span class="style-name" style="width:106px;display:inline-block"><span
+                class="p-ico step-num">1</span>请选择课程</span></div>
+
+    </div>
+
+
+    <!--多选-->
+    <table ng-if="model.offerMerge&&model.totalArchives.length>0"
+           class="ui-table table-line table-hover table-overflow mt10">
+        <thead>
+        <tr>
+            <th class="tl">
+                <label class="ui-label"
+                       ng-class="{'checked':(model.archivesAjaxData.length>0&&(model.archivesAjaxData.length===model.totalArchives.length))||(model.archivesAjaxData.length>0&&model.selectAll)}"
+                       ng-if="model.canSelect">
+                    <input type="checkbox"
+                           ng-checked="(model.archivesAjaxData.length>0&&(model.archivesAjaxData.length===model.totalArchives.length)) || (model.archivesAjaxData.length>0&&model.selectAll)"
+                           ng-click="events.selectArchiveAllOrNone($event)"
+                           class="checkbox">
+                    <a href="javascript:void(0)" class="checkbox-a"></a>
+                    <span class="ipt-txt"></span>
+                </label>
+                课程名称
+            </th>
+            <th width="150">科目</th>
+            <th width="80">学时</th>
+            <th width="80">年度</th>
+            <th width="110">选课日期</th>
+            <th width="120">课程学习时段</th>
+            <th width="120">考核通过时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in model.totalArchives">
+            <td class="tl">
+                <label class="ui-label"
+                       ng-if="model.canSelect"
+                       ng-class="{'checked':model.canSelect&&item.ischecked}"
+                       ng-click="events.selectArchiveForMany(item)">
+                    <!--<input type="checkbox" class="checkbox" checked="">-->
+                    <a href="javascript:void(0)" class="checkbox-a"></a>
+                    <span class="ipt-txt"></span>
+                </label>
+                <span ng-bind="item.courseName" title="b{{item.courseName}}"></span></td>
+            <td><span ng-bind="item.subject"></span> <span ng-if="item.subject==='专业课'">- <span
+                    title="b{{item.subjectName}}" ng-bind="item.subjectName"></span></span></td>
+            <td ng-bind="item.grade"></td>
+            <td ng-bind="item.year"></td>
+            <td ng-bind="item.chooseTime"></td>
+            <td><span ng-bind="item.studyBeginTime"></span><br><span ng-bind="item.studyEndTime"></span></td>
+            <td ng-bind="item.assessPassedTime"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--单选-->
+    <table ng-if="!model.offerMerge&&model.totalArchives.length>0"
+           class="ui-table table-line table-hover table-overflow mt10">
+        <thead>
+        <tr>
+            <th class="tl">课程名称</th>
+            <th width="150">科目</th>
+            <th width="80">学时</th>
+            <th width="80">年度</th>
+            <th width="110">选课日期</th>
+            <th width="120">课程学习时段</th>
+            <th width="120">考核通过时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in model.totalArchives">
+            <td class="tl">
+                <label class="ui-label"
+                       ng-class="{'checked':model.canSelect&&item.ischecked}"
+                       ng-click="events.selectArchiveForOne(item)">
+                    <a href="javascript:void(0)" class="radio-a"></a>
+                    <span class="ipt-txt"></span>
+                </label>
+                <span ng-bind="item.courseName" title="b{{item.courseName}}"></span></td>
+            <td><span ng-bind="item.subject"></span> <span ng-if="item.subject==='专业课'">- <span
+                    title="b{{item.subjectName}}" ng-bind="item.subjectName"></span></span></td>
+            <td ng-bind="item.grade"></td>
+            <td ng-bind="item.year"></td>
+            <td ng-bind="item.chooseTime"></td>
+            <td><span ng-bind="item.studyBeginTime"></span><br><span ng-bind="item.studyEndTime"></span></td>
+            <td ng-bind="item.assessPassedTime"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!--<div pagination
+         ng-if="model.totalArchives.length>0"
+         ng-change="events.getUserCoursePassedMessage()"
+         ng-model="model.currentPage"
+         total-items="model.total"
+         items-per-page="model.itemsPerPage"
+         max-size="model.maxSize"
+         previous-text="上一页"
+         next-text="下一页"></div>-->
+    <div class="m-sum-bar m-screen mt10 clear"
+         ng-if="model.totalArchives.length>0"
+         study-archives-nav-fixed>
+        <p ng-if="!model.offerMerge||!model.canSelect" class="fl ml10"><span class="t-b">【统计】</span><span class="t-b"
+                                                                                                          ng-bind="model.currentSearchYear"></span>年度<span
+                ng-bind="model.currentSearchSubject"></span>考核通过 <span class="t-b"
+                                                                       ng-bind="model.currentSearchGrade"></span> 学时</p>
+        <div ng-if="model.offerMerge&&model.canSelect" class="screen-style screen-style-2 fl mt5 ml10"><span
+                class="style-name"><span class="p-ico step-num">2</span>已选 <span class="t-b"
+                                                                                 ng-bind="model.archivesAjaxData.length"></span> 个课程，共 <span
+                class="t-b" ng-bind="model.hasChoseGrade"></span> 学时</span></div>
+        <div class="fr">
+            <button ng-disabled="submitAble"
+                    ng-if="model.offerMerge"
+                    ng-click="events.mergePrintArchives()"
+                    class="ui-btn btn-gr">
+                合并打印学时证明
+            </button>
+            <button ng-disabled="submitAble"
+                    ng-if="!model.offerMerge"
+                    ng-click="events.printArchives()"
+                    class="ui-btn btn-gr">
+                打印学时证明
+            </button>
+        </div>
+    </div>
+</div>
+
+<!--空数据-->
+<div class="m-no-data tc mh391" ng-if="model.totalArchives.length<=0">
+    <img src="@systemUrl@/images/no-data.png" alt="空数据">
+    <p class="txt">当前分类下暂无课程的学习档案</p>
+
+</div>
+
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

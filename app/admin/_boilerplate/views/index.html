@@ -1,0 +1,9 @@
+<div hb-side-menu template-url="@systemUrl@/templates/common/menu.html" hide-on-some-op="showMenu"></div>
+<div class="main-wrap fr">
+    <div class="main-wrap-pos" ng-style="contentStyle">
+        <div class="abs" ng-class="{top: showApp_$$}">
+            <div ui-view="topView"></div>
+        </div>
+        <div hb-tab template-url="@systemUrl@/templates/common/tab-directive.html"></div>
+    </div>
+</div>

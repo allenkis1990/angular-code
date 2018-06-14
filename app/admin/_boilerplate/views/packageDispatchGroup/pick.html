@@ -1,0 +1,21 @@
+<form name="form.certainPickForm" novalidate autocomplete="off">
+    <ul class="ul-d-form pt10">
+        <li><strong class="left-txt" style="display: inline-block;">领取人：</strong>
+            <input type="text" ng-required="true" name="pickUserName"
+                   ng-model="pickUser.name"
+                   class="ipt ipt-medium" placeholder="请输入领取人姓名"
+                   hb-clear-input>
+            <div validate-message
+                 ashe="form.certainPickForm.pickUserName"></div>
+        </li>
+        <li><strong class="left-txt" style="display: inline-block;">手机号：</strong>
+            <input type="text" ng-required="true"
+                   ng-model="pickUser.phone"
+                   name="pickUserNumber" ng-pattern="numberPattern"
+                   class="ipt ipt-medium"
+                   placeholder="请输入手机号码" hb-clear-input>
+            <div validate-message
+                 ashe="form.certainPickForm.pickUserNumber"></div>
+        </li>
+    </ul>
+</form>

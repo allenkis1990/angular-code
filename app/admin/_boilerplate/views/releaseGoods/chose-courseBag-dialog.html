@@ -1,0 +1,15 @@
+<div class="dialog-body">
+    <div class="dialog-tit">选择课程包<a href="javascript:void(0)"
+                                    ng-click="events.closeKendoWindow('choseCourseBagWindow')"
+                                    class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+        <div kendo-grid="kendoPlus.courseBagInstance"
+             k-options="courseBagGrid.options">
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('choseCourseBagWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

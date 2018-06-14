@@ -1,0 +1,129 @@
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+    <div class="m-right-block fr">
+        <div class="right-block-bd">
+            <div class="panel-tit clear">
+                <p class="fl">各继续教育年度学时数据</p>
+                <div class="tips-icon fl ml10">
+                    <span class="p-ico worm-ico-o"></span>
+                    <div class="hover-block">继续教育年度学时数据为通过本平台学习完成的学时数</div>
+                </div>
+            </div>
+            <div class="data-panel mt10 clear" ng-if="model.userYearList.length>0">
+                <div class="panel-tit fl">
+                    <div class="bd"><span ng-bind="model.currentUserYearObj.name"></span>年度<span class="p-ico"></span>
+                    </div>
+                    <div class="pop-block" style="height:auto">
+                        <a href="javascript:void(0)"
+                           ng-click="events.changeUserYear(item)"
+                           ng-if="item.optionId!==model.currentUserYearObj.optionId"
+                           ng-repeat="item in model.userYearList"><span ng-bind="item.name"></span>年度</a>
+                    </div>
+                </div>
+                <div class="panel-bd-items">
+                    <p class="txt-g" ng-bind="model.currentUserYearObj.name"></p>
+                    <p class="num" ng-bind="model.userStudyData.totalFinishCredit"></p>
+                    <p>完成总学时</p>
+                </div>
+                <div class="symbol">=</div>
+                <div class="panel-bd-items">
+                    <p class="txt-g">自主选课</p>
+                    <p class="num" ng-bind="model.userStudyData.courseFinishCredit"></p>
+                    <p>完成学时</p>
+                </div>
+                <div class="symbol">+</div>
+                <div class="panel-bd-items">
+                    <p class="txt-g">培训班</p>
+                    <p class="num" ng-bind="model.userStudyData.trainingClassFinishCredit"></p>
+                    <p>完成学时</p>
+                </div>
+                <div class="panel-bd-items bor-l"
+                     style="padding-left:inherit;
+                     padding-right:inherit;
+                     width:168px;">
+                    <p class="txt-g" ng-bind="model.currentUserYearObj.name"></p>
+                    <p class="num"
+                       title="b{{model.userStudyData.purchaseCredit}}"
+                       style="text-overflow:ellipsis;overflow: hidden;white-space: nowrap;"
+                       ng-bind="model.userStudyData.purchaseCredit"></p>
+                    <p>已报名学时</p>
+                </div>
+            </div>
+            <div class="m-no-data tc" ng-if="model.userYearList.length<=0">
+                <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                <p class="txt">暂无继续教育年度学时数据</p>
+            </div>
+
+            <div class="panel-tit mt30 clear">
+                <p class="fl">最近学习课程</p>
+            </div>
+            <div class="clear mt10">
+                <div class="m-history-course fl"
+                     ng-click="events.openListenWindow(item,$event)"
+                     ng-if="model.lastStudyCourse.length>0"
+                     ng-repeat="item in model.lastStudyCourse"
+                     style="width:471px; margin-left:8px;cursor:pointer">
+                    <img class="seal"
+                         ng-if="item.assessmentResult"
+                         src="@systemUrl@/images/seal-tg.png" alt="">
+                    <a href="javascript:void(0)"
+                       class="course-img">
+                        <img ng-src="b{{item.iconPath}}" alt=" ">
+                        <span class="p-ico"></span>
+                    </a>
+                    <div class="history-course-bd" style="width:276px;">
+                        <p class="tit" ng-bind="item.courseName"></p>
+                        <div class="info">
+                            课程进度 <span class="num ml10" ng-bind="item.courseSchedule"></span><span class="t-b">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--空数据-->
+                <div class="m-no-data m-no-data-1 tc" ng-if="model.lastStudyCourse.length<=0">
+                    <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                    <p class="txt">有点懒，最近无学习记录~~</p>
+                </div>
+                <!--/空数据-->
+            </div>
+            <!--空数据-->
+            <!--<div class="m-no-data m-no-data-1 tc">-->
+            <!--<img src="@systemUrl@/images/no-data.png" alt="空数据">-->
+            <!--<p class="txt">有点懒，最近无学习记录~~</p>-->
+            <!--</div>-->
+            <!--/空数据-->
+
+            <div class="clear mt30">
+                <div class="home-list-box fl">
+                    <div class="panel-tit panel-tit-1 clear">
+                        <p class="fl">通知公告</p>
+                        <a href="javascript:void(0)"
+                           ng-click="events.goMessage(model.pxtzType)"
+                           class="more fr">MORE+</a>
+                    </div>
+                    <ul class="ul-list">
+                        <li ng-repeat="item in model.pxtzList"><a href="javascript:void(0)"
+                                                                  ng-click="events.goMessageDetail(item)"
+                                                                  title="b{{item.title}}" ng-bind="item.title"></a><span
+                                class="date" ng-bind="item.publishTime"></span></li>
+                    </ul>
+                </div>
+                <div class="home-list-box fr">
+                    <div class="panel-tit panel-tit-1 clear">
+                        <p class="fl">常见问题</p>
+                        <a href="javascript:void(0)"
+                           ng-click="events.goMessage(model.cjwtType)"
+                           class="more fr">MORE+</a>
+                    </div>
+                    <ul class="ul-list">
+                        <li ng-repeat="item in model.cjwtList"><a href="javascript:void(0)"
+                                                                  ng-click="events.goMessageDetail(item)"
+                                                                  title="b{{item.title}}" ng-bind="item.title"></a><span
+                                class="date" ng-bind="item.publishTime"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,257 @@
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+    <div loading-more load-fn="events.getShoppingCartPage(model.pageNo)"
+         totalpagesize="model.totalpagesize"
+         pageno="model.pageNo"
+         lwh-pending="model.pending"></div>
+    <div class="m-right-block fr mh576">
+        <div class="right-block-bd rel" ng-if="model.shoppingAllList.length>0">
+            <div class="txt-o mb10"><span class="p-ico worm-ico-o"></span>注：已选过的培训班/课程不在购物车显示,请到"未支付订单"中去支付,或者去"我的学习"中查看。
+            </div>
+            <table class="ui-table table-line">
+                <thead>
+                <tr class="lwh-th">
+                    <th colspan="2">
+                        <!--<div class="">
+                            <label class="ui-label fl"
+                                   ng-class="{'checked':model.shoppingChoseList.length===copyShoppingList.length&&model.shoppingChoseList.length!==0}">
+                                <input type="checkbox"
+                                       ng-click="events.selectAllOrNone($event)"
+                                       ng-checked="model.shoppingChoseList.length===copyShoppingList.length&&model.shoppingChoseList.length!==0"
+                                       class="checkbox">
+                                <a href="javascript:void(0)"
+                                   class="checkbox-a"
+                                   style="left:0;"></a>
+                                <span class="ipt-txt">全选</span>
+                            </label>
+                        </div>-->
+                        <span style="margin-left:10px;">培训内容名称</span>
+
+                    </th>
+                    <th width="120"
+                        ng-bind="item.skuPropertyName"
+                        ng-repeat="item in model.shoppingAllList[0].shoppingCartCommodityList[0].skuPropertyNameList"></th>
+                    <th width="100">金额(元)</th>
+                    <th width="100">操作</th>
+                </tr>
+                </thead>
+
+                <tbody ng-repeat="item in model.shoppingAllList"
+                       ng-if="item.shoppingCartCommodityList.length>0"
+                       ng-init="$parIndex=$index">
+                <tr class="full-row-1">
+                    <td colspan="6" class="tl td-px">
+                        <label class="ui-label td-label ml5">
+                            <input type="checkbox"
+                                   ng-click="events.choseTheUnitShoppingGoods($event,item)"
+                                   ng-checked="events.getCheckedListLengthbyUnitId(item.unitId)===item.shoppingCartCommodityList.length&&model.shoppingChoseList.length!==0"
+                                   class="checkbox">
+                            <a href="javascript:void(0)"
+                               ng-class="{'current':events.getCheckedListLengthbyUnitId(item.unitId)===item.shoppingCartCommodityList.length&&model.shoppingChoseList.length!==0}"
+                               class="checkbox-a"></a>
+                            <span class="ipt-txt ml10 txt-b">【培训机构】<span ng-bind="item.unitName"></span></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr ng-repeat="subItem in item.shoppingCartCommodityList"
+                    ng-class="{'failure-goods':subItem.disabled}">
+                    <td ng-if="subItem.disabled">
+                        <div class="rel"><span class="p-ico ico-fail"></span></div>
+                    </td>
+                    <td ng-if="!subItem.disabled">
+                        <label class="ui-label td-label">
+                            <input type="checkbox"
+                                   ng-checked="subItem.ischecked==true"
+                                   ng-click="events.choseGoods($event,subItem)"
+                                   class="checkbox">
+                            <a href="javascript:void(0)"
+                               ng-class="{'current':subItem.ischecked==true}"
+                               class="checkbox-a"></a>
+                            <span class="ipt-txt"></span>
+                        </label>
+                    </td>
+                    <td class="tl">
+                        <div class="course-cont">
+                            <a href="javascript:void(0)" class="img"><img ng-src="b{{subItem.image}}" alt=" "></a>
+                            <div class="course-cont-bd">
+                                <a href="javascript:void(0)"
+                                   ng-click="$state.go('states.signUpTraining.introduction',{commoditySkuId:subItem.commoditySkuId,coursePoolId:subItem.coursePoolId,courseId:subItem.courseId})"
+                                   class="course-name txt-ml tb-a to"
+                                   ng-bind="subItem.courseName"></a>
+                                <div class="course-info mt10">
+                                    <p>学时：<span ng-bind="subItem.period"></span><span class="ml30">学习形式：<span
+                                            ng-bind="subItem.coursePoolId?'课程':'培训班'"></span></span> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-bind="subItem.skuPropertyNameList[0].skuPropertyValueName"></td>
+                    <td>
+                        <span ng-bind="subItem.skuPropertyNameList[1].skuPropertyValueName===null?'-':subItem.skuPropertyNameList[1].skuPropertyValueName"
+                              ng-if="!subItem.needYear"></span>
+                        <select class="ui-slt"
+                                ng-if="subItem.needYear"
+                                ng-change="events.acheCurrentChoseYear(subItem.yearOptionsId,subItem)"
+                                ng-model="subItem.yearOptionsId"
+                                ng-options="grandItem.optionId as grandItem.name for grandItem in model.yearList"
+                                style="width:120px">
+                            <option value="">请选择年度</option>
+                        </select>
+                    </td>
+                    <td ng-bind="subItem.discountPrice"></td>
+                    <td class="op"><a href="javascript:void(0)"
+                                      ng-click="events.deleteGoods(item,$parIndex,subItem,$index)">删除</a></td>
+                </tr>
+                </tbody>
+
+<!--
+                <tbody ng-class="{'failure-goods':item.disabled}" ng-repeat="item in model.shoppingAllList">
+                <tr ng-if="!item.disabled" class="full-row-1">
+                    <td colspan="6"></td>
+                </tr>
+                <tr ng-if="!item.disabled">
+                    <td>
+                        <label class="ui-label td-label" ng-class="{'checked':item.ischecked==true}">
+                            <input type="checkbox"
+                                   ng-checked="item.ischecked==true"
+                                   ng-click="events.choseGoods($event,item)"
+                                   class="checkbox">
+                            <a href="javascript:void(0)"
+                               class="checkbox-a"
+                               style="left:0;"></a>
+                            <span class="ipt-txt"></span>
+                        </label>
+                    </td>
+                    <td class="tl">
+                        <div class="course-cont">
+                            <a href="javascript:void(0)"
+                               ng-click="$state.go('states.signUpTraining.introduction',{commoditySkuId:item.commoditySkuId,coursePoolId:item.coursePoolId,courseId:item.courseId})"
+                               class="img"><img ng-src="b{{item.image}}" alt=" "></a>
+                            <div class="course-cont-bd">
+                                <a href="javascript:void(0)"
+                                   ng-click="$state.go('states.signUpTraining.introduction',{commoditySkuId:item.commoditySkuId,coursePoolId:item.coursePoolId,courseId:item.courseId,fromWhere:'shoppingCart'})"
+                                   ng-bind="item.courseName"
+                                   class="course-name tb-a to"></a>
+                                <div class="course-info mt10">
+                                    <p>学时：b{{item.period}}<span style="margin-left:10px;">学习形式：<span
+                                            ng-bind="item.coursePoolId?'课程':'培训班'"></span></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-bind="item.skuPropertyNameList[0].skuPropertyValueName"></td>
+                    <td>
+                        <span ng-bind="item.skuPropertyNameList[1].skuPropertyValueName===null?'-':item.skuPropertyNameList[1].skuPropertyValueName"
+                              ng-if="!item.needYear"></span>
+                        <select class="ui-slt"
+                                ng-if="item.needYear"
+                                ng-change="events.acheCurrentChoseYear(item.yearOptionsId,item)"
+                                ng-model="item.yearOptionsId"
+                                ng-options="item.optionId as item.name for item in model.yearList"
+                                style="width:120px">
+                            <option value="">请选择年度</option>
+                        </select>
+                    </td>
+                    <td ng-bind="item.discountPrice"></td>
+                    <td class="op"><a href="javascript:void(0)" ng-click="events.deleteGoods(item,$index)">删除</a></td>
+                </tr>
+
+
+                &lt;!&ndash;失效样式&ndash;&gt;
+                <tr ng-if="item.disabled">
+                    <td>
+                        <div class="rel"><span class="p-ico ico-fail"></span></div>
+                    </td>
+                    <td class="tl">
+                        <div class="course-cont">
+                            <a href="javascript:void(0)" class="img"><img ng-src="b{{item.image}}" alt=" "></a>
+                            <div class="course-cont-bd">
+                                <a href="javascript:void(0)"
+                                   ng-bind="item.courseName"
+                                   class="course-name txt-ml tb-a to"></a>
+                                <div class="course-info mt10">
+                                    <p>学时：b{{item.period}}<span style="margin-left:10px;">学习形式：<span
+                                            ng-bind="item.coursePoolId?'课程':'培训班'"></span></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td ng-bind="item.skuPropertyNameList[0].skuPropertyValueName"></td>
+                    <td><span
+                            ng-bind="item.skuPropertyNameList[1].skuPropertyValueName===null?'-':item.skuPropertyNameList[1].skuPropertyValueName"></span>
+                    </td>
+                    <td ng-bind="item.discountPrice"></td>
+                    <td class="op"><a href="javascript:void(0)"
+                                      ng-click="events.deleteGoods(item,$index)">删除</a></td>
+                </tr>
+                &lt;!&ndash;失效样式&ndash;&gt;
+                </tbody>
+-->
+
+
+            </table>
+            <p class="lh50 tc" ng-if="model.pageNo<=model.totalpagesize"><a href="javascript:void(0)" class="a-more">滚动显示更多+</a>
+            </p>
+            <!-- 悬停时样式 -->
+            <!--<div class="m-sum-bar mt10 clear " style="position: fixed;  left: 50%; margin-left: -400px;">
+                <label class="ui-label ml10 fl">
+                    <input type="checkbox" class="checkbox">
+                    <a href="javascript:void(0)" style="left:0;"></a>
+                    <span class="ipt-txt">全选</span>
+                </label>
+                <a href="#" class="fl a-txt-1 ml20">删除</a>
+                <a href="#" class="fl a-txt-1 ml20">清除失效课程</a>
+                <a href="#" class="fl a-txt ml20">继续选课</a>
+                <div class="fr">
+                    已选课程 <span class="txt-o fs18">0</span> 件，共 <span class="txt-o fs18">0</span> 学时<span class="ml20">合计：</span><span class="txt-o fs18">￥0.00</span> 元
+                    <input type="button" class="ui-btn btn-o ml20" disabled="" value="结算">
+                </div>
+            </div>-->
+            <!-- 不悬停时样式 -->
+            <div class="m-sum-bar mt10 clear" ng-class="{'lwh-shoppingBar':model.pageNo<=model.totalpagesize}">
+                <!--<label class="ui-label ml10 fl"
+                       ng-class="{'checked':model.shoppingChoseList.length===copyShoppingList.length&&model.shoppingChoseList.length!==0}">
+                    <input type="checkbox"
+                           ng-click="events.selectAllOrNone($event)"
+                           ng-checked="model.shoppingChoseList.length===copyShoppingList.length&&model.shoppingChoseList.length!==0"
+                           class="checkbox">
+                    <a href="javascript:void(0)"
+                       class="checkbox-a"
+                       style="left:0;"></a>
+                    <span class="ipt-txt">全选</span>
+                </label>-->
+
+                <a href="javascript:void(0)"
+                   ng-click="events.batchDelete()"
+                   class="fl a-txt-1 ml20">删除</a>
+                <a href="javascript:void(0)"
+                   ng-click="events.cleanDisable()"
+                   class="fl a-txt-1 ml20">清除失效课程</a>
+                <!--<a href="#" ui-sref="states.signUpTraining" class="fl a-txt ml20">继续选课</a>-->
+                <div class="fr">
+                    已选培训内容 <span class="txt-o fs18" ng-bind="model.shoppingChoseList.length"></span> 件，共 <span
+                        class="txt-o fs18" ng-bind="model.totalPeriod"></span> 学时<span class="ml20">合计：</span><span
+                        ng-bind="'￥'+model.total" class="txt-o fs18"></span> 元
+                    <input type="button"
+                           ng-click="events.goPay()"
+                           class="ui-btn btn-o ml20"
+                           ng-disabled="model.shoppingChoseList.length<=0 || submitAble"
+                           value="结算"/>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="right-block-bd" ng-if="model.shoppingAllList.length<=0">
+            <div class="m-no-data tc">
+                <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                <p class="txt">您的购物车中还没有任何培训内容，快去选购吧！请前往 <a href="javascript:void(0)"
+                                                            ng-click="events.goOntrainingView()">报名培训</a> 选购</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="lwhLoading" ng-if="model.pending===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

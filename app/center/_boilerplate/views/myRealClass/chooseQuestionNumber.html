@@ -1,0 +1,22 @@
+<div class="dialog-bd">
+
+
+    <div class="yearselectlist clear">
+        <a href="javascript:void(0)"
+           ng-click="events.checkQuestionNum(5)"
+           ng-class="{'select': model.maxQuestionNum==5}"
+           class="select">5题<span class="p-ico"></span></a>
+        <a href="javascript:void(0)"
+           ng-click="events.checkQuestionNum(10)"
+           ng-class="{'select': model.maxQuestionNum==10}">10题<span class="p-ico"></span></a>
+        <a href="javascript:void(0)"
+           ng-click="events.checkQuestionNum(20)"
+           ng-class="{'select': model.maxQuestionNum==20}">20题<span class="p-ico"></span></a>
+        <a href="javascript:void(0)"
+           ng-click="events.checkQuestionNum(30)"
+           ng-class="{'select': model.maxQuestionNum==30}">30题<span class="p-ico"></span></a>
+    </div>
+
+
+    <p class="mt20 t-r">当练习题量不足时，以实际题量为准</p>
+</div>

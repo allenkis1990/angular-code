@@ -1,0 +1,34 @@
+<!--授权日志-->
+<div class="dialog-body">
+    <div class="dialog-tit">授权日志<a href="" ng-click="events.closeKendoWindow('authorizedOpDialog')" class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+        <div class="op-list">
+            <div class="list-items" ng-repeat="item in model.authorizeRecordList">
+                <p>【<span ng-bind="item.operateAdmin"></span>】在
+                    【<span ng-bind="item.operateTime"></span>】
+                    <span ng-bind="item.operationType ==1?'授权了':'调整了授权资源，新授权了'"></span>
+                    <span >【试卷】b{{item.examCount}}份，</span>
+                    <span >【课程】b{{item.courseCount}}门，</span>
+                    <span >【课程包】b{{item.coursePoolCount}}个，</span>
+                    <span >【题库】b{{item.examLibraryCount}}个。</span>
+                    <a class="t-b" href="javascript:void(0)" ng-click="events.goResourceLog(item)">[详情]</a>
+                </p>
+            </div>
+            <!-- 无记录 -->
+            <div ng-if="model.authorizeRecordList.length === 0" class="no-data pt30 clear">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂无授权日志记录</div>
+            </div>
+            <div class="pages mt20 fr">
+                    <span class="page-info">第<span ng-bind="model.logPage.pageNo"></span>/<span
+                            ng-bind="model.logPage.pageCount"></span>页 总共<span ng-bind="model.logPage.totalSize"></span>条</span>
+                <a href="javascript:void(0);" class="a-1" ng-click="events.pageLog(1)">首页</a>
+                <a href="javascript:void(0);" class="a-1" ng-click="events.pageLog(model.pageNo-1)">上一页</a>
+                <a ng-repeat="a in model.pageList" ng-class="{'current':a==model.logPage.pageNo}" href="javascript:void(0);"
+                   ng-click="events.pageLog(a)"><span ng-bind="a"></span></a>
+                <a href="javascript:void(0);" class="a-1" ng-click="events.pageLog(model.logPage.pageNo+1)">下一页</a>
+                <a href="javascript:void(0);" class="a-1" ng-click="events.pageLog(model.logPage.pageCount)">尾页</a>
+            </div>
+        </div>
+    </div>
+</div>

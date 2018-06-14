@@ -1,0 +1,274 @@
+<div class="pos-nav-box" ng-if="$state.current.name==='states.batchManage.createBatch'">
+    <div class="pos-nav"><span ng-if="$state.current.name!=='states.batchManage'"><a href="javascript:void(0)"
+                                                                                     ng-click="events.backManage()"
+                                                                                     class="ico return"></a>
+        <a class="aw"
+           ng-click="events.backManage()"
+           href="javascript:void(0)">报名管理</a> &gt;</span><span>创建缴费批次</span>
+    </div>
+</div>
+<div class="pos-nav-box" ng-if="$state.current.name==='states.batchManage.batchDetail'">
+    <div class="pos-nav"><span ng-if="$state.current.name!=='states.batchManage'"><a href="javascript:void(0)"
+                                                                                     ng-click="events.backManage()"
+                                                                                     class="ico return"></a>
+        <a class="aw"
+           ng-click="events.backManage()"
+           href="javascript:void(0)">报名管理</a> &gt;</span><span>批次详情</span>
+    </div>
+</div>
+<div class="pos-nav-box"
+     ng-if="$state.current.name==='states.batchManage.batchOrder'||$state.current.name==='states.batchManage.goPay'">
+    <div class="pos-nav"><span ng-if="$state.current.name!=='states.batchManage'"><a href="javascript:void(0)"
+                                                                                     ng-click="events.backManage()"
+                                                                                     class="ico return"></a>
+        <a class="aw"
+           ng-click="events.backManage()"
+           href="javascript:void(0)">报名管理</a> &gt;</span><span>批量缴费</span>
+    </div>
+</div>
+
+<div class="main-wrap-body" ng-show="$state.current.name==='states.batchManage'">
+    <div class="tips-box">
+        温馨提示:<br>
+        1. 需为学员缴费，请先创建缴费批次，再选择对应批次缴费的人员及培训班；<br>
+        2. 平台提供手动加班和批量导班两种方式，批量导班需先下载导入模版再提交，导入任务成功的记录会直接显示在报名批次中；<br>
+        3. 缴费批次提交成功后交易状态会变更为下单中，需待批次处理完成请在24小时内前往支付页面缴费，超时未缴费系统将默认关闭批次，需重新创建批次。
+    </div>
+    <!--     <div class="search-bar mt20">
+             <ul class="ul-form li-fl clear">
+                 <li><input type="text"
+                            hb-clear-input
+                            ng-model="model.userPageParams.identy"
+                            class="ipt ipt-medium" placeholder="请输入身份证号"></li>
+                 <li><input type="text"
+                            hb-clear-input
+                            ng-model="model.userPageParams.name"
+                            class="ipt ipt-medium" placeholder="请输入姓名"></li>
+                 <li><a   ng-click="events.search($event)"  class="btn btn-b">查询</a></li>
+             </ul>
+         </div>-->
+
+    <div class="search-bar mt20">
+        <ul class="ul-form li-fl clear" has-permission="batchManage/search">
+            <li><input type="text" class="ipt ipt-medium"
+                       ng-model="model.userParams.batchNo"
+                       hb-clear-input
+                       placeholder="请输入报名批次号"></li>
+
+            <li>
+                <select class="select-small"  ng-model="model.userParams.batchType" has-permission="batchManage/searchBatchType">
+                    <option selected="selected" value="-1">缴费批次类型</option>
+                    <option value="0">非测试</option>
+                    <option value="1">测试</option>
+                </select>
+            </li>
+
+            <li>
+                <select ng-model="model.userParams.batchState" class="slt slt-small">
+                    <option value="">交易状态</option>
+                    <option value="beginning">待下单</option>
+                    <option value="addingOrder">下单中</option>
+                    <option value="commited">待付款</option>
+                    <option value="paying">支付中</option>
+                    <!--<option value="payFail">支付失败</option>-->
+                    <!--<option value="paySuccess">支付成功</option>-->
+                    <option value="delivering">开通中</option>
+                    <!--<option value="deliverySuccess">发货成功</option>-->
+                    <option value="tradeSuccess">交易成功</option>
+                    <option value="tradeClose">交易关闭</option>
+                    <option value="tradeClosing">交易关闭中</option>
+                </select>
+            </li>
+
+            <li>
+                <input type="text"
+                       class="ipt ipt-large"
+                       hb-clear-input
+                       ng-model="model.userParams.commitStartTime"
+                       k-options="kendoPlus.queryBeginTimeOptions"
+                       kendo-date-picker="kendoPlus.timeModel"
+                       hb-readonly
+                       placeholder="批次提交时间"/> -
+                <input type="text"
+                       hb-clear-input
+                       ng-model="model.userParams.commitEndTime"
+                       k-options="kendoPlus.queryEndTimeOptions"
+                       kendo-date-picker="kendoPlus.timeModel"
+                       hb-readonly
+                       class="ipt ipt-large"
+                       placeholder="批次提交时间"/>
+            </li>
+
+            <li><a ng-click="events.search($event)" has-permission="batchManage/search" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="column mt10">
+        <button ng-disabled="create===true" ng-click="events.createBatch()" has-permission="batchManage/createBatch"
+                class="btn-r btn">创建缴费批次
+        </button>&nbsp;&nbsp;&nbsp;
+        <button ng-disabled="create===true" ng-click="events.createTestBatch()" has-permission="batchManage/createTestBatch"
+                class="btn-r btn">创建测试缴费批次
+        </button>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.unitbatchGrid" k-options="ui.unitbatchGrid.options">
+        </div>
+    </div>
+</div>
+<!--培训班弹窗-->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="classWindow" style="width: 1100px">
+    <div class="dialog-body">
+        <div class="dialog-tit">查看下单结果<a href="javascript:void(0)"
+                                         class="ico ico-close"
+                                         ng-click="events.closeKendoWindow('classWindow')"></a></div>
+        <div class="dialog-cont">
+            <ul class="ul-d-form uf-bg pt10 pl20 lh-1">
+                <li>
+
+                    <span class="left-txt">缴费批次号：</span> <span ng-bind="model.commitResult.batchNo"></span>
+                    <span class="left-txt">缴费人次：</span><span ng-bind="model.commitResult.people"></span>
+                    <span class="left-txt  ">实付金额(元)：</span><span ng-bind="model.commitResult.totalMoney"></span>
+                </li>
+                <li>
+
+                    <span class="left-txt">下单结果：</span><span ng-bind="model.commitResult.result"></span>
+                    <span class="left-txt">下单时间：</span><span ng-bind="model.commitResult.processingTime"></span>
+                </li>
+            </ul>
+            <div class="tab-tit mt10">
+                <a class="current">处理结果说明</a>
+            </div>
+            <p class="mt10" ng-if="model.commitResult.result =='处理中'">当前批次缴费处理中！</p>
+            <p class="mt10" ng-if="model.commitResult.result =='处理完成'">当前批次缴费人次<span
+                    ng-bind="model.commitResult.num"></span>，处理成功<span ng-bind="model.commitResult.success"></span>，处理失败<span
+                    ng-bind="model.commitResult.fail"></span></p>
+            <div class="col-body table-box mt20" ng-if="model.commitResult.fail>0">
+                <div kendo-grid="node.commitResultGrid" k-options="ui.commitResultGrid.options">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="dialog w-2" k-options="kendoPlus.invoiceQuerywindowOptions" kendo-window="invoiceQueryclassWindow">
+    <div class="dialog-body">
+        <div class="dialog-tit">发票配送查询<a href="javascript:void(0)"
+                                         class="ico ico-close"
+                                         ng-click="events.closeKendoWindow('invoiceQueryclassWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="tab-tit">
+                <a class="current">发票信息</a>
+            </div>
+            <!--没发票-->
+            <p class="ml15 mt5" ng-if="model.batchDetail.needInvoice===false">是否需要发票：否 </p>
+            <!-- 需要发票 -->
+            <div ng-if="model.batchDetail.needInvoice===true">
+                <p class="ml15 mt5">
+             <span class="mr20">发票类型：
+                 <span ng-if="model.batchDetail.bill.electron">普通电子发票</span>
+                 <span ng-if="!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==2">普通发票</span>
+                 <span ng-if="!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==3">增值税专用发票</span>
+                 <span ng-if="model.batchDetail.bill.noTaxBill===true">非税务发票</span>
+             </span>
+
+
+            <span class="ml50"
+                  ng-if="model.batchDetail.bill.titleType==1&&model.batchDetail.bill.paperInvoiceType!=3">
+                发票抬头:[个人]<span ng-bind="model.batchDetail.bill.title||'-'"></span>
+            </span>
+            <span class="ml50"
+                  ng-if="model.batchDetail.bill.titleType==2&&model.batchDetail.bill.paperInvoiceType!=3">
+                发票抬头:[单位]<span ng-bind="model.batchDetail.bill.title||'-'"></span>
+            </span>
+            <span class="ml50"
+                  ng-if="(!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==3)">
+                单位名称:<span ng-bind="model.batchDetail.bill.title||'-'">
+            </span>
+            </span>
+            <span class="ml50"
+                  ng-if="(model.batchDetail.bill.titleType==2||(!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==3))&&model.batchDetail.bill.noTaxBill===false">纳税人识别号：<span
+                    ng-bind="model.batchDetail.bill.taxpayerNo||'-'"></span></span>
+                </p>
+                <!--增值税发票才有的选项-->
+                <p class="ml15 mt5"
+                   ng-if="!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==3"
+                >开户银行：<span ng-bind="model.batchDetail.bill.bankName"></span>
+                </p>
+
+                <p class="ml15 mt5"
+                   ng-if="!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==3"
+                >开户账号：<span ng-bind="model.batchDetail.bill.account"></span>
+                </p>
+
+                <p class="ml15 mt5"
+                   ng-if="!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==3"
+                >注册电话：<span ng-bind="model.batchDetail.bill.phone"></span>
+                </p>
+
+                <p class="ml15 mt5"
+                   ng-if="!model.batchDetail.bill.electron&&model.batchDetail.bill.paperInvoiceType==3"
+                >注册地址：<span ng-bind="model.batchDetail.bill.address"></span>
+                </p>
+                <!--增值税发票才有的选项-->
+
+                <p class="ml15 mt5">
+            <span>开票状态：
+                <span ng-switch="model.batchDetail.bill.billState">
+                    <!-- 发票状态 0：未打印1:已打印2:已发货3:已作废 -->
+                    <span ng-switch-when="0">待开票</span>
+                    <span ng-switch-when="1">已开票</span>
+                    <span ng-switch-when="2">已开票</span>
+                    <span ng-switch-when="3">已作废</span>
+                    <span ng-switch-default>-</span>
+                </span>
+            </span>
+                    <span class="ml50">发票号码：<span ng-bind="model.batchDetail.bill.billNo||'-'"></span></span>
+                    <!-- 电子票的额外信息 -->
+                    <!--<span ng-if="model.batchDetail.bill.electron===true" class="ml50">发票代码：<span ng-bind="model.batchDetail.bill.code||'-'"></span></span>-->
+                </p>
+
+                <!-- 电子票的额外信息 -->
+                <!--<p ng-if="model.batchDetail.bill.electron===true" class="ml15 mt5">-->
+                <!--<span>查询验证码：<span ng-bind="model.batchDetail.bill.verifyCode||'-'"></span></span>-->
+                <!--<span class="ml50">开票日期：<span ng-bind="model.batchDetail.bill.createTime||'-'"></span></span>-->
+                <!--<span class="ml50">下载地址：<span ng-bind="model.batchDetail.bill.code||'-'"></span></span>-->
+                <!--</p>-->
+            </div>
+
+
+            <div ng-if="model.batchDetail.needInvoice===true && model.batchDetail.bill.electron===false">
+                <div class="dash-line-5"></div>
+                <p class="ml15 b">配送信息</p>
+
+                <div ng-if="model.batchDetail.bill.deliverType==='2'">
+                    <p class="ml15 mt5">配送方式：自取 </p>
+                    <p class="ml15 mt5">领取地点：<span ng-bind="model.batchDetail.bill.recipientsAddress"></span></p>
+                    <p class="ml15 mt5">领取时间：<span ng-bind="model.batchDetail.bill.signTime"></span></p>
+                    <p class="ml15 mt5">备注：<span ng-bind="model.batchDetail.bill.remark"></span></p>
+                </div>
+
+                <div ng-if="model.batchDetail.bill.deliverType==='1'">
+                    <p class="ml15 mt5">配送方式：邮寄
+                        <!--<p class="ml15 mt5">收件人：<span ng-bind="model.batchDetail.bill.receiverName||'-'"></span></p>-->
+                        <!--<p class="ml15 mt5">手机号：<span ng-bind="model.batchDetail.bill.mobileNo"></span></p>-->
+                        <!--<p class="ml15 mt5">收件详址：<span ng-bind="model.batchDetail.bill.postAddress||'-'"></span></p>-->
+                        <!--<p class="ml15 mt5">邮政编码：<span ng-bind="model.batchDetail.bill.postCode||'-'"></span></p>-->
+                <span class="ml50">快递公司：<span
+                        ng-bind="model.batchDetail.bill.expressCompany||'-'"></span></span></p>
+                    <p class="ml15 mt5">运单号：<span ng-bind="model.batchDetail.bill.expressNumber||'-'"></span>
+                <span class="ml50" ng-show="model.batchDetail.bill.expressNumber">
+                    <a copy-man-four class="txt-b mt10" style="display: inline-block;"
+                       after-copy="events.afterCopy(model.batchDetail.bill.expressCompanyUrl)"
+                       data-clipboard-text="b{{model.batchDetail.bill.expressNumber}}">复制运单号并查询</a></span>
+                    </p>
+                    <p class="ml15 mt5">发货时间：<span ng-bind="model.batchDetail.bill.sendTime||'-'"></span></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div ui-view="batchManageItem"></div>

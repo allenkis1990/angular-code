@@ -1,0 +1,60 @@
+<!--发票信息-->
+<div class="tab-bd clear" ng-show="model.noUserInformation">
+    <div class="no-data w-4 pt20 pb20 clear">
+        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+        <div class="p-txt">请先输入相关信息进行搜索！</div>
+    </div>
+</div>
+<div class="tab-bd clear" ng-show="!model.noUserInformation">
+
+    <div class="main-wrap-body">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li class="clear">
+                    <a ng-click="events.switchTable(0)"
+                       ng-class="{'btn btn-b': invoiceModel.invoiceShowNum === 0, 'btn btn-g ml5': invoiceModel.invoiceShowNum !== 0}">增值税普通发票</a>
+                    <a ng-click="events.switchTable(1)"
+                       ng-class="{'btn btn-b': invoiceModel.invoiceShowNum === 1, 'btn btn-g ml5': invoiceModel.invoiceShowNum !== 1}">普通电子发票</a>
+                    <a ng-click="events.switchTable(2)"
+                       ng-class="{'btn btn-b': invoiceModel.invoiceShowNum === 2, 'btn btn-g ml5': invoiceModel.invoiceShowNum !== 2}">增值税专用发票</a>
+                    <a ng-click="events.switchTable(3)"
+                       ng-class="{'btn btn-b': invoiceModel.invoiceShowNum === 3, 'btn btn-g ml5': invoiceModel.invoiceShowNum !== 3}">非税务发票</a>
+                    <a ng-click="events.switchTable(-1)"
+                       ng-class="{'btn btn-b': invoiceModel.invoiceShowNum === -1, 'btn btn-g ml5': invoiceModel.invoiceShowNum !== -1}">不开发票</a>
+                </li>
+            </ul>
+
+            <!--发票表格-->
+            <ul class="ul-form li-fl clear">
+                <li><input type="text" class="ipt ipt-medium" ng-model="invoiceModel.billOrderQueryParams.orderNo"
+                           hb-clear-input
+                           placeholder="请输入订单号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                </li>
+                <li ng-show="invoiceModel.invoiceShowNum === 0 || invoiceModel.invoiceShowNum === 2 || invoiceModel.invoiceShowNum === 3">
+                    <select class="slt slt-medium" ng-model="invoiceModel.billOrderQueryParams.deliverType">
+                        <option ng-selected="true" value="">配送方式</option>
+                        <option value="1">邮寄</option>
+                        <option value="2">自取</option>
+                    </select>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="classInformation/searchInvoiceInfo"
+                       ng-click="events.MainPageQueryList($event)"
+                       class="btn btn-b">查询</a>
+                </li>
+
+            </ul>
+
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.commonInvoiceGrid" k-options="ui.commonInvoiceGrid.options"
+                     k-ng-delay="kendoPlus.gridDelay"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>

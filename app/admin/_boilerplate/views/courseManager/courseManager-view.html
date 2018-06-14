@@ -1,0 +1,83 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goLessonResourceManage($event)"></a>
+        <a href="#" class="aw" ng-click="events.goLessonResourceManage($event)">课程管理</a>
+        &gt;课程详情
+    </div>
+</div>
+
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit clear">课程基础信息<a href="javascript:void(0)" ng-class="{'btn-disable':model.course.status!=1}"
+                                            ng-click="events.openListenWindow(model.course.id)"
+                                            class="btn btn-r mr20 fr">试听课程</a></div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2">
+        <ul class="ul-d-form udf-2 lh-1">
+            <li><span class="left-txt">课程名称：</span><span style="word-wrap:break-word;width:300px;"
+                                                         ng-bind="model.course.name"></span></li>
+            <li><span class="left-txt">讲师：</span><span ng-bind="model.course.teacherInfo"></span></li>
+            <li><span class="left-txt">学时：</span><span ng-show="model.course.period!=undefined"
+                                                       ng-bind="model.course.period/10"></span></li>
+            <li><span class="left-txt">课程分类：</span><span ng-bind="model.course.typeName"></span></li>
+            <li><span class="left-txt">供应商：</span><span ng-bind="model.course.supplier"></span></li>
+            <li><span class="left-txt">创建人：</span><span ng-bind="model.course.userName"></span></li>
+            <li><span class="left-txt">创建时间：</span><span ng-bind="model.course.createTime"></span></li>
+            <li class="clear"><span class="left-txt fl">课程简介：</span>
+                <span class="w-textarea fl" style="word-wrap:break-word;"
+                      ng-bind="model.course.abouts?model.course.abouts:'暂无简介'"></span>
+            </li>
+        </ul>
+        <div class="course-pic">
+            <img ng-src="b{{model.course.iconPath?'/mfs/'+model.course.iconPath:'@systemUrl@/images/afei.jpg'}}">
+        </div>
+    </div>
+</div>
+<div class="main-wrap-body-1 mt20 clear">
+    <div class="column mb20">
+        <div class="col-tit">课程章节</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="column-block w-tree wt-2 fl">
+        <div class="col-tit">课程章节（<span ng-bind="model.courseOutlines.length"></span>）</div>
+        <div class="col-body p0">
+            <ul class="ul-chapter">
+                <li ng-class="{'bg-g': model.selectIndex==$index}" ng-click="model.selectIndex=$index"
+                    ng-repeat="courseOutline in model.courseOutlines"><span class="chapter-tit"><span
+                        ng-bind="$index+1"></span>. <span ng-bind="courseOutline.name"></span></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="right-pre fl">
+        <div class="column-block w-pre">
+            <div class="col-tit">课件（<span
+                    ng-bind="model.courseOutlines[model.selectIndex].subCourseOutlines.length"></span>）
+            </div>
+            <div class="col-body h-9">
+                <div class="udf-8">
+                    <div class="file-upload-box">
+                        <ul class="ul-file-upload">
+                            <li ng-repeat="subCourseOutline in model.courseOutlines[model.selectIndex].subCourseOutlines">
+                                <span class="file-state-1"
+                                      ng-bind="subCourseOutline.status==0?'转换中':(subCourseOutline.status==1?'转换成功':(subCourseOutline.status==2?'转换失败':'草稿'))"></span>
+                                <span class="file-tit to" style="width:500px;"> <span ng-bind="$index+1"></span>.<span
+                                        ng-class="{'ico ico-document':subCourseOutline.type==1,'ico ico-video':subCourseOutline.type==2,'ico ico-scorm':subCourseOutline.type==3}"></span><span
+                                        title="b{{subCourseOutline.name}}"
+                                        ng-bind="subCourseOutline.name"></span></span>
+                                <span class="file-state"> <!--ng-if="subCourseOutline.customeStatus===1"-->
+                                    <input type="checkbox" disabled ng-checked="subCourseOutline.customeStatus===1">开放试听</span>
+                                <span class="fr-ico">
+                                      <a href="javascript:void(0)"
+                                         ng-click="events.play(subCourseOutline)" class="ico-play">
+                                          <span class="ico"></span>预览</a>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

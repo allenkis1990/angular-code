@@ -1,0 +1,174 @@
+<div class="dialog w-10">
+    <div class="dialog-body">
+        <div ng-if="model.updateType==1" class="dialog-tit">添加课程<a href="javascript:void(0);" class="ico ico-close"
+                                                                   ng-click="events.toClosePeriodAverage($event)"></a>
+        </div>
+        <div ng-if="model.updateType==2" class="dialog-tit">修改学时<a href="javascript:void(0);" class="ico ico-close"
+                                                                   ng-click="events.toClosePeriodAverage($event)"></a>
+        </div>
+        <div ng-if="model.updateType==3" class="dialog-tit">移除课程<a href="javascript:void(0);" class="ico ico-close"
+                                                                   ng-click="events.toClosePeriodAverage($event)"></a>
+        </div>
+        <div class="tips-box">此课程包要求<span class="b t-r"><span ng-bind="model.coursePackage.totalPeriod"></span>学时</span>
+            ，现累计学时数为<span class="b t-r"><span ng-bind="model.utils.getTotalPeriod()"></span>学时</span>，
+            <span ng-show="model.utils.getResidual()>0">已超出<span class="b t-r"><span
+                    ng-bind="model.utils.getResidual()"></span>学时</span>，请先调整各课程的学时数！</span>
+            <span ng-show="model.utils.getResidual()==0">学时数已匹配！</span>
+            <span ng-show="model.utils.getResidual()<0">还差<span class="b t-r"><span
+                    ng-bind="0-model.utils.getResidual()"></span>学时</span>，请先调整各课程的学时数！</span>
+        </div>
+        <div class="dialog-cont">
+            <form name="averageCoursePackageValidate" novalidate>
+                <div ng-if="model.updateType==1" class="wp-full">
+                    <div class="tab-tit clear">
+                        <a href="javascript:void(0);" class="current">新增课程</a>
+                    </div>
+                    <div class="col-body bt0">
+                        <div class="col-body table-box bt0" style="max-height: 300px;">
+                            <table class="table mt10">
+                                <thead>
+                                <tr>
+                                    <th width="30">No.</th>
+
+                                    <th>课程名称</th>
+                                    <th width="110">课程分类</th>
+                                    <th width="110">参考学时</th>
+                                    <th width="150">选课学时</th>
+                                    <th width="100">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="course in model.selectedList | filter: {name: newLessonNameFilter}">
+                                    <td class="ng-binding"><span ng-bind="$index + 1"></span></td>
+                                    <td class="ng-binding"><a href="javascript: void(0)" class="c-tit"><span
+                                            ng-bind="course.name"></span></a></td>
+                                    <td class="ng-binding"><span ng-bind="course.categoryName"></span></td>
+                                    <td class="ng-binding"><span ng-bind="course.defaultPeriod"></span></td>
+                                    <td class="ng-binding"><input style="text-align:right" name="b{{$index}}"
+                                                                  type="text" ng-model="course.period"
+                                                                  class="ipt ipt-small"
+                                                                  ng-pattern="/^[0-9]+(\.[0-9]{1})?$/"
+                                                                  required
+                                                                  ng-change="model.utils.getPeriodCount()"
+                                                                  maxlength="10"/>
+
+                                        <span class="li-prompt lip-4"
+                                              ng-show="averageCoursePackageValidate.b{{$index}}.$dirty&&averageCoursePackageValidate.b{{$index}}.$error.required">
+                                <span class="ico ico-prompt"></span>学时不能为空。</span>
+                                        <span class="li-prompt lip-2 lip-2"
+                                              ng-show="averageCoursePackageValidate.period.$dirty&&averageCoursePackageValidate.period.$error.maxlength"> 位数超长</span>
+                                        <span class="li-prompt lip-4"
+                                              ng-show="averageCoursePackageValidate.period.$dirty&&averageCoursePackageValidate.period.$error.pattern">
+                                <span class="ico ico-prompt"></span>请输入正实数（最多1位小数）。</span>
+                                    </td>
+                                    <td class="op">
+                                        <a href="javascript:void(0);" has-permission="coursePackageManager/addRemove"
+                                           ng-click="events.unSelect(course)">移除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="model.updateType==2" class="wp-full">
+                    <div class="tab-tit clear">
+                        <a href="javascript:void(0);" class="current">修改学时</a>
+                    </div>
+                    <div class="col-body bt0">
+                        <div class="col-body table-box bt0" style="max-height: 300px;">
+                            <table class="table mt10">
+                                <thead>
+                                <tr>
+                                    <th width="30">No.</th>
+                                    <th>课程名称</th>
+                                    <th width="110">课程分类</th>
+                                    <th width="110">参考学时</th>
+                                    <th width="150">选课学时</th>
+                                    <th width="100">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="(key,value) in model.updatedAdjustMap | filter: {name: newLessonNameFilter}">
+                                    <td class="ng-binding"><span ng-bind="$index + 1"></span></td>
+                                    <td class="ng-binding"><a href="javascript: void(0)" class="c-tit"><span
+                                            ng-bind="value.courseName"></span></a></td>
+                                    <td class="ng-binding"><span ng-bind="value.categoryName"></span></td>
+                                    <td class="ng-binding"><span ng-bind="value.coursePeriod/10"></span></td>
+                                    <td class="ng-binding"><input style="text-align:center" name="b{{$index}}"
+                                                                  type="text" ng-model="value.period"
+                                                                  class="ipt ipt-small"
+                                                                  ng-pattern="/^[0-9]+(\.[0-9]{1})?$/"
+                                                                  required
+                                                                  maxlength="10"/></td>
+                                    <td class="op">
+                                        <a href="javascript:void(0);" has-permission="coursePackageManager/addRemove"
+                                           ng-click="events.removeAdjust(value)">取消</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="model.updateType==3" class="wp-full">
+                    <div class="tab-tit clear">
+                        <a href="javascript:void(0);" class="current">移除课程</a>
+                    </div>
+                    <div class="col-body bt0">
+                        <div class="col-body table-box bt0" style="max-height: 300px;">
+                            <table class="table mt10">
+                                <thead>
+                                <tr>
+                                    <th width="30">No.</th>
+
+                                    <th>课程名称</th>
+                                    <th width="110">课程分类</th>
+                                    <th width="110">参考学时</th>
+                                    <th width="150">选课学时</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="course in model.deletedList | filter: {name: newLessonNameFilter}">
+                                    <td class="ng-binding"><span ng-bind="$index + 1"></span></td>
+                                    <td class="ng-binding"><a href="javascript: void(0)" class="c-tit"><span
+                                            ng-bind="course.courseName"></span></a></td>
+                                    <td class="ng-binding"><span ng-bind="course.categoryName"></span></td>
+                                    <td class="ng-binding"><span ng-bind="course.coursePeriod/10"></span></td>
+                                    <td class="ng-binding"><span ng-bind="course.period"></span></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="wp-full">
+                    <div class="tab-tit clear">
+                        <a href="javascript:void(0);" class="current">已选课程</a>
+
+                    </div>
+                    <div class="col-body bt0">
+                        <div class="search-bar" style="margin-top: 10px;">
+                            <ul class="ul-form li-fl clear">
+                                <li><input type="text" class="ipt ipt-large"
+                                           ng-model="model.avergaeCourseInPoolParams.name" placeholder="课程名称"/></li>
+                                <li><a href="javascript:void(0);" class="btn btn-b"
+                                       ng-click="events.queryAverageCourseInPool($event)">查询</a></li>
+                                <a ng-class="{'btn-disable':!averageCoursePackageValidate.$valid||model.saving}"
+                                   href="javascript:void(0);"
+                                   ng-click="events.confirm($event,averageCoursePackageValidate.$valid)"
+                                   class="btn btn-r">确认调整</a>
+                            </ul>
+                        </div>
+                        <div class="col-body table-box">
+                            <div kendo-grid="node.averageCourseInsideGrid"
+                                 k-options="ui.averageCourseInsideGrid.options">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

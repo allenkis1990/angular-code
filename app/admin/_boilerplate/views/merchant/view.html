@@ -1,0 +1,82 @@
+<div class="pos-nav-box">
+    <div class="pos-nav"><a href="javascript:void(0);" class="ico return" ng-click="events.closeView($event)"></a> <a
+            class="aw" href="javascript:void(0);" ng-click="events.closeView($event)">商户管理</a> &gt; 查看商户
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit">商户/商学院基础信息</div>
+        <div class="dash-line-1"></div>
+        <div class="w-10 auto clear">
+            <ul class="ul-d-form udf-12 li-fl pt10 fl">
+                <li><span class="left-txt">企业名称：</span>b{{model.merchantDetailInfo.companyName}}</li>
+                <li><span class="left-txt">商学院名称：</span>b{{model.merchantDetailInfo.businessSchoolName}}</li>
+                <li><span class="left-txt">联系人：</span>b{{model.merchantDetailInfo.contactPerson}}</li>
+                <li><span class="left-txt">联系电话：</span>b{{model.merchantDetailInfo.mobileNumber}}</li>
+                <li><span class="left-txt">邮箱：</span>b{{model.merchantDetailInfo.email}}</li>
+                <li><span class="left-txt">申请时间：</span>b{{model.merchantDetailInfo.applyTime}}</li>
+                <li><span class="left-txt">申请入口：</span>b{{model.merchantDetailInfo.applyEnterface}}</li>
+                <li><span class="left-txt">开通者：</span>b{{model.merchantDetailInfo.dredge}}</li>
+                <li><span class="left-txt">商学院状态：</span>b{{model.merchantDetailInfo.status}}</li>
+                <li><span class="left-txt">商学院性质：</span>b{{model.merchantDetailInfo.nature}}</li>
+                <li><span class="left-txt">平台服务期限：</span>b{{model.merchantDetailInfo.platServeTimeBegin}} 至
+                    b{{model.merchantDetailInfo.platServeTimeEnd}}
+                </li>
+                <li><span class="left-txt">企业所处行业：</span>b{{model.merchantDetailInfo.industryName}}</li>
+                <li ng-if="model.merchantDetailInfo.status!='注销'"><span class="left-txt">商户域名：</span><a
+                        href="http://b{{model.merchantDetailInfo.domain}}" target="_blank">b{{model.merchantDetailInfo.domain}}</a>
+                </li>
+                <li ng-if="model.merchantDetailInfo.status=='注销'"><span class="left-txt">商户域名：</span>b{{model.merchantDetailInfo.domain}}
+                </li>
+                <li><span class="left-txt">备注：</span>b{{model.merchantDetailInfo.remark}}</li>
+            </ul>
+            <div class="company-logo cl-1 fl">
+                <img ng-src="b{{model.merchantDetailInfo.logo}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="column mt20">
+        <div class="col-tit">商学院内容信息</div>
+        <div class="dash-line-1"></div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="30">序号</th>
+                <th>商品名称</th>
+                <th width="160">服务期限</th>
+                <th width="140">内容</th>
+                <th width="140">推送时间</th>
+                <th width="80">状态</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="goods in model.merchantGoods">
+                <td>b{{$index+1}}</td>
+                <td>b{{goods.goodsName}}</td>
+                <td>b{{goods.serveTimeBegin}} 至b{{goods.serveTimeEnd}}</td>
+                <td>b{{goods.goodsContent}}</td>
+                <td>b{{goods.dataCreateTime}}</td>
+                <td>b{{goods.goodsStatus}}</td>
+                <td class="op">
+                    <a href="javascript:void(0);" ng-if="goods.goodsType=='2'"
+                       ng-click="events.viewSolution($event,goods.solutionId)">查看详情</a>
+                    <a ng-if="goods.goodsType=='2'&&(goods.goodsStatus=='待推送'||goods.goodsStatus=='在用')&&model.merchantDetailInfo.status!='注销'"
+                       href="javascript:void(0);" ng-click="events.recycleSolution($event,goods)">回收</a>
+                    <a ng-if="goods.goodsType=='3'&&(goods.goodsStatus=='待推送'||goods.goodsStatus=='在用')&&model.merchantDetailInfo.status!='注销'"
+                       href="javascript:void(0);" ng-click="events.recycleAccount($event,goods)">回收</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="column mt20">
+        <div class="col-tit">商学院推送记录</div>
+        <div class="dash-line-1"></div>
+        <div class="mb5 clear" ng-repeat="actionRecord in model.merchantActionRecord"><span class="mr20 fl">b{{actionRecord.operateTime}}</span><span
+                class="wp-8 fl">b{{actionRecord.content}}</span></div>
+    </div>
+
+</div>

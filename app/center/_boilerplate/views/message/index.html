@@ -1,0 +1,54 @@
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+
+
+    <div class="m-right-block fr mh576">
+        <div class="right-block-bd">
+            <!--<div class="tips-box">共 <span class="txt-o">b{{model.total}}</span> 封
+            </div>-->
+            <div class="m-account">
+                <div class="account-tit">
+                    <a ng-click="events.tabNotice('TRAINING_NOTICE')"
+                       ng-class="{'current':model.categoryType==='TRAINING_NOTICE'}"
+                       href="javascript:void(0)">通知</a>
+                    <a ng-click="events.tabNotice('HELP_CENTER_COMMON_PROBLEM')"
+                       ng-class="{'current':model.categoryType==='HELP_CENTER_COMMON_PROBLEM'}"
+                       href="javascript:void(0)">常见问题</a>
+                </div>
+            </div>
+
+            <div ng-if="model.notice.length>0">
+                <ul class="m-notice" ng-repeat="item in model.notice">
+                    <li><!--ng-class="{'done': item.showRed===false}"-->
+                        <span class="p-ico" style="top: -2px;"></span>
+                        <a href="javascript:void(0)" ng-click="events.detail(item)">b{{item.title}}</a>
+                        <span class="time">b{{item.publishTime}}</span></li>
+                </ul>
+            </div>
+
+
+            <div pagination
+                 ng-if="model.notice.length>0"
+                 ng-change="events.getCourseList()"
+                 ng-model="model.currentPage"
+                 total-items="model.total"
+                 items-per-page="model.itemsPerPage"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+
+
+            <!--空数据-->
+            <div class="m-no-data tc mh391" ng-if="model.notice.length<=0">
+                <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                <p class="txt">暂无数据</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

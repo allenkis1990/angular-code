@@ -1,0 +1,25 @@
+<ul class="ul-d-form pt20 pl20 lh-1">
+    <li>
+        <span class="left-txt">自取点名称：</span>
+        <input type="text" class="ipt w-4" ng-model="model.physicsName"
+               placeholder="请输入自取点名称，仅做为管理员命名用，学员不可见">
+    </li>
+    <li>
+        <span class="left-txt">领取地点：</span> <input type="text" class="ipt w-4"
+                                                   ng-model="model.physicsAddress"
+                                                   placeholder="请输入自取点地址，学员可见">
+    </li>
+    <li>
+        <span class="left-txt">领取时间：</span><input type="text" class="ipt w-4"
+                                                  ng-model="model.physicsTime"
+                                                  placeholder="请输入开放领取时间，供学员在此时段前往领取">
+    </li>
+    <li class="clear">
+        <span class="left-txt fl">备注：</span>
+        <div class="w-4 fl">
+                        <textarea class="textarea wp-m-full" ng-model="model.physicsRemark"
+                                  placeholder="请输入备注信息"></textarea>
+        </div>
+    </li>
+</ul>
+

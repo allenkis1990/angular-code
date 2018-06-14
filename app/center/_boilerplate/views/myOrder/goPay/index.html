@@ -1,0 +1,83 @@
+<div class="p-wrap-full m-content clear">
+
+    <div class="m-right-block w-full">
+        <div class="right-block-bd">
+
+            <div class="m-order-process-1">
+                <div class="process-line"><span class="current" style="width: 66%;"></span></div>
+                <ul class="process-bd clear">
+                    <li class="li-ed">
+                        <span class="p-ico">1</span>
+                        <p>我的购物车</p>
+                    </li>
+                    <li class="li-ed">
+                        <span class="p-ico">2</span>
+                        <p>核对订单信息</p>
+                    </li>
+                    <li class="li-ed">
+                        <span class="p-ico">3</span>
+                        <p>付款</p>
+                    </li>
+                    <li>
+                        <span class="p-ico">4</span>
+                        <p>支付成功</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-order-info plr20 rel">
+                <div class="fs15 lh30 mt20">订单号：b{{model.orderNo}}<br>
+                    请您在<span class="txt-r">24</span>小时内完成支付，否则订单会被自动取消。
+                </div>
+                <div class="tit-block-1 mt30">培训内容</div>
+                <div class="order-info-bd">
+                    <table class="ui-table table-line mt10 lwh-th">
+                        <thead>
+                        <tr>
+                            <th class="tl">培训内容</th>
+                            <th width="200">学习形式</th>
+                            <th width="150">学时</th>
+                            <th width="300">属性</th>
+                            <th width="150">价格(元)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in model.courseList">
+                            <td class="tl" ng-bind="item.name"></td>
+                            <td ng-bind="item.schemeType==='TRAINING_CLASS'?'培训班':'课程'"></td>
+                            <td ng-bind="item.hour"></td>
+                            <td>
+                                <div ng-repeat="subItem in item.skuPropertyNameList">
+                                    <span ng-bind="subItem.skuPropertyName"></span>:
+                                    <span ng-bind="subItem.skuPropertyValueName"></span>
+                                </div>
+                            </td>
+                            <td class="txt-r" ng-bind="item.dealPrice"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tit-block-1 mt30">支付方式</div>
+                <ul class="pay-style clear mb20">
+                    <li class="current"
+                        style="height:61px;">
+                        <label class="ui-label">
+                            <span class="ipt-txt" style="padding-left:10px;"><img ng-src="b{{model.orderDetail.merchantAccount.logoPath}}" alt=""></span>
+                        </label>
+                        <span class="p-ico"></span>
+                    </li>
+                </ul>
+                <div class="m-sum-bar-1 m-screen mt10 clear">
+                    <div class="fr">
+                        <input type="button"
+                               style="height:40px;line-height:40px;"
+                               ng-click="events.payRightNow()"
+                               ng-disabled="submitAble"
+                               class="ui-btn btn-o ml10" value="确认支付">
+                    </div>
+                    <p class="fr ml30 txt-g fs18 b">订单总金额：<span class="txt-r">￥b{{model.total}}</span></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

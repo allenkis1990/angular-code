@@ -1,0 +1,278 @@
+<div class="pos-nav-box" ng-if="$state.current.name!=='states.goodsManager'">
+    <div class="pos-nav"><a href="javascript:void(0)"
+                            ng-click="$state.go('states.goodsManager')"
+                            class="ico return"></a>
+        <a class="aw"
+           ng-click="$state.go('states.goodsManager')"
+           href="javascript:void(0)">培训方案管理</a> &gt; <span
+                ng-if="$state.current.name==='states.goodsManager.goodsEdit'">编辑培训方案</span><span
+                ng-if="$state.current.name==='states.goodsManager.goodsDetail'">培训方案详情</span><span
+                ng-if="$state.current.name==='states.goodsManager.goodsAuthorized'">授权培训方案</span><span
+                ng-if="$state.current.name==='states.goodsManager.authorizedView'">授权培训方案</span></div>
+</div>
+
+<div class="main-wrap-body" ng-show="$state.current.name==='states.goodsManager'">
+
+    <div class="tab-tit mt10" ng-if="events.isSubProjectManager()">
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.myself.code}"
+           ng-click="events.chooseTab($event,tabMap.myself.code)"
+           ng-bind="tabMap.myself.name"
+        ></a>
+        <a href=""
+        ng-class="{ current: currentTab===tabMap.all.code}"
+        ng-click="events.chooseTab($event,tabMap.all.code)"
+        ng-bind="tabMap.all.name"
+        ></a>
+    </div>
+
+    <!-- 本单位 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.myself.code">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <div hb-authorized-option
+                     lock-range-for-res="commodity"
+                     query-params="model.mySelfAuthorizedQuery"></div>
+                <li>
+                    <select class="slt slt-small"
+                            ng-model="model.myselfQuery.categoryType">
+                        <option value="">培训方案形式</option>
+                        <option value="TRAINING_CLASS_GOODS">培训班学习</option>
+                        <option value="COURSE_SUPERMARKET_GOODS">自主选课学习</option>
+                    </select>
+                </li>
+                <div hb-sku-directive
+                     category-type="model.myselfQuery.categoryType"
+                     lwhmodel="skuParamsMyselfGoodsManager"
+                     ng-model="skuParamsMyselfGoodsManager"
+                     templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+
+
+                <!--<li style="margin-left:15px;">
+                    <select class="slt slt-small"
+                            ng-model="model.commodityQueryParams.commoditySkuState">
+                        <option value="-1">商品状态</option>
+                        <option value="1">已上架</option>
+                        <option value="2">待上架</option>
+                        <option value="3">已下架</option>
+                    </select>
+                </li>-->
+
+
+                <!--<li ng-class="{'margin-left15':model.myselfQuery.categoryType}">-->
+                <!--<select class="slt slt-small"-->
+                <!--ng-model="model.myselfQuery.trainingSchemeEnabled">-->
+                <!--<option value="-1">培训方案状态</option>-->
+                <!--<option value="0">停用</option>-->
+                <!--<option value="1">正常</option>-->
+                <!--</select>-->
+                <!--</li>-->
+
+
+                <li>
+                    <input type="text"
+                           class="ipt ipt-medium"
+                           ng-keyup="events.pressEnterKey($event)"
+                           ng-model="model.myselfQuery.commoditySkuName"
+                           placeholder="请输入培训方案名称"/>
+                </li>
+
+
+                <li>
+                    <select class="slt slt-small"
+                            ng-model="model.myselfQuery.commoditySkuState">
+                        <option value="-1">销售状态</option>
+                        <option value="1">已上架</option>
+                        <option value="2">待上架</option>
+                        <option value="3">已下架</option>
+                    </select>
+                </li>
+
+                <li>
+                    <select class="slt slt-small"
+                            ng-model="model.myselfQuery.saleState">
+                        <option value="-1">是否售出</option>
+                        <option value="1">未售</option>
+                        <option value="2">已售</option>
+                    </select>
+                </li>
+                <!--<li>-->
+                    <!--<select class="slt slt-medium"-->
+                            <!--ng-model="model.myselfQuery.Authorized">-->
+                        <!--<option value="">是否为代销培训方案</option>-->
+                        <!--<option value="true">是</option>-->
+                        <!--<option value="false">否</option>-->
+                    <!--</select>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<input type="text"-->
+                <!--class="ipt ipt-middle"-->
+                <!--hb-clear-input-->
+                <!--ng-model="model.myselfQuery.firstUpTimeMin"-->
+                <!--k-options="kendoPlus.timeOptions"-->
+                <!--kendo-date-picker="kendoPlus.timeModel"-->
+                <!--hb-readonly-->
+                <!--placeholder="首次上架时间"/> - -->
+                <!--<input type="text"-->
+                <!--hb-clear-input-->
+                <!--ng-model="model.myselfQuery.firstUpTimeMax"-->
+                <!--k-options="kendoPlus.timeOptions"-->
+                <!--kendo-date-picker="kendoPlus.timeModel"-->
+                <!--hb-readonly-->
+                <!--class="ipt ipt-middle"-->
+                <!--placeholder="首次上架时间"/>-->
+                <!--</li>-->
+                <li>
+                    <input class="ipt ipt-c-xm " style="margin-top: 10px;" type="checkbox"
+                           ng-click="model.myselfQuery.checkPrice=='1'?model.myselfQuery.checkPrice='-1':model.myselfQuery.checkPrice='1'"/>
+                    待配置培训方案（代销培训方案未确认销售价格）
+                </li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.MainPageQueryList($event)"
+                       class="btn btn-b">查询</a>
+                </li>
+            </ul>
+        </div>
+        <div class="dash-line-3"></div>
+        <div class="column mt10" style="overflow: auto">
+            <div kendo-grid="kendoPlus.myselfGoodsManagerGridInstance"
+                 k-options="myselfGoodsManagerGrid.options">
+            </div>
+        </div>
+    </div>
+    <!-- /本单位 -->
+    <!-- 全部 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.all.code">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+
+                <div hb-authorized-option query-all="true" change-unit-callback="events.initAllGrid(unitId)"
+                     lock-range-for-res="commodity"
+                     query-params="model.allAuthorizedQuery"></div>
+                <li>
+                    <select class="slt slt-small"
+                            ng-model="model.allQuery.categoryType">
+                        <option value="">培训方案形式</option>
+                        <option value="TRAINING_CLASS_GOODS">培训班学习</option>
+                        <option value="COURSE_SUPERMARKET_GOODS">自主选课学习</option>
+                    </select>
+                </li>
+                <div hb-sku-directive
+                     category-type="model.allQuery.categoryType"
+                     lwhmodel="skuParamsAllGoodsManager"
+                     ng-model="skuParamsAllGoodsManager"
+                     templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+
+
+                <!--<li style="margin-left:15px;">
+                    <select class="slt slt-small"
+                            ng-model="model.commodityQueryParams.commoditySkuState">
+                        <option value="-1">商品状态</option>
+                        <option value="1">已上架</option>
+                        <option value="2">待上架</option>
+                        <option value="3">已下架</option>
+                    </select>
+                </li>-->
+
+
+                <!--<li ng-class="{'margin-left15':model.allQuery.categoryType}">-->
+                <!--<select class="slt slt-small"-->
+                <!--ng-model="model.allQuery.trainingSchemeEnabled">-->
+                <!--<option value="-1">培训方案状态</option>-->
+                <!--<option value="0">停用</option>-->
+                <!--<option value="1">正常</option>-->
+                <!--</select>-->
+                <!--</li>-->
+
+
+                <li>
+                    <input type="text"
+                           class="ipt ipt-medium"
+                           ng-keyup="events.pressEnterKey($event)"
+                           ng-model="model.allQuery.commoditySkuName"
+                           placeholder="请输入培训方案名称"/>
+                </li>
+
+
+                <li>
+                    <select class="slt slt-small"
+                            ng-model="model.allQuery.commoditySkuState">
+                        <option value="-1">销售状态</option>
+                        <option value="1">已上架</option>
+                        <option value="2">待上架</option>
+                        <option value="3">已下架</option>
+                    </select>
+                </li>
+
+                <li>
+                    <select class="slt slt-small"
+                            ng-model="model.allQuery.saleState">
+                        <option value="-1">是否售出</option>
+                        <option value="1">未售</option>
+                        <option value="2">已售</option>
+                    </select>
+                </li>
+                <!--<li>-->
+                <!--<select class="slt slt-medium"-->
+                <!--ng-model="model.allQuery.Authorized">-->
+                <!--<option value="">是否为代销培训方案</option>-->
+                <!--<option value="true">是</option>-->
+                <!--<option value="false">否</option>-->
+                <!--</select>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<input type="text"-->
+                <!--class="ipt ipt-middle"-->
+                <!--hb-clear-input-->
+                <!--ng-model="model.allQuery.firstUpTimeMin"-->
+                <!--k-options="kendoPlus.timeOptions"-->
+                <!--kendo-date-picker="kendoPlus.timeModel"-->
+                <!--hb-readonly-->
+                <!--placeholder="首次上架时间"/> - -->
+                <!--<input type="text"-->
+                <!--hb-clear-input-->
+                <!--ng-model="model.allQuery.firstUpTimeMax"-->
+                <!--k-options="kendoPlus.timeOptions"-->
+                <!--kendo-date-picker="kendoPlus.timeModel"-->
+                <!--hb-readonly-->
+                <!--class="ipt ipt-middle"-->
+                <!--placeholder="首次上架时间"/>-->
+                <!--</li>-->
+                <li>
+                    <input class="ipt ipt-c-xm " style="margin-top: 10px;" type="checkbox"
+                           ng-click="model.allQuery.checkPrice=='1'?model.allQuery.checkPrice='-1':model.allQuery.checkPrice='1'"/>
+                    待配置培训方案（代销培训方案未确认销售价格）
+                </li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.MainPageQueryList($event)"
+                       class="btn btn-b">查询</a>
+                </li>
+            </ul>
+        </div>
+        <div class="dash-line-3"></div>
+        <div class="column mt10" style="overflow: auto">
+            <div kendo-grid="kendoPlus.allGoodsManagerGridInstance"
+                 k-options="allGoodsManagerGrid.options">
+            </div>
+        </div>
+    </div>
+    <!-- /全部 -->
+</div>
+
+
+<div class="dialog" style="width:600px;" k-options="kendoPlus.windowOptions" kendo-window="priceChangeWindow">
+    <div class="dialog-body mt30">
+        <div class="dialog-tit">价格管理<a href="javascript:void(0)"
+                                       ng-click="priceChangeWindow.close()"
+                                       class="ico ico-close"></a></div>
+        <div class="" style="margin-top:7px;" ng-repeat="item in model.priceChangeList">
+            b{{item.updateTime}} 【b{{item.creatorName}}】 将价格从【b{{item.oldPeriodPrice}}元】调整为【b{{item.newPeriodPrice}}元】。
+        </div>
+        <div class="no-data w-4 pt20 pb20 clear" ng-if="model.priceChangeList.length<=0">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">暂时还没有价格变更！</div>
+        </div>
+    </div>
+</div>
+
+<div ui-view="goodsManagerItem"></div>

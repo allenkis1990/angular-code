@@ -1,0 +1,45 @@
+<!-- <div>
+     <ul>
+         <li ng-repeat="item in hasChoseResult track by $index"><span ng-bind="item.propertyIdName+': '"></span><span ng-bind="item.valueName"></span>
+             <span style="margin-left:10px;cursor:pointer"
+                   ng-if="skuShowAll"
+                   ng-click="events.cacelSearch(item,$index)">x</span>
+         </li>
+         <li ng-transclude></li>
+     </ul>
+
+     <span ng-click="events.clearSearch()">清空筛选条件</span>
+
+
+ </div>-->
+
+
+<div class="m-array-style-2 clear">
+    <span class="b">筛选条件：</span>
+    <a href="javascript:void(0)"
+       ng-repeat="item in hasChoseResult track by $index"
+       class="conditions-btn"><span ng-bind="item.propertyIdName+': '"></span><span class="txt"
+                                                                                    ng-bind="item.valueName"></span>
+        <span class="p-ico close-ico"
+              ng-if="!item.hideBtn"
+              ng-click="events.cacelSearch(item,$index)"></span></a>
+    <span ng-transclude></span>
+    <a href="javascript:void(0)"
+       ng-if="!hideClearBtn"
+       ng-click="events.clearSearch()"
+       class=" clear-btn">清空筛选条件</a>
+
+</div>
+
+
+<div class="screen-style"
+     ng-if="item.lwhIf"
+     style="padding-left:99px;height:auto"
+     ng-repeat="item in skuviewList"><span style="width:88px;" class="style-name" ng-bind="item.cName"></span>
+    <button ng-disabled="lwhLoading===true"
+            ng-class="{'current':(item.model===subItem.optionId)&&item.hideAll}"
+            style="min-width: 60px;"
+            ng-click="events.tabSearch(subItem.optionId,item,subItem,$index)"
+            ng-repeat="subItem in model['skuItem'+item.skuPropertyId]">b{{subItem.name}}
+    </button>
+</div>

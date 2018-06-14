@@ -1,0 +1,13 @@
+<div class="dialog-box w4">
+    <div class="dialog-tip tc">
+        <span class="txt">注册成功</span><br/>
+        <span class="" ng-bind="'账号：'+model.use.identy"></span><br/>
+        <span class="" ng-bind="'密码：'+ (model.use.identy.substr($scope.model.use.identy.length - 6))"></span>
+    </div>
+    <div class="dialog-ft">
+        <a i="close" href="javascript:void (0);"
+           ng-click="events.submitUserInformation(model.use.identy,model.use.identy.substr($scope.model.use.identy.length - 6))"
+           class="btn-normal btn">马上登录</a>
+        <a i="close" class="btn-normal btn">暂不</a>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0);" class="ico return" ng-click="events.closeEdit($event)"></a>
+        <a class="aw" href="javascript:void(0);" ng-click="events.closeEdit($event)">商户管理</a>
+        &gt;修改商学院
+    </div>
+</div>
+<div class="main-wrap-body">
+    <form name="merchantInfo" novalidate>
+        <ul class="ul-d-form udf-4 lh-1">
+            <li><span class="left-txt"><i>*</i>企业名称：</span><input type="text" class="ipt ipt-large"
+                                                                  ng-model="model.updateMerchantDto.companyName"
+                                                                  name="companyName"
+                                                                  required
+                                                                  ng-maxlength="25"
+                                                                  maxlength="26"
+                                                                  ajax-data="validateParam"
+                                                                  ajax-validate
+                                                                  ajax-url="/web/admin/merchant/validateCompanyName">
+                <span ng-show="merchantInfo.companyName.$dirty &&
+              merchantInfo.companyName.$error.required"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+              </span>
+              请输入企业名称！
+            </span>
+                <span ng-show="merchantInfo.companyName.$error.maxlength"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+
+              </span>
+              企业名称长度不能超过25！
+            </span>
+                <span ng-show="merchantInfo.companyName.$dirty &&
+              !merchantInfo.companyName.$error.required &&
+              !merchantInfo.companyName.$error.maxlength &&
+              merchantInfo.companyName.$error.ajaxValidate" class="li-prompt">
+                <span class="ico ico-prompt"></span>
+                企业名称已存在！
+              </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>商学院名称：</span><input type="text" class="ipt ipt-large"
+                                                                   ng-model="model.updateMerchantDto.businessSchoolName"
+                                                                   name="businessScooleName"
+                                                                   required
+                                                                   ng-maxlength="125"
+                                                                   maxlength="126">
+                <span ng-show="merchantInfo.businessScooleName.$dirty &&
+              merchantInfo.businessScooleName.$error.required"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+              </span>
+              请输入商学院名称！
+            </span>
+                <span ng-show="merchantInfo.businessScooleName.$error.maxlength"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+
+              </span>
+              商学院名称长度不能超过125！
+            </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>所处行业：</span>
+                <select class="slt slt-large" ng-model="model.updateMerchantDto.industryId"
+                        name="industryId"
+                        required
+                        ng-model="model.createMerchantDto.industryId">
+                    <option value="1">银行行业</option>
+                    <option value="2">酒店行业</option>
+                    <option value="3">汽车行业</option>
+                    <option value="4">餐饮行业</option>
+                    <option value="5">房地产行业</option>
+                    <option value="6">保险行业</option>
+                    <option value="7">零售行业</option>
+                    <option value="8">其它行业</option>
+                </select>
+                <span ng-show="merchantInfo.industryId.$dirty &&merchantInfo.industryId.$error.required"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+
+              </span>
+              请选择所处行业！
+            </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>联系人：</span><input type="text" class="ipt ipt-large"
+                                                                 ng-model="model.updateMerchantDto.contactPerson"
+                                                                 name="contactPerson"
+                                                                 required
+                                                                 ng-maxlength="50"
+                                                                 maxlength="51">
+                <span ng-show="merchantInfo.contactPerson.$dirty &&merchantInfo.contactPerson.$error.required"
+                      class="li-prompt"><span class="ico ico-prompt"></span>请输入联系人！</span>
+                <span ng-show="merchantInfo.contactPerson.$error.maxlength" class="li-prompt"><span
+                        class="ico ico-prompt"></span>联系人长度不能超过50！</span>
+            </li>
+            <li><span class="left-txt"><i>*</i>联系手机：</span><input type="text" class="ipt ipt-large"
+                                                                  ng-model="model.updateMerchantDto.mobileNumber"
+                                                                  name="mobileNumber"
+                                                                  required
+                                                                  ng-pattern="regexps.phoneNumber"
+                                                                  ajax-data="validateParam"
+                                                                  ajax-validate
+                                                                  ajax-url="/web/admin/merchant/validatePhone">
+                <span ng-show="merchantInfo.mobileNumber.$dirty && merchantInfo.mobileNumber.$error.required"
+                      class="li-prompt"><span class="ico ico-prompt"></span>请输入联系手机！</span>
+                <span
+                        ng-show="merchantInfo.mobileNumber.$dirty && (!merchantInfo.mobileNumber.$error.required) && merchantInfo.mobileNumber.$error.pattern"
+                        class="li-prompt"><span class="ico ico-prompt"></span>手机号格式不正确！</span>
+                <span ng-show="merchantInfo.mobileNumber.$dirty &&
+             !merchantInfo.mobileNumber.$error.required &&
+            merchantInfo.mobileNumber.$error.ajaxValidate" class="li-prompt">
+                <span class="ico ico-prompt"></span>
+                手机号已存在！
+              </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>联系邮箱：</span><input type="text" class="ipt ipt-large"
+                                                                  ng-model="model.updateMerchantDto.email"
+                                                                  name="email"
+                                                                  required
+                                                                  ng-pattern="regexps.email"
+                                                                  ajax-data="validateParam"
+                                                                  ajax-validate
+                                                                  ajax-url="/web/admin/merchant/validateEmail">
+                <span ng-show="merchantInfo.email.$dirty && merchantInfo.email.$error.required" class="li-prompt"><span
+                        class="ico ico-prompt"></span>请输入联系邮箱！</span>
+                <span
+                        ng-show="merchantInfo.email.$dirty && (!merchantInfo.email.$error.required) && merchantInfo.email.$error.pattern"
+                        class="li-prompt"><span class="ico ico-prompt"></span>邮箱格式不正确！</span>
+                <span ng-show="merchantInfo.email.$dirty &&
+             !merchantInfo.email.$error.required &&
+            merchantInfo.email.$error.ajaxValidate" class="li-prompt">
+                <span class="ico ico-prompt"></span>
+                邮箱号已存在！
+              </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>商学院域名：</span><input type="text" class="ipt ipt-large" readonly
+                                                                   ng-model="model.updateMerchantDto.domain">
+            </li>
+            <li class="clear"><span class="left-txt fl">企业LOGO：</span>
+
+                <div class="company-logo fl">
+                    <div upload-image
+                         ng-model="model.uploadImage"
+                    ></div>
+                    <img ng-src="b{{model.image}}">
+
+                </div>
+            </li>
+            <li><span class="left-txt"><i>*</i>开放能力项：</span><label><input type="radio"
+                                                                          name="includingAbility"
+                                                                          ng-model="model.updateMerchantDto.includingAbility"
+                                                                          value="1">开放</label><label
+                    class="ml20"><input type="radio" name="includingAbility"
+                                        ng-model="model.updateMerchantDto.includingAbility"
+                                        value="0">不开放</label></li>
+        </ul>
+    </form>
+    <div class="btn-center pt20">
+        <div class="btn-center">
+            <input type="button" ng-click="events.saveEdit($event);merchantInfo.$setPristine()"
+                   ng-disabled="merchantInfo.$invalid || showDisabled"
+                   ng-class="{'btn-g': !merchantInfo.$valid|| showDisabled, 'btn-r': merchantInfo.$valid && !showDisabled}"
+                   class="btn" value="保存">
+            <input type="button" ng-click="events.closeEdit($event)"
+                   class="btn btn-g ml10"
+                   value="取消">
+        </div>
+    </div>
+    </ul>
+</div>

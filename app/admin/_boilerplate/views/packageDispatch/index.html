@@ -1,0 +1,431 @@
+<div class="pos-nav-box" ng-if="$state.current.name==='states.packageDispatch.departPackage'">
+    <div class="pos-nav"><span><a href="javascript:void(0)"
+                                  ng-click="$state.go('states.packageDispatch')"
+                                  class="ico return"></a>
+        <a class="aw"
+           ng-click="$state.go('states.packageDispatch')"
+           href="javascript:void(0)">物流配送</a> &gt;</span>
+        <span class="ml10">未就绪包裹</span>&gt;<span>拆分包裹</span>
+    </div>
+</div>
+
+<div class="main-wrap-body" ng-show="$state.is('states.packageDispatch')">
+    <!--tab按钮-->
+    <div class="tab-tit" style="margin-bottom: 10px">
+        <div style="display: inline-block;position: relative;">
+            <a class="current" ng-class="{current: query.tabType === 'OWN'}" ng-click="events.tabClick($event,'OWN')">本单位</a>
+            <a class="" ng-class="{current: query.tabType === 'PROJECT'}" ng-click="events.tabClick($event, 'PROJECT')" ng-if="events.isSubProjectManager()">项目级</a>
+        </div>
+    </div>
+
+    <div ng-if=" query.tabType === 'OWN'">
+        <div class="tab-tit">
+            <div style="display: inline-block;position: relative;" id="state_package_dispatch_toggle_tab">
+                <a href=""
+                   has-permission="packageDispatch/all"
+                   ng-click="events.toggleTab($event,typeMap.all.name)"
+                   ng-class="{current:typeMap.isTypeOf(typeMap.all.name)}">
+                    <span ng-bind="typeMap.all.title"></span>
+                </a>
+                <a href=""
+                   has-permission="packageDispatch/express"
+                   ng-click="events.toggleTab($event,typeMap.express.name)"
+                   ng-class="{current:typeMap.isTypeOf(typeMap.express.name)}"
+                   ng-bind="typeMap.express.title"></a>
+                <a href=""
+                   has-permission="packageDispatch/pickUp"
+                   ng-click="events.toggleTab($event,typeMap.pickUp.name)"
+                   ng-class="{current: typeMap.isTypeOf(typeMap.pickUp.name)}"
+                   ng-bind="typeMap.pickUp.title"></a>
+            </div>
+        </div>
+        <!--全部-->
+        <div class="tab-bd">
+        <div class="search-bar mt10">
+            <form novalidate autocomplete="off" name="queryForm">
+                <ul class="ul-form li-fl clear">
+                    <div hb-authorized-option query-params="query.authorizedQuery"></div>
+                    <li>
+                        <input type="text" class="ipt"
+                               hb-clear-input
+                               ng-model="query.consignee" placeholder="收件人名称">
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-pattern="/[0-9A-Za-z]/"
+                               ng-model="query.identify"
+                               hb-clear-input
+                               placeholder="请输入身份证"></li>
+                    <li has-permission="packageDispatch/urlTestUser">
+                        <select class="slt slt-middle"
+                                ng-model="query.isTestUser">
+                            <option value="0">非测试</option>
+                            <option value="1">测试</option>
+                        </select>
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-pattern="/[0-9A-Za-z]/"
+                               ng-model="query.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"></li>
+                    <li>
+                        <div hb-date-arrange
+                             template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                             start-date="query.packageBeginTime"
+                             end-date="query.packageEndTime"
+                             config="timeConfig"
+                             start-placeholder="状态更新时间" end-placeholder="状态更新时间"></div>
+                    </li>
+                    <li>
+                        <select class="slt slt-small"
+                                k-ng-model="query.dispatchStatus"
+                                kendo-combo-box
+                                k-options="config.dispatchStatus">
+                        </select>
+                    </li>
+                    <li>
+                        <div hb-date-arrange
+                             template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                             start-date="query.deliveryBeginTime"
+                             end-date="query.deliveryEndTime"
+                             config="timeConfig"
+                             start-placeholder="发货时间" end-placeholder="发货时间"></div>
+                    </li>
+                    <li ng-show="$stateParams.type==='all'">
+                        <select class="slt slt-mini"
+                                k-ng-model="query.dispatchWay"
+                                kendo-combo-box
+                                k-options="config.dispatchWay">
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium"
+                               ng-show="(typeMap.isTypeOf(typeMap.all.name)&&query.dispatchWay.optionId!=2)||typeMap.isTypeOf(typeMap.express.name)"
+                               ng-pattern="/[0-9A-Za-z]/"
+                               ng-disabled="query.dispatchWay.optionId==-1 && query.receiver"
+                               hb-clear-input
+                               ng-model="query.waybillNo" placeholder="请输入运单号">
+                        <input type="text" class="ipt ipt-medium"
+                               hb-clear-input
+                               ng-disabled="query.dispatchWay.optionId==-1 && query.waybillNo"
+                               ng-show="(typeMap.isTypeOf(typeMap.all.name)&&query.dispatchWay.optionId!=1)||typeMap.isTypeOf(typeMap.pickUp.name)"
+                               ng-model="query.receiver" placeholder="请输入领取人姓名">
+                    </li>
+                    <li>
+                        <select class="slt slt-mini"
+                                k-ng-model="query.frozen"
+                                kendo-combo-box
+                                k-options="config.frozenStatus">
+                        </select>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-b"
+                           exp="true"
+                           has-permission="permission.search"
+                           ng-click="events.search()">查询</a>
+                        <a href="" class="btn btn-g"
+                           exp="true"
+                           has-permission="permission.reset"
+                           ng-click="events.doReset()">重置</a>
+                        <a href="" exp="true" class="btn btn-b"
+                           has-permission="permission.merge"
+                           ng-show = "false"
+                           ng-click="events.merge()">合并包裹</a>
+                        <div loading="events.export_()"
+                             text="导出包裹信息"
+                             exp="true"
+                             has-permission="permission.exportOut"
+                             loading-biu is-loading="isLoadingExport"></div>
+                        <div loading="events.import_()"
+                             exp="true"
+                             has-permission="permission.importIn"
+                             ng-if="!typeMap.isTypeOf(typeMap.pickUp.name)" text="导入包裹运单"
+                             loading-biu is-loading="isLoadingImport"></div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="dash-line-3"></div>
+
+        <div class="table" kendo-grid="node.mainGrid" k-options="mainGridOptions"></div>
+    </div>
+    </div>
+    <div ng-if=" query.tabType === 'PROJECT'">
+        <div class="tab-tit">
+            <div style="display: inline-block;position: relative;" id="state_package_dispatch_toggle_tab">
+                <a href=""
+                   has-permission="packageDispatch/all"
+                   ng-click="events.toggleTab($event,typeMap.all.name)"
+                   ng-class="{current:typeMap.isTypeOf(typeMap.all.name)}">
+                    <span ng-bind="typeMap.all.title"></span>
+                </a>
+                <a href=""
+                   has-permission="packageDispatch/express"
+                   ng-click="events.toggleTab($event,typeMap.express.name)"
+                   ng-class="{current:typeMap.isTypeOf(typeMap.express.name)}"
+                   ng-bind="typeMap.express.title"></a>
+                <a href=""
+                   has-permission="packageDispatch/pickUp"
+                   ng-click="events.toggleTab($event,typeMap.pickUp.name)"
+                   ng-class="{current: typeMap.isTypeOf(typeMap.pickUp.name)}"
+                   ng-bind="typeMap.pickUp.title"></a>
+            </div>
+        </div>
+        <!--全部-->
+        <div class="tab-bd">
+        <div class="search-bar mt10">
+            <form novalidate autocomplete="off" name="queryForm">
+                <ul class="ul-form li-fl clear">
+                    <div hb-authorized-option
+                         query-params="query.authorizedQuery"
+                         query-all="true"
+                         change-unit-callback="events.initAllGrid(unitId)"></div>
+                    <li>
+                        <input type="text" class="ipt"
+                               hb-clear-input
+                               ng-model="query.consignee" placeholder="收件人名称">
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-pattern="/[0-9A-Za-z]/"
+                               ng-model="query.identify"
+                               hb-clear-input
+                               placeholder="请输入身份证"></li>
+                    <li has-permission="packageDispatch/urlTestUser">
+                        <select class="slt slt-middle"
+                                ng-model="query.isTestUser">
+                            <option value="0">非测试</option>
+                            <option value="1">测试</option>
+                        </select>
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-pattern="/[0-9A-Za-z]/"
+                               ng-model="query.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"></li>
+                    <li>
+                        <div hb-date-arrange
+                             template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                             start-date="query.packageBeginTime"
+                             end-date="query.packageEndTime"
+                             config="timeConfig"
+                             start-placeholder="状态更新时间" end-placeholder="状态更新时间"></div>
+                    </li>
+                    <li>
+                        <select class="slt slt-small"
+                                k-ng-model="query.dispatchStatus"
+                                kendo-combo-box
+                                k-options="config.dispatchStatus">
+                        </select>
+                    </li>
+                    <li>
+                        <div hb-date-arrange
+                             template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                             start-date="query.deliveryBeginTime"
+                             end-date="query.deliveryEndTime"
+                             config="timeConfig"
+                             start-placeholder="发货时间" end-placeholder="发货时间"></div>
+                    </li>
+                    <li ng-show="$stateParams.type==='all'">
+                        <select class="slt slt-mini"
+                                k-ng-model="query.dispatchWay"
+                                kendo-combo-box
+                                k-options="config.dispatchWay">
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium"
+                               ng-show="(typeMap.isTypeOf(typeMap.all.name)&&query.dispatchWay.optionId!=2)||typeMap.isTypeOf(typeMap.express.name)"
+                               ng-pattern="/[0-9A-Za-z]/"
+                               ng-disabled="query.dispatchWay.optionId==-1 && query.receiver"
+                               hb-clear-input
+                               ng-model="query.waybillNo" placeholder="请输入运单号">
+                        <input type="text" class="ipt ipt-medium"
+                               hb-clear-input
+                               ng-disabled="query.dispatchWay.optionId==-1 && query.waybillNo"
+                               ng-show="(typeMap.isTypeOf(typeMap.all.name)&&query.dispatchWay.optionId!=1)||typeMap.isTypeOf(typeMap.pickUp.name)"
+                               ng-model="query.receiver" placeholder="请输入领取人姓名">
+                    </li>
+                    <li>
+                        <select class="slt slt-mini"
+                                k-ng-model="query.frozen"
+                                kendo-combo-box
+                                k-options="config.frozenStatus">
+                        </select>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-b"
+                           exp="true"
+                           has-permission="permission.search"
+                           ng-click="events.search()">查询</a>
+                        <a href="" class="btn btn-g"
+                           exp="true"
+                           has-permission="permission.reset"
+                           ng-click="events.doReset()">重置</a>
+                        <!--<a href="" exp="true" class="btn btn-b"-->
+                           <!--has-permission="permission.merge"-->
+                           <!--ng-show = "false"-->
+                           <!--ng-click="events.merge()">合并包裹</a>-->
+                        <!--<div loading="events.export_()"-->
+                             <!--text="导出包裹信息"-->
+                             <!--exp="true"-->
+                             <!--has-permission="permission.exportOut"-->
+                             <!--loading-biu is-loading="isLoadingExport"></div>-->
+                        <!--<div loading="events.import_()"-->
+                             <!--exp="true"-->
+                             <!--has-permission="permission.importIn"-->
+                             <!--ng-if="!typeMap.isTypeOf(typeMap.pickUp.name)" text="导入包裹运单"-->
+                             <!--loading-biu is-loading="isLoadingImport"></div>-->
+                    </li>
+                </ul>
+            </form>
+        </div>
+            <div class="dash-line-3"></div>
+        <div class="table" kendo-grid="node.mainGrid" k-options="mainGridOptions"></div>
+    </div>
+    </div>
+</div>
+<div ui-view="departPackageItem"></div>
+<div ui-view></div>
+<script id="template" type="text/x-kendo-template">
+    <tr data-uid="#= uid #">
+        <td>
+            #: $index #
+        </td>
+        <td style="white-space:normal">
+            <div class="goods-info tl" ng-repeat="item in dataItem.packageContentList">
+                <strong>订单号：</strong><span ng-bind="item.orderNo"></span>
+                <strong class="ml5">交易成功时间：</strong><span
+                    ng-bind="item.traceSuccessTime"></span><br/>
+                <!-- <strong>培训班：</strong><span ng-bind="dataItem.packageContent.goodNameList.join(',')"></span>-->
+
+                <div class="tips-box mt5 mb5" ng-if="ob.invoiceGoodType==2" ng-repeat="ob in item.invoiceGoodDtoList">
+
+                    【<span ng-bind="ob.billName"></span>】
+                    发票抬头：<span ng-bind="ob.billTitle||'无'"></span>
+                    <span class="ml20"></span>数量：<span ng-bind="ob.billCount"></span>
+                    <span class="ml20"></span>发票号：<span ng-bind="ob.billNumber||'未打印'"> </span>
+
+                </div>
+
+                <div class="tips-box mt5 mb5" ng-if="ob.invoiceGoodType==3" ng-repeat="ob in item.invoiceGoodDtoList">
+
+                    【证书】
+                    <b>持证人：</b><span ng-bind="ob.certificateHolderName"></span>
+                    <span class="ml10">
+                    <b>证书编号：</b><span ng-bind="ob.certificateSubOrderNo"></span>
+                    </span>
+                    <span class="ml10  txt-r">
+                        <span ng-if="ob.state==2">已打印</span>
+                        <span ng-if="ob.state==1">未打印</span></span>
+
+                </div>
+
+            </div>
+        </td>
+        <td class="tl">
+            <div ng-if="dataItem.deliveryWayType==typeMap.express.code">
+                <div class="fei">
+                    <strong class="left">收货地址:</strong>
+                    <span class="right" ng-bind="dataItem.receiveContent.recipientsAddress"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">收货人:</strong>
+                    <span class="right" ng-bind="dataItem.receiveContent.recipients"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">手机号码:</strong>
+                    <span class="right" ng-bind="dataItem.receiveContent.recipientsPhone"></span>
+                </div>
+                <div class="tips-box-2 mt5 mb5 nowrap" ng-if="dataItem.remark"
+                     title="b{{dataItem.remark}}"
+                     style="max-height: 80px;overflow: hidden;">
+                    备注：<span ng-bind="dataItem.remark"></span>
+                </div>
+            </div>
+            <div ng-if="dataItem.deliveryWayType==typeMap.pickUp.code">
+                <div class="fei">
+                    <strong class="left">购买人:</strong>
+                    <span class="right" ng-bind="dataItem.receiveContent.recipients"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">身份证号:</strong>
+                    <span class="right" ng-bind="dataItem.receiveContent.identificationNo"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">手机号码:</strong>
+                    <span class="right" ng-bind="dataItem.receiveContent.recipientsPhone"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">自取地址:</strong>
+                    <span class="right" ng-bind="dataItem.receiveContent.recipientsAddress"></span>
+                </div>
+                <div class="tips-box-2 mt5 mb5 nowrap" ng-if="dataItem.remark"
+                     title="b{{dataItem.remark}}"
+                     style="max-height: 80px;overflow: hidden;">
+                    备注：<span ng-bind="dataItem.remark"></span>
+                </div>
+            </div>
+        </td>
+        <td ng-bind="stateMap[dataItem.state].desc">
+
+        </td>
+        <td>
+            <strong ng-bind="typeMap.getType(dataItem.deliveryWayType).title"></strong>
+        </td>
+        <td class="tl">
+            <div ng-if="dataItem.deliveryWayType==typeMap.express.code && dataItem.state==='g'">
+                <div class="fei">
+                    <strong class="left">快递公司:</strong>
+                    <span class="right" ng-bind="dataItem.carrierName"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">运单号:</strong>
+                    <span class="right" ng-bind="dataItem.waybillNo"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">发货时间:</strong>
+                    <span class="right" ng-bind="dataItem.sendTime"></span>
+                </div>
+                <a copy-man-two class="txt-b mt10" style="display: inline-block;"
+                   after-copy="events.afterCopy(dataItem)"
+                   data-clipboard-text="b{{dataItem.waybillNo}}">复制运单号并查询</a>
+            </div>
+            <div class="tl" ng-if="dataItem.deliveryWayType==typeMap.pickUp.code && dataItem.state=='g'">
+                <div class="fei">
+                    <strong class="left">领取人:</strong>
+                    <span class="right" ng-bind="dataItem.selfClaimGoodsName"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">手机号:</strong>
+                    <span class="right" ng-bind="dataItem.selfClaimGoodsPhone"></span>
+                </div>
+                <div class="fei">
+                    <strong class="left">取货时间:</strong>
+                    <span class="right" ng-bind="dataItem.signTime"></span>
+                </div>
+            </div>
+        </td>
+        <td>
+            <strong ng-bind="dataItem.frozen?'是':'否'"></strong>
+        </td>
+        <td class="op" >
+            <span class="txt-r" ng-if="dataItem.state=='g'">已取货</span>
+            <div ng-if="query.tabType === 'OWN'">
+                <a class="t-btn btn btn-mini"
+                   ng-if="dataItem.state==1&&dataItem.deliveryWayType==typeMap.express.code"
+                   has-permission="packageDispatch/dispatch"
+                   ng-click="events.dispatch($event,dataItem)">发货</a>
+                <a class="t-btn btn btn-mini" ng-if="dataItem.state==1&&dataItem.deliveryWayType==typeMap.pickUp.code"
+                   has-permission="packageDispatch/pick"
+                   ng-click="events.toPick($event,dataItem)">确认自取</a>
+                <!--<a class="t-btn btn btn-mini"-->
+                <!--ng-click="events.toPick($event,dataItem)">确认自取</a>-->
+
+                <a style="display: block;"
+                   has-permission="packageDispatch/remark"
+                   ng-click="events.remark(dataItem)">备注</a>
+                <a class="t-btn btn btn-mini mb10"
+                   has-permission="packageDispatch/departPackage"
+                   ng-if="dataItem.doSplitPackage"
+                   ng-click="events.departPackage(dataItem)">拆分包裹</a> <!--has-permission="packageDispatch/departPackage"-->
+            </div>
+
+        </td>
+
+    </tr>
+</script>

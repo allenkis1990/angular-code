@@ -1,0 +1,135 @@
+<div class="no-data w-4 pt20 pb20 clear"
+     ng-show="model.noUserInformation">
+    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+    <div class="p-txt">请先输入相关信息进行搜索！</div>
+</div>
+
+<!--学习历程-->
+<div class="tab-bd clear" ng-show="!learnProcessModel.noLearningProcess&&!model.noUserInformation">
+    <br/>
+    <div class="tab-tit">
+        <a href="javascript:void(0)"
+           ng-click="events.tabConfig('course')"
+           ng-class="{'current':model.configState=='course'}">学习的课程</a>
+        <a href="javascript:void(0)"
+           ng-click="events.tabConfig('class')"
+           ng-class="{'current':model.configState=='class'}">学习的班级</a>
+    </div>
+    <div ng-show="model.configState=='course'">
+        <ul class="ul-form li-fl lh-1 mt20 clear">
+
+            <div hb-sku-directive
+                 category-type="model.courseCategoryId"
+                 lwhmodel="skuParamsCourseLearning"
+                 ng-model="skuParamsCourseLearning"
+                 templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+            <!--<li>-->
+            <!--<input type="text"-->
+            <!--class="ipt ipt-small"-->
+            <!--ng-model="learnProcessModel.className"-->
+            <!--ng-keyup="$event.keyCode==13?events.MainPageQueryList():''"-->
+            <!--placeholder="班级名称"></li>-->
+            <!--<li>-->
+            <!--<select class="slt slt-small" ng-model="learnProcessModel.testResult">-->
+            <!--<option value="-2">是否合格</option>-->
+            <!--<option value="-1">未考核</option>-->
+            <!--<option value="0">不合格</option>-->
+            <!--<option value="1">合格</option>-->
+            <!--</select>-->
+            <!--</li>-->
+            <li><a href="javascript:void (0);"
+                   has-permission="classInformation/searchStudyInfo"
+                   ng-click="events.coursePageQueryList()"
+                   class="btn btn-b">查询</a></li>
+        </ul>
+        <ul class="ul-d-form mt10 lh-1" ng-repeat="item in model.trainCourseMessage">
+            <li style="font-size: 20px"><b>b{{item.trainingYearValue}} b{{item.subjectName}}</b></li>
+            <li>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="140">课程名称</th>
+                        <th width="100" ng-if="item.subjectName==='专业课'">专业</th>
+                        <th width="60">学时</th>
+                        <th width="140">选购时间</th>
+                        <th width="140">学习时段</th>
+                        <th width="80">课程进度</th>
+                        <th width="100">课后测验得分</th>
+                        <th width="80">来源方案</th>
+                        <th width="140">弹窗题得分</th>
+                        <th width="140">考核结果</th>
+                        <th width="140">考核通过时间</th>
+                        <th width="140">创建方式</th>
+                    </tr>
+
+                    </thead>
+                    <tbody ng-repeat="it in item.userCourseInfoList">
+                    <tr>
+                        <td>b{{it.courseName}}</td>
+                        <td ng-if="item.subjectName==='专业课'">b{{it.coursePoolName}}</td>
+                        <td>b{{it.coursePeriod}}</td>
+                        <td><span ng-if="it.chooseTime!==null">b{{it.chooseTime}}</span>
+                            <span ng-if="it.chooseTime===null">--</span></td>
+                        <td><span ng-if="it.learningBeginTime!==null">b{{it.learningBeginTime}}<br/>b{{it.learningEndTime}}</span>
+                            <span ng-if="it.learningBeginTime===null">--</span></td>
+                        <td><span ng-if="it.courseSchedule!==null">b{{it.courseSchedule}}</span>
+                            <span ng-if="it.courseSchedule===null">--</span></td>
+                        <td><span ng-if="it.coursePracticeScore!==null">b{{it.coursePracticeScore}}</span>
+                            <span ng-if="it.coursePracticeScore===null">--</span></td>
+                        <td><span ng-if="it.schemeName!==null">b{{it.schemeName}}</span>
+                            <span ng-if="it.schemeName===null">--</span></td>
+                        <td><span
+                                ng-if="it.hasPopQuestionAssess==true&&it.popAnswer==true">b{{it.popQuestionScore}}</span>
+                            <span ng-if="it.hasPopQuestionAssess==true&&it.popAnswer==false&&it.autoPass==true">b{{it.popQuestionScore}}</span>
+                            <span ng-if="it.hasPopQuestionAssess==true&&it.popAnswer==false&&it.autoPass==false">未测</span>
+                            <span ng-if="it.hasPopQuestionAssess==false">无</span></td>
+                        <td><span ng-if="it.assessmentResult==true">合格</span>
+                            <span ng-if="it.assessmentResult==false&&it.courseSchedule==100">不合格</span>
+                            <span ng-if="it.assessmentResult==false&&it.courseSchedule<100">--</span></td>
+                        <td><span ng-if="it.assessPassTime!==null">b{{it.assessPassTime}}</span>
+                            <span ng-if="it.assessPassTime===null">--</span></td>
+                        <td><span ng-if="it.creatType!==null">b{{it.creatType}}</span>
+                            <span ng-if="it.creatType===null">--</span></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="model.configState=='class'">
+        <ul class="ul-form li-fl lh-1 mt20 clear">
+            <div hb-sku-directive
+                 category-type="model.categoryId"
+                 lwhmodel="skuParamsClassLearning"
+                 ng-model="skuParamsClassLearning"
+                 templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+            <!--<li>-->
+            <!--<input type="text"-->
+            <!--class="ipt ipt-small"-->
+            <!--ng-model="learnProcessModel.className"-->
+            <!--ng-keyup="$event.keyCode==13?events.MainPageQueryList():''"-->
+            <!--placeholder="班级名称"></li>-->
+            <!--<li>-->
+            <!--<select class="slt slt-small" ng-model="learnProcessModel.testResult">-->
+            <!--<option value="-2">是否合格</option>-->
+            <!--<option value="-1">未考核</option>-->
+            <!--<option value="0">不合格</option>-->
+            <!--<option value="1">合格</option>-->
+            <!--</select>-->
+            <!--</li>-->
+            <li><a href="javascript:void (0);"
+                   has-permission="classInformation/searchStudyInfo"
+                   ng-click="events.MainPageQueryList()"
+                   class="btn btn-b">查询</a></li>
+        </ul>
+        <div kendo-grid="node.learningClass" k-options="ui.learningClass.options"
+             k-ng-delay="learnProcessModel.searchLearning"></div>
+    </div>
+</div>
+<div class="tab-bd clear" ng-if="model.trainClassMessage.length===0&&!model.noUserInformation">
+    <div class="no-data w-4 pt20 pb20 clear">
+        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+        <div class="p-txt">查询不到学习历程的相关信息！</div>
+    </div>
+</div>

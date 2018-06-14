@@ -1,0 +1,10 @@
+<div class="hide-block hb-1 mh-1" style="margin-left: -120px;width:99.5%;max-height:85%;margin-top:13px">
+    <div kendo-tree-view="node.tree"
+         k-options="ui.tree.options"
+         k-on-change="model.selectedItem = dataItem">
+                            <span k-template ng-click="events.getArea(dataItem)">
+                              <label style="width: 80px;"><span ng-bind="dataItem.name"></span></label>
+                            </span>
+    </div>
+</div>
+

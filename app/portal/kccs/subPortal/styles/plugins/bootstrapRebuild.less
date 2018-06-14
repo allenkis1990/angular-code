@@ -1,0 +1,110 @@
+/*tab标签样式改写*/
+.nav-tabs {
+  border-bottom-color: #6fcc40;
+  a {
+    color: #6fcc40;
+
+    &:hover {
+      color: #4daf1c;
+    }
+  }
+}
+
+a {
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border-color: #6fcc40;
+  border-bottom-color: transparent;
+}
+
+.nav-tabs > li > a:hover {
+  border-bottom-color: #6fcc40;
+}
+
+.table > tbody {
+  &:first-child {
+    td {
+      border: 0;
+    }
+  }
+}
+
+.btn .badge {
+  background-color: #fff;
+  color: #6fcc40;
+  margin-left: 5px;
+  top: 0;
+}
+
+.form-control:focus {
+  border-color: #6fcc40;
+  box-shadow: none;
+}
+
+.form-inline .form-group {
+  display: inline-block;
+}
+
+.form-inline .form-control {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.form-inline .input-group {
+  display: inline-table;
+  vertical-align: middle;
+}
+
+.pagination > li > a {
+  color: #6fcc40;
+}
+
+.pagination > .active > a {
+  background-color: #6fcc40;
+  border-color: #6fcc40;
+}
+
+.pagination > li > a:hover {
+  color: #666;
+}
+
+.form-group select {
+  color: #999;
+}
+
+div[datepicker] {
+  tbody {
+    .btn {
+      padding: 3px 7px;
+      border: 0;
+    }
+  }
+}
+
+.btn:focus, .btn:active:focus {
+  outline: none;
+  outline-offset: 0;
+}
+
+.glyphicon-calendar {
+  width: 15px;
+  height: 15px;
+  background: url('../images/web-icons.png');
+  background-position: -340px -243px;
+}
+
+.glyphicon-calendar:before {
+  content: none;
+}
+
+/*解决日期控件样式冲突问题*/
+.dropdown-menu * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+

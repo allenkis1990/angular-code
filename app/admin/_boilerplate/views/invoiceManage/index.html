@@ -1,0 +1,634 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.invoiceManage'"
+     ng-click="lessonTypeShow=false">
+
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li class="clear">
+                <a ng-click="events.switchTable(0)"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 0, 'btn btn-g ml5': model.paperInvoiceShowNum !== 0}">增值税普通发票</a>
+                <a ng-click="events.switchTable(1)" ng-show="realSupportIssuingElectronInvoice === true"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 1, 'btn btn-g ml5': model.paperInvoiceShowNum !== 1}">普通电子发票</a>
+                <!--可在平台开票-->
+                <a ng-click="events.switchTable(4)" ng-show="realSupportIssuingElectronInvoice === false"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 4, 'btn btn-g ml5': model.paperInvoiceShowNum !== 4}">普通电子发票</a>
+                <!--不可在平台开票-->
+                <a ng-click="events.switchTable(2)"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 2, 'btn btn-g ml5': model.paperInvoiceShowNum !== 2}">增值税专用发票</a>
+                <a ng-click="events.switchTable(3)"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 3, 'btn btn-g ml5': model.paperInvoiceShowNum !== 3}">非税务发票</a>
+            </li>
+        </ul>
+        <div class="tab-tit mt10">
+            <a ng-class="{ current: currentTab===tabMap.myself.code}"
+               ng-click="events.chooseTab($event,tabMap.myself.code)"
+               ng-bind="tabMap.myself.name"
+            ></a>
+            <a ng-class="{ current: currentTab===tabMap.all.code}"
+               ng-click="events.chooseTab($event,tabMap.all.code)"
+               ng-bind="tabMap.all.name"
+               ng-if="events.isSubProjectManager()"
+            ></a>
+        </div>
+
+        <div ng-show="model.paperInvoiceShowNum === 0">
+            <div class="search-bar mt10" >
+                <ul class="ul-form li-fl clear">
+                    <div hb-authorized-option use-type="bill"
+                         query-params="model.commonPaperBillOrderQueryParams" ng-if="currentTab===tabMap.myself.code"></div>
+                    <div hb-authorized-option use-type="bill" query-all = "true"
+                         query-params="model.commonPaperBillOrderQueryParams" ng-if="currentTab===tabMap.all.code"></div>
+                    <li has-permission="invoiceManage/searchClass">
+                        <div select-goods sku-id="model.commonPaperBillOrderQueryParams.skuId"></div>
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.commonPaperBillOrderQueryParams.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.commonPaperBillOrderQueryParams.buyerName"
+                               hb-clear-input
+                               placeholder="购买人姓名"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.commonPaperBillOrderQueryParams.idNum"
+                               hb-clear-input
+                               placeholder="身份证号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium" ng-model="model.commonPaperBillOrderQueryParams.BillNo"
+                               placeholder="发票号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.commonPaperBillOrderQueryParams.invoiceState">
+                            <option ng-selected="true" value="">发票状态</option>
+                            <option value="2">开票中</option>
+                            <option value="3">开票成功</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.commonPaperBillOrderQueryParams.frozen">
+                            <option ng-selected="true" value="">是否冻结</option>
+                            <option value="false">正常</option>
+                            <option value="true">冻结</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.commonPaperBillOrderQueryParams.billingTimeStart" type="text"
+                               class="ipt ipt-s"
+                               placeholder="开票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.commonPaperBillOrderQueryParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="开票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.commonPaperBillOrderQueryParams.askBillTimeStart" type="text"
+                               class="ipt ipt-s"
+                               placeholder="索要发票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.commonPaperBillOrderQueryParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="索要发票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.commonPaperBillOrderQueryParams.deliverType">
+                            <option ng-selected="true" value="">配送方式</option>
+                            <option value="1">邮寄</option>
+                            <option value="2">自取</option>
+                        </select>
+                    </li>
+
+                    <li has-permission="invoiceManage/urlTestUser">
+                        <select class="slt slt-middle"
+                                ng-model="model.commonPaperBillOrderQueryParams.isTestUser">
+                            <option value="-1">是否为测试</option>
+                            <option value="0">非测试</option>
+                            <option value="1">测试</option>
+                        </select>
+                    </li>
+                    <li class="clear">
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/paperView"
+                           ng-click="events.MainPageQueryList($event)"
+                           class="btn btn-b">查询</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/listOpen"
+                           ng-click="events.ListOpen($event)"
+                           class="btn btn-b">列表数据导出</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/chooseFile"
+                           ng-if="currentTab===tabMap.myself.code"
+                           ng-click="events.chooseFile($event)"
+                           class="btn btn-b">导入开票结果</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="column">
+                <div class="dash-line-3"></div>
+            </div>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.commonPaperInvoiceGrid" k-options="ui.commonPaperInvoiceGrid.options"></div>
+            </div>
+        </div>
+
+        <!--普通电子发票表格（可在平台开票）-->
+        <div ng-show="model.paperInvoiceShowNum === 1 && realSupportIssuingElectronInvoice === true">
+            <div class="search-bar mt10" >
+                <ul class="ul-form li-fl clear">
+                    <div hb-authorized-option use-type="bill"
+                         query-params="model.ableIssuingCommonElectronQueryParams" ng-if="currentTab===tabMap.myself.code"></div>
+                    <div hb-authorized-option use-type="bill" query-all = "true"
+                         query-params="model.ableIssuingCommonElectronQueryParams" ng-if="currentTab===tabMap.all.code"></div>
+                    <li has-permission="invoiceManage/searchClass">
+                        <div select-goods sku-id="model.commonPaperBillOrderQueryParams.skuId"></div>
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.buyerName"
+                               hb-clear-input
+                               placeholder="购买人姓名"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <!--<li><input type="text" class="ipt ipt-medium" ng-model="model.ableIssuingCommonElectronQueryParams.loginInput"-->
+                    <!--hb-clear-input-->
+                    <!--placeholder="账号"-->
+                    <!--ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>-->
+                    <li><input type="text" class="ipt ipt-medium"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.idNum"
+                               hb-clear-input
+                               placeholder="身份证号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.ableIssuingCommonElectronQueryParams.invoiceState">
+                            <option ng-selected="true" value="">发票状态</option>
+                            <option value="1">待开票</option>
+                            <option value="2">开票中</option>
+                            <option value="3">开票成功</option>
+                            <option value="4">开票失败</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.ableIssuingCommonElectronQueryParams.frozen">
+                            <option ng-selected="true" value="">是否冻结</option>
+                            <option value="false">正常</option>
+                            <option value="true">冻结</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.ableIssuingCommonElectronQueryParams.billSelectThree"
+                                style="width: 100px">
+                            <option value="1">发票号</option>
+                            <option value="2">发票代码</option>
+                            <option value="3">验证码</option>
+                        </select>：
+                        <input type="text" class="ipt ipt-medium"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.BillNo"
+                               ng-if="model.ableIssuingCommonElectronQueryParams.billSelectThree === '1'"
+                               placeholder="发票号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                        <input type="text" class="ipt ipt-medium"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.billCode"
+                               placeholder="发票代码"
+                               ng-if="model.ableIssuingCommonElectronQueryParams.billSelectThree === '2'"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                        <input type="text" class="ipt ipt-medium"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.billVeriCode"
+                               ng-if="model.ableIssuingCommonElectronQueryParams.billSelectThree === '3'"
+                               placeholder="验证码"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                    </li>
+                    <!--<select class="slt slt-medium" ng-model="model.ableIssuingCommonElectronQueryParams.payType">-->
+                    <!--<option ng-selected="true" value="">缴费方式</option>-->
+                    <!--&lt;!&ndash;<option value="1">全部</option>&ndash;&gt;-->
+                    <!--<option value="1">网银缴费</option>-->
+                    <!--<option value="2">现场开通</option>-->
+                    <!--</select>-->
+
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.askBillTimeStart" type="text"
+                               class="ipt ipt-s"
+                               placeholder="索要发票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.askBillTimeEnd" type="text"
+                               class="ipt ipt-s"
+                               placeholder="索要发票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                    <li has-permission="invoiceManage/urlTestUser">
+                        <select class="slt slt-middle"
+                                ng-model="model.ableIssuingCommonElectronQueryParams.isTestUser">
+                            <option value="-1">是否为测试</option>
+                            <option value="0">非测试</option>
+                            <option value="1">测试</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.billingTimeStart" type="text"
+                               class="ipt ipt-s"
+                               placeholder="开票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.ableIssuingCommonElectronQueryParams.billingTimeEnd" type="text"
+                               class="ipt ipt-s"
+                               placeholder="开票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                </ul>
+                <ul class="ul-form li-fl clear">
+                    <!--<select class="slt slt-medium" ng-model="model.ableIssuingCommonElectronQueryParams.isBilling">-->
+                    <!--<option ng-selected="true" value="">是否已开票</option>-->
+                    <!--<option value="true">是</option>-->
+                    <!--<option value="false">否</option>-->
+                    <!--</select>-->
+
+                    <li class="clear">
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/electronView"
+                           ng-click="events.MainPageQueryList($event)"
+                           class="btn btn-b">查询</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/listOpen"
+                           ng-click="events.ListOpen($event)"
+                           class="btn btn-b">列表数据导出</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/batchIssuingInvoice"
+                           ng-click="events.batchIssuingInvoice()"
+                           ng-if="currentTab===tabMap.myself.code"
+                           class="btn btn-b">批量开票</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/getElectronInvoiceStorage"
+                           ng-click="events.getStorageByTaxPayer($event)"
+                           class="btn btn-b">查询电子发票库存</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <div class="dash-line-3"></div>
+            </div>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.ableIssuingCommonElectronInvoiceGrid"
+                     k-options="ui.ableIssuingCommonElectronInvoiceGrid.options"></div>
+            </div>
+        </div>
+
+        <!--增值税专用发票表格-->
+        <div ng-show="model.paperInvoiceShowNum === 2">
+            <div class="search-bar mt10" >
+                <ul class="ul-form li-fl clear">
+                    <div hb-authorized-option use-type="bill"
+                         query-params="model.vatPaperBillOrderQueryParams" ng-if="currentTab===tabMap.myself.code"></div>
+                    <div hb-authorized-option use-type="bill" query-all = "true"
+                         query-params="model.vatPaperBillOrderQueryParams" ng-if="currentTab===tabMap.all.code"></div>
+                    <li has-permission="invoiceManage/searchClass">
+                        <div select-goods sku-id="model.commonPaperBillOrderQueryParams.skuId"></div>
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.vatPaperBillOrderQueryParams.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.vatPaperBillOrderQueryParams.buyerName"
+                               hb-clear-input
+                               placeholder="购买人姓名"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.vatPaperBillOrderQueryParams.idNum"
+                               hb-clear-input
+                               placeholder="身份证号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium" ng-model="model.vatPaperBillOrderQueryParams.BillNo"
+                               placeholder="发票号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.vatPaperBillOrderQueryParams.invoiceState">
+                            <option ng-selected="true" value="">发票状态</option>
+                            <option value="2">开票中</option>
+                            <option value="3">开票成功</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.vatPaperBillOrderQueryParams.frozen">
+                            <option ng-selected="true" value="">是否冻结</option>
+                            <option value="false">正常</option>
+                            <option value="true">冻结</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.vatPaperBillOrderQueryParams.billingTimeStart" type="text" class="ipt ipt-s"
+                               placeholder="开票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.vatPaperBillOrderQueryParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="开票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.vatPaperBillOrderQueryParams.askBillTimeStart" type="text" class="ipt ipt-s"
+                               placeholder="索要发票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.vatPaperBillOrderQueryParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="索要发票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.vatPaperBillOrderQueryParams.deliverType">
+                            <option ng-selected="true" value="">配送方式</option>
+                            <option value="1">邮寄</option>
+                            <option value="2">自取</option>
+                        </select>
+                    </li>
+
+                    <li has-permission="invoiceManage/urlTestUser">
+                        <select class="slt slt-middle"
+                                ng-model="model.vatPaperBillOrderQueryParams.isTestUser">
+                            <option value="-1">是否为测试</option>
+                            <option value="0">非测试</option>
+                            <option value="1">测试</option>
+                        </select>
+                    </li>
+                    <li class="clear">
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/paperView"
+                           ng-click="events.MainPageQueryList($event)"
+                           class="btn btn-b">查询</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/listOpen"
+                           ng-click="events.ListOpen($event)"
+                           class="btn btn-b">列表数据导出</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/chooseFile"
+                           ng-click="events.chooseFile($event)"
+                           ng-if="currentTab===tabMap.myself.code"
+                           class="btn btn-b">导入开票结果</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="column">
+                <div class="dash-line-3"></div>
+            </div>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.vatPaperInvoiceGrid" k-options="ui.vatPaperInvoiceGrid.options"></div>
+            </div>
+        </div>
+
+        <!--非税务发票表格-->
+        <div ng-show="model.paperInvoiceShowNum === 3">
+            <div class="search-bar mt10" >
+                <ul class="ul-form li-fl clear">
+                    <div hb-authorized-option use-type="bill"
+                         query-params="model.nonTaxPaperBillOrderQueryParams" ng-if="currentTab===tabMap.myself.code"></div>
+                    <div hb-authorized-option use-type="bill" query-all = "true"
+                         query-params="model.nonTaxPaperBillOrderQueryParams" ng-if="currentTab===tabMap.all.code"></div>
+                    <li has-permission="invoiceManage/searchClass">
+                        <div select-goods sku-id="model.commonPaperBillOrderQueryParams.skuId"></div>
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.nonTaxPaperBillOrderQueryParams.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.nonTaxPaperBillOrderQueryParams.buyerName"
+                               hb-clear-input
+                               placeholder="购买人姓名"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.nonTaxPaperBillOrderQueryParams.idNum"
+                               hb-clear-input
+                               placeholder="身份证号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium" ng-model="model.nonTaxPaperBillOrderQueryParams.BillNo"
+                               placeholder="发票号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.nonTaxPaperBillOrderQueryParams.invoiceState">
+                            <option ng-selected="true" value="">发票状态</option>
+                            <option value="2">开票中</option>
+                            <option value="3">开票成功</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.nonTaxPaperBillOrderQueryParams.frozen">
+                            <option ng-selected="true" value="">是否冻结</option>
+                            <option value="false">正常</option>
+                            <option value="true">冻结</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.nonTaxPaperBillOrderQueryParams.billingTimeStart" type="text"
+                               class="ipt ipt-s"
+                               placeholder="开票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.nonTaxPaperBillOrderQueryParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="开票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.nonTaxPaperBillOrderQueryParams.askBillTimeStart" type="text"
+                               class="ipt ipt-s"
+                               placeholder="索要发票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.nonTaxPaperBillOrderQueryParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="索要发票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.nonTaxPaperBillOrderQueryParams.deliverType">
+                            <option ng-selected="true" value="">配送方式</option>
+                            <option value="1">邮寄</option>
+                            <option value="2">自取</option>
+                        </select>
+                    </li>
+
+                    <li has-permission="invoiceManage/urlTestUser">
+                        <select class="slt slt-middle"
+                                ng-model="model.nonTaxPaperBillOrderQueryParams.isTestUser">
+                            <option value="-1">是否为测试</option>
+                            <option value="0">非测试</option>
+                            <option value="1">测试</option>
+                        </select>
+                    </li>
+                    <li class="clear">
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/paperView"
+                           ng-click="events.MainPageQueryList($event)"
+                           class="btn btn-b">查询</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/listOpen"
+                           ng-click="events.ListOpen($event)"
+                           class="btn btn-b">列表数据导出</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/chooseFile"
+                           ng-click="events.chooseFile($event)"
+                           ng-if="currentTab===tabMap.myself.code"
+                           class="btn btn-b">导入开票结果</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="column">
+                <div class="dash-line-3"></div>
+            </div>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.nonTaxPaperInvoiceGrid" k-options="ui.nonTaxPaperInvoiceGrid.options"></div>
+            </div>
+        </div>
+
+        <!--普通电子发票表格（不可在平台开票）-->
+        <div ng-show="model.paperInvoiceShowNum === 4 && realSupportIssuingElectronInvoice === false">
+            <div class="search-bar mt10" >
+                <ul class="ul-form li-fl clear">
+                    <div hb-authorized-option use-type="bill"
+                         query-params="model.billOrderQueryParams" ng-if="currentTab===tabMap.myself.code"></div>
+                    <div hb-authorized-option use-type="bill" query-all = "true"
+                         query-params="model.billOrderQueryParams" ng-if="currentTab===tabMap.all.code"></div>
+                    <li has-permission="invoiceManage/searchClass">
+                        <div select-goods sku-id="model.commonPaperBillOrderQueryParams.skuId"></div>
+                    </li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.billOrderQueryParams.orderNo"
+                               hb-clear-input
+                               placeholder="订单号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.billOrderQueryParams.buyerName"
+                               hb-clear-input
+                               placeholder="购买人姓名"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li><input type="text" class="ipt ipt-medium" ng-model="model.billOrderQueryParams.loginInput"
+                               hb-clear-input
+                               placeholder="账号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/></li>
+                    <li has-permission="invoiceManage/urlTestUser">
+                        <select class="slt slt-middle"
+                                ng-model="model.billOrderQueryParams.isTestUser">
+                            <option value="-1">是否为测试</option>
+                            <option value="0">非测试</option>
+                            <option value="1">测试</option>
+                        </select>
+                    </li>
+
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.billOrderQueryParams.askBillTimeStart" type="text" class="ipt ipt-s"
+                               placeholder="索取发票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.billOrderQueryParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="索取发票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+                </ul>
+                <ul class="ul-form li-fl clear">
+                    <select class="slt slt-medium" ng-model="model.billOrderQueryParams.isBilling">
+                        <option ng-selected="true" value="">是否已开票</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.billOrderQueryParams.billSelectThree"
+                                style="width: 100px">
+                            <option value="1">发票号</option>
+                            <option value="2">发票代码</option>
+                            <option value="3">验证码</option>
+                        </select>：
+                        <input type="text" class="ipt ipt-medium" ng-model="model.billOrderQueryParams.BillNo"
+                               ng-if="model.billOrderQueryParams.billSelectThree === '1'"
+                               placeholder="发票号"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                        <input type="text" class="ipt ipt-medium" ng-model="model.billOrderQueryParams.billCode"
+                               placeholder="发票代码"
+                               ng-if="model.billOrderQueryParams.billSelectThree === '2'"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                        <input type="text" class="ipt ipt-medium" ng-model="model.billOrderQueryParams.billVeriCode"
+                               ng-if="model.billOrderQueryParams.billSelectThree === '3'"
+                               placeholder="验证码"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"/>
+                    </li>
+                    <li>
+                        <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                               ng-model="model.billOrderQueryParams.billingTimeStart" type="text" class="ipt ipt-s"
+                               placeholder="开票开始时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        /> -
+                        <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                               ng-model="model.billOrderQueryParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                               placeholder="开票结束时间"
+                               ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                        />
+                    </li>
+
+                    <select class="slt slt-medium" ng-model="model.billOrderQueryParams.frozen">
+                        <option ng-selected="true" value="">是否冻结</option>
+                        <option value="false">正常</option>
+                        <option value="true">冻结</option>
+                    </select>
+
+                    <li class="clear">
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/electronView"
+                           ng-click="events.MainPageQueryList($event)"
+                           class="btn btn-b">查询</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/listOpen"
+                           ng-click="events.ListOpen($event)"
+                           class="btn btn-b">列表数据导出</a>
+                        <a href="javascript:void(0)"
+                           has-permission="invoiceManage/chooseFile"
+                           ng-click="events.chooseFile($event)"
+                           ng-if="currentTab===tabMap.myself.code"
+                           class="btn btn-b">导入开票结果</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <div class="dash-line-3"></div>
+            </div>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid.options"></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

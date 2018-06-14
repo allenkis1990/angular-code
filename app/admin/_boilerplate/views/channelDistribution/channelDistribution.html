@@ -1,0 +1,554 @@
+<div class="main-wrap-body" ng-show="$state.current.name==='states.channelDistribution'">
+    <div class="tips-box">
+        配置相关说明：<br>
+        1.当前系统提供个人缴费、集体缴费及教务导入三个渠道，请针对实际渠道的运用情况配置对应的收款账户及发票信息；<br>
+        2.个人缴费渠道、单位缴费渠道可允许添加多个收款账号，导入开通渠道只能添加一个线下的收款账号。<br>
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="$state.current.name==='states.channelDistribution'">
+    <div class="tab-tit">
+        <a ng-repeat="item in model.channelList" href="javascript:void(0)"
+           ng-click="events.tabType(item)"
+           ng-class="{'current':model.type===item.type}">
+            <span ng-if="item.type==='PERSONAL'">学员缴费</span>
+            <!--<span ng-if="item.type==='COLLECTIVE'">单位缴费</span>-->
+            <span ng-if="item.type==='PRESENT'">导入开通</span>
+        </a>
+    </div>
+
+    <!-- 个人缴费渠道 -->
+    <div ng-show="model.type==='PERSONAL'">
+        <div class="column mt20">
+            <div class="col-tit">收款账号配置
+            </div>
+            <div class="tab-tit" style="margin-top: 0px;height: 0px;"></div>
+
+            <h3>web端</h3>
+            <button
+                    ng-click="events.openKendoWindow('paymentAccountWindow', 'WEB')" class="btn-r btn mt5 mb5 fr">选择收款账号
+            </button>
+            <!--收款账号列表-->
+            <table class="table">
+                <thead class="k-grid-header">
+                <tr>
+                    <th width="30">No.</th>
+                    <th width="140">支付方式</th>
+                    <th width="100">支付账号类型</th>
+                    <th width="145">收款账号别名</th>
+                    <th width="145">是否为授权账号</th>
+                    <th width="145">授权状态</th>
+                    <th width="250">开户账户信息</th>
+                    <th width="160">分行号</th>
+                    <th width="145">柜台号</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="model.webPaymentAccountList.length>=0"
+                    ng-repeat="paymentAccount in model.webPaymentAccountList">
+                    <td>b{{$index + 1}}</td>
+                    <td>b{{paymentAccount.firstType===1?'线上':'线下'}}</td>
+                    <td>b{{paymentAccount.tradeChannelName}}</td>
+                    <td>b{{paymentAccount.accountAlias}}</td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ? '是':'否'"></td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ?  paymentAccount.authorizationState === 'AUTHORIZATION' ? '授权中':'已取消授权' : '-' "></td>
+                    <td>
+                        <p ng-if="paymentAccount.code==='OTHER'"> 商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code!=='CCB'&&paymentAccount.code!=='OTHER'">
+                            商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户户名：b{{paymentAccount.merchantName}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户银行：b{{paymentAccount.depositBank}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 银行账号：b{{paymentAccount.accountNo}}</p>
+                    </td>
+                    <td>b{{paymentAccount.branchBankId||'-'}}</td>
+                    <td>b{{paymentAccount.counterNumber||'-'}}</td>
+
+                    <td>
+                        <!--<a class="table-btn"  ng-click="events.update(paymentAccount)">修改</a>-->
+                        <a class="table-btn" ng-click="events.delete(paymentAccount, 'WEB')">移除</a>
+                        <!--has-permission="channelDistribution/delete"-->
+                    </td>
+                </tr>
+                <tr ng-if="model.webPaymentAccountList.length===0">
+                    <td style="height: 80px" colspan="8">该渠道暂未配置相关收款账号，请先添加！</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Android客户端</h3>
+            <button
+                    ng-click="events.openKendoWindow('paymentAccountWindow', 'ANDROID')" class="btn-r btn mt5 mb5 fr">
+                选择收款账号
+            </button>
+            <!--收款账号列表-->
+            <table class="table">
+                <thead class="k-grid-header">
+                <tr>
+                    <th width="30">No.</th>
+                    <th width="140">支付方式</th>
+                    <th width="100">支付账号类型</th>
+                    <th width="145">收款账号别名</th>
+                    <th width="145">是否为授权账号</th>
+                    <th width="145">授权状态</th>
+                    <th width="250">开户账户信息</th>
+                    <th width="160">分行号</th>
+                    <th width="145">柜台号</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="model.androidPaymentAccountList.length>=0"
+                    ng-repeat="paymentAccount in model.androidPaymentAccountList">
+                    <td>b{{$index + 1}}</td>
+                    <td>b{{paymentAccount.firstType===1?'线上':'线下'}}</td>
+                    <td>b{{paymentAccount.tradeChannelName}}</td>
+                    <td>b{{paymentAccount.accountAlias}}</td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ? '是':'否'"></td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ?  paymentAccount.authorizationState === 'AUTHORIZATION' ? '授权中':'已取消授权' : '-' "></td>
+                    <td>
+                        <p ng-if="paymentAccount.code==='OTHER'"> 商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code!=='CCB'&&paymentAccount.code!=='OTHER'">
+                            商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户户名：b{{paymentAccount.merchantName}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户银行：b{{paymentAccount.depositBank}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 银行账号：b{{paymentAccount.accountNo}}</p>
+                    </td>
+                    <td>b{{paymentAccount.branchBankId||'-'}}</td>
+                    <td>b{{paymentAccount.counterNumber||'-'}}</td>
+
+                    <td>
+                        <!--<a class="table-btn"  ng-click="events.update(paymentAccount)">修改</a>-->
+                        <a class="table-btn" ng-click="events.delete(paymentAccount, 'ANDROID')">移除</a>
+                        <!--has-permission="channelDistribution/delete"-->
+                    </td>
+                </tr>
+                <tr ng-if="model.androidPaymentAccountList.length===0">
+                    <td style="height: 80px" colspan="8">该渠道暂未配置相关收款账号，请先添加！</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>IOS客户端</h3>
+            <button
+                    ng-click="events.openKendoWindow('paymentAccountWindow', 'IOS')" class="btn-r btn mt5 mb5 fr">选择收款账号
+            </button>
+            <!--收款账号列表-->
+            <table class="table">
+                <thead class="k-grid-header">
+                <tr>
+                    <th width="30">No.</th>
+                    <th width="140">支付方式</th>
+                    <th width="100">支付账号类型</th>
+                    <th width="145">收款账号别名</th>
+                    <th width="145">是否为授权账号</th>
+                    <th width="145">授权状态</th>
+                    <th width="250">开户账户信息</th>
+                    <th width="160">分行号</th>
+                    <th width="145">柜台号</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="model.iosPaymentAccountList.length>=0"
+                    ng-repeat="paymentAccount in model.iosPaymentAccountList">
+                    <td>b{{$index + 1}}</td>
+                    <td>b{{paymentAccount.firstType===1?'线上':'线下'}}</td>
+                    <td>b{{paymentAccount.tradeChannelName}}</td>
+                    <td>b{{paymentAccount.accountAlias}}</td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ? '是':'否'"></td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ?  paymentAccount.authorizationState === 'AUTHORIZATION' ? '授权中':'已取消授权' : '-' "></td>
+                    <td>
+                        <p ng-if="paymentAccount.code==='OTHER'"> 商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code!=='CCB'&&paymentAccount.code!=='OTHER'">
+                            商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户户名：b{{paymentAccount.merchantName}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户银行：b{{paymentAccount.depositBank}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 银行账号：b{{paymentAccount.accountNo}}</p>
+                    </td>
+                    <td>b{{paymentAccount.branchBankId||'-'}}</td>
+                    <td>b{{paymentAccount.counterNumber||'-'}}</td>
+
+                    <td>
+                        <!--<a class="table-btn"  ng-click="events.update(paymentAccount)">修改</a>-->
+                        <a class="table-btn" ng-click="events.delete(paymentAccount, 'IOS')">移除</a>
+                        <!--has-permission="channelDistribution/delete"-->
+                    </td>
+                </tr>
+                <tr ng-if="model.iosPaymentAccountList.length===0">
+                    <td style="height: 80px" colspan="8">该渠道暂未配置相关收款账号，请先添加！</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>微信公众号</h3>
+            <button
+                    ng-click="events.openKendoWindow('paymentAccountWindow', 'WECHAT_OFFICIAL_ACCOUNTS')"
+                    class="btn-r btn mt5 mb5 fr">选择收款账号
+            </button>
+            <!--收款账号列表-->
+            <table class="table">
+                <thead class="k-grid-header">
+                <tr>
+                    <th width="30">No.</th>
+                    <th width="140">支付方式</th>
+                    <th width="100">支付账号类型</th>
+                    <th width="145">收款账号别名</th>
+                    <th width="145">是否为授权账号</th>
+                    <th width="145">授权状态</th>
+                    <th width="250">开户账户信息</th>
+                    <th width="160">分行号</th>
+                    <th width="145">柜台号</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="model.weChatOfficaAccountslPaymentAccountList.length>=0"
+                    ng-repeat="paymentAccount in model.weChatOfficaAccountslPaymentAccountList">
+                    <td>b{{$index + 1}}</td>
+                    <td>b{{paymentAccount.firstType===1?'线上':'线下'}}</td>
+                    <td>b{{paymentAccount.tradeChannelName}}</td>
+                    <td>b{{paymentAccount.accountAlias}}</td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ? '是':'否'"></td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ?  paymentAccount.authorizationState === 'AUTHORIZATION' ? '授权中':'已取消授权' : '-' "></td>
+                    <td>
+                        <p ng-if="paymentAccount.code==='OTHER'"> 商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code!=='CCB'&&paymentAccount.code!=='OTHER'">
+                            商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户户名：b{{paymentAccount.merchantName}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户银行：b{{paymentAccount.depositBank}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 银行账号：b{{paymentAccount.accountNo}}</p>
+                    </td>
+                    <td>b{{paymentAccount.branchBankId||'-'}}</td>
+                    <td>b{{paymentAccount.counterNumber||'-'}}</td>
+
+                    <td>
+                        <!--<a class="table-btn"  ng-click="events.update(paymentAccount)">修改</a>-->
+                        <a class="table-btn" ng-click="events.delete(paymentAccount, 'WECHAT_OFFICIAL_ACCOUNTS')">移除</a>
+                        <!--has-permission="channelDistribution/delete"-->
+                    </td>
+                </tr>
+                <tr ng-if="model.weChatOfficaAccountslPaymentAccountList.length===0">
+                    <td style="height: 80px" colspan="8">该渠道暂未配置相关收款账号，请先添加！</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>微信小程序</h3>
+            <button
+                    ng-click="events.openKendoWindow('paymentAccountWindow', 'WECHAT_MINI_PROGRAMS')"
+                    class="btn-r btn mt5 mb5 fr">选择收款账号
+            </button>
+            <!--收款账号列表-->
+            <table class="table">
+                <thead class="k-grid-header">
+                <tr>
+                    <th width="30">No.</th>
+                    <th width="140">支付方式</th>
+                    <th width="100">支付账号类型</th>
+                    <th width="145">收款账号别名</th>
+                    <th width="145">是否为授权账号</th>
+                    <th width="145">授权状态</th>
+                    <th width="250">开户账户信息</th>
+                    <th width="160">分行号</th>
+                    <th width="145">柜台号</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="model.webChatMiniProgramPaymentAccountList.length>=0"
+                    ng-repeat="paymentAccount in model.webChatMiniProgramPaymentAccountList">
+                    <td>b{{$index + 1}}</td>
+                    <td>b{{paymentAccount.firstType===1?'线上':'线下'}}</td>
+                    <td>b{{paymentAccount.tradeChannelName}}</td>
+                    <td>b{{paymentAccount.accountAlias}}</td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ? '是':'否'"></td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ?  paymentAccount.authorizationState === 'AUTHORIZATION' ? '授权中':'已取消授权' : '-' "></td>
+                    <td>
+                        <p ng-if="paymentAccount.code==='OTHER'"> 商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code!=='CCB'&&paymentAccount.code!=='OTHER'">
+                            商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户户名：b{{paymentAccount.merchantName}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户银行：b{{paymentAccount.depositBank}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 银行账号：b{{paymentAccount.accountNo}}</p>
+                    </td>
+                    <td>b{{paymentAccount.branchBankId||'-'}}</td>
+                    <td>b{{paymentAccount.counterNumber||'-'}}</td>
+
+                    <td>
+                        <!--<a class="table-btn"  ng-click="events.update(paymentAccount)">修改</a>-->
+                        <a class="table-btn" ng-click="events.delete(paymentAccount, 'WECHAT_MINI_PROGRAMS')">移除</a>
+                        <!--has-permission="channelDistribution/delete"-->
+                    </td>
+                </tr>
+                <tr ng-if="model.webChatMiniProgramPaymentAccountList.length===0">
+                    <td style="height: 80px" colspan="8">该渠道暂未配置相关收款账号，请先添加！</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 集体缴费渠道 -->
+    <div ng-show="model.type==='COLLECTIVE'">
+        <div class="column mt20">
+            <div class="col-tit">收款账号配置
+                <button disabled ng-disabled="model.collectivePaymentAccountList.length===2"
+                        ng-click="events.openKendoWindow('paymentAccountWindow', 'COLLECTIVE')"
+                        class="btn-r btn mt5 mb5 fr">选择收款账号
+                </button>
+            </div>
+            <div class="tab-tit" style="margin-top: 0px;height: 0px;"></div>
+
+            <!--收款账号列表-->
+            <table class="table">
+                <thead class="k-grid-header">
+                <tr>
+                    <th width="30">No.</th>
+                    <th width="140">支付方式</th>
+                    <th width="100">支付账号类型</th>
+                    <th width="145">收款账号别名</th>
+                    <th width="145">是否为授权账号</th>
+                    <th width="145">授权状态</th>
+                    <th width="250">开户账户信息</th>
+                    <th width="160">分行号</th>
+                    <th width="145">柜台号</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="model.collectivePaymentAccountList.length>=0"
+                    ng-repeat="paymentAccount in model.collectivePaymentAccountList">
+                    <td>b{{$index + 1}}</td>
+                    <td>b{{paymentAccount.firstType===1?'线上':'线下'}}</td>
+                    <td>b{{paymentAccount.tradeChannelName}}</td>
+                    <td>b{{paymentAccount.accountAlias}}</td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ? '是':'否'"></td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ?  paymentAccount.authorizationState === 'AUTHORIZATION' ? '授权中':'已取消授权' : '-' "></td>
+                    <td>
+                        <p ng-if="paymentAccount.code==='OTHER'"> 商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code!=='CCB'&&paymentAccount.code!=='OTHER'">
+                            商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户户名：b{{paymentAccount.merchantName}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户银行：b{{paymentAccount.depositBank}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 银行账号：b{{paymentAccount.accountNo}}</p>
+                    </td>
+                    <td>b{{paymentAccount.branchBankId||'-'}}</td>
+                    <td>b{{paymentAccount.counterNumber||'-'}}</td>
+
+                    <td>
+                        <!--<a class="table-btn"  ng-click="events.update(paymentAccount)">修改</a>-->
+                        <a class="table-btn" ng-click="events.delete(paymentAccount, 'COLLECTIVE')">移除</a>
+                        <!--has-permission="channelDistribution/delete"-->
+                    </td>
+                </tr>
+                <tr ng-if="model.collectivePaymentAccountList.length===0">
+                    <td style="height: 80px" colspan="8">该渠道暂未配置相关收款账号，请先添加！</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 导入开通渠道 -->
+    <div ng-show="model.type==='PRESENT'">
+        <div class="column mt20">
+            <div class="col-tit">收款账号配置
+                <button disabled ng-disabled="model.presentPaymentAccountList.length===1"
+                        ng-click="events.openKendoWindow('paymentAccountWindow', 'PRESENT')"
+                        class="btn-r btn mt5 mb5 fr">选择收款账号
+                </button>
+            </div>
+            <div class="tab-tit" style="margin-top: 0px;height: 0px;"></div>
+
+            <!--收款账号列表-->
+            <table class="table">
+                <thead class="k-grid-header">
+                <tr>
+                    <th width="30">No.</th>
+                    <th width="140">支付方式</th>
+                    <th width="100">支付账号类型</th>
+                    <th width="145">收款账号别名</th>
+                    <th width="145">是否为授权账号</th>
+                    <th width="145">授权状态</th>
+                    <th width="250">开户账户信息</th>
+                    <th width="160">分行号</th>
+                    <th width="145">柜台号</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="model.presentPaymentAccountList.length>=0"
+                    ng-repeat="paymentAccount in model.presentPaymentAccountList">
+                    <td>b{{$index + 1}}</td>
+                    <td>b{{paymentAccount.firstType===1?'线上':'线下'}}</td>
+                    <td>b{{paymentAccount.tradeChannelName}}</td>
+                    <td>b{{paymentAccount.accountAlias}}</td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ? '是':'否'"></td>
+                    <td ng-bind="paymentAccount.createType === 'AUTHORIZE' ?  paymentAccount.authorizationState === 'AUTHORIZATION' ? '授权中':'已取消授权' : '-' "></td>
+                    <td>
+                        <p ng-if="paymentAccount.code==='OTHER'"> 商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code!=='CCB'&&paymentAccount.code!=='OTHER'">
+                            商户号：b{{paymentAccount.accountNo}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户户名：b{{paymentAccount.merchantName}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 开户银行：b{{paymentAccount.depositBank}}</p>
+                        <p ng-if="paymentAccount.code==='CCB'"> 银行账号：b{{paymentAccount.accountNo}}</p>
+                    </td>
+                    <td>b{{paymentAccount.branchBankId||'-'}}</td>
+                    <td>b{{paymentAccount.counterNumber||'-'}}</td>
+
+                    <td>
+                        <!--<a class="table-btn"  ng-click="events.update(paymentAccount)">修改</a>-->
+                        <a class="table-btn" ng-click="events.delete(paymentAccount, 'PRESENT')">移除</a>
+                        <!--has-permission="channelDistribution/delete"-->
+                    </td>
+                </tr>
+                <tr ng-if="model.presentPaymentAccountList.length===0">
+                    <td style="height: 80px" colspan="8">该渠道暂未配置相关收款账号，请先添加！</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!--发票配置信息-->
+    <div class="column mt20">
+        <div class="col-tit">发票配置信息
+            <button ng-click="events.modify()" class="btn-r btn mt5 mb5 fr">修改</button>
+        </div>
+        <div class="tab-tit" style="margin-top: 0px;height: 0px;"></div>
+
+        <!--发票配置信息-->
+        <ul class="ul-d-form lh-1">
+            <li>
+                <span class="left-txt"><i>*</i>是否提供发票：</span>
+                <label><input type="radio" class="chk" value=2 ng-model="model.billConfig.isProvide"
+                              ng-disabled="model.isDisable" ng-click="events.selectNotProvideBill(1)">提供发票</label>
+                <label class="ml30"><input type="radio" class="chk" value=1 ng-model="model.billConfig.isProvide"
+                                           checked ng-disabled="model.isDisable"
+                                           ng-click="events.selectNotProvideBill(2)">不提供发票</label>
+
+                <!--选择不提供发票时添加 no-provide-->
+                <div class="clear">
+                    <div class="add-address-bd mt10">
+                        <span class="left-txt"></span>
+                        <label><input type="radio" class="chk" value=1 ng-model="model.billConfig.provideType"
+                                      ng-disabled="model.isDisable || model.notProvide">开放学员自选是否需要发票</label>
+                        <label class="ml30"><input type="radio" class="chk" value=2
+                                                   ng-model="model.billConfig.provideType"
+                                                   ng-disabled="model.isDisable|| model.notProvide">强制向学员提供发票</label>
+
+
+                        <div class="mt10">
+                            <span class="left-txt"><i>*</i>发票类型：</span>
+
+                            <span>
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-click="events.onNodeClick($event,node)"
+                                       ng-model="model.billConfig.selectCommonVAT"
+                                       ng-disabled="model.isDisable|| model.notProvide">
+                                增值税普通发票
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig"
+                                       ng-model="model.billConfig.selectCommonElectron"
+                                       ng-disabled="model.isDisable|| model.notProvide">
+                                电子普通发票
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectVATOnly"
+                                       ng-disabled="model.isDisable|| model.notProvide">
+                                增值税专用发票
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectNonTax"
+                                       ng-disabled="model.isDisable|| model.notProvide">
+                                非税务票（纸质）
+                            </label>
+                            </span>
+                        </div>
+
+
+                        <div class="mt10"
+                             ng-if="!(model.billConfig.selectVATOnly && !model.billConfig.selectCommonVAT && !model.billConfig.selectCommonElectron && !model.billConfig.selectNonTax)">
+                            <span class="left-txt"><i>*</i>发票抬头：</span>
+
+                            <span>
+                            <label style="margin-right:20px;" ng-if="model.type!=='COLLECTIVE'">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectPersonal"
+                                       ng-disabled="model.isDisable|| model.notProvide">
+                                个人
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectUnit"
+                                       ng-disabled="model.isDisable|| model.notProvide">
+                                单位
+                            </label>
+                            </span>
+                        </div>
+
+                        <!--电子发票查询地址 目前不需要2018-01-23-->
+                        <!--<div class="mt10"-->
+                        <!--ng-show="model.billConfig.billType === '2' || model.billConfig.billType === '3' || model.billConfig.billType === 2 || model.billConfig.billType === 3">-->
+                        <!--<span class="left-txt"><i>*</i>电子发票查询地址：</span>-->
+                        <!--<input type="text"-->
+                        <!--class="ipt ipt-medium"-->
+                        <!--ng-model="model.billConfig.eInvoiceSearchAddress"-->
+                        <!--ng-disabled="model.isDisable|| model.notProvide"-->
+                        <!--placeholder="请输入电子发票查询地址"/>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+
+
+        <div class="dash-line-5"></div>
+        <button ng-click="events.updateBillConfig()" ng-show="!model.isDisable" class="btn-r btn ml30 fl">保存配置</button>
+        <button ng-show="!model.isDisable" ng-click="events.cancleModify()" class="btn-g btn ml30   fl">取消</button>
+
+        <span ng-show="model.isDisable && model.billConfig.id == null" class="t-r">缴费渠道尚不存在关联的发票配置，如需使用缴费渠道的发票配置，请先更新发票配置信息</span>
+    </div>
+
+</div>
+<!--收款账号弹窗-->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="paymentAccountWindow" style="width: 1100px">
+    <div class="dialog-body">
+        <div class="dialog-tit">
+            选择收款账号<a href="javascript:void(0)"
+                     class="ico ico-close"
+                     ng-click="events.closeKendoWindow('paymentAccountWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="col-body table-box mt20">
+                <ul class="ul-form li-fl clear">
+                    <li ng-if="model.type!=='PRESENT'">
+                        <select class="slt slt-small" ng-model="model.paymentListQueryParam.tradeType">
+                            <option value="">支付方式</option>
+                            <option value="1">线上</option>
+                            <option value="2">线下</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="text"
+                               class="ipt ipt-medium"
+                               ng-model="model.paymentListQueryParam.accountAlias"
+                               placeholder="请输入收款账号别名"/>
+                    </li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.MainPageQueryList($event,'paymentListGridInstance','paymentListPage')"
+                           class="btn btn-b">查询</a>
+                    </li>
+                </ul>
+                <div kendo-grid="kendoPlus.paymentListGridInstance"
+                     k-options="paymentListGrid.options">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

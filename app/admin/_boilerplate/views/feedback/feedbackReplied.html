@@ -1,0 +1,42 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.feedback" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ui-sref="states.feedback">意见反馈</a> &gt;
+        已处理的反馈
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit">意见反馈内容b{{name}}</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <ul class="ul-d-form udf-2">
+        <li><span class="left-txt">问题类型：</span>b{{model.feedback.type}}</li>
+        <li class="clear"><span class="left-txt fl">反馈内容：</span>
+            <span class="w-textarea fl" ng-bind-html="model.feedback.desc"></span></li>
+        <!--<li class="clear">
+            <span class="left-txt fl">附件图片：</span>
+
+            <div class="attachment-img w-textarea fl">
+                <span ng-repeat="pic in pictures"><img src="b{{pic.picturePath}}"></span>
+            </div>
+        </li>-->
+        <li><span class="left-txt">反馈人：</span>b{{model.feedback.userName}}</li>
+        <li><span class="left-txt">邮箱号：</span>b{{model.feedback.email}}</li>
+        <li><span class="left-txt" ng-if="model.feedback.mobile!=null">手机号：</span>b{{model.feedback.mobile}}</li>
+        <li><span class="left-txt" ng-if="model.feedback.mobile==null">手机号：</span>暂无手机号</li>
+    </ul>
+
+    <div class="column mt50 mb20">
+        <div class="col-tit">回复意见反馈</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <ul class="ul-d-form udf-2">
+        <li class="clear"><span class="left-txt fl">回复内容：</span>
+            <span class="w-textarea fl" ng-bind-html="model.feedback.answerReply"></span>
+        </li>
+        <li class="clear"><span class="left-txt fl">回复时间：</span>
+            <span class="w-textarea fl">b{{model.feedback.answerCreateTime}}</span>
+        </li>
+    </ul>
+</div>

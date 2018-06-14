@@ -1,0 +1,118 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goCourseWareManager($event)"></a>
+        <a href="#" class="aw" ng-click="events.goCourseWareManager($event)">课件管理</a>
+        &gt;课件详情
+    </div>
+</div>
+
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit clear">课件基础信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2">
+        <ul class="ul-d-form udf-2 lh-1">
+            <li class="wp-4 fl"><span class="left-txt">课件分类：</span><span ng-bind="model.courseWare.cwyName"></span></li>
+            <li class="wp-4 fl"><span class="left-txt">课件名称：</span><span ng-bind="model.courseWare.name"></span></li>
+            <li class="wp-4 fl"><span class="left-txt txt-long">课件提供商：</span><span
+                    ng-bind="model.courseWare.supplier"></span></li>
+
+            <li class="wp-4 fl"><span class="left-txt">课件类型：</span><span
+                    ng-bind="model.courseWare.type==1?'文档':(model.courseWare.type==2?'单视频':(model.courseWare.type==3?'视频包':'未知'))"></span>
+            </li>
+            <li class="wp-4 fl"><span class="left-txt">转换状态：</span><span
+                    ng-bind="model.courseWare.status==0?'处理中':(model.courseWare.status==1?'处理成功':(model.courseWare.status==2?'处理失败':'未知'))"></span>
+            </li>
+            <li class="wp-4 fl"><span class="left-txt">课件状态：</span><span
+                    ng-bind="model.courseWare.isUsable==true?'正常':'停用'"></span></li>
+            <li class="clear"><span class="left-txt">课件教师：</span><span
+                    ng-bind="model.courseWare.teacherName?model.courseWare.teacherName:'无'"></span></li>
+            <li class="clear"><span class="left-txt fl">教师简介：</span>
+                <span class="w-textarea fl" style="word-wrap:break-word;"
+                      ng-bind="model.courseWare.teacherAbouts?model.courseWare.teacherAbouts:'暂无简介'"></span>
+            </li>
+            <li class="clear"><span class="left-txt fl">课件简介：</span>
+                <span class="w-textarea " style="word-wrap:break-word;"
+                      ng-bind="model.courseWare.abouts?model.courseWare.abouts:'暂无简介'"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="column mb20">
+        <div class="col-tit">关联媒体（<span style="color: red">*</span>）</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2">
+        <ul class="ul-d-form udf-2 lh-1">
+            <li><span class="left-txt">课件资源：</span>
+                <span class="ul-file-upload">
+                    <span ng-class="{'ico ico-document':model.courseWare.type==1,'ico ico-video':model.courseWare.type==2,'ico ico-scorm':model.courseWare.type==3}"
+                          class="ico ico-video"></span>
+                    <span ng-bind="model.courseWare.expandData"></span>
+                    <span ng-show="model.courseWare.status==1" class="fl-ico">
+                        <a href="javascript:void(0)" ng-click="events.openListenWindow(model.courseWare.id)"
+                           class="ico-play">
+                            <span class="ico"></span>预览</a>
+                    </span>
+                </span>
+            </li>
+            <li><span class="left-txt">课件时长：</span><span ng-bind="model.courseWare.timeLength"></span></li>
+        </ul>
+    </div>
+</div>
+<div class="main-wrap-body mt20">
+    <div class="column mb20">
+        <div class="col-tit clear">已添加弹窗题</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <table>
+        <tr>
+            <th style="width: 20px;">No</th>
+            <th style="width: 40px;">弹窗时间</th>
+            <th style="width: 50px;">试题类型</th>
+            <th style="width: 130px;">试题题目</th>
+            <th style="width: 250px;">试题答案</th>
+            <th style="width: 80px;">正确答案</th>
+        </tr>
+        <tbody>
+        <tr ng-repeat="pop in model.popsInit">
+            <td><span ng-bind="$index+1"></span></td>
+            <td><span ng-bind="events.formatTimePoint(pop.timePoint)"></span></td>
+            <td><span ng-bind="pop.questionType"></span></td>
+            <td><span ng-bind="pop.topic"></span></td>
+            <td><span ng-bind="events.formatAnswerAndOptions(pop.options)"></span></td>
+            <td><span ng-bind="events.formatAnswerAndOptions(pop.answer)"></span></td>
+        </tr>
+        </tbody>
+    </table>
+    <div ng-show="model.popsInit.length==0" class="no-data">
+        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+        <div class="p-txt">暂时没有数据!</div>
+    </div>
+</div>
+
+<div class="main-wrap-body mt20">
+    <div class="column mb20">
+        <div class="col-tit">使用该课件的课程清单</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <table>
+        <tr>
+            <th style="width: 20px;">No.</th>
+            <th style="width: 300px;">课程名称</th>
+            <th style="width: 100px;">课程分类</th>
+            <th style="width: 100px;">学时</th>
+            <th style="width: 200px;">创建时间</th>
+        </tr>
+        <tbody>
+        <tr ng-repeat="temp in model.courseList">
+            <td>b{{$index + 1}}</td>
+            <td>b{{temp.name}}</td>
+            <td>b{{temp.categoryName}}</td>
+            <td>b{{temp.period/10}}</td>
+            <td>b{{temp.createTime}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="tips-box-1">
+    确认取消该订单的退款申请？取消后需重新发起退款！
+</div>
+
+<ul class="ul-d-form pt10 lh-1">
+    <li class="clear">
+        <span class=" fl">取消原因：</span>
+        <div class="w-4 fl">
+
+        <textarea class="textarea wp-m-full  fl"
+                  placeholder="请输入取消退款理由"
+                  ng-model="model.cancelRefundDesc">
+        </textarea>
+        </div>
+    </li>
+</ul>
+
+
+<div class="btn-center">
+    <a href="javascript:void(0)" class="btn btn-r" ng-click="events.cancel(dataItem);dialog.close($index)">确定</a>
+    <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="dialog.close($index)">取消</a>
+</div>

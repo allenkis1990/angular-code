@@ -1,0 +1,28 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.systemProcessTask" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ui-sref="states.systemProcessTask">系统处理任务管理</a> &gt;
+        错误信息列表
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column wp-m-2 mt10">
+        <p>失败数据共b{{data.total}}条</p>
+        <table class="table mt10">
+            <thead>
+            <tr>
+                <th width="60">No.</th>
+                <th>内容名称</th>
+                <th>失败原因</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="error in data.error">
+                <td>b{{$index+1}}</td>
+                <td class="tl">b{{error.content}}</td>
+                <td>b{{error.because}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

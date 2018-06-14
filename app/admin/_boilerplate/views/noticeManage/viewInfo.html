@@ -1,0 +1,25 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.noticeManage')" class="ico return"></a>
+        <a href="javascript: void(0);" ng-click="$state.go('states.noticeManage')" class="aw">公告管理</a> &gt; 查询公告
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="udf-2">
+        <div class="announcement-cont">
+            <div class="anc-tit">
+                <span ng-bind="model.noticeViewInfo.title"></span>
+                <p>发布者：<span ng-bind="model.noticeViewInfo.publishPersonName"></span><span class="ml20">发布时间：<span
+                        ng-bind="model.noticeViewInfo.publishTime"></span></span>
+                    <span class="ml20">发布总人数：<span
+                            ng-bind="model.noticeViewInfo.totalPersonCount"></span>人，被阅读次数&nbsp;<span
+                            ng-bind="model.noticeViewInfo.readCount"></span></span>
+                </p>
+            </div>
+            <div class="anc-body" ng-bind-html="model.noticeViewInfo.content">
+                <!--<span ng-bind="model.noticeViewInfo.content"></span>-->
+            </div>
+            <div class="object mt50">发布对象：<span ng-bind="model.noticeViewInfo.publishObjectName"></span></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,181 @@
+<style>
+    .wzy-w-525 {
+        top: 2px;
+        left: 520px;
+        width: 200px;
+    }
+
+    .wzy-w-825 {
+        top: 2px;
+        left: 825px;
+        width: 210px;
+    }
+
+    .wzy-w-630 {
+        top: 2px;
+        left: 625px;
+    }
+</style>
+<div class="pos-nav-box">
+    <div class="pos-nav"><a href="javascript:void(0);" class="ico return" ng-click="events.goBack($event)"></a> <a
+            class="aw" href="javascript:void(0);" ng-click="events.goBack($event)">商户管理</a> &gt; 推送解决方案
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit">待选解决方案列表</div>
+        <div class="dash-line-1"></div>
+        <div class="col-body">
+            <div class="search-bar">
+                <ul class="ul-form li-fl lh-1 clear">
+                    <li><input type="text" class="ipt ipt-medium" placeholder="请输入解决方案名称"
+                               ng-keyup="events.pressEnterKey($event)"
+                               ng-model="model.queryParam.solutionName"/></li>
+                    <li><a href="javascript:void(0);" ng-click="events.queryList($event)" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+            <div kendo-grid="node.gridInstance" k-options="ui.grid.options">
+            </div>
+        </div>
+    </div>
+
+    <div class="column mt30">
+        <div class="col-tit">待推送解决方案</div>
+        <div class="dash-line-1"></div>
+
+        <!--没有选择解决方案的默认图片-->
+        <div class="no-data clear" ng-show="hasNoSelectedCourse">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">暂时没有选择解决方案!</div>
+        </div>
+        <!--有选择解决方案的内容-->
+        <table class="table" ng-show="!hasNoSelectedCourse">
+            <thead>
+            <tr>
+                <th>解决方案名称</th>
+                <th width="80">类型</th>
+                <th width="80">岗位体系数</th>
+                <th width="80">课程数</th>
+                <th width="80">能力项数</th>
+                <th width="80">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="solution in model.pushSolutionInfo.solution">
+                <td>b{{solution.name}}</td>
+                <td ng-if="solution.appType==2">正式</td>
+                <td ng-if="solution.appType==1">体验</td>
+                <td>b{{solution.jobCount}}</td>
+                <td>b{{solution.lessonCount}}</td>
+                <td>b{{solution.abilityCount}}</td>
+                <td class="op">
+                    <a href="javascript:void(0);" ng-click="events.cancelSelect($event)">取消选择</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="column mt10 wp-full">
+        <div class="col-tit">推送规则设置</div>
+        <div class="dash-line-1"></div>
+        <div class="column clear">
+            <form name="pushSolutionForm" novalidate>
+                <div class="col-body bt0">
+                    <ul class="ul-d-form lh-1 ml30">
+                        <li><span class="left-txt txt-long">是否推送能力项：</span><label><input type="radio" value="true"
+                                                                                         name="includingAbility"
+                                                                                         ng-model="model.pushSolutionInfo.includingAbility">是</label><label
+                                class="ml10"><input type="radio" value="false" name="includingAbility"
+                                                    ng-model="model.pushSolutionInfo.includingAbility">否</label></li>
+                        <li><span class="left-txt"><i>*</i>账号并发数：</span><input type="text" class="ipt ipt-small"
+                                                                               ng-model="model.pushSolutionInfo.accountConcurrence"
+                                                                               placeholder="请输入账号并发数"
+                                                                               name="accountConcurrence"
+                                                                               min="1"
+                                                                               required
+                                                                               ng-pattern="regexps.positiveInteger">
+                            个，账号并发数服务期限：b{{model.merchantInfo.serveTimeBegin}}至b{{model.merchantInfo.serveTimeEnd}}<!--账号并发数服务期限：<input
+                                type="text"
+                                class="ipt ipt-medium"
+                                placeholder="开始日期"
+                                hb-readonly
+                                required
+                                name="accountServeTimeBegin"
+                                hb-clear-input
+                                kendo-date-picker="node.accountServeTimeBegin"
+                                k-options="ui.datePicker.accountServeTimeBegin.options"
+                                ng-model="model.pushSolutionInfo.accountServeTimeBegin">
+                            - <input
+                                type="text"
+                                class="ipt ipt-medium"
+                                placeholder="结束日期"
+                                hb-readonly
+                                required
+                                name="accountServeTimeEnd"
+                                hb-clear-input
+                                kendo-date-picker="node.accountServeTimeEnd"
+                                k-options="ui.datePicker.accountServeTimeEnd.options"
+                                ng-model="model.pushSolutionInfo.accountServeTimeEnd">-->
+                            <span
+                                    ng-show="pushSolutionForm.accountConcurrence.$dirty &&pushSolutionForm.accountConcurrence.$error.required"
+                                    class="li-prompt wzy-w-825"><span class="ico ico-prompt"></span>请输入账号并发数！</span>
+
+                            <span
+                                    ng-show="pushSolutionForm.accountConcurrence.$dirty && (!pushSolutionForm.accountConcurrence.$error.required) && pushSolutionForm.accountConcurrence.$error.pattern"
+                                    class="li-prompt wzy-w-825"><span class="ico ico-prompt"></span>只能输入正整数！</span>
+                            <!--<span
+                                ng-show="pushSolutionForm.accountServeTimeBegin.$dirty &&pushSolutionForm.accountServeTimeBegin.$error.required"
+                                class="li-prompt wzy-w-825"><span class="ico ico-prompt"></span>请选择账号并发数服务开始日期！</span>
+                            <span
+                                ng-show="pushSolutionForm.accountServeTimeEnd.$dirty &&pushSolutionForm.accountServeTimeEnd.$error.required"
+                                class="li-prompt wzy-w-825"><span class="ico ico-prompt"></span>请选择账号并发数服务结束日期！</span>-->
+                        </li>
+                        <li ng-if="model.pushSolutionInfo.solution.length>0"><span class="left-txt txt-long"><i>*</i>解决方案服务期限：</span>解决方案服务期限：b{{model.merchantInfo.serveTimeBegin}}至b{{model.merchantInfo.serveTimeEnd}}<!--<input
+                            type="text"
+                            class="ipt ipt-medium"
+                            placeholder="开始日期"
+                            hb-readonly
+                            required
+                            name="solutionServeTimeBegin"
+                            hb-clear-input
+                            kendo-date-picker="node.solutionServeTimeBegin"
+                            k-options="ui.datePicker.solutionServeTimeBegin.options"
+                            ng-model="model.pushSolutionInfo.solutionServeTimeBegin">
+                            - <input
+                                type="text"
+                                class="ipt ipt-medium"
+                                placeholder="结束日期"
+                                required
+                                hb-readonly
+                                hb-clear-input
+                                name="solutionServeTimeEnd"
+                                kendo-date-picker="node.solutionServeTimeEnd"
+                                k-options="ui.datePicker.solutionServeTimeEnd.options"
+                                ng-model="model.pushSolutionInfo.solutionServeTimeEnd">
+                        <span
+                            ng-show="pushSolutionForm.solutionServeTimeBegin.$dirty &&pushSolutionForm.solutionServeTimeBegin.$error.required"
+                            class="li-prompt wzy-w-525"><span class="ico ico-prompt"></span>请选择解决方案服务开始日期！</span>
+                            <span
+                                ng-show="pushSolutionForm.solutionServeTimeEnd.$dirty &&pushSolutionForm.solutionServeTimeEnd.$error.required"
+                                class="li-prompt wzy-w-525"><span class="ico ico-prompt"></span>请选择解决方案服务结束日期！</span>-->
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="dash-line"></div>
+    <div class="btn-center pt20">
+        <div class="btn-center">
+            <input type="button" ng-click="events.savePushSolution($event);pushSolutionForm.$setPristine()"
+                   ng-disabled="pushSolutionForm.$invalid || showDisabled||hasNoSelectedCourse"
+                   ng-class="{'btn-g': !pushSolutionForm.$valid|| showDisabled||hasNoSelectedCourse, 'btn-r': pushSolutionForm.$valid && !showDisabled && !hasNoSelectedCourse}"
+                   class="btn" value="确认推送">
+            <input type="button" ng-click="events.goBack($event)"
+                   class="btn btn-g ml10"
+                   value="取消">
+        </div>
+    </div>
+</div>

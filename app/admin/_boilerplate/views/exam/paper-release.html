@@ -1,0 +1,492 @@
+<!--安排考试第一步-->
+<div class="pos-nav-box" ng-if="$stateParams.comeForm==='1'">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.paperConfig" class="ico return"></a>
+        <a href="javascript: void(0);" ui-sref="states.paperConfig" class="aw">试卷管理</a> >
+        试卷发布
+    </div>
+</div>
+<div class="pos-nav-box" ng-if="$stateParams.comeForm==='2'">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="globle.stateGo('states.exam', '试卷管理');" class="ico return"></a>
+        <a href="javascript: void(0);" ng-click="globle.stateGo('states.exam', '试卷管理');" class="aw">考试管理</a> >
+        试卷发布
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="show.releasePaperStep1">
+    <form name="releaseStep1Form" novalidate>
+        <div class="steps mb30">
+            <div class="bg-line rd3"><span class="bg-l-current rd3" style="margin-left:0;"></span></div>
+            <ul class="ul-step li-fl clear">
+                <li class="current"><span class="ico s-1"></span>
+
+                    <p class="step-name">填写考试基本信息</p></li>
+                <li><span class="ico s-2"></span>
+
+                    <p class="step-name">设置考试对象</p></li>
+                <li><span class="ico s-3"></span>
+
+                    <p class="step-name">发布考试</p></li>
+            </ul>
+        </div>
+        <div class="rel udf-6">
+            <ul class="ul-d-form udf-2 lh-1">
+                <li>
+                    <span class="left-txt"><i>*</i>考试名称：</span>
+                    <input type="text" class="ipt ipt-large"
+                           ng-model="model.examRound.name"
+                           name="name"
+                           ng-maxlength="15"
+                           required ng-required="true"
+                    >
+                    <span ng-show="releaseStep1Form.name.$dirty && releaseStep1Form.name.$error.required"
+                          class="li-prompt"><span class="ico ico-prompt"></span>请输入考试名称</span>
+                    <span ng-show="releaseStep1Form.name.$dirty && releaseStep1Form.name.$error.maxlength"
+                          class="li-prompt"><span class="ico ico-prompt"></span>试卷最多支持15个汉字</span>
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>所用试卷：</span>
+                    <a href="" class="btn btn-r ml5 fl"
+                       ng-if="model.examRound.examPaperId==null||model.examRound.examPaperId===''"
+                       ng-click="events.choiceExamPaper()">选择试卷</a>
+                    <ul class="ul-course uc-4 fl li-fl">
+                        <li ng-if="model.examRound.examPaperId!=null&&model.examRound.examPaperId!==''">
+                            <span ng-bind="model.examPaperName"></span> <a href="" class="ico"
+                                                                           ng-click="events.removePaper()"></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="left-txt">考试总分：</span>
+                    b{{model.totalScore}}分
+                </li>
+                <li>
+                    <span class="left-txt"><i>*</i>考试及格分数：</span>
+                    <input type="text" class="ipt ipt-large"
+                           ng-model="model.examRound.passScore"
+                           ng-pattern="/^[1-9]\d*$/"
+                           name="passScore"
+                           required ng-required="true"
+                    >
+                    <span ng-show="releaseStep1Form.passScore.$dirty && releaseStep1Form.passScore.$error.required"
+                          class="li-prompt"><span class="ico ico-prompt"></span>请输入及格分数</span>
+                    <span ng-show="releaseStep1Form.passScore.$dirty && model.totalScore<model.examRound.passScore"
+                          class="li-prompt"><span class="ico ico-prompt"></span>及格分数不能大于考试总分</span>
+                    <span ng-show="releaseStep1Form.passScore.$error.pattern" class="li-prompt"><span
+                            class="ico ico-prompt"></span>请输入正整数</span>
+                    <span class="ml5">分</span>
+                </li>
+                <li>
+                    <span class="left-txt"><i>*</i>考试时长：</span>
+                    <input type="text" class="ipt ipt-large"
+                           ng-model="model.examRound.examTimeLength"
+                           ng-pattern="/^[1-9]\d*$/"
+                           name="examTimeLength"
+                           required ng-required="true"
+                    >
+                    <span
+                            ng-show="releaseStep1Form.examTimeLength.$dirty && releaseStep1Form.examTimeLength.$error.required"
+                            class="li-prompt"><span class="ico ico-prompt"></span>请输入考试时长</span>
+                    <span ng-show="releaseStep1Form.examTimeLength.$error.pattern" class="li-prompt"><span
+                            class="ico ico-prompt"></span>请输入正整数</span>
+
+                    <span class="ml5">分钟</span>
+                </li>
+                <li>
+                    <span class="left-txt txt-long"><i>*</i>考试时间条件设置：</span>
+                    <span class="mr30">
+                    <input type="radio" value="1" ng-model="model.examRound.examModeType"/>时间范围内都可进入考试</span>
+                    <input type="radio" value="2" ng-model="model.examRound.examModeType"/>固定时间统一进入考试
+                </li>
+                <li>
+                    <span class="left-txt txt-long"><i>*</i>考试起止时间范围：</span>
+
+                    <input kendo-date-time-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.examRound.beginTime" type="text" class="ipt ipt-medium"
+                           required
+                           placeholder="考试开始时间"
+                           ng-change="events.startTimeChange()"
+                    /> -
+                    <input kendo-date-time-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.examRound.endTime" type="text" class="ipt ipt-medium"
+                           required
+                           placeholder="考试结束时间"/>
+                </li>
+                <li ng-if="model.examRound.examModeType==='2'">
+                    <span class="left-txt txt-long">开考多久不可考试：</span>
+                    <input type="text" class="ipt ipt-large"
+                           ng-model="model.examRound.lastEnterTimeLength"
+                           ng-pattern="/^[1-9]\d*$/"
+                           name="lastEnterTimeLength"
+                    ><!--required ng-required="true"-->
+                    <!--<span
+                        ng-show="releaseStep1Form.lastEnterTimeLength.$dirty && releaseStep1Form.lastEnterTimeLength.$error.required"
+                        class="li-prompt"><span class="ico ico-prompt"></span>请输入开考不许进入时长</span>-->
+                    <span ng-show="releaseStep1Form.lastEnterTimeLength.$error.pattern" class="li-prompt"><span
+                            class="ico ico-prompt"></span>请输入正整数</span>
+                    <span class="ml5">分钟</span>
+                </li>
+                <li ng-if="model.examRound.examModeType==='2'">
+                    <span class="left-txt txt-long">开考多久内不许交卷：</span>
+                    <input type="text" class="ipt ipt-large"
+                           ng-model="model.examRound.minSubmitTimeLength"
+                           ng-pattern="/^[1-9]\d*$/"
+                           name="minSubmitTimeLength"
+                    ><!--required ng-required="true"-->
+                    <!--<span
+                        ng-show="releaseStep1Form.minSubmitTimeLength.$dirty && releaseStep1Form.minSubmitTimeLength.$error.required"
+                        class="li-prompt"><span class="ico ico-prompt"></span>请输入开考不许交卷时长</span>-->
+                    <span ng-show="releaseStep1Form.minSubmitTimeLength.$error.pattern" class="li-prompt"><span
+                            class="ico ico-prompt"></span>请输入正整数</span>
+                    <span class="ml5">分钟</span>
+                </li>
+                <li>
+                    <span class="left-txt txt-long">试卷试题显示方式：</span>
+                    <span class="mr30">
+                <input type="radio" value="1" ng-model="model.examRound.displayType"/>单题显示
+                </span>
+                    <input type="radio" value="0" ng-model="model.examRound.displayType"/>全部显示
+                </li>
+                <li ng-show="model.examRound.displayType=='1'">
+                    <span class="left-txt txt-long">单题是否可回退：</span>
+                    <span class="mr30"><input type="radio" value="true" ng-model="model.examRound.back"/>是</span>
+                    <input type="radio" value="false" ng-model="model.examRound.back"/>否
+                </li>
+                <li>
+                    <span class="left-txt txt-long">是否打乱试题顺序：</span>
+                    <span class="mr30"><input type="radio" value="true" ng-model="model.examRound.confusionQuestion"/>是</span>
+                    <input type="radio" value="false" ng-model="model.examRound.confusionQuestion"/>否
+                </li>
+                <li>
+                    <span class="left-txt txt-long-1">是否打乱试题选项顺序：</span>
+                    <span class="mr30"><input type="radio" value="true"
+                                              ng-model="model.examRound.confusionAnswer"/>是</span>
+                    <input type="radio" value="false" ng-model="model.examRound.confusionAnswer"/>否
+                </li>
+                <!--<li>-->
+                <!--<span class="left-txt txt-long">考完是否显示题析：</span>-->
+                <!--<span class="mr30"><input type="radio" checked="checked"/>是</span>-->
+                <!--<input type="radio"/>否-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<span class="left-txt txt-long">填空题是否系统阅卷：</span>-->
+                <!--<span class="mr30"><input type="radio" checked="checked"/>是</span>-->
+                <!--<input type="radio"/>否-->
+                <!--</li>-->
+                <li>
+                    <span class="left-txt">成绩公布方式：</span>
+                    <span class="mr30"><input type="radio" value="0" ng-model="model.examRound.publishType"/>不公布</span>
+                    <span class="mr30"><input type="radio" value="1" ng-model="model.examRound.publishType"/>考完公布</span>
+                    <input type="radio" value="2" ng-model="model.examRound.publishType"/>限时公布
+                </li>
+                <li ng-if="model.examRound.publishType==='2'">
+                    <span class="left-txt"><i>*</i>成绩公布时间：</span>
+                    <input kendo-date-time-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.examRound.publishTime" type="text" class="ipt ipt-medium"
+                           placeholder="成绩公布时间"/>
+                </li>
+                <!--<li>-->
+                <!--<span class="left-txt txt-long">是否启用错题库：</span>-->
+                <!--<span class="mr30"><input type="radio" checked="checked"/>是</span>-->
+                <!--<input type="radio"/>否-->
+                <!--</li>-->
+                <!--<li class="clear">
+                    <span class="left-txt fl">阅卷老师：</span>
+                    <a href="" ng-click="node.windows.teacherWindow.open()" class="btn btn-r ml5 fl">选择</a>
+                    <ul class="ul-course uc-4 fl li-fl">
+                        <li ng-repeat="item in model.teachers">b{{item.name}}<a href=""
+                                                                               ng-click="events.removeStudyObjectByGrid($event,'3',item)"
+                                                                               class="ico"></a></li>
+                    </ul>
+                </li>-->
+            </ul>
+
+        </div>
+        <div class="dash-line"></div>
+        <div class="btn-center">
+            <a href="" ng-click="events.continueRelease()"
+               ng-class="{'btn-g': !releaseStep1Form.$valid, 'btn-r': releaseStep1Form.$valid}"
+               class="btn">下一步</a>
+            <a href="" ng-if="$stateParams.comeForm==='1'" class="btn btn-g ml10"
+               ng-click="$state.go('states.paperConfig')">取消</a>
+            <a href="" ng-if="$stateParams.comeForm==='2'" class="btn btn-g ml10"
+               ng-click="$state.go('states.exam')">取消</a>
+        </div>
+    </form>
+
+</div>
+
+<!--安排考试第二部-->
+<div ng-show="show.releasePaperStep2" class="main-wrap-body">
+    <div class="steps mb30">
+        <div class="bg-line rd3"><span class="bg-l-current rd3" style="margin-left:0;"></span></div>
+        <ul class="ul-step li-fl clear">
+            <li class="ed"><span class="ico s-1"></span>
+
+                <p class="step-name">填写考试基本信息</p></li>
+            <li class="current"><span class="ico s-2"></span>
+
+                <p class="step-name">设置考试对象</p></li>
+            <li><span class="ico s-3"></span>
+
+                <p class="step-name">发布考试</p></li>
+        </ul>
+    </div>
+
+    <div class="column mb20 mt30">
+        <div class="col-tit clear">添加学习对象</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="clear">
+        <div class="wp-4 fl">
+            <div class="col-tit">待选区</div>
+            <div class="tab-tit">
+                <a href="#" ng-click="events.toggleStudyObject($event, 1)"
+                   ng-class="{'current': model.studyObjectCursor == 1}">学员</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 2)"
+                   ng-class="{'current': model.studyObjectCursor == 2}">岗位</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 3)"
+                   ng-class="{'current': model.studyObjectCursor == 3}">组织机构</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div class="col-body bt0 h-1">
+                    <!-------------  学员  ----------------->
+                    <div ng-show="model.studyObjectCursor == 1" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-model="model.electedEmployeeGridParams.nickname" type="text"
+                                           class="ipt ipt-medium" placeholder="请输入学员名称"/></li>
+                                <li><a href="#" ng-click="events.reloadElectedStudyObjectData($event, 1)"
+                                       class="btn btn-b">查询</a></li>
+                                <li><a href="#" ng-click="events.batchSelectStudyObject($event, 1)"
+                                       class="btn btn-r">全选</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <div kendo-grid="node.electedEmployeeGrid" k-options="ui.electedEmployeeGrid"></div>
+                    </div>
+                    <!-------------  岗位  ----------------->
+                    <div ng-show="model.studyObjectCursor == 2" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-model="model.electedJobGridParams.name" type="text" class="ipt ipt-medium"
+                                           placeholder="岗位名称"/></li>
+                                <li><a href="#" ng-click="events.reloadElectedStudyObjectData($event, 2)"
+                                       class="btn btn-b">查询</a></li>
+                                <li><a href="#" ng-click="events.batchSelectStudyObject($event, 2)"
+                                       class="btn btn-r">全选</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <div kendo-grid="node.electedJobGrid" k-options="ui.electedJobGrid"
+                             k-ng-delay="ui.electedJobGrid"></div>
+                    </div>
+
+                    <!-------------  组织机构  ----------------->
+                    <div ng-show="model.studyObjectCursor == 3" class="tab-cont">
+                        <!--<div class="search-bar">-->
+                        <!--<ul class="ul-form uf-3 li-fl clear">-->
+                        <!--<li><input type="text" class="ipt ipt-medium"-->
+                        <!--placeholder="单位/部门名称"/></li>-->
+                        <!--<li><a href="#" class="btn btn-b">查询</a></li>-->
+
+                        <!--<li><span>单击选中</span></li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <div kendo-tree-view="node.electedUnitOrgTree" k-options="ui.electedUnitOrgTree"
+                             k-ng-delay="ui.electedUnitOrgTree" class="p0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wp-4 fr">
+            <div class="col-tit">已选区</div>
+            <div class="tab-tit">
+                <a href="#" ng-click="events.toggleStudyObject($event, 1)"
+                   ng-class="{'current': model.studyObjectCursor == 1}">学员</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 2)"
+                   ng-class="{'current': model.studyObjectCursor == 2}">岗位</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 3)"
+                   ng-class="{'current': model.studyObjectCursor == 3}">组织机构</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div class="col-body bt0 h-1">
+                    <!-------------  学员  ----------------->
+                    <div ng-show="model.studyObjectCursor == 1" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-model="editEmployeeNameFilter" type="text" class="ipt ipt-medium"
+                                           placeholder="学员名称"/></li>
+                                <li><a href="" class="btn btn-b">查询</a></li>
+                                <li class="fr"><a href="#" ng-click="events.emptyStudyObject($event, 1)"
+                                                  class="btn btn-g">清空</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <table class="table mt10">
+                            <thead>
+                            <tr>
+                                <th width="20">No.</th>
+                                <th width="60">姓名</th>
+                                <th>单位/部门</th>
+                                <th width="80">岗位</th>
+                                <th width="40">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="employee in model.selectedEmployeeList | filter: {name: editEmployeeNameFilter}">
+                                <td>b{{$index + 1}}</td>
+                                <td>b{{employee.name}}</td>
+                                <td>b{{employee.unit}}/b{{employee.organization}}</td>
+                                <td>b{{employee.job}}</td>
+                                <td class="op">
+                                    <a href="#" ng-click="events.removeStudyObject($event, 1, $index, employee.userId)">取消</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-------------  岗位  ----------------->
+                    <div ng-show="model.studyObjectCursor == 2" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-model="editJobNameFilter" type="text" class="ipt ipt-medium"
+                                           placeholder="岗位名称"/></li>
+                                <li><a href="" class="btn btn-b">查询</a></li>
+                                <li class="fr"><a href="#" ng-click="events.emptyStudyObject($event, 2)"
+                                                  class="btn btn-g">清空</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <table class="table mt10">
+                            <thead>
+                            <tr>
+                                <th width="20">No.</th>
+                                <th>岗位</th>
+                                <th width="60">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="job in model.selectedJobList | filter: {name: editJobNameFilter}">
+                                <td>b{{$index + 1}}</td>
+                                <td>b{{job.name}}</td>
+                                <td class="op">
+                                    <a href="#" ng-click="events.removeStudyObject($event, 2, $index, job.id)">取消选择</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-------------  组织机构  ----------------->
+                    <div ng-show="model.studyObjectCursor == 3" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <!--<li><input type="text" class="ipt ipt-medium"-->
+                                <!--placeholder="组织机构名称"/></li>-->
+                                <!--<li><a href="" class="btn btn-b">查询</a></li>-->
+                                <li class="fr"><a href="#" ng-click="events.emptyStudyObject($event, 3)"
+                                                  class="btn btn-g">清空</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <table class="table mt10">
+                            <thead>
+                            <tr>
+                                <th width="20">No.</th>
+                                <th>组织机构名称</th>
+                                <th width="60">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="unitOrg in model.selectedUnitOrgList">
+                                <td>b{{$index + 1}}</td>
+                                <td>b{{unitOrg.name}}</td>
+                                <td class="op">
+                                    <a href="#"
+                                       ng-click="events.removeStudyObject($event, unitOrg.type, $index, unitOrg.name)">取消选择</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-tit mt20">安排考试的人员数量：XXXX人</div>-->
+    <div class="dash-line"></div>
+    <div class="btn-center">
+        <a href="" ng-click="events.release()" class="btn" ng-class="{'btn-g':submitNow, 'btn-r':!submitNow}">发布考试</a>
+        <a href="" class="btn btn-r ml10" ng-click="events.back()">返回上一步</a>
+        <a href="" ng-if="$stateParams.comeForm==='1'" class="btn btn-g ml10"
+           ng-click="$state.go('states.paperConfig')">取消</a>
+        <a href="" ng-if="$stateParams.comeForm==='2'" class="btn btn-g ml10" ng-click="$state.go('states.exam')">取消</a>
+    </div>
+</div>
+
+<!--选择教师-->
+<div class="dialog w-textarea" kendo-window="node.windows.teacherWindow" k-options="ui.windowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择教师<a href="" ng-click="node.windows.teacherWindow.close()"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" class="ipt ipt-medium" placeholder="请输入教师名称"
+                               ng-model="model.electedTeacherGridParams.name"/></li>
+                    <li><a href="" class="btn btn-b" ng-click="events.teacherSearch()">查询</a></li>
+                    <li><a href="" ng-click="events.toTeacherAccountManage()" class="btn btn-b">新建</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.electedTeacherGrid" k-options="ui.electedTeacherGrid"
+                 k-ng-delay="ui.electedTeacherGrid"></div>
+        </div>
+        <div class="btn-center">
+            <a href="" class="btn btn-r" ng-click="node.windows.teacherWindow.close()">确认选择</a>
+            <!--<a href="" class="btn btn-g ml10" ng-click="events.cancelTeacher()">取消</a>-->
+        </div>
+    </div>
+</div>
+
+<!------  选择试卷 ----->
+<div class="dialog w-2" kendo-window="node.windows.examPaperWindow" k-options="ui.windowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择试卷<a href="" ng-click="node.windows.examPaperWindow.close()"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" class="ipt ipt-small" placeholder="请输入试卷名称"
+                               ng-model="model.paperSearch.name"/></li>
+                    <li>
+                        <input type="text" class="ipt ipt-large"
+                               placeholder="请选择试卷类别"
+                               ng-model="model.examPaperName"
+                               ng-click="examTypeTreeShow=!examTypeTreeShow"
+                        >
+
+                        <div class="column-block w-tree fl" ng-show="examTypeTreeShow"
+                             style="  position: absolute;z-index: 10;left: 121px;">
+                            <div class="col-body">
+                                <div kendo-tree-view="node.tree"
+                                     k-options="ui.tree.options"
+                                     k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getOrgInfo(dataItem)">
+                      <label style="width: 100px;">b{{dataItem.name}}</label>
+                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="" class="btn btn-b" ng-click="node.examPaperGrid.dataSource.page(0)">查询</a></li>
+                </ul>
+            </div>
+            <div kendo-grid="node.examPaperGrid"
+                 k-options="ui.examPaperGrid.options">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<!-- /头部 -->
+<!--<div class="p-wrap-full pos-nav  clear"><a href="#">首页</a><span class="plr3">&gt;</span>
+    <a ui-sref="states.accountant.notice">培训通知</a><span class="plr3">&gt;</span>
+    {{ model.noticeContent.title}}
+</div>-->
+<!-- 培训通知列表 -->
+<!--<div class="p-wrap-full clear mb20" ng-if="!model.noNotice">
+    <div class="w880 fl" style="width: 1180px">
+        <div class="p20 white-bg mh500">
+            <div class="m-notice-detail">
+                <p class="notice-tit tc">{{model.noticeContent.title}}</p>
+                <p class="notice-info tc">发布时间：{{model.noticeContent.publishTime}}</p>
+                <div class="notice-bd" ng-bind-html="model.noticeContent.content| trustHtml">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>-->
+<!-- /课程列表 -->
+
+
+<!--
+<div class="m-no-data tc" ng-if="model.noNotice">
+    <img src="ahzj/fykccs/images/no-data.png" alt="空数据">
+    <p class="txt">消息资讯已被删除！</p>
+</div>-->
+
+
+<div class="main-wrap  main-wrap-2 mh500">
+
+    <div class="w-bg clear mb50">
+        <!-- 位置导航 -->
+        <div class="pos-nav clear">
+            <span class="p-ico"></span>当前位置：<a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span><a href="#" ui-sref="states.accountant.laws">政策法规</a><span>&gt;</span>{{ model.detail.title}}
+        </div>
+        <!-- /位置导航 -->
+        <div class="m-article mr15">
+            <div class="article-top">
+                <h1>{{model.detail.title}}</h1>
+                <div class="date"><!--<span class="mr30">作者：华博管理员</span>--><!--<span class="mr30">浏览数：239</span>--><span class="mr30">发布时间：{{model.detail.publishTime}}</span></div>
+            </div>
+            <div class="article-text" ng-bind-html="model.detail.content| trustHtml">
+            </div>
+        </div>
+    </div>
+</div>

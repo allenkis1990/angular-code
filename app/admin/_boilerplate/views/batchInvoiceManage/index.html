@@ -1,0 +1,684 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.batchInvoiceManage'"
+     ng-click="lessonTypeShow=false">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li class="clear">
+                <a ng-click="events.switchTable(0)"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 0, 'btn btn-g ml5': model.paperInvoiceShowNum !== 0}">增值税普通发票</a>
+                <a ng-click="events.switchTable(1)" ng-show="realSupportIssuingElectronInvoice === true"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 1, 'btn btn-g ml5': model.paperInvoiceShowNum !== 1}">普通电子发票</a>
+                <!--可在平台开票-->
+                <a ng-click="events.switchTable(4)" ng-show="realSupportIssuingElectronInvoice === false"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 4, 'btn btn-g ml5': model.paperInvoiceShowNum !== 4}">普通电子发票</a>
+                <!--不可在平台开票-->
+                <a ng-click="events.switchTable(2)"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 2, 'btn btn-g ml5': model.paperInvoiceShowNum !== 2}">增值税专用发票</a>
+                <a ng-click="events.switchTable(3)"
+                   ng-class="{'btn btn-b': model.paperInvoiceShowNum === 3, 'btn btn-g ml5': model.paperInvoiceShowNum !== 3}">非税务发票</a>
+            </li>
+        </ul>
+
+        <div class="tab-tit mt10">
+            <a href=""
+               ng-class="{ current: currentTab===tabMap.myself.code}"
+               ng-click="events.chooseTab($event,tabMap.myself.code)"
+               ng-bind="tabMap.myself.name"
+            ></a>
+        </div>
+
+        <!--普通纸质发票表格-->
+        <div ng-show="model.paperInvoiceShowNum === 0">
+            <div class="search-bar mt10" >
+            <ul class="ul-form li-fl clear">
+                <div hb-authorized-option query-params="model.commonPaperPageParams"></div>
+                <li has-permission="invoiceManage/searchClass">
+                    <input type="text" class="ipt ipt-large" ng-model="model.commonPaperPageParams.batchNo"
+                           hb-clear-input
+                           placeholder="单位报名批次号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.commonPaperPageParams.buyerName"
+                           hb-clear-input
+                           placeholder="购买人姓名"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"/></li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.commonPaperPageParams.loginInput"
+                           hb-clear-input
+                           placeholder="账号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"/></li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" ng-model="model.commonPaperPageParams.billNo"
+                           ng-if="model.electronPageParams.billSelectThree === '1'"
+                           placeholder="请输入发票号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.commonPaperPageParams.deliverType">
+                        <option value="">配送方式</option>
+                        <option value="1">邮寄</option>
+                        <option value="2">自取</option>
+                    </select>
+                </li>
+                <li style="position:relative;">
+                    <input type="text"
+                           ng-click="events.openKendoWindow('commonPaperCreatorUnitWindow')"
+                           class="ipt ipt-large"
+                           ng-model="model.commonPaperPageParams.creatorUnitName"
+                           placeholder="请选择单位">
+                    <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                          ng-click="events.clearPaperUnitTextContent()"
+                          class="k-icon k-i-close" role="button">select
+                    </span>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.commonPaperPageParams.askBillTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="索取发票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.commonPaperPageParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="索取发票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"
+                    />
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.commonPaperPageParams.billingTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="开票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.commonPaperPageParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="开票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'commonPaperInvoiceGrid'):''"
+                    />
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.commonPaperPageParams.made">
+                        <option value="">是否已开票</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.commonPaperPageParams.frozen">
+                        <option value="">发票状态</option>
+                        <option value="false">正常</option>
+                        <option value="true">冻结</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="select-small" ng-model="model.commonPaperPageParams.batchBillType" has-permission="batchBill/searchTestBill">
+                        <option selected="selected" value="-1">缴费发票类型</option>
+                        <option value="0">非测试</option>
+                        <option value="1">测试</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="batchBill/search"
+                       ng-click="events.MainPageQueryList($event, 'commonPaperInvoiceGrid')"
+                       class="btn btn-b">查询</a>
+                    <a href="javascript:void(0)"
+                       has-permission="paperBatchBill/export"
+                       ng-click="events.ListOpen($event)"
+                       class="btn btn-b">列表数据导出</a>
+                    <a href="javascript:void(0)"
+                       has-permission="paperBatchBill/import"
+                       ng-click="events.chooseFile($event)"
+                       class="btn btn-b">导入开票结果</a>
+                </li>
+            </ul>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.commonPaperInvoiceGrid" k-options="ui.commonPaperInvoiceGrid.options"></div>
+            </div>
+        </div>
+        <!--增值税专用发票表格-->
+        <div ng-show="model.paperInvoiceShowNum === 2">
+            <ul class="ul-form li-fl clear">
+                <div hb-authorized-option query-params="model.vatPaperPageParams"></div>
+                <li has-permission="invoiceManage/searchClass">
+                    <input type="text" class="ipt ipt-large" ng-model="model.vatPaperPageParams.batchNo"
+                           hb-clear-input
+                           placeholder="单位报名批次号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.vatPaperPageParams.buyerName"
+                           hb-clear-input
+                           placeholder="购买人姓名"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"/></li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.vatPaperPageParams.loginInput"
+                           hb-clear-input
+                           placeholder="账号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"/></li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" ng-model="model.vatPaperPageParams.billNo"
+                           ng-if="model.electronPageParams.billSelectThree === '1'"
+                           placeholder="请输入发票号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.vatPaperPageParams.deliverType">
+                        <option value="">配送方式</option>
+                        <option value="1">邮寄</option>
+                        <option value="2">自取</option>
+                    </select>
+                </li>
+                <li style="position:relative;">
+                    <input type="text"
+                           ng-click="events.openKendoWindow('vatPaperCreatorUnitWindow')"
+                           class="ipt ipt-large"
+                           ng-model="model.vatPaperPageParams.creatorUnitName"
+                           placeholder="请选择单位">
+                    <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                          ng-click="events.clearPaperUnitTextContent()"
+                          class="k-icon k-i-close" role="button">select
+                    </span>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.vatPaperPageParams.askBillTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="索取发票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.vatPaperPageParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="索取发票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"
+                    />
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.vatPaperPageParams.billingTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="开票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.vatPaperPageParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="开票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'vatPaperInvoiceGrid'):''"
+                    />
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.vatPaperPageParams.made">
+                        <option value="">是否已开票</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.vatPaperPageParams.frozen">
+                        <option value="">发票状态</option>
+                        <option value="false">正常</option>
+                        <option value="true">冻结</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="select-small" ng-model="model.vatPaperPageParams.batchBillType" has-permission="batchBill/searchTestBill">
+                        <option selected="selected" value="-1">缴费发票类型</option>
+                        <option value="0">非测试</option>
+                        <option value="1">测试</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="batchBill/search"
+                       ng-click="events.MainPageQueryList($event, 'vatPaperInvoiceGrid')"
+                       class="btn btn-b">查询</a>
+                    <a href="javascript:void(0)"
+                       has-permission="paperBatchBill/export"
+                       ng-click="events.ListOpen($event)"
+                       class="btn btn-b">列表数据导出</a>
+                    <a href="javascript:void(0)"
+                       has-permission="paperBatchBill/import"
+                       ng-click="events.chooseFile($event)"
+                       class="btn btn-b">导入开票结果</a>
+                </li>
+            </ul>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.vatPaperInvoiceGrid" k-options="ui.vatPaperInvoiceGrid.options"></div>
+            </div>
+        </div>
+        <!--非税务发票表格-->
+        <div ng-show="model.paperInvoiceShowNum === 3">
+            <ul class="ul-form li-fl clear">
+                <div hb-authorized-option query-params="model.nonTaxPaperPageParams"></div>
+                <li has-permission="invoiceManage/searchClass">
+                    <input type="text" class="ipt ipt-large" ng-model="model.nonTaxPaperPageParams.batchNo"
+                           hb-clear-input
+                           placeholder="单位报名批次号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.nonTaxPaperPageParams.buyerName"
+                           hb-clear-input
+                           placeholder="购买人姓名"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"/></li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.nonTaxPaperPageParams.loginInput"
+                           hb-clear-input
+                           placeholder="账号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"/></li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" ng-model="model.nonTaxPaperPageParams.billNo"
+                           ng-if="model.electronPageParams.billSelectThree === '1'"
+                           placeholder="请输入发票号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.nonTaxPaperPageParams.deliverType">
+                        <option value="">配送方式</option>
+                        <option value="1">邮寄</option>
+                        <option value="2">自取</option>
+                    </select>
+                </li>
+                <li style="position:relative;">
+                    <input type="text"
+                           ng-click="events.openKendoWindow('nonTaxPaperCreatorUnitWindow')"
+                           class="ipt ipt-large"
+                           ng-model="model.nonTaxPaperPageParams.creatorUnitName"
+                           placeholder="请选择单位">
+                    <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                          ng-click="events.clearPaperUnitTextContent()"
+                          class="k-icon k-i-close" role="button">select
+                    </span>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.nonTaxPaperPageParams.askBillTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="索取发票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.nonTaxPaperPageParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="索取发票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"
+                    />
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.nonTaxPaperPageParams.billingTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="开票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.nonTaxPaperPageParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="开票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid'):''"
+                    />
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.nonTaxPaperPageParams.made">
+                        <option value="">是否已开票</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.nonTaxPaperPageParams.frozen">
+                        <option value="">发票状态</option>
+                        <option value="false">正常</option>
+                        <option value="true">冻结</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="select-small" ng-model="model.nonTaxPaperPageParams.batchBillType" has-permission="batchBill/searchTestBill">
+                        <option selected="selected" value="-1">缴费发票类型</option>
+                        <option value="0">非测试</option>
+                        <option value="1">测试</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="batchBill/search"
+                       ng-click="events.MainPageQueryList($event, 'nonTaxPaperInvoiceGrid')"
+                       class="btn btn-b">查询</a>
+                    <a href="javascript:void(0)"
+                       has-permission="paperBatchBill/export"
+                       ng-click="events.ListOpen($event)"
+                       class="btn btn-b">列表数据导出</a>
+                    <a href="javascript:void(0)"
+                       has-permission="paperBatchBill/import"
+                       ng-click="events.chooseFile($event)"
+                       class="btn btn-b">导入开票结果</a>
+                </li>
+            </ul>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.nonTaxPaperInvoiceGrid" k-options="ui.nonTaxPaperInvoiceGrid.options"></div>
+            </div>
+        </div>
+
+        <!--普通电子发票表格（不可在平台开票）-->
+        <div ng-show="model.paperInvoiceShowNum === 4">
+            <ul class="ul-form li-fl clear">
+                <div hb-authorized-option query-params="model.electronPageParams"></div>
+                <li has-permission="invoiceManage/searchClass">
+                    <input type="text" class="ipt ipt-large" ng-model="model.electronPageParams.batchNo"
+                           hb-clear-input
+                           placeholder="单位报名批次号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'disableIssuingCommonElectronInvoiceGrid'):''"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.buyerName"
+                           hb-clear-input
+                           placeholder="购买人姓名"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'disableIssuingCommonElectronInvoiceGrid'):''"/></li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.loginInput"
+                           hb-clear-input
+                           placeholder="账号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'disableIssuingCommonElectronInvoiceGrid'):''"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.electronPageParams.billSelectThree" style="width: 100px">
+                        <option value="1">发票号</option>
+                        <option value="2">发票代码</option>
+                        <option value="3">验证码</option>
+                    </select>：
+                    <input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.billNo"
+                           ng-if="model.electronPageParams.billSelectThree === '1'"
+                           placeholder="发票号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'disableIssuingCommonElectronInvoiceGrid'):''"/>
+                    <input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.billCode"
+                           placeholder="发票代码"
+                           ng-if="model.electronPageParams.billSelectThree === '2'"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'disableIssuingCommonElectronInvoiceGrid'):''"/>
+                    <input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.verifyCode"
+                           ng-if="model.electronPageParams.billSelectThree === '3'"
+                           placeholder="验证码"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'disableIssuingCommonElectronInvoiceGrid'):''"/>
+                </li>
+                <li style="position:relative;">
+                    <input type="text"
+                           ng-click="events.openKendoWindow('electronCreatorUnitWindow')"
+                           class="ipt ipt-large"
+                           ng-model="model.electronPageParams.creatorUnitName"
+                           placeholder="请选择单位">
+                    <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                          ng-click="events.clearElectronUnitTextContent()"
+                          class="k-icon k-i-close" role="button">select
+                    </span>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.electronPageParams.askBillTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="索取发票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.electronPageParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="索取发票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    />
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.electronPageParams.billingTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="开票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.electronPageParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="开票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    />
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.electronPageParams.made">
+                        <option value="">是否已开票</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.electronPageParams.frozen">
+                        <option value="">发票状态</option>
+                        <option value="false">正常</option>
+                        <option value="true">冻结</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="select-small"  ng-model="model.electronPageParams.batchBillType" has-permission="batchBill/searchTestBill">
+                        <option selected="selected" value="-1">缴费发票类型</option>
+                        <option value="0">非测试</option>
+                        <option value="1">测试</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="batchBill/search"
+                       ng-click="events.MainPageQueryList($event, 'disableIssuingCommonElectronInvoiceGrid')"
+                       class="btn btn-b">查询</a>
+                    <a href="javascript:void(0)"
+                       has-permission="electronBatchBill/export"
+                       ng-click="events.ListOpen($event)"
+                       class="btn btn-b">列表数据导出</a>
+                    <a href="javascript:void(0)"
+                       has-permission="electronBatchBill/import"
+                       ng-click="events.chooseFile($event)"
+                       class="btn btn-b">导入开票结果</a>
+                </li>
+            </ul>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.disableIssuingCommonElectronInvoiceGrid" k-options="ui.disableIssuingCommonElectronInvoiceGrid.options"></div>
+            </div>
+        </div>
+        <!--普通电子发票表格（可在平台开票）-->
+        <div ng-show="model.paperInvoiceShowNum === 1">
+            <ul class="ul-form li-fl clear">
+                <div hb-authorized-option query-params="model.electronPageParams"></div>
+                <li has-permission="invoiceManage/searchClass">
+                    <input type="text" class="ipt ipt-large" ng-model="model.electronPageParams.batchNo"
+                           hb-clear-input
+                           placeholder="单位报名批次号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'enableIssuingCommonElectronInvoiceGrid'):''"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.buyerName"
+                           hb-clear-input
+                           placeholder="购买人姓名"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'enableIssuingCommonElectronInvoiceGrid'):''"/></li>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.loginInput"
+                           hb-clear-input
+                           placeholder="账号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'enableIssuingCommonElectronInvoiceGrid'):''"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.electronPageParams.billSelectThree" style="width: 100px">
+                        <option value="1">发票号</option>
+                        <!--<option value="2">发票代码</option>-->
+                        <!--<option value="3">验证码</option>-->
+                    </select>：
+                    <input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.billNo"
+                           ng-if="model.electronPageParams.billSelectThree === '1'"
+                           placeholder="发票号"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'enableIssuingCommonElectronInvoiceGrid'):''"/>
+                    <input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.billCode"
+                           placeholder="发票代码"
+                           ng-if="model.electronPageParams.billSelectThree === '2'"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'enableIssuingCommonElectronInvoiceGrid'):''"/>
+                    <input type="text" class="ipt ipt-medium" ng-model="model.electronPageParams.verifyCode"
+                           ng-if="model.electronPageParams.billSelectThree === '3'"
+                           placeholder="验证码"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event, 'enableIssuingCommonElectronInvoiceGrid'):''"/>
+                </li>
+                <li style="position:relative;">
+                    <input type="text"
+                           ng-click="events.openKendoWindow('electronCreatorUnitWindow')"
+                           class="ipt ipt-large"
+                           ng-model="model.electronPageParams.creatorUnitName"
+                           placeholder="请选择单位">
+                    <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                          ng-click="events.clearElectronUnitTextContent()"
+                          class="k-icon k-i-close" role="button">select
+                    </span>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.electronPageParams.askBillTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="索取发票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.electronPageParams.askBillTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="索取发票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    />
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.electronPageParams.billingTimeStart" type="text" class="ipt ipt-s"
+                           placeholder="开票开始时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.electronPageParams.billingTimeEnd" type="text" class="ipt ipt-s"
+                           placeholder="开票结束时间"
+                           ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                    />
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.electronPageParams.made">
+                        <option value="">是否已开票</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.electronPageParams.frozen">
+                        <option value="">发票状态</option>
+                        <option value="false">正常</option>
+                        <option value="true">冻结</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="select-small"  ng-model="model.electronPageParams.batchBillType" has-permission="batchBill/searchTestBill">
+                        <option selected="selected" value="-1">缴费发票类型</option>
+                        <option value="0">非测试</option>
+                        <option value="1">测试</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="batchBill/search"
+                       ng-click="events.MainPageQueryList($event, 'enableIssuingCommonElectronInvoiceGrid')"
+                       class="btn btn-b">查询</a>
+                    <a href="javascript:void(0)"
+                       has-permission="electronBatchBill/export"
+                       ng-click="events.ListOpen($event)"
+                       class="btn btn-b">列表数据导出</a>
+                    <a href="javascript:void(0)"
+                       ng-click="events.batchIssuingInvoice()"
+                       class="btn btn-b">批量开票</a>
+                    <a href="javascript:void(0)"
+                       ng-click="events.getStorageByTaxPayer($event)"
+                       class="btn btn-b">查询电子发票库存</a>
+                </li>
+            </ul>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.enableIssuingCommonElectronInvoiceGrid" k-options="ui.enableIssuingCommonElectronInvoiceGrid.options"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 单位弹窗 -->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="commonPaperCreatorUnitWindow" style="width:1000px;">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择单位<a href="javascript:void(0)" class="ico ico-close" ng-click="events.closeKendoWindow('commonPaperCreatorUnitWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" ng-model="model.commonPaperCreatorUnitQueryParam.name" class="ipt ipt-large" placeholder="请输入单位名称，支持模糊搜索"></li>
+                    <li><a href="javascript:void(0)" ng-click="events.MainPageQueryList($event,'paperCreatorUnitGrid')" class="btn btn-b">搜索</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.paperCreatorUnitGrid" k-options="ui.creatorUnitGridOptions.commonPaper"></div>
+        </div>
+        <div class="btn-center">
+            <a href="javascript:void(0)"
+               class="btn btn-g ml10"
+               ng-click="events.closeKendoWindow('commonPaperCreatorUnitWindow')">取消</a>
+        </div>
+    </div>
+</div>
+<!-- 单位弹窗 -->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="vatPaperCreatorUnitWindow" style="width:1000px;">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择单位<a href="javascript:void(0)" class="ico ico-close" ng-click="events.closeKendoWindow('vatPaperCreatorUnitWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" ng-model="model.vatPaperCreatorUnitQueryParam.name" class="ipt ipt-large" placeholder="请输入单位名称，支持模糊搜索"></li>
+                    <li><a href="javascript:void(0)" ng-click="events.MainPageQueryList($event,'paperCreatorUnitGrid')" class="btn btn-b">搜索</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.paperCreatorUnitGrid" k-options="ui.creatorUnitGridOptions.vatPaper"></div>
+        </div>
+        <div class="btn-center">
+            <a href="javascript:void(0)"
+               class="btn btn-g ml10"
+               ng-click="events.closeKendoWindow('vatPaperCreatorUnitWindow')">取消</a>
+        </div>
+    </div>
+</div>
+<!-- 单位弹窗 -->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="nonTaxPaperCreatorUnitWindow" style="width:1000px;">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择单位<a href="javascript:void(0)" class="ico ico-close" ng-click="events.closeKendoWindow('nonTaxPaperCreatorUnitWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" ng-model="model.nonTaxPaperCreatorUnitQueryParam.name" class="ipt ipt-large" placeholder="请输入单位名称，支持模糊搜索"></li>
+                    <li><a href="javascript:void(0)" ng-click="events.MainPageQueryList($event,'nonTaxPaperCreatorUnitGrid')" class="btn btn-b">搜索</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.nonTaxPaperCreatorUnitGrid" k-options="ui.creatorUnitGridOptions.nonTaxPaper"></div>
+        </div>
+        <div class="btn-center">
+            <a href="javascript:void(0)"
+               class="btn btn-g ml10"
+               ng-click="events.closeKendoWindow('nonTaxPaperCreatorUnitWindow')">取消</a>
+        </div>
+    </div>
+</div>
+
+<!-- 单位弹窗 -->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="electronCreatorUnitWindow" style="width:1000px;">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择单位<a href="javascript:void(0)" class="ico ico-close" ng-click="events.closeKendoWindow('electronCreatorUnitWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" ng-model="model.electronCreatorUnitQueryParam.name" class="ipt ipt-large" placeholder="请输入单位名称，支持模糊搜索"></li>
+                    <li><a href="javascript:void(0)" ng-click="events.MainPageQueryList($event,'electronCreatorUnitGrid')" class="btn btn-b">搜索</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.electronCreatorUnitGrid" k-options="ui.creatorUnitGridOptions.electron"></div>
+        </div>
+        <div class="btn-center">
+            <a href="javascript:void(0)"
+               class="btn btn-g ml10"
+               ng-click="events.closeKendoWindow('electronCreatorUnitWindow')">取消</a>
+        </div>
+    </div>
+</div>

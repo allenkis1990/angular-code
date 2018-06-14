@@ -1,0 +1,399 @@
+<!-- /内容 -->
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+    <div class="m-right-block fr mh576"  ng-if="show!==101 && show!==102">
+        <div class="right-block-bd">
+            <div class="m-account">
+                <div class="account-tit" style="height:30px">
+                    <a ng-class="{'current':show===1}" style="text-decoration: none;padding-bottom: 5px; "
+                       ng-click="events.changeType(1)  ">个人资料设置</a>
+                    <a ng-class="{'current':show===3}" style="text-decoration: none;padding-bottom: 5px; "
+                       ng-click="events.changeType(3)  ">收货地址管理</a>
+                    <a ng-class="{'current':show===2}" style="text-decoration: none;padding-bottom: 5px;"
+                       ng-click="events.changeType(2)">密码修改</a>
+                </div>
+
+                <div ng-if=" show===1">
+                    <form name="user" ng-model="name">
+                        <div class="m-img tc">
+                            <!--
+                                                    <img ng-if="$$userInfo.photo===null" ng-src="b{{$$userInfo.photo===null?'@systemUrl@/images/user-img.jpg':'/mfs'+$$userInfo.photo}}" alt="" class="user-img">
+                            -->
+                            <!--
+                                                    <img ng-if="$$userInfo.photo!==null" ng-src="b{{model.uploader.newPath?('/mfs'+model.uploader.newPath):'/mfs'+model.user.displayPhotoUrl}}">
+                            -->
+                            <img ng-if="model.user.gender==1" ng-src="b{{$$userInfo.photo?('/mfs'+$$userInfo.photo):'@systemUrl@/images/user-man.jpg'}}">
+                            <img ng-if="model.user.gender==2" ng-src="b{{$$userInfo.photo?('/mfs'+$$userInfo.photo):'@systemUrl@/images/user-woman.jpg'}}">
+
+                            <a href="javascript:void (0);" class="upload mt10">
+                                <div class="ui-btn btn-o "
+                                     size-limit="2097152"
+                                     hb-file-uploader
+                                     accepts="jpg,png"
+                                     on-file-type-denied="events.fileTypeDenied($info)"
+                                     standard="small"
+                                     auto="true"
+                                     button-text="b{{!model.hasUploadImg?'上传头像':'修改头像'}}"
+                                     ng-model="model.uploader"></div>
+                            </a>
+                        </div>
+
+
+                        <ul class="ul-form">
+                            <li class="txt-r"><span class="l-t"></span>注：<i>*</i>为必填项</li>
+                            <li>
+                                <span class="l-t"><i>*</i>姓名：</span>
+                                <input type="text"
+                                       name="name"
+                                       ng-model="model.user.name"
+                                       class="ipt1"
+                                       required
+                                       placeholder="请输入用户名">
+                                <span class="tips" ng-if="user.name.$dirty&&user.name.$error.required"><span
+                                        class="p-ico"></span>姓名不可为空</span>
+                            </li>
+                            <li><span class="l-t">身份证：</span>b{{model.user.identify}}</li>
+                            <li><span class="l-t"><i>*</i>性别：</span>
+                                <span class="sex">
+                                <a href="javascript:void(0)" ng-click="events.changeSex(1)"
+                                   ng-class="{'selected':model.user.gender===1}">
+
+                                    <span class="p-ico ico-man"></span>男
+                                </a>
+                                <a href="javascript:void(0)" ng-click="events.changeSex(2)"
+                                   ng-class="{'selected':model.user.gender===2}">
+                                    <span class="p-ico ico-woman"></span>女
+                                </a>
+                            </span>
+                            </li>
+                            <!--
+                                                    <li><span class="l-t"><i>*</i>邮箱：</span>
+                                                        <input type="text"
+                                                               ng-model="model.user.email"
+                                                               name="email"
+                                                               required
+                                                               ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
+                                                               class="ipt1" placeholder="请输入邮箱">
+                                                        <span class="tips" ng-if="user.email.$dirty&&user.email.$error.required">
+                                                            <span class="p-ico"></span>邮箱不可为空</span>
+                                                        <span class="tips" ng-if="user.email.$dirty&&!user.email.$error.required&&user.email.$invalid">
+                                                            <span class="p-ico"></span>邮箱格式错误</span>
+                                                    </li>-->
+                            <li>
+                                <span class="l-t">手机号码：</span>
+                                <input type="text" disabled class="ipt" value="b{{model.user.phoneNumber}}">
+                                <span class="ml10"><a href="javascript:void(0);" ng-click="events.changeType(101)" class="t-b">换绑手机</a></span>
+                            </li>
+                            <!--<li><span class="l-t"><i>*</i>所在地区：</span>
+                                安徽省 - <select class="ui-slt ml5"
+                                                        validate-area
+                                                        ng-required="true"
+                                                        name="area"
+                                                         required
+                                                        ng-change="events.changeCity()"
+                                                        ng-options="item.id as item.name for item in model.cityList"
+                                                        ng-model="model.user.cityId" style="width:127px">
+                                    <option value="" class="">请选择市</option>
+                                </select>
+                                <select class="ui-slt ml5 " style="width:127px"
+                                        ng-options="item.id as item.name for item in model.areaArr"
+                                        ng-change="events.changeArea()"
+                                        name="areaId"
+                                        required
+                                        ng-model="model.user.areaId">
+                                    <option value="" class="">请选择区县</option>
+                                </select>
+                                <span class="tips"  ng-if="user.area.$dirty&&user.area.$invalid||(user.areaId.$dirty&&user.areaId.$invalid)||model.user.areaId===undefined">
+                                                        <span class="p-ico"></span>请选择所在地区</span>
+
+
+                            </li>-->
+                            <li><span class="l-t">工作单位(全称)：</span>
+                                <input type="text" ng-model="model.user.unitName"
+                                       class="ipt1"
+
+                                       placeholder="请输入工作单位"></li>
+                            <!--<li><span class="l-t">继续教育证书管理号：</span>
+                                    <input
+                                    ng-model="model.user.certificateNumber"
+                                    type="text" class="ipt1" placeholder=" 请输入证书号"></li>
+                            <li><span class="l-t">专业技术岗位：</span>
+                                <input type="text"
+                                       ng-model="model.user.job"
+                                       class="ipt1" placeholder="请输入技术岗位"></li>
+                            <li><span class="l-t">专业技术职务：</span>
+                                <input type="text"
+                                       ng-model="model.user.jobGrade"
+                                       class="ipt1" placeholder="请输入技术职务"></li>
+                            <li><span class="l-t">学历：</span>
+                                <input type="text"
+
+                                       ng-model="model.user.highestEducation"
+                                       class="ipt1" placeholder="请输入学历"></li>-->
+
+                            <!--    <li><span class="l-t">邮编：</span>
+                                    <input
+                                        name="postCode"
+                                        ng-model="model.user.postCode"
+                                        ng-pattern="/^[\d]{6}$/"
+                                        type="text" class="ipt1" placeholder="请输入邮编">
+                                 <span class="tips" ng-if="user.postCode.$dirty&&user.postCode.$invalid">
+                                        <span class="p-ico"></span>邮编格式错误</span></li>
+                                <li><span class="l-t">通讯地址：</span>
+                                    <input type="text"
+                                           name="address"
+                                           ng-model="model.user.address"
+                                           class="ipt1 "
+                                           style="width: 500px"
+                                           placeholder="请输入通讯地址"></li>-->
+                            <li><span class="l-t">
+                        </span>
+                                <button href="javascript:void(0)" ng-disabled="user.$invalid||model.disable===false"
+                                        ng-click="events.save()" class="ui-btn btn-o">保存
+                                </button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+
+
+                <div ng-if="show===2">
+                    <form name="password">
+                        <ul class="ul-form mt50 ml30">
+                            <li>
+                                <span class="l-t"><i>*</i>旧密码：</span>
+                                <input class="ui-ipt1 ipt1-l ipt1"
+                                       ng-model="model.passwordNow"
+                                       name="passwordNow"
+                                       type="password"
+                                       required>
+                                <!-- <span class="tips"><span class="p-ico">
+                             </span>提示语</span>-->
+
+                            </li>
+                            <li>
+                                <span class="l-t"><i>*</i>新密码：</span>
+                                <input type="password" class="ui-ipt1 ipt1-l ipt1"
+                                       name="passwodFuture"
+                                       ng-model="model.passwodFuture"
+                                       ng-pattern="/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{6,18}$/"
+                                       required>
+                                <span class="tips"
+                                      ng-if="password.passwodFuture.$dirty && password.passwodFuture.$invalid">
+                        <span class="p-ico"></span>请输入6~18位由字母、数字组合的登录密码</span>
+                            </li>
+                            <li>
+                                <span class="l-t"><i>*</i>确认新密码：</span>
+                                <input type="password" class="ui-ipt1 ipt1-l ipt1"
+                                       name="rePasswod"
+                                       ng-model="model.rePasswod"
+                                       required>
+                                <span class="tips"
+                                      ng-if="(model.passwodFuture !== model.rePasswod)&&password.passwodFuture.$dirty&&password.rePasswod.$dirty"><i
+                                        class="p-ico"></i>确认密码和新密码必须一致</span>
+                            </li>
+                            <li><span class="l-t"></span>
+
+                                <a class="ui-btn btn-o">
+                                    <button
+                                            ng-disabled="password.$invalid||(model.passwodFuture !== model.rePasswod)"
+                                            ng-click="events.submitPassword($event,model.passwordNow,model.passwodFuture,model.rePasswod)"
+                                            class="btn-m">保 存
+                                    </button>
+                                </a></li>
+
+                        </ul>
+                    </form>
+                </div>
+
+
+                <div ng-if="show===3" class="lwh-takeAddress">
+                    <div class="tc mt50" ng-if="!hasReceiveAddress&&!receiveObj.id">
+                        <p class="fs18">请配置收货地址~</p>
+                        <a href="javascript:void(0)"
+                           ng-click="events.addReceive()"
+                           class="ui-btn ui-btn-1 btn-o mt20">新增地址</a>
+                    </div>
+
+
+                    <ul class="ul-form mt50 ml30" ng-if="!receiveOp.editReceive&&(hasReceiveAddress||receiveObj.id)">
+                        <li><span class="l-t">所在地区：</span><span ng-bind="receiveObj.province"></span>
+                            <span ng-bind="receiveObj.city"></span>
+                            <span ng-bind="receiveObj.district"></span></li>
+                        <li><span class="l-t">详细地址：</span><span ng-bind="receiveObj.addressDetails"></span></li>
+                        <li><span class="l-t">邮政编码：</span><span ng-bind="receiveObj.postCode"></span></li>
+                        <li><span class="l-t">收货人：</span><span ng-bind="receiveObj.receiverName"></span></li>
+                        <li><span class="l-t">手机号：</span><span ng-bind="receiveObj.mobileNo"></span></li>
+                        <li><span class="l-t"></span>
+                            <a href="javascript:void(0)"
+                               ng-click="events.editReceive()"
+                               class="ui-btn btn-o mr20">修 改</a>
+                        </li>
+                    </ul>
+
+                    <ul class="ul-form mt50 ml30" ng-if="receiveOp.editReceive&&(hasReceiveAddress||receiveObj.id)">
+                        <li><span class="l-t"><i>*</i>所在地区：</span>
+                            安徽省 - <select class="ui-slt ml5"
+                                          ng-change="events.changeReceiveCity(receiveObj.cityId)"
+                                          ng-options="item.id as item.name for item in model.shiList"
+                                          ng-model="receiveObj.cityId" style="width:127px">
+                                <option value="" class="">请选择市</option>
+                            </select>
+                            <select class="ui-slt ml5 " style="width:127px"
+                                    ng-options="item.id as item.name for item in model.quList"
+                                    ng-model="receiveObj.districtId">
+                                <option value="" class="">请选择区县</option>
+                            </select>
+                        </li>
+                        <li><span class="l-t"><i>*</i>详细地址：</span><input type="text"
+                                                                         ng-model="receiveObj.addressDetails"
+                                                                         class="ipt w-1"></li>
+                        <li><span class="l-t"><i>*</i>邮政编码：</span><input type="text"
+                                                                         ng-model="receiveObj.postCode"
+                                                                         class="ipt"></li>
+                        <li>
+                            <span class="l-t"><i>*</i>收货人：</span><input type="text"
+                                                                        ng-model="receiveObj.receiverName"
+                                                                        class="ipt">
+                            <!--<span class="tips"><span class="p-ico"></span>提示语</span>-->
+                        </li>
+                        <li><span class="l-t"><i>*</i>手机号：</span><input type="text"
+                                                                        ng-model="receiveObj.mobileNo"
+                                                                        class="ipt"></li>
+                        <li><span class="l-t"></span>
+                            <button ng-disabled="submitAble"
+                                    ng-click="events.saveReceive()"
+                                    class="ui-btn btn-o mr20">保 存
+                            </button>
+                            <a href="javascript:void(0)"
+                               ng-click="events.cancelEditReceive()"
+                               class="ui-btn btn-g">取 消</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="m-right-block fr" ng-if="show===101||show===102">
+        <div class="right-block-bd">
+            <div class="tit-block clear">
+                <span class="tit-txt">换绑手机</span> <a href="javascript:void(0);" class="ui-btn btn-gr btn-m fr" ng-click="events.changeType(1)">返回</a>
+            </div>
+            <div class="m-account mt20">
+                <form name="oldPhone" ng-if="show===101">
+                    <div id="con_one_1">
+                        <ul class="ul-form">
+                            <li class="txt-r"><span class="l-t"></span>注：<i>*</i>更换手机号，请及时登录平台绑定新手机号</li>
+                            <li><span class="l-t">原手机号：</span>b{{model.user.phoneNumber}}</li>
+                            <li class="clear v-code">
+                                <span class="l-t fl"><i>*</i>验证码：</span>
+                                <input type="text" class="ipt ipt2 fl" placeholder="图形验证码" maxlength="4"
+                                       name="picValidateCode"
+                                       ng-model="model.code"
+                                       required ng-required="true"
+                                       ng-minlength="4"
+                                       ng-maxlength="4"
+                                       ajax-validate ajax-url="b{{model.sureCode}}"
+                                       ng-focus="model.codeShow = true">
+                                <em class="ok" ng-if="!(model.code.length!==4 || oldPhone.picValidateCode.$error.ajaxValidate)"></em>
+                                <span class="img-code fl"  ng-click="events.changeCode()" ng-if="model.codeShow">
+                                    <img src="" ng-src="b{{model.validateCode}}" width="80" height="35" title="看不清？点击刷新">
+                                </span>
+                                <span class="tips" ng-if="oldPhone.picValidateCode.$dirty&&(oldPhone.picValidateCode.$error.required||model.code.length!==4)">
+                                    <span class="p-ico"></span>请输入完整验证码</span>
+                                <span class="tips" ng-if="model.code !== undefined && oldPhone.picValidateCode.$error.ajaxValidate">
+                                    <span class="p-ico"></span>请输入正确的验证码，看不清？点击验证码刷新</span>
+                            </li>
+                            <li class="clear">
+                                <span class="l-t fl"><i>*</i>验证码：</span>
+                                <input type="text" class="ipt ipt2 fl" placeholder="短信验证码" maxlength="6"
+                                       name = "mobileCode"
+                                       ng-model="model.mobileCode"
+                                       required ng-required="true"
+                                       ng-minlength="6" ng-maxlength="6">
+                                <span class="fl">
+                                    <button  class="btn-code" ng-click="events.sendMobile($event,7)" ng-bind="model.phoneCodeText"
+                                             ng-class="{ 'btn-off': (sendAble || model.code.length!==4 || oldPhone.picValidateCode.$error.ajaxValidate) }"
+                                             ng-disabled="sendAble || model.code.length!==4 || oldPhone.picValidateCode.$error.ajaxValidate">
+                                    </button>
+                                </span>
+                                <span class="tips" ng-if="oldPhone.mobileCode.$dirty&&oldPhone.mobileCode.$invalid">
+                                    <span class="p-ico"></span>请输入6位短信验证码
+                                </span>
+                            </li>
+                            <li><span class="l-t"></span>
+                                <button ng-class="{'btn-off':(oldPhone.$invalid||model.disable===false)}" ng-disabled="oldPhone.$invalid||model.disable===false"
+                                        ng-click="events.checkPhoneCode($event)" class="ui-btn btn-o">下一步
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+
+                <form name="newPhone" ng-if="show===102">
+                    <div id="con_one_2">
+                        <ul class="ul-form">
+                            <li><span class="l-t"><i>*</i>新手机号：</span>
+                                <input type="text" class="ipt" placeholder="请输入新手机号" maxlength="11"
+                                       name="phoneNumber"
+                                       ng-model="model.phoneNumber"
+                                       required ng-required="true"
+                                       ajax-validate ajax-url="b{{model.isExistsPhoneNumber}}"
+                                       ng-pattern="/^[\d]{11}$/">
+                                <span class="tips" ng-if="newPhone.phoneNumber.$dirty&&(model.phoneNumber.length!=11||newPhone.phoneNumber.$error.ajaxValidate)">
+                                    <span class="p-ico"></span>请输入未注册的11位手机号
+                                </span>
+                            </li>
+                            <li class="clear v-code">
+                                <span class="l-t fl"><i>*</i>验证码：</span>
+                                <input type="text" class="ipt ipt2 fl" placeholder="图形验证码" maxlength="4"
+                                       name="picValidateCode"
+                                       ng-model="model.code"
+                                       required ng-required="true"
+                                       ng-minlength="4"
+                                       ng-maxlength="4"
+                                       ajax-validate ajax-url="b{{model.sureCode}}"
+                                       ng-focus="model.codeShow = true">
+                                <em class="ok" ng-if="!(model.code.length!==4 || model.phoneNumber.length!=11 || newPhone.phoneNumber.$error.ajaxValidate || oldPhone.picValidateCode.$error.ajaxValidate)"></em>
+                                <span class="img-code fl" ng-click="events.changeCode()" ng-if="model.codeShow">
+                                    <img src="" ng-src="b{{model.validateCode}}" width="80" height="35" title="看不清？点击刷新">
+                                </span>
+                                <span class="tips" ng-if="newPhone.picValidateCode.$dirty&&(newPhone.picValidateCode.$error.required||model.code.length!==4)">
+                                    <span class="p-ico"></span>请输入完整验证码
+                                </span>
+                                <span class="tips" ng-if="model.code !== undefined && newPhone.picValidateCode.$error.ajaxValidate">
+                                    <span class="p-ico"></span>请输入正确的验证码，看不清？点击验证码刷新
+                                </span>
+                            </li>
+                            <li class="clear">
+                                <span class="l-t fl"><i>*</i>验证码：</span>
+                                <input type="text" class="ipt ipt2 fl" placeholder="短信验证码" maxlength="6"
+                                       ng-required="true"
+                                       ng-minlength="6" ng-maxlength="6"
+                                       name = "mobileCode"
+                                       ng-model="model.mobileCode">
+                                <span class="fl">
+                                    <button  class="btn-code" ng-click="events.sendMobile($event,8)" ng-bind="model.phoneCodeText"
+                                             ng-class="{'btn-off': (sendAble || model.code.length!==4 || model.phoneNumber.length!=11 || newPhone.phoneNumber.$error.ajaxValidate || newPhone.picValidateCode.$error.ajaxValidate)}"
+                                             ng-disabled="sendAble || model.code.length!==4 || model.phoneNumber.length!=11 || newPhone.phoneNumber.$error.ajaxValidate || newPhone.picValidateCode.$error.ajaxValidate">
+                                    </button>
+                                </span>
+                                <span class="tips" ng-if="newPhone.mobileCode.$dirty&&newPhone.mobileCode.$invalid">
+                                    <span class="p-ico"></span>请输入6位短信验证码
+                                </span>
+                            </li>
+                            <li><span class="l-t"></span>
+                                <button class="ui-btn btn-o" ng-class="{'btn-off': (newPhone.$invalid||model.disable===false)}"
+                                        ng-disabled="newPhone.$invalid||model.disable===false" ng-click="events.comfirmUpdatePhone($event)">确认绑定新手机
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

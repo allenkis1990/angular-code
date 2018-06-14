@@ -1,0 +1,62 @@
+<div class="main-wrap-body" ng-click="model.trainTypeShow=false"
+     ng-if="$state.current.name === 'states.trainClassManage'">
+    <div class="column" has-permission="trainClassManage/add"><a href="#" class="btn-r btn"
+                                                                 ng-click="events.addTrainClass($event)">新建培训班</a></div>
+    <div class="dash-line-1"></div>
+    <div class="tab-tit mt10">
+        <a href="#" ng-class="{'current':model.trainPageParams.searchType==2}" ng-click="events.changeType($event,2)">已发布</a>
+        <a href="#" ng-class="{'current':model.trainPageParams.searchType==0}"
+           ng-click="events.changeType($event,0)">草稿</a>
+        <a href="#" ng-class="{'current':model.trainPageParams.searchType==3}" ng-click="events.changeType($event,3)">培训结束</a>
+    </div>
+    <div class="search-bar mt10">
+        <ul class="ul-form li-fl clear">
+            <li><input type="text" class="ipt ipt-small"
+                       hb-clear-input
+                       ng-model="model.trainPageParams.likeName"
+                       ng-keyup="events.search($event)"
+                       placeholder="培训班名称"/></li>
+            <!--<li ng-if="model.trainPageParams.searchType==3">-->
+            <!--<select class="ipt ipt-medium" ng-model="model.trainPageParams.state">-->
+            <!--<option value="-1">请选择培训班状态</option>-->
+            <!--<option value="2">已发布</option>-->
+            <!--<option value="0">草稿</option>-->
+            <!--</select>-->
+            <!--</li>-->
+            <li>
+                <input type="text" name="type" class="ipt ipt-medium"
+                       ng-click="model.trainTypeShow=!model.trainTypeShow;events.openTrainTypeTree($event)"
+                       placeholder="请选择课程培训班分类"
+                       ng-model="model.typeName">
+                <div class="hide-block hb-2 mh-1" ng-show="model.trainTypeShow " ng-click="events.openTree($event)">
+                    <div kendo-tree-view="node.tree"
+                         k-options="ui.tree.options"
+                         k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getTypeInfo(dataItem,$event)">
+                      <label style="width: 100px;"> <span ng-bind="dataItem.name"></span></label>
+                    </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                       ng-model="model.trainPageParams.createBeginDate" hb-readonly hb-clear-input type="text"
+                       class="ipt ipt-medium"
+                       placeholder="培训班创建时间"/> -
+                <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                       ng-model="model.trainPageParams.createEndDate" hb-readonly hb-clear-input type="text"
+                       class="ipt ipt-s"
+                       placeholder="培训班创建时间"/>
+
+            </li>
+            <li><a href="#" class="btn btn-b" ng-click="events.searchTrainClass($event)">查询</a></li>
+        </ul>
+    </div>
+    <div class="column">
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.trainGrid" k-options="ui.trainGrid.options">
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view></div>

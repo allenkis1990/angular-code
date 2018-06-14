@@ -1,0 +1,147 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.resAuthorizedUnitInfo" class="ico return"></a>
+        <a href="javascript: void(0);" ui-sref="states.resAuthorizedUnitInfo" class="aw">机构资源授权情况</a> >
+        <span>方案授权日志</span>
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="rel udf-16">
+        <div class="column">
+            <div class="col-tit clear">基础信息</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <ul class="ul-d-form mt20">
+            <li><span class="left-txt">方案名称：</span>XXXXXXXXX任务</li>
+            <li><span class="left-txt">授权时间：</span>2018-12-12   17:23</li>
+            <li><span class="left-txt">授权操作人：</span>隔壁老王</li>
+        </ul>
+        <div class="column mt50">
+            <div class="col-tit">资源清单</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <div class="tab-tit mt20">
+            <a href="#" class="current">课程（X门）</a>
+            <a href="#">课程包（X个）</a>
+            <a href="#">题库（X个）</a>
+            <a href="#">考试卷（X份）</a>
+        </div>
+        <div class="pos-nav-box">
+            <div class="pos-nav">
+                <a href="javascript: void(0);" ui-sref="states.resAuthorizedUnitInfo" class="ico return"></a>
+                <a href="javascript: void(0);" ui-sref="states.resAuthorizedUnitInfo" class="aw">机构资源授权情况</a> >
+                <span>查看资源明细</span>
+            </div>
+        </div>
+        <div class="main-wrap-body">
+            <div class="rel udf-16" style="width: 1200px">
+                <div class="column mt20 fs16">
+                    <span class="b">现有在用资源数统计：</span>
+                    课程   <span class="t-b b" ng-bind="model.resourceCount.course"></span> 门；
+                    课程包 <span class="t-b b" ng-bind="model.resourceCount.coursePool"></span> 个；
+                    题库   <span class="t-b b" ng-bind="model.resourceCount.questionLibrary"></span> 个；
+                    考试卷 <span class="t-b b" ng-bind="model.resourceCount.examPaper"></span> 份
+                    <span class="t-r ml10">（同一个资源去重统计）</span>
+                </div>
+                <div class="column mt20">
+                    <div class="col-tit">资源清单</div>
+                    <div class="dash-line-1"></div>
+                </div>
+                <div class="mt20">
+                    请选择查看的方案：
+                    <select class="slt slt-medium">
+                        <option>请选择课程分类</option>
+                    </select>
+                </div>
+                <div class="tab-tit mt20">
+                    <a href="#" class="current">课程（<span ng-bind="model.resourceCount.course">></span>门）</a>
+                    <a href="#">课程包（<span ng-bind="model.resourceCount.coursePool">></span>个）</a>
+                    <a href="#">题库（<span ng-bind="model.resourceCount.questionLibrary">></span>个）</a>
+                    <a href="#">考试卷（<span ng-bind="model.resourceCount.examPaper">></span>份）</a>
+                </div>
+                <!--课程-->
+                <div class="column">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <li>
+                                <select class="slt slt-medium">
+                                    <option>请选择课程分类</option>
+                                </select>
+                            </li>
+                            <li>
+                                <input type="text" class="ipt ipt-medium" placeholder="请输入课程名称" ng-model="model.courseArg.name">
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadCourseGrid()">查询</a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="column table-box mt20">
+
+                        <div kendo-grid="node.courseGridInstance"
+                             k-options="grid.courseGrid">
+                        </div>
+                    </div>
+                </div>
+                <!--课程包-->
+                <div class="column">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <li>
+                                <input type="text" class="ipt ipt-medium" placeholder="请输入课程包名称" ng-model="model.coursePoolArg.name">
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadCoursePoolGrid()">查询</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column table-box mt20">
+
+                        <div kendo-grid="node.coursePoolGridInstance"
+                             k-options="grid.coursePoolGrid">
+                        </div>
+                    </div>
+                </div>
+                <!--题库-->
+                <div class="column">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <li>
+                                <select class="slt slt-medium">
+                                    <option>请选择题库</option>
+                                </select>
+                            </li>
+                            <li>
+                                <select class="slt slt-small"
+                                        ng-options="item.value as item.type for item in model.questionType"
+                                        ng-model="model.questionArg.questionType">
+                                </select>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadQuestionGrid()">查询</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column table-box mt20">
+
+                        <div kendo-grid="node.questionGridInstance"
+                             k-options="grid.questionGrid">
+                        </div>
+                    </div>
+                </div>
+                <!--试卷-->
+                <div class="column">
+                    <div class="column table-box mt20">
+
+                        <div kendo-grid="node.paperExamGridInstance"
+                             k-options="grid.paperExamGrid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

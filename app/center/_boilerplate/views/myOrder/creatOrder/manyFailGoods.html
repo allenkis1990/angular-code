@@ -1,0 +1,44 @@
+<div class="dialog-bd">
+    <p>您选购的以下班级无法报名，说明如下：</p>
+    <div class="gray-box mt10">
+        <div class="clear">
+            <p class="b fl">无法报名的班级</p>
+            <p class="b fr mr">无法报名原因</p>
+        </div>
+        <ul class="ul-class" style="height:180px;overflow:auto">
+            <!--已失效-->
+            <li class="clear" ng-repeat="item in unavailableSkus">
+                <div class="fl class-name" ng-bind="item.saleTitle"></div>
+                <div class="fr" style="margin-right:15px;">已失效</div>
+            </li>
+            <!--已报班-->
+            <li class="clear" ng-repeat="item in existUserPoolGoods">
+                <div class="fl class-name" ng-bind="item.name"></div>
+                <div class="fr" style="margin-right:15px;">已报班</div>
+            </li>
+            <!--培训时间已结束-->
+            <li class="clear" ng-repeat="item in trainingFinishGoods">
+                <div class="fl class-name" ng-bind="item.name"></div>
+                <div class="fr" style="margin-right:15px;">培训时间已结束</div>
+            </li>
+            <!--已存在订单中-->
+            <li class="clear" ng-repeat="item in unfinishedOrderSkus">
+                <div class="fl class-name" ng-bind="item.saleTitle"></div>
+                <div class="fr" style="margin-right:15px;">已存在订单中</div>
+            </li>
+            <!--已存在子订单中-->
+            <li class="clear" ng-repeat="item in unfinishedSubOrderSkus">
+                <div class="fl class-name" ng-bind="item.saleTitle"></div>
+                <div class="fr" style="margin-right:15px;">已存在订单中</div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="dialog-bottom tc rel">
+    <a href="javascript:void(0)"
+       ng-click="manyFailGoods.remove()"
+       class="btn-normal btn">确定</a>
+
+</div>

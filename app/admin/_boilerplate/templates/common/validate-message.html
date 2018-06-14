@@ -1,0 +1,25 @@
+<div style="display: inline-block">
+    <div style="display: inline-block" ng-if="ashe.$dirty">
+        <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg ml10"
+              style="color: red;"
+              ng-if="ashe.$error.required"
+              role="alert"><span
+                class="k-icon k-warning"></span>
+        不能为空
+    </span>
+        <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg ml10"
+              style="color: red;"
+              ng-if="ashe.$error.pattern"
+              role="alert"><span
+                class="k-icon k-warning"></span>
+        格式不正确
+    </span>
+        <span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg ml10"
+              style="color: red;"
+              ng-if="ashe.$error.minlength || ashe.$error.maxlength"
+              role="alert"><span
+                class="k-icon k-warning"></span>
+        长度不正确
+    </span>
+    </div>
+</div>

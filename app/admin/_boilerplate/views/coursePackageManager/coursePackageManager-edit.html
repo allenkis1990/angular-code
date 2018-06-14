@@ -1,0 +1,161 @@
+<div class="pos-nav-box">
+    <div class="pos-nav" ng-show="!model.showSuccess">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goCoursePackageManager($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goCoursePackageManager($event)">课程包管理</a>
+        &gt; 修改课程包
+    </div>
+</div>
+<div class="main-wrap-body ng-scope">
+    <div class="column mb20">
+        <div class="col-tit">修改课程包</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <form name="coursePackageValidate" novalidate>
+        <ul class="ul-d-form lh-1">
+            <li><span class="left-txt"><i>*</i>课程包名称：</span><input type="text" class="ipt ipt-large"
+                                                                   ng-model="model.coursePackage.poolName" name="name"
+                                                                   ajax-data="validateParams"
+                                                                   ng-maxlength="50"
+                                                                   required ng-required="true"
+                                                                   ajax-validate
+                                                                   ajax-url="/web/admin/coursePoolAction/validate">
+                <span class="li-prompt"
+                      ng-show="coursePackageValidate.name.$dirty&&coursePackageValidate.name.$error.required"><span
+                        class="ico ico-prompt"></span>课程包名称不能为空。</span>
+                <span class="li-prompt"
+                      ng-show="coursePackageValidate.name.$dirty && coursePackageValidate.name.$error.ajaxValidate&& !coursePackageValidate.name.$error.maxlength"><span
+                        class="ico ico-prompt"></span>课程包名称不能重复。</span>
+                <span ng-show="coursePackageValidate.name.$dirty && coursePackageValidate.name.$error.maxlength"
+                      class="li-prompt">
+            <span class="ico ico-prompt"></span>课程包名称长度不能超过50</span>
+                <a href="javascript:void(0)" class="btn btn-r ml10"
+                   ng-show="coursePackageValidate.$valid==true" has-permission="coursePackageManager/save"
+                   ng-class="{'btn-disable':!coursePackageValidate.$valid||model.saving}"
+                   ng-click="events.save($event)">修改名称</a>
+            </li>
+            <li><span class="left-txt"><i>*</i>展示名称：</span>
+                <input type="text" class="ipt ipt-large"
+                       ng-model="model.coursePackage.showName" name="markerDto"
+                       ng-maxlength="50"
+                       required ng-required="true"
+                >
+                <span class="li-prompt"
+                      ng-show="coursePackageValidate.markerDto.$dirty&&coursePackageValidate.markerDto.$error.required"><span
+                        class="ico ico-prompt"></span>展示名称不能为空。</span>
+                <span ng-show="coursePackageValidate.markerDto.$dirty && coursePackageValidate.markerDto.$error.maxlength"
+                      class="li-prompt">
+                <span class="ico ico-prompt"></span>课程包展示名称长度不能超过50</span>
+
+            </li>
+        </ul>
+
+        <div class="wp-full">
+            <div class="tab-tit">
+                <a href="javascript:void(0);" class="current" ng-click="events.toggleLessonDimension($event, 1)">
+                    课程分类
+                    <!--<span ng-click="events.reloadLessonType($event)" class="ico ico-refresh"></span>-->
+                </a>
+            </div>
+            <div class="column-block clear">
+                <div class="cb-left">
+                    <!-----  课程分类  ----->
+                    <div class="column">
+                        <div kendo-tree-view="node.tree"
+                             id="courseCategoryTree"
+                             k-options="ui.tree.options"
+                             k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.selectCategory($event,dataItem)">
+                      <label ng-bind="dataItem.name"></label>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cb-right-1">
+                    <div class="col-body bt0">
+                        <div class="search-bar" style="margin-top: 10px;">
+                            <ul class="ul-form li-fl clear">
+                                <li><input type="text" class="ipt ipt-large" style="width:300px;"
+                                           ng-model="model.courseParams.name" placeholder="课程名称"/></li>
+                                <li><input type="text" class="ipt ipt-large" style="width:150px;"
+                                           ng-model="model.courseParams.periodBegin" placeholder="请输入学时"/>
+                                <li>-</li>
+                                <li><input type="text" class="ipt ipt-large" style="width:150px;"
+                                           ng-model="model.courseParams.periodEnd" placeholder="请输入学时"/></li>
+                                <li><a href="javascript:void(0);" class="btn btn-b"
+                                       has-permission="coursePackageManager/updateFindCourse"
+                                       ng-click="events.queryCourse($event, 0)">查询</a></li>
+                                <li><a href="javascript:void(0);" class="btn btn-r"
+                                       has-permission="coursePackageManager/updateChooseAll"
+                                       ng-click="events.selectAll($event)">全选</a></li>
+                                <li><a href="javascript:void(0);" has-permission="coursePackageManager/updateFindCourse"
+                                       class="btn btn-r" ng-click="events.refresh($event)">刷新</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-body bt0">
+                            <div class="col-body table-box">
+                                <div kendo-grid="node.courseGrid" k-options="ui.courseGrid.options">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    已选<span ng-bind="model.selectedList.length"></span>门
+                    <a href="javascript:void(0)" class="btn btn-r ml10"
+                       ng-class="{'btn-disable':!coursePackageValidate.$valid||model.saving||model.selectedList.length==0}"
+                       has-permission="coursePackageManager/addCourseInPool"
+                       ng-click="events.addCourse($event)">添加进课程包</a>
+                    <a href="javascript:void(0);" has-permission="coursePackageManager/updateEmpty"
+                       ng-click="events.clearSelect($event)" class="btn btn-g ">清空已选</a>
+                </div>
+            </div>
+        </div>
+        <div class="dash-line-1"></div>
+        <div class="wp-full">
+            <div class="tab-tit clear">
+                <a href="javascript:void(0);" class="current">已选课程</a>
+                <span>已选<span ng-bind="model.coursePackage.courseCount"></span>门，共<span
+                        ng-bind="model.coursePackage.totalPeriod"></span>学时</span>
+            </div>
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" class="ipt ipt-large" ng-model="model.courseInPoolParams.name"
+                               placeholder="课程名称"/></li>
+                    <li>
+                        <input type="text" name="type" readonly="true" class="ipt ipt-medium"
+                               ng-click="events.openLessonTypeTree($event)"
+                               placeholder="请选择课程分类"
+                               ng-model="model.typeName">
+                        <div class="hide-block hb-2 mh-1" ng-show="lessonTypeShow" ng-click="events.openTree($event)">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getTypeInfo(dataItem,$event)">
+                      <label style="width: 100px;"> <span ng-bind="dataItem.name"></span></label>
+                    </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="javascript:void(0);" class="btn btn-b"
+                           ng-click="events.queryCourseInPool($event)">查询</a></li>
+                    <a href="javascript:void(0);" style="width:200px;" ng-click="events.empty($event)"
+                       class="btn btn-b">将本页显示课程移出课程包</a>
+                </ul>
+
+            </div>
+
+            <div class="col-body bt0">
+                <div class="col-body table-box">
+                    <div kendo-grid="node.courseInsideGrid" k-options="ui.courseInsideGrid.options">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-center">
+            <div class="btn-center">
+
+                <a href="javascript:void(0)" ng-click="events.goCoursePackageManager($event)"
+                   class="btn btn-g ml10">返回</a>
+            </div>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,39 @@
+<ul class="ul-d-form pt10 lh-1">
+    <li class="clear">
+        <span class="left-txt fl">商品上架时间：</span>
+        <div class="fl">
+            <div class="pt10">
+                <label><input class="rad"
+                              value="true"
+                              name="onSaleImmediately"
+                              ng-model="model.onSaleImmediately"
+                              type="radio">立即上架</label>
+                <label class="ml50"><input class="rad"
+                                           name="onSaleImmediately"
+                                           ng-model="model.onSaleImmediately"
+                                           value="false"
+                                           type="radio">指定时间</label>
+                <span ng-if="model.onSaleImmediately=='false'">
+                    <input type="text"
+                           k-options="kendoPlus.timeOptions"
+                           ng-model="model.onSaleTime"
+                           kendo-date-time-picker="kendoPlus.timeModel"
+                           hb-readonly
+                           class="ipt ipt-middle">
+                </span>
+
+
+                <!--假-->
+                <span ng-if="model.onSaleImmediately=='true'">
+                    <input type="text"
+                           style="background:#ccc"
+                           k-options="kendoPlus.timeOptions"
+                           kendo-date-time-picker="kendoPlus.timeModel"
+                           readonly
+                           class="ipt ipt-middle">
+                </span>
+                <!--假-->
+            </div>
+        </div>
+    </li>
+</ul>

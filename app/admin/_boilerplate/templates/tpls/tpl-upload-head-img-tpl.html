@@ -1,0 +1,68 @@
+<div kendo-window="node.uploadHeadWindow" k-options="windowConfig">
+    <div class="dialog w-textarea">
+        <div class="dialog-body">
+            <div class="dialog-tit">头像设置<a href="javascript: void(0);" ng-click="node.uploadHeadWindow.close()"
+                                           class="ico ico-close"></a></div>
+            <div class="dialog-cont clear">
+                <div class="original-img fl">
+
+                    <div class="img-upload">
+                        <div class="upload fl">
+                            <div id="upload_btn">选择图片</div>
+                        </div>
+                        <span class="fl">只支持JPG、PNG<span style="color:red">(图片大小不能超过500KB)</span></span>
+                    </div>
+
+                    <div class="or-img-box">
+                        <img class="horizontal" src="@systemUrl@/images/image_container.png" style="margin-top: 135px;"
+                             id="image_preview_container" alt=""/>
+                        <!--<img class="horizontal hide" src="@systemUrl@/images/img-complete.png"/>-->
+                        <div class="btn-op clear" ng-if="cropperInstalled">
+                            <button type="button" ng-click="baseSize()">
+                                <span class="ico original-size" title="初始化"></span>
+                            </button>
+                            <button type="button" ng-click="bigger()">
+                                <span class="ico bigger" title="放大"></span>
+                            </button>
+                            <button type="button" ng-click="smaller()">
+                                <span class="ico smaller" title="缩小"></span>
+                            </button>
+                            <button type="button" ng-click="leftScale()">
+                                <span class="ico turn-left" title="左转"></span>
+                            </button>
+                            <button type="button" ng-click="rightScale()">
+                                <span class="ico turn-right" title="右转"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-img fr">
+                    <p class="p-img-tit">预览</p>
+
+                    <div class="p-img-1">
+                        <div class="img-preview"></div>
+                        <p>120px × 120px</p>
+                    </div>
+                    <div class="p-img-2">
+                        <div class="img-user">
+                            <div class="img-preview"></div>
+                            <span class="img-mask"><img src="@systemUrl@/images/mask-user-img.png"></span>
+                        </div>
+                        <p>80px × 80px</p>
+                    </div>
+                    <div class="p-img-3">
+                        <div class="img-user">
+                            <div class="img-preview"></div>
+                            <span class="img-mask"><img src="@systemUrl@/images/mask-user-img.png"></span>
+                        </div>
+                        <p>60px × 60px</p>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-center">
+                <input type="button" class="btn btn-r" ng-click="getResult()" value="保存"/>
+                <input type="button" class="btn btn-g ml10" ng-click="node.uploadHeadWindow.close()" value="取消"/>
+            </div>
+        </div>
+    </div>
+</div>

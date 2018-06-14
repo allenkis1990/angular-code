@@ -1,0 +1,15 @@
+<p class="mb10" ng-repeat="item in model.orderRemenber" ng-if="model.orderRemenber.length !== 0">
+    【<span ng-bind="item.operatorName"></span>】在
+    【<span ng-bind="item.operateTime"></span>】
+    <span ng-bind="item.operationType"></span>了【培训发票】。
+    <span ng-hide="model.electron === true && realSupportIssuingElectronInvoice === true">发票号【<span
+            ng-bind="item.billNo"></span>】；</span>
+    <span ng-show="model.electron === true && realSupportIssuingElectronInvoice === false">发票代码【<span
+            ng-bind="item.billCode"></span>】；</span>
+    <span ng-show="model.electron === true && realSupportIssuingElectronInvoice === false">验证码【<span
+            ng-bind="item.billVeriCode"></span>】</span>
+    <span ng-show="item.operationType =='作废'">作废说明【<span ng-bind="item.remark"></span>】</span>
+</p>
+<p class="mb10" ng-if="model.orderRemenber.length === 0">
+    该发票暂时还没有操作记录！
+</p>

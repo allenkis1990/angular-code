@@ -1,0 +1,33 @@
+<div class="main-wrap-body">
+    <div class="search-bar">系统当前已添加<span style="font-weight: bold; color: red; font-size: 16px; margin: 0 2px;">b{{paymentAccountList.length}}</span>个收款账户
+    </div>
+
+    <div class="column mt10">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="30">No.</th>
+                <th width="140">收款账号别名</th>
+                <th width="140">支付方式</th>
+                <th>账户名称/开户户名</th>
+                <th width="220">开户银行</th>
+                <th width="160">开户行号</th>
+                <th width="160">柜台号</th>
+                <th width="220">银行账号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="paymentAccount in paymentAccountList">
+                <td>b{{$index + 1}}</td>
+                <td>b{{paymentAccount.accountAlias}}</td>
+                <td>b{{paymentAccount.firstType===1?'网银缴费':'现场缴费'}}</td>
+                <td>b{{paymentAccount.merchantName}}</td>
+                <td>b{{paymentAccount.depositBank}}</td>
+                <td>b{{paymentAccount.bankNumber}}</td>
+                <td>b{{paymentAccount.counterNumber}}</td>
+                <td>b{{paymentAccount.accountNo}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

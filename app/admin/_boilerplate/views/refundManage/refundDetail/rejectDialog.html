@@ -1,0 +1,17 @@
+<ul class="ul-d-form pt10 lh-1">
+    <li class="clear">
+        <span class=" fl">拒绝退款：</span>
+        <div class="w-4 fl">
+
+            <textarea class="textarea wp-m-full  fl"
+                      placeholder="请输入拒绝退款理由"
+                      ng-model="model.rejectRefundDesc">
+            </textarea>
+        </div>
+    </li>
+</ul>
+
+<div class="btn-center">
+    <a href="javascript:void(0)" class="btn btn-r" ng-click="events.reject();dialog.close($index)">确定</a>
+    <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="dialog.close($index);">取消</a>
+</div>

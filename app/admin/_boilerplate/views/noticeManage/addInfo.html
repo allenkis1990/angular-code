@@ -1,0 +1,162 @@
+<div class="dialog" style="width:900px;" ng-click="events.addPageCloseTree($event)">
+    <div class="dialog-body">
+        <form name="noticeInfo" novalidate>
+            <div class="dialog-tit">
+                发布公告
+                <a href="javascript:void(0);"
+                   class="ico ico-close"
+                   ng-click="events.closeAdd($event);noticeInfo.$setPristine()"></a>
+            </div>
+            <div class="dialog-cont">
+                <div class="rel udf-2 ">
+                    <ul class="ul-d-form lh-1">
+                        <li><span class="left-txt">公告标题：</span><input type="text" class="ipt ipt-large"
+                                                                      name="title"
+                                                                      required
+                                                                      ng-model="model.noticeInfo.title"
+                                                                      placeholder="请输入公告标题"
+                                                                      ng-maxlength="50"
+                        />
+                            <span ng-show="noticeInfo.title.$dirty &&
+                            noticeInfo.title.$error.required"
+                                  class="li-prompt">
+                                <span class="ico ico-prompt"></span>
+                                请输入公告标题！
+                            </span>
+                            <span ng-show="noticeInfo.title.$dirty &&
+                            !noticeInfo.title.$error.required &&
+                            noticeInfo.title.$error.maxlength"
+                                  class="li-prompt">
+                                <span class="ico ico-prompt"></span>
+                                公告标题长度不能超过50！
+                            </span>
+                        </li>
+                        <li class="clear">
+                            <span class="left-txt fl">公告对象：</span>
+                            <div class="fl"><input type="text" class="ipt ipt-large"
+                                                   ng-model="model.noticeInfo.publishObjectName"
+                                                   ng-click="events.addPageOpenTree($event)"
+                                                   name="publishObjectName"
+                                                   required
+                                                   hb-readonly
+                                                   placeholder="请选择发布对象"
+                            >
+                                <span ng-show="noticeInfo.publishObjectName.$dirty &&
+                            noticeInfo.publishObjectName.$error.required"
+                                      class="li-prompt">
+                                <span class="ico ico-prompt"></span>
+                                请选择发布对象！
+                            </span>
+                                <input type="checkbox" ng-click="events.selectChildren($event)"
+                                       ng-checked="pageVar.selectChildren" ng-model="pageVar.selectChildren">
+                                级联操作
+                                <div class="column-block w-tree fl"
+                                     ng-click="events.addPageOpenTree($event)"
+                                     ng-show="pageVar.addPageShowTree"
+                                     style="position: absolute;
+                                        z-index: 10;
+                                        left: 121px;
+                                        width:243px;
+                                        max-height: 250px;
+                                        overflow: auto;"
+                                >
+                                    <div kendo-tree-view="node.tree"
+                                         id="unitTree"
+                                         k-options="ui.addPageTree.options">
+                                    <span k-template> <!--style="height: 26px;margin-top: 5px;"-->
+                                        <input type="checkbox" ng-change="events.addPageSelectPublishObject(dataItem)"
+                                               ng-checked="dataItem.showChecked" ng-model="dataItem.showChecked"
+                                        >
+                                            <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                                    </span>
+                                    </div>
+                                </div>
+
+                                <div class="column-block w-textarea2 mt10 mb10"
+                                     ng-show="pageVar.hasSelectedPublishObject">
+                                    <div class="col-body bt0">
+                                        <ul class="ul-course uc-3 li-fl clear">
+                                            <li ng-repeat="publishObject in pageVar.addPageSelectedPublishObjectArray">
+                                                <span ng-bind="publishObject.name"></span>
+                                                <a href="javascript:void(0);" class="ico"
+                                                   ng-click="events.deleteOnePublishObject($event,publishObject)">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li><span class="left-txt"></span>
+                            <lable>
+                                <input type="radio" ng-model="model.noticeInfo.studentType" value="1">全体学员
+                            </lable>
+
+                            <!--<lable>
+                                <input type="radio" ng-model="model.noticeInfo.studentType" value="2">
+                                公告下级分管管理员
+                            </lable>-->
+                        </li>
+                        <li class="clear"><span class="left-txt fl">公告内容：</span><textarea name="content" required
+                                                                                          kendo-editor
+                                                                                          ng-model="model.noticeInfo.content"
+                                                                                          k-options="ui.editor"
+                                                                                          style="width: 80%;">
+                            </textarea>
+                            <span ng-show="noticeInfo.content.$dirty &&
+                        noticeInfo.content.$error.required"
+                                  style="width:155px;
+                             top:2px;
+                             padding: 3px 5px;
+                             line-height: 1.5;
+                             background-color: #fff;
+                             color: #f66985;
+                             border-radius: 2px;
+                             z-index:999;
+                             margin-left:115px;">
+                            请输入公告内容！
+                        </span>
+                        </li>
+                        <li>
+                            <span class="left-txt">发布方式：</span>
+                            <lable>
+                                <input type="radio" ng-model="model.noticeInfo.publishWay" value="1">立即发布
+                            </lable>
+
+                            <lable>
+                                <input type="radio" ng-model="model.noticeInfo.publishWay" value="2">
+                                定时发布
+                            </lable>
+                        </li>
+                        <li ng-if="model.noticeInfo.publishWay=='2'">
+                            <span class="left-txt">发布时间：</span><input placeholder="请选择发布时间"
+                                                                      required
+                                                                      kendo-datetimepicker="node.publishTime"
+                                                                      hb-readonly
+                                                                      k-options="ui.datePicker.publish.options"
+                                                                      name="publishTime"
+                                                                      value=''
+                                                                      ng-model="model.noticeInfo.publishTime"
+                        >
+                            <span ng-show="noticeInfo.publishTime.$dirty &&
+                            noticeInfo.publishTime.$error.required"
+                                  class="li-prompt">
+                                <span class="ico ico-prompt"></span>
+                                请选择发布时间！
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <div class="btn-center">
+            <input type="button" ng-click="events.saveAdd($event);noticeInfo.$setPristine()"
+                   ng-disabled="noticeInfo.$invalid || showDisabled"
+                   ng-class="{'btn-g': !noticeInfo.$valid|| showDisabled, 'btn-r': noticeInfo.$valid && !showDisabled}"
+                   class="btn" value="保存并发布">
+            <input type="button" ng-click="events.closeAdd($event);noticeInfo.$setPristine()"
+                   class="btn btn-g ml10"
+                   value="取消">
+        </div>
+    </div>
+</div>

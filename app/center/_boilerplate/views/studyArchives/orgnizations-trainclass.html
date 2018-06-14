@@ -1,0 +1,12 @@
+<div class="m-screen">
+    <div class="screen-style screen-style-2 clear">
+        <span class="style-name"><!--<span class="p-ico step-num">1</span>-->请选择培训机构</span>
+    </div>
+    <div class="screen-style screen-style-3" style="padding-left:0px;">
+        <a href="javascript:void(0)"
+           ng-click="events.choseItem(item)"
+           ng-repeat="item in orgnizationsList"
+           ng-class="{'current':unitId===item.unitId}"
+           ng-bind="item.unitName"></a>
+    </div>
+</div>

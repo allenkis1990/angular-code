@@ -1,0 +1,101 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="" ui-sref="^" class="ico return"></a>
+        <a class="aw" ui-sref="^" href="">防假学规则管理</a> &gt; 防假学规则详情
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="rel udf-2 pt20">
+        <ul class="ul-d-form lh-1">
+            <li>
+                <span class="left-txt"><i>*</i>防假学范围：</span>
+                <span ng-bind="constant.arrange[model.defenceFake.arrange]"></span>
+                <div class="qus-ico">
+                    <span class="ico"></span>
+                    <span class="qus-txt qus-txt-1">
+                        防假学范围：<br>
+                        1. 适用全系统：适用范围剔除已配置的培训班防假学规则的班级，系统下所有班级都适用<br>
+                        2. 适用培训班：适用于具体配置的培训班，若系统也有配置规则，则以培训班的配置为准
+                    </span>
+                </div>
+            </li>
+            <li class="clear" ng-if="model.defenceFake.arrange==1">
+                <span class="left-txt fl"><i>*</i>已添加培训班：</span>
+                <div class="w-textarea1 ml5 fl">
+                    <div kendo-grid k-options="mainGridOptions"></div>
+                </div>
+            </li>
+            <li>
+                <span class="left-txt"><i>*</i>防假学模式：</span>
+                <span ng-bind="constant.mode[model.defenceFake.mode]"></span>
+                <div class="qus-ico">
+                    <span class="ico"></span>
+                    <span class="qus-txt qus-txt-1">
+                        防假学模式：<br>
+                        1. 课件知识点弹题：在学习过程中会根据课件已添加好的题目及弹窗时间进行弹题<br>
+                        2. 系统随机弹题：在学习过程中由系统随机出弹窗数学计算题，如50-3=？
+                    </span>
+                </div>
+            </li>
+            <li ng-if="model.defenceFake.mode==0">
+                <span class="left-txt txt-long-2"><i>*</i>无知识点启用随机弹题：</span>
+                <!--关闭时添加switch-off-->
+                <a href="" class="switch"
+                   ng-class="{'switch-off': !model.defenceFake.enableRandomWithoutQuestion}"></a>
+            </li>
+            <li ng-if="model.defenceFake.enableRandomWithoutQuestion || model.defenceFake.mode==1">
+                <span class="left-txt"><i>*</i>随机弹题规则：</span>
+                <span ng-bind="constant.popQuestionRule[model.defenceFake.randomTriggerForm]"></span>
+                <div class="qus-ico">
+                    <span class="ico"></span>
+                    <span class="qus-txt qus-txt-1">
+                        随机弹题规则：<br>
+                        1. 间隔时间弹题：课件播放至已设置好的间隔时间就会弹题<br>
+                        2. 课件进度间隔百分比：按课件进度设置每隔多少百分比就弹题，如进度间隔20%，在进度达20%就会弹题
+                    </span>
+                </div>
+            </li>
+            <li ng-if="model.defenceFake.enableRandomWithoutQuestion || model.defenceFake.mode==1">
+                <div ng-if="model.defenceFake.randomTriggerForm==2">
+                    <span class="left-txt"><i>*</i>课件间隔时间：</span>
+                    课件播放间隔 <span class="txt-r" ng-bind="model.defenceFake.randomTriggerValue"></span> 秒弹一次
+                </div>
+                <div ng-if="model.defenceFake.randomTriggerForm==1">
+                    <span class="left-txt"><i>*</i>进度百分比：</span>
+                    课件进度间隔 <span class="txt-r" ng-bind="model.defenceFake.randomTriggerValue"></span> % 弹一次
+                </div>
+            </li>
+            <li ng-if="model.defenceFake.mode==0">
+                <span class="left-txt"><i>*</i>弹窗形式：</span>
+                <span ng-bind="constant.popForm[model.defenceFake.popForm]"></span>
+                <div class="qus-ico">
+                    <span class="ico"></span>
+                    <span class="qus-txt qus-txt-1">
+                        弹窗形式：<br>
+                        1. 每次都弹：每次打开课件进行学习时，都会在设置好的弹窗时间内弹出题目<br>
+                        2. 首次弹题：只要该课件已弹过一次弹窗题目，下次进入不再弹窗
+                    </span>
+                </div>
+            </li>
+            <li>
+                <span class="left-txt"><i>*</i>答题形式：</span>
+
+                <span ng-if="model.defenceFake.verificationForm==1">
+                    可答次数 <span class="txt-r" ng-bind="model.defenceFake.verificationFormValue"></span>次
+                </span>
+                <span ng-if="model.defenceFake.verificationForm==0">
+                    答对为止
+                </span>
+
+                <div class="qus-ico">
+                    <span class="ico"></span>
+                    <span class="qus-txt qus-txt-1">
+                        答题方式：<br>
+                        1. 答对为止：弹窗答题时必须答对才能继续学习<br>
+                        2. 可答次数：设置弹窗题的作答次数，答题时最多可答几次
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

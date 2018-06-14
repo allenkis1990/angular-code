@@ -1,0 +1,27 @@
+<div class="p-wrap-full content-bd-3 clear">
+    <div class="wp-70" ng-if="examCode===200&&!pending">
+        <div class="content-tit" ng-bind="examResult.examRoundName"></div>
+        <div class="block-gray mt10 p10">
+            <div class="ml10">当前成绩：<span class="fs30 t-r" ng-bind="examResult.currentExamScore"></span></div>
+            <div class="bor-dt mt10">
+                <div class="mt10 ml10">
+                    本次答卷用时：<span ng-bind="examResult.currentExamTimeLength"></span>分钟<br>
+                    答卷限时：<span ng-bind="examResult.examTimeLength"></span>分钟<br>
+                    余考次数：<span ng-if="examResult"
+                               ng-bind="examResult.surplusExamCount>=0?examResult.surplusExamCount:'无限次'"></span><br>
+                    总分：<span ng-bind="examResult.totalExamScore"></span><br>
+                </div>
+            </div>
+        </div>
+        <!--<a href="#" class="btn-normal btn-m mt20">确定</a>-->
+    </div>
+    <div class="m-no-data tc" ng-if="examCode!==200&&!pending">
+        <img src="@systemUrl@/images/no-data.png" alt="空数据">
+        <p class="txt" ng-bind="examResult"></p>
+    </div>
+
+    <div class="m-no-data tc" ng-if="pending">
+        <img src="@systemUrl@/images/no-data.png" alt="数据加载中">
+        <p class="txt">数据生成中...请稍后</p>
+    </div>
+</div>

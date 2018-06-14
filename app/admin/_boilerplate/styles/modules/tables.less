@@ -1,0 +1,271 @@
+table {
+  width: 100%;
+  border: none;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background-color: #fff;
+  text-align: center;
+  table-layout: fixed;
+}
+
+table th {
+  height: 30px;
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-bottom: 2px solid #ddd;
+}
+
+table td {
+  border: 1px solid #ddd;
+  padding: 4px 10px;
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+table th, table td {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.table {
+  .op {
+    white-space: normal;
+    a {
+      padding: 3px;
+      color: #3ca2e2;
+
+      &:hover {
+        color: #54b1ec;
+      }
+    }
+    .dis {
+      cursor: default;
+      color: #999;
+      &:hover {
+        color: #999;
+      }
+    }
+  }
+  .td-line {
+    background-color: #fff;
+    border: 0;
+  }
+
+  .bg-g {
+    background-color: #f2f2f2;
+  }
+  .ico-video {
+    background-position: -220px -210px;
+    width: 17px;
+    height: 20px;
+    margin: 0 5px 0 3px;
+    position: relative;
+    top: 6px;
+  }
+  .ico-document {
+    background-position: -190px -210px;
+    width: 17px;
+    height: 20px;
+    margin: 0 5px 0 3px;
+    position: relative;
+    top: 6px;
+  }
+}
+
+.table-f {
+  table-layout: fixed;
+  td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.table-nf {
+  td, th {
+    text-overflow: clip;
+    white-space: normal;
+    overflow: visible;
+  }
+}
+
+.table-noline {
+  tr {
+    border: 1px solid #ddd;
+  }
+  th, td {
+    border: none;
+  }
+  th {
+    border-bottom: 2px solid #ddd;
+  }
+
+  .td-line {
+    background-color: #f2f2f2;
+    border: 0;
+  }
+  .txt-r {
+    font-weight: normal;
+  }
+
+  .blue-bor {
+    border-color: #8dcff8;
+    td {
+      border-color: #8dcff8;
+    }
+  }
+}
+
+.table {
+  .ico-close, .ico-open {
+    width: 11px;
+    height: 11px;
+    margin-right: 5px;
+    position: relative;
+    top: 1px;
+  }
+  .ico-close {
+    background-position: -110px -110px;
+  }
+
+  .ico-open {
+    top: 4px;
+    background-position: -70px -110px;
+  }
+  .ico-sub, .ico-sub-1 {
+    width: 10px;
+    height: 10px;
+    background-position: -140px -210px;
+    position: relative;
+    top: -3px;
+    margin: 0 5px 0 20px;
+  }
+  .ico-sub-1 {
+    margin-left: 40px;
+  }
+}
+
+.table-btn {
+  background-color: transparent;
+  border: 0;
+  font-size: 12px;
+  color: #3ca2e2;
+  outline: none;
+  cursor: pointer;
+  padding: 3px;
+
+  &:hover {
+    color: #54b1ec;
+  }
+  &:disabled {
+    color: #999;
+    cursor: default;
+
+    &:hover {
+      color: #999;
+    }
+  }
+}
+
+.table-1 {
+  td {
+    border: 0;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+
+    &:first-child {
+      border-left: 0;
+    }
+  }
+  tr {
+    &:first-child {
+      td {
+        border-top: 0
+      }
+    }
+  }
+}
+
+.table-2 {
+  background-color: #f8f8f8;
+  td, th {
+    height: 34px;
+    border: 1px dashed #ddd;
+  }
+
+}
+
+.table-3 {
+  td {
+    font-size: 14px;
+  }
+}
+
+.table-s {
+  td, th {
+    padding: 3px 4px;
+  }
+}
+
+.table-sp {
+  td, th {
+    padding: 3px 4px;
+    line-height: 1.5;
+  }
+}
+
+.t-w1 {
+  width: 60px;
+  overflow: hidden;
+  margin: 0 auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.t-w2 {
+  width: 250px;
+  overflow: hidden;
+  margin: 0 auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-hover {
+  tr {
+    cursor: pointer;
+    &:hover {
+      background-color: #ecf8ff;
+      th {
+        cursor: default;
+        background-color: #fff;
+      }
+    }
+  }
+  .current {
+    background: #3ca2e2;
+    color: #fff;
+
+    &:hover {
+      background: #3ca2e2;
+      color: #fff;
+    }
+  }
+}
+
+.table-4 {
+  border: 0;
+  td {
+    border: 0;
+  }
+  tr {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.table-noline {
+  border: 0;
+  td, tr {
+    border: 0;
+  }
+}

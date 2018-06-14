@@ -1,0 +1,315 @@
+<style>
+    .wzy-w-520 {
+        top: 0px;
+        left: 520px;
+    }
+
+    .wzy-w-625 {
+        top: 0px;
+        left: 625px;
+    }
+
+    .wzy-w-630 {
+        top: 2px;
+        left: 625px;
+    }
+</style>
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0);" class="ico return" ng-click="events.closeAdd($event)"></a>
+        <a class="aw" href="javascript:void(0);" ng-click="events.closeAdd($event)">商户管理</a>
+        &gt;新建商学院
+    </div>
+</div>
+<div class="main-wrap-body">
+    <form name="merchantInfo" novalidate>
+        <ul class="ul-d-form udf-4 lh-1">
+            <li><span class="left-txt"><i>*</i>企业名称：</span><input type="text" class="ipt ipt-large"
+                                                                  placeholder="请输入企业名称"
+                                                                  ng-model="model.createMerchantDto.companyName"
+                                                                  name="companyName"
+                                                                  required
+                                                                  ng-maxlength="25"
+                                                                  maxlength="26"
+            >
+                <span ng-show="merchantInfo.companyName.$dirty &&
+              merchantInfo.companyName.$error.required"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+              </span>
+              请输入企业名称！
+            </span>
+                <span ng-show="merchantInfo.companyName.$error.maxlength"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+
+              </span>
+              企业名称长度不能超过25！
+            </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>商学院名称：</span><input type="text" class="ipt ipt-large"
+                                                                   placeholder="请输入商学院名称"
+                                                                   ng-model="model.createMerchantDto.businessSchoolName"
+                                                                   name="businessScooleName"
+                                                                   required
+                                                                   ng-maxlength="125"
+                                                                   maxlength="126"
+            ><!--ajax-data="validateOrgNameParam"
+                ajax-validate
+                ajax-url="/web/admin/organization/validateOrgName.action"-->
+                <span ng-show="merchantInfo.businessScooleName.$dirty &&
+              merchantInfo.businessScooleName.$error.required"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+              </span>
+              请输入商学院名称！
+            </span>
+                <!--<span ng-show="merchantInfo.businessScooleName.$dirty &&
+                 !merchantInfo.businessScooleName.$error.required &&
+                merchantInfo.businessScooleName.$error.ajaxValidate"
+                      class="li-prompt lip-2">
+                  <span class="ico ico-prompt">
+                  </span>
+                  企业名称已被使用！
+                </span>-->
+                <span ng-show="merchantInfo.businessScooleName.$error.maxlength"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+
+              </span>
+              商学院名称长度不能超过125！
+            </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>所处行业：</span>
+                <select class="slt slt-large"
+                        name="industryId"
+                        required
+                        ng-model="model.createMerchantDto.industryId">
+                    <option value="" selected>请选择所处行业</option>
+                    <option value="1">银行行业</option>
+                    <option value="2">酒店行业</option>
+                    <option value="3">汽车行业</option>
+                    <option value="4">餐饮行业</option>
+                    <option value="5">房地产行业</option>
+                    <option value="6">保险行业</option>
+                    <option value="7">零售行业</option>
+                    <option value="8">其它行业</option>
+                </select>
+                <span ng-show="merchantInfo.industryId.$dirty &&merchantInfo.industryId.$error.required"
+                      class="li-prompt">
+              <span class="ico ico-prompt">
+
+              </span>
+              请选择所处行业！
+            </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>联系人：</span><input type="text" class="ipt ipt-large" placeholder="请输入联系人"
+                                                                 ng-model="model.createMerchantDto.contactPerson"
+                                                                 name="contactPerson"
+                                                                 required
+                                                                 ng-maxlength="50"
+                                                                 maxlength="51">
+                <span ng-show="merchantInfo.contactPerson.$dirty &&merchantInfo.contactPerson.$error.required"
+                      class="li-prompt"><span class="ico ico-prompt"></span>请输入联系人！</span>
+                <span ng-show="merchantInfo.contactPerson.$error.maxlength" class="li-prompt"><span
+                        class="ico ico-prompt"></span>联系人长度不能超过50！</span>
+            </li>
+            <li><span class="left-txt"><i>*</i>联系手机：</span><input type="text" class="ipt ipt-large"
+                                                                  placeholder="请输入联系手机"
+                                                                  ng-model="model.createMerchantDto.mobileNumber"
+                                                                  name="mobileNumber"
+                                                                  required
+                                                                  ng-pattern="regexps.phoneNumber"
+            >
+
+                <span ng-show="merchantInfo.mobileNumber.$dirty && merchantInfo.mobileNumber.$error.required"
+                      class="li-prompt"><span class="ico ico-prompt"></span>请输入联系手机！</span>
+                <span
+                        ng-show="merchantInfo.mobileNumber.$dirty && (!merchantInfo.mobileNumber.$error.required) && merchantInfo.mobileNumber.$error.pattern"
+                        class="li-prompt"><span class="ico ico-prompt"></span>手机号格式不正确！</span>
+                <!--<span ng-show="addEmployeeForm.phoneNumber.$dirty && (!addEmployeeForm.phoneNumber.$error.required) && (!addEmployeeForm.phoneNumber.$error.pattern) && addEmployeeForm.phoneNumber.$error.ajaxValidate" class="li-prompt"><span class="ico ico-prompt"></span>该手机号已被注册</span>-->
+            </li>
+            <li><span class="left-txt"><i>*</i>联系邮箱：</span><input type="text" class="ipt ipt-large"
+                                                                  placeholder="请输入联系邮箱"
+                                                                  ng-model="model.createMerchantDto.email"
+                                                                  name="email"
+                                                                  required
+                                                                  ng-pattern="regexps.email">
+                <span ng-show="merchantInfo.email.$dirty && merchantInfo.email.$error.required" class="li-prompt"><span
+                        class="ico ico-prompt"></span>请输入联系邮箱！</span>
+                <span
+                        ng-show="merchantInfo.email.$dirty && (!merchantInfo.email.$error.required) && merchantInfo.email.$error.pattern"
+                        class="li-prompt"><span class="ico ico-prompt"></span>邮箱格式不正确！</span>
+                <!--<span ng-show="addEmployeeForm.email.$dirty && (!addEmployeeForm.email.$error.required) && (!addEmployeeForm.email.$error.pattern) && addEmployeeForm.email.$error.ajaxValidate" class="li-prompt"><span class="ico ico-prompt"></span>该邮箱已被注册</span>-->
+            </li>
+            <li><span class="left-txt"><i>*</i>商学院域名：</span><input type="text" class="ipt ipt-small"
+                                                                   placeholder="请输入商学院域名"
+                                                                   ng-model="model.createMerchantDto.domain"
+                                                                   name="domain"
+                                                                   required
+                                                                   maxlength="101"
+                                                                   ng-maxlength="100"
+                                                                   ajax-validate
+                                                                   ajax-url="/web/admin/merchant/validateDomainExist">
+                <!--  validateDomainExist  -->
+                .hxlearning.com
+
+                <span ng-show="merchantInfo.domain.$dirty &&merchantInfo.domain.$error.required"
+                      class="li-prompt"><span class="ico ico-prompt"></span>请输入商学院域名！</span>
+                <span ng-show="merchantInfo.domain.$error.maxlength" class="li-prompt"><span
+                        class="ico ico-prompt"></span>商学院域名长度不能超过100！</span>
+                <span ng-show="merchantInfo.domain.$dirty &&
+             !merchantInfo.domain.$error.required &&
+            merchantInfo.domain.$error.ajaxValidate" class="li-prompt">
+                <span class="ico ico-prompt"></span>
+                域名已存在！
+              </span>
+            </li>
+            <li class="clear"><span class="left-txt fl">企业LOGO：</span>
+
+                <div class="company-logo fl">
+                    <div upload-image
+                         ng-model="model.uploadImage"
+                    ></div>
+                    <img ng-src="b{{model.image}}">
+                </div>
+            </li>
+            <li><span class="left-txt"><i>*</i>商学院性质：</span><label><input type="radio" name="type"
+                                                                          ng-model="model.createMerchantDto.type"
+                                                                          value="2"
+                                                                          ng-click="events.selectSolution($event,1)">体验</label><label
+                    class="ml20"><input type="radio" name="type" ng-model="model.createMerchantDto.type"
+                                        value="1" ng-click="events.selectSolution($event,2)">正式</label></li>
+            <li class="clear">
+                <span class="left-txt txt-long fl"> 请选择解决方案：</span>
+
+                <div class="fl">
+                    <div><input type="text" class="ipt ipt-large" ng-model="model.queryParam.solutionName"
+                                placeholder="请输入解决方案名称" ng-keyup="events.pressEnterKey($event)"><a
+                            href="javascript:void(0);"
+                            class="btn btn-r ml5"
+                            ng-click="events.queryList($event)"
+                    >查询</a>
+                    </div>
+                    <div class="mh-2 w-4 mt10">
+                        <div id="addPageGrid" kendo-grid="node.addPageGridInstance" k-options="ui.addPageGrid.options">
+                        </div>
+                    </div>
+                    <p class="mt10" ng-if="model.createMerchantDto.solution.length==0"><span class="b">已选解决方案:</span>b{{selectedSolution}}
+                    </p>
+
+                    <p class="mt10" ng-if="model.createMerchantDto.solution.length!=0"><span class="b">已选解决方案:</span>
+                        <span ng-repeat="solution in model.createMerchantDto.solution">
+                            b{{solution.name}},b{{solution.jobCount}}个岗位体系，b{{solution.lessonCount}}门课程，b{{solution.abilityCount}}个能力项
+                        </span>
+                    </p>
+                </div>
+            </li>
+            <li><span class="left-txt txt-long"><i>*</i>是否推送能力项：</span><label><input
+                    type="radio" name="includingAbility" ng-model="model.createMerchantDto.includingAbility"
+                    value="1">是</label><label class="ml20"><input type="radio"
+                                                                  name="includingAbility"
+                                                                  ng-model="model.createMerchantDto.includingAbility"
+                                                                  value="0">否</label>
+            </li>
+            <li><span class="left-txt"><i>*</i>平台服务期限：</span><input type="text"
+                                                                    class="ipt ipt-medium"
+                                                                    placeholder="开始日期"
+                                                                    hb-readonly
+
+                                                                    readonly
+                                                                    kendo-date-picker="node.plantServeTimeStart"
+                                                                    k-options="ui.datePicker.plantServeTimeStart.options"
+                                                                    ng-model="model.createMerchantDto.platformServeTimeBegin"
+                                                                    name="platformServeTimeBegin"
+                                                                    required><!--hb-clear-input-->
+                - <input
+                        type="text"
+                        class="ipt ipt-medium"
+                        placeholder="结束日期"
+                        hb-readonly
+                        hb-clear-input
+                        kendo-date-picker="node.plantServeTimeEnd"
+                        k-options="ui.datePicker.plantServeTimeEnd.options"
+                        ng-model="model.createMerchantDto.platformServeTimeEnd"
+                        name="platformServeTimeEnd"
+                        required>
+                <span
+                        ng-show="merchantInfo.platformServeTimeBegin.$dirty &&merchantInfo.platformServeTimeBegin.$error.required"
+                        class="li-prompt wzy-w-520"><span class="ico ico-prompt"></span>请选择平台服务开始日期！</span>
+                <span
+                        ng-show="merchantInfo.platformServeTimeEnd.$dirty &&merchantInfo.platformServeTimeEnd.$error.required"
+                        class="li-prompt wzy-w-520"><span class="ico ico-prompt"></span>请选择平台服务结束日期！</span>
+                <span
+                        ng-show="model.createMerchantDto.platformServeTimeBegin==model.createMerchantDto.platformServeTimeEnd&&model.createMerchantDto.platformServeTimeBegin!=''&&model.createMerchantDto.platformServeTimeEnd!=''"
+                        class="li-prompt wzy-w-520"><span class="ico ico-prompt"></span>结束日期不能小于开始日期！</span>
+            </li>
+            <li><span class="left-txt"><i>*</i>账号并发数：</span><input type="text" class="ipt ipt-small"
+                                                                   placeholder="请输入账号并发数"
+                                                                   ng-model="model.createMerchantDto.accountConcurrence"
+                                                                   name="accountConcurrence"
+                                                                   min="1"
+                                                                   required
+                                                                   ng-pattern="regexps.positiveInteger">
+                个<span
+                        class="ml10 b">账号并发数服务期限与平台服务期限一致
+                    <!--账号并发数服务期限：b{{model.createMerchantDto.platformServeTimeBegin}} 至 b{{model.createMerchantDto.platformServeTimeEnd}}--></span>
+                <span ng-show="merchantInfo.accountConcurrence.$dirty &&merchantInfo.accountConcurrence.$error.required"
+                      class="li-prompt wzy-w-625"><span class="ico ico-prompt"></span>请输入账号并发数！</span>
+                <span
+                        ng-show="merchantInfo.accountConcurrence.$dirty && (!merchantInfo.accountConcurrence.$error.required) && merchantInfo.accountConcurrence.$error.pattern"
+                        class="li-prompt wzy-w-625"><span class="ico ico-prompt"></span>只能输入正整数！</span>
+            </li>
+            <li ng-if="model.createMerchantDto.solution.length>0"><span class="left-txt txt-long">解决方案服务期限：</span>与平台服务期限一致<!--<input
+                type="text"
+                class="ipt ipt-medium"
+                placeholder="开始日期"
+                hb-readonly
+                hb-clear-input
+                kendo-date-picker="node.solutionServeTimeStart"
+                k-options="ui.datePicker.solutionServeTimeStart.options"
+                ng-model="model.createMerchantDto.solutionServeTimeBegin"
+                name="solutionServeTimeBegin"
+                required>
+                - <input
+                    type="text"
+                    class="ipt ipt-medium"
+                    placeholder="结束日期"
+                    hb-readonly
+                    hb-clear-input
+                    kendo-date-picker="node.solutionServeTimeEnd"
+                    k-options="ui.datePicker.solutionServeTimeEnd.options"
+                    ng-model="model.createMerchantDto.solutionServeTimeEnd"
+                    name="solutionServeTimeEnd"
+                    required>
+            <span
+                ng-show="merchantInfo.solutionServeTimeBegin.$dirty &&merchantInfo.solutionServeTimeBegin.$error.required"
+                class="li-prompt wzy-w-520"><span class="ico ico-prompt"></span>请选择解决方案服务开始日期！</span>
+                <span
+                    ng-show="merchantInfo.solutionServeTimeEnd.$dirty &&merchantInfo.solutionServeTimeEnd.$error.required"
+                    class="li-prompt wzy-w-520"><span class="ico ico-prompt"></span>请选择解决方案服务结束日期！</span>-->
+            </li>
+            <li class="clear"><span class="left-txt fl">备注：</span><textarea
+                    class="textarea w-4 fl" ng-model="model.createMerchantDto.remark" ng-maxlength="1500" name="remark"
+                    maxlength="1501"></textarea>
+                <span ng-show="merchantInfo.remark.$error.maxlength"
+                      class="li-prompt wzy-w-630">
+              <span class="ico ico-prompt">
+
+              </span>
+              备注长度不能超过1500！
+            </span></li>
+        </ul>
+    </form>
+    <div class="btn-center pt20">
+        <div class="btn-center">
+            <input type="button" ng-click="events.saveAdd($event);merchantInfo.$setPristine()"
+                   ng-disabled="merchantInfo.$invalid || showDisabled"
+                   ng-class="{'btn-g': !merchantInfo.$valid|| showDisabled, 'btn-r': merchantInfo.$valid && !showDisabled}"
+                   class="btn" value="保存">
+            <input type="button" ng-click="events.closeAdd($event)"
+                   class="btn btn-g ml10"
+                   value="取消">
+        </div>
+    </div>
+</div>

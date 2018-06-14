@@ -1,0 +1,31 @@
+<ul style="margin-left: 20px">
+    <ul ng-if="courseInfoModel.courseRealInfo.hasCoursePracticeAssess">
+        <li>课程测验合格分：<span ng-bind="courseInfoModel.courseRealInfo.coursePracticeRequireScore"></span>分</li>
+        <br>
+        <li>课程测验满分：<span ng-bind="courseInfoModel.courseRealInfo.coursePracticeTotalScore"></span>分</li>
+        <br>
+        <li><span style="color: red">*</span>设置合格分：<input type="text"
+                                                          ng-model="courseInfoModel.coursePracticeScore"
+                                                          class="ipt ipt-c-xm" style="width: 100px"
+                                                          placeholder="请设置考核分数">分
+        </li>
+        <br>
+    </ul>
+    <ul style="margin-top: 20px" ng-if="courseInfoModel.courseRealInfo.hasPopQuestionAssess">
+        <li>课程弹窗题合格成绩：<span ng-bind="courseInfoModel.courseRealInfo.popQuestionRequireScore"></span>分</li>
+        <br>
+        <li>课程弹窗题满分：<span ng-bind="courseInfoModel.courseRealInfo.popQuestionTotalScore"></span>分</li>
+        <br>
+        <li><span style="color: red">*</span>设置合格分：<input type="text"
+                                                          ng-model="courseInfoModel.popQuestionScore"
+                                                          class="ipt ipt-c-xm" style="width: 100px"
+                                                          placeholder="请设置考核分数">分
+        </li>
+        <br>
+    </ul>
+    <li><span style="color: red">注：</span>请设置合格成绩介于合格分和满分之间</li>
+    <li style="margin-top: 20px;margin-left: 30px">
+        <a href="javascript:void (0);" ng-click="events.sureOneKeyOkForCourse($index)" class="btn btn-b">确定</a>
+        <a href="javascript:void (0);" ng-click="events.cancelOneKeyOk($index)" class="btn btn-g ml5">取消</a>
+    </li>
+</ul>

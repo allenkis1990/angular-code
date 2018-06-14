@@ -1,0 +1,53 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ui-sref="states.classSchedule"></a>
+        <a class="aw" href="javascript:void(0)" ui-sref="states.classSchedule">培训课表管理</a>&gt;新建培训课表
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mt20">
+        <span><i class="t-r">*</i>培训课表：</span>
+        <input type="text" class="ipt ipt-large" maxlength="50"
+               ng-model="model.planTemplate.name"
+               placeholder="请输入培训课表名称">
+    </div>
+    <div class="column mt20">
+        <span><i class="t-r">*</i>授课教师：</span>
+        <label>
+            <input type="radio" name="type"
+                   ng-model="model.selectTeacherType"
+                   ng-value="0"
+                   ng-checked="model.selectTeacherType==0"
+                   ng-click="events.selectTeacherType($event,0)">统一老师授课
+        </label>
+        <label class="ml20">
+            <input type="radio" name="type"
+                   ng-model="model.selectTeacherType"
+                   ng-value="1"
+                   ng-checked="model.selectTeacherType==1"
+                   ng-click="events.selectTeacherType($event,1)">每个课程独立老师授课
+        </label>
+        <div class="column mt20" ng-if="model.selectTeacherType==0">
+            <a class="btn btn-r" ng-click="events.addTeacherWindow($event)">选择教师</a>
+            <div class="mt10">
+                教师名称：<span ng-bind="model.selectTeacherInfo.name"></span>
+            </div>
+            <div class="mt10">
+                教师简介：<span ng-bind-html="model.selectTeacherInfo.description"></span>
+            </div>
+        </div>
+    </div>
+    <div class="column mt30">
+        <div class="col-tit">配置课程</div>
+        <div class="dash-line-2"></div>
+        <a class="btn btn-r" ng-click="events.addItemTemplateWindow($event)"
+           has-permission="/classSchedule/UrlAddPlanItemTemplate">新增课程</a>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.itemTemplateGrid" k-options="itemTemplateGrid.options">
+        </div>
+    </div>
+    <div class="btn-center mt20">
+        <a class="btn btn-r" ng-click="events.beforeSubmit($event)" has-permission="/classSchedule/UrlAddPlanTemplate">保存修改</a>
+    </div>
+</div>

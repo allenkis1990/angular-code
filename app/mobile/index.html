@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="apphtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Title</title>
+    <link href="styles/loginstyle.css" rel="stylesheet">
+</head>
+<body class="appbody">
+<!--
+<div class="app_bg-g">
+    &lt;!&ndash;导航栏&ndash;&gt;
+    <header class="nav-bar"  >
+        <image class="nav-left nav-ico" src="images/nav_icon_return.png" />
+        <div class="nav-center">
+            <text class="nav-tit" lines="1">帮助中心</text>
+        </div>
+    </header>
+    &lt;!&ndash;/导航栏&ndash;&gt;
+    <div class="app_mt44 app_pt10">
+        <div class="helpbox">
+            <div class="helpblcok app_bor-r">
+                <a href="#">
+                    <image class="help-ico" src="images/help_ico_1.png"/>
+                    <span>常见问题</span>
+                </a>
+            </div>
+            <div class="helpblcok app_bor-r">
+                <a href="#">
+                    <image class="help-ico" src="images/help_ico_2.png"/>
+                    <span>业务流程</span>
+                </a>
+            </div>
+            <div class="helpblcok">
+                <a href="#">
+                    <image class="help-ico" src="images/help_ico_3.png"/>
+                    <span>操作手册</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+
+<div>
+    <div ui-view="topView"></div>
+    <div ui-view="contentView"></div>
+</div>
+
+<script src="../bower_components/requirejs/require.js" data-main="js/main.config.js"></script>
+</body>
+</html>

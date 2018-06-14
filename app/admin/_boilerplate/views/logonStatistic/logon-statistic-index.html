@@ -1,0 +1,98 @@
+<div class="main-wrap-body">
+    <div class="tab-tit mt10">
+        <a href="#" ng-click="events.toggleDimension($event, 1)" ng-class="{current: model.dimension == 1}">机构维度统计</a>
+        <a href="#" ng-click="events.toggleDimension($event, 2)" ng-class="{current: model.dimension == 2}">统计具体学员</a>
+    </div>
+
+    <!---------  机构维度统计  ----------->
+    <div ng-show="model.dimension == 1" class="column">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input id="lesson_create_unit_input" placeholder="请选择展示的机构单位" readonly type="text"
+                           class="ipt ipt-medium"
+                           ng-model="model.lessonCreateUnitName"
+                           ng-click="events.showUnitPopup(1)"
+                           ng-change="events.unitValueChange(1)"
+                           hb-clear-input
+                    >
+                    <div style="min-width: 196px; max-height: 360px; overflow: auto;"
+                         kendo-popup="node.lessonCreateUnitPopup" k-options="ui.popup.lessonCreateUnit"
+                    >
+                        <div kendo-tree-view="node.lessonCreateUnitTree" k-options="ui.treeView.lessonCreateUnit"></div>
+                    </div>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" placeholder="统计起始时间"
+                           ng-model="model.statisticBeginTime"
+                           kendo-date-picker="node.statisticBeginTime"
+                           k-options="ui.datePicker.begin"
+                           hb-readonly hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                    /> -
+                    <input type="text" class="ipt ipt-medium" placeholder="统计结束时间"
+                           ng-model="model.statisticEndTime"
+                           kendo-date-picker="node.statisticEndTime"
+                           k-options="ui.datePicker.end"
+                           hb-readonly hb-clear-input
+                    />
+                </li>
+                <li>
+                    <a href="#" ng-click="events.queryUnitLogonTimes($event)" class="btn btn-b">查询</a>
+                    <!--<a href="#" class="btn btn-b">导出数据</a>-->
+                </li>
+            </ul>
+        </div>
+        <h2 class="tc mt10 mb10">b{{model.statisticBeginTime}} 至 b{{model.statisticEndTime}} 机构访问平台情况</h2>
+        <div id="unit_logon_chart" class="tc mt10 mb10" style="width: 1300px; height: 385px;"></div>
+    </div>
+
+    <!---------  统计具体学员  ----------->
+    <div ng-show="model.dimension == 2" class="column">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input type="text" class="ipt ipt-small" placeholder="请输入学员姓名"
+                           ng-model="model.employeeName"
+                           hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                    />
+                </li>
+                <li>
+                    <input id="employee_unit_input" placeholder="请选择机构单位" type="text" class="ipt ipt-medium"
+                           ng-model="model.employeeUnitName"
+                           ng-click="events.showUnitPopup(2)"
+                           ng-change="events.unitValueChange(2)"
+                           hb-clear-input
+                    >
+                    <div kendo-popup="node.employeeUnitPopup" k-options="ui.popup.employeeUnit"
+                         style="min-width: 196px; max-height: 360px; overflow: auto;">
+                        <div kendo-tree-view="node.employeeUnitTree" k-options="ui.treeView.employeeUnit"
+                             k-ng-delay="ui.treeView.employeeUnit"></div>
+                    </div>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" placeholder="登陆统计起始时间"
+                           ng-model="model.employeeBeginTime"
+                           kendo-date-picker="node.employeeBeginTime"
+                           k-options="ui.datePicker.employeeBegin"
+                           hb-readonly hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                    /> -
+                    <input type="text" class="ipt ipt-medium" placeholder="登陆统计结束时间"
+                           ng-model="model.employeeEndTime"
+                           kendo-date-picker="node.employeeEndTime"
+                           k-options="ui.datePicker.employeeEnd"
+                           hb-readonly hb-clear-input
+                    />
+                </li>
+                <li>
+                    <a href="#" ng-click="events.reloadEmployeeLogonTimesGrid($event)" class="btn btn-b">查询</a>
+                    <!--<a href="#" class="btn btn-r">导出数据</a>-->
+                </li>
+            </ul>
+        </div>
+        <div kendo-grid="node.employeeLogonTimesGrid" k-options="ui.employeeLogonTimesGrid"
+             k-ng-delay="ui.employeeLogonTimesGrid"></div>
+    </div>
+</div>

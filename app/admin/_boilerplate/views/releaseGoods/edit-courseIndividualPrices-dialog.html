@@ -1,0 +1,78 @@
+<div class="dialog-body">
+    <div class="dialog-tit"><span ng-if="model.lookPriceCourseMode===1">添加课程价格</span><span
+            ng-if="model.lookPriceCourseMode===2">查看课程价格</span><a href="javascript:void(0)"
+                                                                  class="ico ico-close"
+                                                                  ng-click="events.cacelCourseIndividualPriceTemp()"></a>
+    </div>
+    <div class="dialog-cont">
+
+        <ul class="ul-d-form pt20 pl20 lh-1">
+
+
+            <li><span class="left-txt"><i ng-if="model.lookPriceCourseMode===1">*</i> 定价销售名称：</span> <input type="text"
+                                                                                                            ng-if="model.lookPriceCourseMode===1"
+                                                                                                            ng-model="model.tempCourseIndividualPrice.saleTitle"
+                                                                                                            class="ipt ipt-large">
+                <span ng-bind="model.tempCourseIndividualPrice.saleTitle"
+                      ng-if="model.lookPriceCourseMode===2"></span>
+            </li>
+
+
+            <li><span class="left-txt"><i ng-if="model.lookPriceCourseMode===1">*</i> 课程价格：</span> <input type="text"
+                                                                                                          ng-if="model.lookPriceCourseMode===1"
+                                                                                                          ng-model="model.tempCourseIndividualPrice.price"
+                                                                                                          class="ipt">
+                <span ng-bind="model.tempCourseIndividualPrice.price"
+                      ng-if="model.lookPriceCourseMode===2"></span> 元
+            </li>
+            <li ng-if="model.lookPriceCourseMode===1"><span class="left-txt"><i>*</i>课程：</span>
+                <button ng-click="events.openCourseIndividualKendoDialog()"
+                        class="btn btn-r">请选择课程
+                </button>
+            </li>
+            <li>
+                <div class="column">
+                    <div class="col-tit">已选课程
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-nf table-2">
+                        <thead>
+                        <tr>
+                            <th class="tl">课程名称</th>
+                            <th width="120">所属课程包</th>
+                            <th width="80">学时</th>
+                            <th width="100">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in model.tempCourseIndividualPrice.courseList">
+                            <td class="tl" ng-bind="item.courseName"></td>
+                            <td ng-bind="item.coursePoolName"></td>
+                            <td><span class="b fs16" ng-bind="item.period"></span>学时</td>
+                            <td class="op">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.lookCourseDetail(item.courseId)">查看</a>
+                                <a href="javascript:void(0)"
+                                   ng-if="model.lookPriceCourseMode===1"
+                                   ng-click="events.spliceSignerPriceCourse($index,item)">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+
+        </ul>
+
+
+    </div>
+    <div class="btn-center" ng-if="model.lookPriceCourseMode===1">
+        <a href="javascript:void(0)"
+           ng-click="events.pushCourseIndividualPrice()"
+           class="btn btn-r">保存</a>
+        <a href="javascript:void(0)"
+           class="btn btn-g ml10"
+           ng-click="events.cacelCourseIndividualPriceTemp()">取消</a>
+    </div>
+</div>

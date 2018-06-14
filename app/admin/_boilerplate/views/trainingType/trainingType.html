@@ -1,0 +1,192 @@
+<style>
+    .k-grid-header th.k-header {
+        height: 25px;
+        vertical-align: middle;
+    }
+
+    .k-grid-header th.k-header, .k-filter-row th {
+        text-align: center;
+    }
+
+    .k-checkbox-label {
+        top: 0px;
+        left: 3px;
+    }
+
+    .k-grid-content td {
+        height: 20px;
+    }
+
+    .k-popup .k-item > .k-group {
+        background-color: rgba(0, 0, 0, 0);
+        position: relative;
+    }
+
+    .k-treeview .k-plus {
+        background-position: 0 -16px;
+    }
+
+    .k-treeview .k-minus {
+        background-position: 0 -32px;
+    }
+
+    .k-grid tbody button.k-button {
+        min-width: 40px;
+    }
+
+    .k-grid td {
+        white-space: nowrap;
+    }
+
+    .li-prompt {
+        width: 200px;
+        top: 0;
+        left: 375px;
+        padding: 7px 5px;
+    }
+</style>
+
+<div class="main-wrap-body-1 clear">
+    <div class="column-block w-tree fl" style="top:0">
+        <div class="col-tit">培训班类别列表<a href="javascript:void(0);" class="ico tit-new" title="添加"
+                                       has-permission="trainingType/add"
+                                       ng-click="events.createActivity();trainingTypeForm.$setPristine()"></a>
+        </div>
+        <div class="col-body">
+            <div kendo-tree-view="node.tree"
+                 id="trainingTypeTree"
+                 k-options="ui.tree.options"
+                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getCourseCategoryInfo($event,dataItem)">
+                      <!--b{{dataItem.unitId}}-->
+                      <label><!--b{{dataItem.type==='1'?'单位':'部门'}}&nbsp;&nbsp;-->b{{dataItem.name}}</label>
+                        <!--b{{dataItem.sort}}-->
+                        <!--<button class='k-button' ng-click='events.activate($event,dataItem)'>建</button>-->
+                        <span class="resource-category-operators">
+                            <span class="k-icon k-i-plus" title="添加" has-permission="trainingType/add"
+                                  ng-click='events.queryCreate($event,dataItem);trainingTypeForm.$setPristine();'></span>
+                            <span class="k-icon k-i-pencil" title="修改" has-permission="trainingType/edit"
+                                  ng-click='events.queryModify($event,dataItem);trainingTypeForm.$setPristine();'></span>
+                            <span class="k-icon k-i-close" title="删除" has-permission="trainingType/del"
+                                  ng-click='events.deleteResourceCategory($event,dataItem);trainingTypeForm.$setPristine()'></span>
+                        </span>
+                    </span>
+
+            </div>
+        </div>
+    </div>
+
+    <!--  保存培训班分类列表-->
+
+    <div class="right-pre fl" ng-show="categorySave">
+        <div class="column-block w-pre">
+            <div class="col-tit" ng-if="saveVisible">创建培训班类别</div>
+            <div class="col-tit" ng-if="modifyVisible">编辑培训班类别</div>
+
+            <div class="col-body">
+                <form novalidate="novalidate" name="trainingTypeForm">
+                    <ul class="ul-d-form udf-3 ml30">
+                        <li><span class="left-txt">所属节点类别：</span><input id="index_training_input"
+                                                                        ng-model="model.orgName" readonly="true"
+                                                                        ng-click="events.showCourseCategory($event)"
+                                                                        ng-keyup="events.keyUpIndexUnit($event)"
+                                                                        ng-change="events.refreshIndexUnit($event)"
+                                                                        placeholder="培训班类别列表" type="text"
+                                                                        class="ipt ipt-large"/>
+
+                            <div kendo-popup="node.courseResourcePopup" k-options="ui.popup.indexUnit"
+                                 style="min-width: 244px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.trees" k-options="ui.treeView.indexUnit" id="selectTree">
+                                </div>
+                            </div>
+
+                            <!--<div kendo-popup="node.courseResourcePopup" k-options="ui.popup.indexUnit" style="min-width: 196px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.indexCoursePerentTree" k-options="ui.treeView.indexUnit">
+                                </div>
+                            </div>-->
+                        </li>
+                        <li>
+                            <span class="left-txt txt-long"><i>*</i>培训班类别名称：</span><input type="text"
+                                                                                          name="courseResourseCategory"
+                                                                                          class="ipt ipt-large"
+                                                                                          placeholder="请输入培训班类别名称"
+                                                                                          ng-model="model.trainingTypeAdd.name"
+                                                                                          ng-maxlength="30"
+                                                                                          ng-keyup="events.initValue($event)"
+                                                                                          ng-blur="events.loseValue($event)"
+                                                                                          ajax-validate
+                                                                                          ajax-data="iscourseCategoryName"
+                                                                                          ajax-url="/web/admin/trainingTypeAction/isExists"
+                                                                                          required
+                        />
+                            <span
+                                    ng-show="trainingTypeForm.courseResourseCategory.$dirty && trainingTypeForm.courseResourseCategory.$error.required"
+                                    class="li-prompt"><span class="ico ico-prompt"></span>请输入培训班类别名称</span>
+                            <span
+                                    ng-show="trainingTypeForm.courseResourseCategory.$dirty && !trainingTypeForm.courseResourseCategory.$error.required && trainingTypeForm.courseResourseCategory.$error.maxlength"
+                                    class="li-prompt"><span class="ico ico-prompt"></span> 培训班类别字符长度不可超过30个！</span>
+                            <span ng-show="trainingTypeForm.courseResourseCategory.$dirty && !trainingTypeForm.courseResourseCategory.$error.required && !trainingTypeForm.courseResourseCategory.$error.maxlength &&
+            trainingTypeForm.courseResourseCategory.$error.ajaxValidate" class="li-prompt"><span
+                                    class="ico ico-prompt"></span>培训班类别名称已存在，请重新输入。</span>
+                        </li>
+                        <li class="clear">
+                            <span class="left-txt fl"><i>*</i>培训类别描述：</span>
+                            <textarea class="textarea w-6 fl" ng-model="model.trainingTypeAdd.desc"
+                                      placeholder="请输入培训类别描述"></textarea>
+                        </li>
+                    </ul>
+
+                    <div class="btn-center" ng-if="saveVisible">
+
+                        <!--<input type="button" ng-disabled="" name="saveUpdateValue" ng-model="saveUpdateValue" ng-click="events.save($event)" ng-class="{'btn-g': !trainingTypeForm.$valid, 'btn-r': trainingTypeForm.$valid}" class="btn" value="">-->
+                        <input ng-if="saveVisible" type="button" ng-model="saveUpdateValue"
+                               ng-disabled="trainingTypeForm.$invalid"
+                               ng-click="events.save($event);trainingTypeForm.$setPristine()"
+                               ng-class="{'btn-g': !trainingTypeForm.$valid, 'btn-r': trainingTypeForm.$valid}"
+                               class="btn" value="保存">
+                        <input type="button" ng-click="events.cannel($event);trainingTypeForm.$setPristine()"
+                               class="btn btn-g ml10" value="取消">
+                    </div>
+                    <div class="btn-center" ng-if="modifyVisible">
+
+                        <!--<input type="button" ng-disabled="" name="saveUpdateValue" ng-model="saveUpdateValue" ng-click="events.save($event)" ng-class="{'btn-g': !trainingTypeForm.$valid, 'btn-r': trainingTypeForm.$valid}" class="btn" value="">-->
+                        <input type="button"
+                               ng-disabled="trainingTypeForm.$invalid"
+                               ng-click="events.modifyResourceCategory($event);trainingTypeForm.$setPristine()"
+                               ng-class="{'btn-g': !trainingTypeForm.$valid, 'btn-r': trainingTypeForm.$valid}"
+                               class="btn" value="修改">
+                        <input type="button" ng-click="events.cannel($event);trainingTypeForm.$setPristine()"
+                               class="btn btn-g ml10" value="取消">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 以下为查看培训班分类状态-->
+    <div class="right-pre fl" ng-show="categoryText">
+        <div class="column-block w-pre">
+            <div class="col-tit">查看培训班类别</div>
+            <div class="col-body">
+                <ul class="ul-d-form udf-3 ml30">
+                    <li><span class="left-txt">所属节点类别：</span>
+                        <span>b{{model.orgNames}}</span>
+                    </li>
+                    <li>
+                        <span class="left-txt txt-long">培训班类别名称：</span>
+                        <!--<span>b{{model.trainingTypeAdd.name}}</span>-->
+                        <span>b{{iscourseCategoryName.queryName}}</span>
+                    </li>
+                    <li>
+                        <span class="left-txt txt-long">培训类别描述：</span>
+                        <!--<span>b{{model.trainingTypeAdd.name}}</span>-->
+                        <span>b{{iscourseCategoryName.desc}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

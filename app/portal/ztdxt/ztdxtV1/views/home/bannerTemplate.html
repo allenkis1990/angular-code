@@ -1,0 +1,13 @@
+<!-- 代码 开始 -->
+
+<div id="full-screen-slider">
+    <ul id="slides">
+        <li ng-style="item.style"
+            ng-repeat="item in bannerList"></li>
+    </ul>
+    <ul id="pagination" style="margin-left: -54px;">
+        <li ng-class="{'current':item.current}"
+            ng-repeat="item in bannerList"><a href="javascript:void(0)">{{$index+1}}</a></li>
+    </ul>
+</div>
+<!-- 代码 结束 -->

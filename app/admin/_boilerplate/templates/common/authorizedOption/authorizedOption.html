@@ -1,0 +1,82 @@
+<li ng-if="queryAll==='true'">
+    <div hb-unit-select default-choose="b{{queryAll}}" unit-id="queryParams.targetUnitId"
+         default-txt="选择查看单位"></div>
+</li>
+<li
+        ng-if="(model.queryAll!=='true'||utils.validateIsNull(queryParams.targetUnitId)===false)&&utils.validateIsNull(lockRange)===true&&utils.validateIsNull(lockRangeForRes)===true">
+    <select class="slt slt-small"
+            ng-options="item.code as item.name for item in model.searchRange"
+            ng-model="queryParams.rangeType">
+        <option value="">请选择查询维度</option>
+    </select>
+</li>
+<li     ng-if="model.queryAll==false||utils.validateIsNull(queryParams.targetUnitId)===false"
+        ng-hide="utils.validateIsNull(queryParams.rangeType)===true" >
+    <select class="slt slt-medium" ng-model="queryParams.belongsType">
+        <!--<option value="">请选择b{{model.currentRangeName}}所属权</option>-->
+        <option ng-if="queryParams.rangeType!=='merchantAccount'" value="ALL">全部</option>
+        <option value="MYSELF">自建的</option>
+        <option ng-if="queryParams.rangeType!=='commodity'" value="AUTHORIZED_FROM">授权的</option>
+        <option ng-if="queryParams.rangeType==='commodity'" value="AUTHORIZED_FROM">代销的</option>
+        <option value="AUTHORIZE_TO">我授权出的</option>
+    </select>
+</li>
+<li ng-if="(model.queryAll==false||utils.validateIsNull(queryParams.targetUnitId)===false)&&queryParams.belongsType==='AUTHORIZE_TO'">
+    <div unit-id="queryParams.authorizeToUnitId" hb-unit-select
+         authorized-search="true"
+         range-type="queryParams.rangeType" belongs-type="queryParams.belongsType"
+         target-unit-id="queryParams.targetUnitId"
+         default-txt="请选择授权出的单位"></div>
+</li>
+<li ng-if="(model.queryAll==false||utils.validateIsNull(queryParams.targetUnitId)===false)&&queryParams.belongsType==='AUTHORIZED_FROM'&&queryParams.rangeType==='merchantAccount'">
+    <div unit-id="queryParams.authorizedFromUnitId" hb-unit-select
+         authorized-search="true"
+         range-type="queryParams.rangeType" belongs-type="queryParams.belongsType"
+         target-unit-id="queryParams.targetUnitId"
+         default-txt="请选择授权帐号的单位"></div>
+</li>
+<li ng-if="(model.queryAll==false||utils.validateIsNull(queryParams.targetUnitId)===false)&&queryParams.belongsType==='AUTHORIZED_FROM'&&queryParams.rangeType!=='merchantAccount'">
+    <div unit-id="queryParams.authorizedFromUnitId" hb-unit-select
+         authorized-search="true"
+         range-type="queryParams.rangeType" belongs-type="queryParams.belongsType" target-unit-id="queryParams.targetUnitId"
+         default-txt="请选择授权代销的单位"></div>
+</li>
+<li
+        ng-if="(model.queryAll==false||utils.validateIsNull(queryParams.targetUnitId)===false)&&queryParams.rangeType==='merchantAccount'&&utils.validateIsNull(queryParams.belongsType)===false&&utils.validateIsNull(lockRangeForRes)===true">
+    <div authorized-account
+         account-id="queryParams.objectId"
+         query-params="queryParams"
+         default-txt="请选择具体收款帐号"></div>
+</li>
+<li
+        ng-if="(model.queryAll==false||utils.validateIsNull(queryParams.targetUnitId)===false)&&queryParams.rangeType==='commodity'&&utils.validateIsNull(queryParams.belongsType)===false&&utils.validateIsNull(lockRangeForRes)===true">
+    <div authorized-commodity
+         commodity-sku-id="queryParams.objectId"
+         query-params="queryParams"
+         default-txt="请选择具体商品"></div>
+</li>
+
+<!-- 资源独立查询项 -->
+<li ng-if="queryParams.belongsType==='MYSELF'&&utils.validateIsNull(lockRangeForRes)===false&&lockRangeForRes!=='merchantAccount'">
+    <select class="slt slt-medium" ng-model="queryParams.hasAuthorize">
+        <option value="">是否授权</option>
+        <option value="true">已授权</option>
+        <option value="false">未授权</option>
+    </select>
+</li>
+<li ng-if="queryParams.belongsType==='AUTHORIZED_FROM'&&utils.validateIsNull(lockRangeForRes)===false&&lockRangeForRes==='commodity'">
+    <select class="slt slt-small"
+            ng-model="queryParams.authorizedState">
+        <option value="0">代销状态</option>
+        <option value="1">代销中</option>
+        <option value="2">已取消代销</option>
+    </select>
+</li><li ng-if="queryParams.belongsType==='AUTHORIZED_FROM'&&utils.validateIsNull(lockRangeForRes)===false&&lockRangeForRes!=='commodity'&&lockRangeForRes!=='merchantAccount'">
+    <select class="slt slt-small"
+            ng-model="queryParams.authorizedState">
+        <option value="0">授权状态</option>
+        <option value="1">授权使用中</option>
+        <option value="2">已取消授权</option>
+    </select>
+</li>
+<li></li>

@@ -1,0 +1,440 @@
+<div class="main-wrap-body">
+    <div class="udf-2">
+        <form name="add">
+            <ul class="ul-d-form pt20 lh-1">
+                <li>
+                    <span class="left-txt-4 fl"><i>*</i>请选择支付方式：</span>
+                    <lable class="mr30" ng-click="params.firstType=1;params.validate=0"><input type="radio"
+                                                                                               ng-checked="params.firstType===1 ">线上
+                    </lable>
+                    <lable class="mr30" ng-click="params.firstType=2;params.validate=0"><input type="radio"
+                                                                                               ng-checked="params.firstType===2 ">线下
+                    </lable>
+                    <!--<span class="left-txt-4 fl"><i>*</i>请选择支付方式：</span>-->
+                    <!--<select class="ipt ipt-large" ng-model="params.firstType" name="firstType">-->
+                    <!--&lt;!&ndash;<option ng-selected="" value="">请选择支付方式</option>&ndash;&gt;-->
+                    <!--<option value="1">线上</option>-->
+                    <!--<option value="2">线下</option>-->
+                    <!--</select>-->
+                    <!--<span class="t-r ml20" ng-if="add.firstType.$dirty&&add.firstType.$error.required">必填项！</span>-->
+                </li>
+                <div ng-if="params.firstType===1 ">
+                    <li style="width: 900px">
+                        <span class="left-txt-5 fl"><i>*</i>请选择支付账号类型：</span>
+                        <lable class="mr30" ng-click="params.createType=2;params.validate=0"><input type="radio"
+                                                                                                    ng-checked="params.createType===2 ">微信支付
+                        </lable>
+                        <lable class="mr30" ng-click="params.createType=4;params.validate=0"><input type="radio"
+                                                                                                    ng-checked="params.createType===4 ">微信公众号
+                        </lable>
+                        <lable class="mr30" ng-click="params.createType=5;params.validate=0"><input type="radio"
+                                                                                                    ng-checked="params.createType===5 ">微信公众号（小程序）
+                        </lable>
+                        <lable class="mr30" ng-click="params.createType=1;params.validate=0"><input type="radio"
+                                                                                                    ng-checked="params.createType===1 ">支付宝
+                        </lable>
+                        <lable class="mr30" ng-click="params.createType=3;params.validate=0"><input type="radio"
+                                                                                                    ng-checked="params.createType===3 ">建设银行
+                        </lable>
+                    </li>
+                    <li>
+                        <span class="left-txt-4 fl"><i>*</i>账户别名：</span>
+                        <input type="text"
+                               ng-model="params.accountAlias"
+                               class="ipt ipt-large"
+                               name="accountAlias"
+                               required
+                               ng-class="{'ng-invalid':params.validate===2||params.validate===1,'ng-pristine':params.validate===0}"
+                               ng-keyup="events.validateName(params)"
+                               placeholder="请输入帐户别名">
+                        <span class="t-r ml20" ng-if="params.validate===1">帐户别名不可重复。</span>
+                        <span class="t-r ml20"
+                              ng-if="add.accountAlias.$dirty&&add.accountAlias.$error.required">必填项！</span>
+                    </li>
+                    <div ng-if="params.createType===2||params.createType===4||params.createType===5 ">
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>商户号：</span>
+                            <input type="text"
+                                   ng-model="params.accountNo"
+                                   class="ipt ipt-large"
+                                   name="merchantName"
+                                   required
+                                   placeholder="请输入微信支付商户号">
+                            <span class="t-r ml20" ng-if="add.merchantName.$dirty&&add.merchantName.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>密钥：</span>
+                            <input type="text"
+                                   ng-model="params.merchantKey"
+                                   class="ipt ipt-large"
+                                   name="merchantKey"
+                                   required
+                                   placeholder="请输入账户密钥">
+                            <span class="t-r ml20"
+                                  ng-if="add.merchantKey.$dirty&&add.merchantKey.$error.required">必填项！</span>
+
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>公众帐号ID：</span>
+                            <input type="text"
+                                   name="appId"
+                                   ng-model="params.appId"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入微信公众号帐号ID">
+                            <span class="t-r ml20" ng-if="add.appId.$dirty&&add.appId.$error.required">必填项！</span>
+
+                        </li>
+                        <li>
+                            <span class="left-txt-4  fl"><i>*</i>微信证书密钥：</span>
+                            <input type="text"
+                                   name="privateKeyPwd"
+                                   ng-model="params.privateKeyPwd"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入微信证书密钥">
+                            <span class="t-r ml20" ng-if="add.privateKeyPwd.$dirty&&add.privateKeyPwd.$error.required">必填项！</span>
+
+                        </li>
+                        <!--  <input type="text" ng-model="model.upload.result.fileName" readonly class="ipt ipt-large ml20"
+                                 placeholder="批量导入试题" style="float:left;margin-top:10px;"/>
+          -->
+                        <!--<div hb-file-uploader="test" auto="true" ng-model="model.upload.result"-->
+                        <!--class="upload" style="float:left;margin-left:10px">选择-->
+                        <!--</div>-->
+
+                        <li>
+                            <span class="left-txt-4  fl"><i>*</i>上传微信证书：</span>
+                            <a class=" btn mr20 "
+                               hb-file-uploader="test"
+                               style="float:left;margin-left:10px"
+                               auto="true"
+                               accepts="p12"
+                               href="javascript:void(0)"
+                               name="uploadResult"
+                               required
+                               ng-model="model.upload.result"></a>
+                            <span class="t-r">文件格式  .p12</span>
+                        </li>
+                        <li class="li-1 clear">
+                            <span class="left-txt-4  fl">&nbsp;</span>
+                            <ul class="ul-d-form w-textarea1 fl">
+                                <li><span class="num">1</span>
+                                    <input type="text"
+                                           ng-model="model.upload.result.fileName"
+                                           readonly
+                                           class="ipt ipt-large"
+                                           placeholder="xxxx1.p12">
+
+                                    <a href="" ng-click="model.upload.result.fileName=''"
+                                       class="btn-g btn-delete-1">×</a></li>
+
+                            </ul>
+                        </li>
+                        <li ng-if="params.realSupportIssuingElectronInvoice">
+                            <span class="left-txt-4  fl"><i>*</i>纳税人识别号：</span>
+                            <select class="ipt ipt-large"
+                                    ng-model="params.taxPayerId"
+                                    required
+                                    name="taxPayerId"
+                                    ng-options="taxPayer.id as taxPayer.name for taxPayer in params.taxPayerList">
+                                <option ng-selected="" value="">纳税人识别号</option>
+                            </select>
+                            <span class="t-r ml20"
+                                  ng-if="add.taxPayerId.$dirty&&add.taxPayerId.$error.required">必填项！</span>
+                        </li>
+
+                    </div>
+
+
+                    <div ng-if="params.createType===1">
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>支付宝账号：</span>
+                            <input type="text"
+                                   name="accountNo"
+                                   ng-model="params.accountNo"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入支付宝账号">
+                            <span class="t-r ml20"
+                                  ng-if="add.accountNo.$dirty&&add.accountNo.$error.required">必填项！</span>
+
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>支付宝密钥：</span>
+                            <input type="text"
+                                   ng-model="params.merchantKey"
+                                   name="merchantKey"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入支付宝密钥">
+                            <span class="t-r ml20"
+                                  ng-if="add.merchantKey.$dirty&&add.merchantKey.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>合作者身份ID：</span>
+                            <input type="text"
+                                   name="appId"
+                                   required
+                                   ng-model="params.appId"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入合作者身份ID">
+                            <span class="t-r ml20" ng-if="add.appId.$dirty&&add.appId.$error.required">必填项！</span>
+
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>支付宝应用私钥：</span>
+                            <input type="text"
+                                   name="alipayAppPrivateKey"
+                                   required
+                                   ng-model="params.alipayAppPrivateKey"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入支付宝应用私钥">
+                            <span class="t-r ml20"
+                                  ng-if="add.alipayAppPrivateKey.$dirty&&add.alipayAppPrivateKey.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>支付宝公钥：</span>
+                            <input type="text"
+                                   name="alipayPublicKey"
+                                   required
+                                   ng-model="params.alipayPublicKey"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入支付宝公钥">
+                            <span class="t-r ml20"
+                                  ng-if="add.alipayPublicKey.$dirty&&add.alipayPublicKey.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>支付宝应用id：</span>
+                            <input type="text"
+                                   name="alipayAppId"
+                                   required
+                                   ng-model="params.alipayAppId"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入支付宝应用id">
+                            <span class="t-r ml20"
+                                  ng-if="add.alipayAppId.$dirty&&add.alipayAppId.$error.required">必填项！</span>
+                        </li>
+                        <li ng-if="params.realSupportIssuingElectronInvoice">
+                            <span class="left-txt-4  fl"><i>*</i>纳税人识别号：</span>
+                            <select class="slt slt-medium"
+                                    ng-model="params.taxPayerId"
+                                    required
+                                    name="taxPayerId"
+                                    ng-options="taxPayer.id as taxPayer.name for taxPayer in params.taxPayerList">
+                                <option ng-selected="" value="">纳税人识别号</option>
+                            </select>
+                            <span class="t-r ml20"
+                                  ng-if="add.taxPayerId.$dirty&&add.taxPayerId.$error.required">必填项！</span>
+                        </li>
+                    </div>
+
+                    <div ng-if="params.createType===3">
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>开户号：</span>
+                            <input type="text"
+                                   name="accountNo"
+                                   required
+                                   ng-model="params.accountNo"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入开户号">
+                            <span class="t-r ml20"
+                                  ng-if="add.accountNo.$dirty&&add.accountNo.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>分行号：</span>
+                            <input type="text"
+                                   name="branchBankId"
+                                   ng-model="params.branchBankId"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入分行号">
+                            <span class="t-r ml20" ng-if="add.branchBankId.$dirty&&add.branchBankId.$error.required">必填项！</span>
+
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>柜台号：</span><!--建行：柜台号就是柜台代码-->
+                            <input type="text"
+                                   ng-model="params.posId"
+                                   name="posId"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入柜台号">
+                            <span class="t-r ml20" ng-if="add.posId.$dirty&&add.posId.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>公钥：</span>
+                            <input type="text"
+                                   name="publicKey"
+                                   required
+                                   ng-model="params.publicKey"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入公钥">
+                            <span class="t-r ml20"
+                                  ng-if="add.publicKey.$dirty&&add.publicKey.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>操作员账号：</span>
+                            <input type="text"
+                                   ng-model="params.operator"
+                                   name="operator"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入操作员账号">
+                            <span class="t-r ml20" ng-if="add.operator.$dirty&&add.operator.$error.required">必填项！</span>
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl"><i>*</i>操作员密码：</span>
+                            <input type="text"
+                                   ng-model="params.password"
+                                   name="password"
+                                   class="ipt ipt-large"
+                                   required
+                                   placeholder="请输入操作员密码">
+                            <span class="t-r ml20" ng-if="add.password.$dirty&&add.password.$error.required">必填项！</span>
+                        </li>
+
+
+                        <li>
+                            <span class="left-txt-4 fl">开户银行：</span>
+                            <input type="text"
+                                   name="depositBank"
+                                   ng-model="params.depositBank"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入开户银行">
+                        </li>
+                        <li>
+                            <span class="left-txt-4 fl">开户户名：</span>
+                            <input type="text"
+                                   ng-model="params.merchantName"
+                                   name="merchantName"
+                                   class="ipt ipt-large"
+                                   placeholder="请输入开户户名">
+                        </li>
+                        <li ng-if="params.realSupportIssuingElectronInvoice">
+                            <span class="left-txt-4  fl"><i>*</i>纳税人识别号：</span>
+                            <select class="slt slt-medium"
+                                    ng-model="params.taxPayerId"
+                                    required
+                                    name="taxPayerId"
+                                    ng-options="taxPayer.id as taxPayer.name for taxPayer in params.taxPayerList">
+                                <option ng-selected="" value="">纳税人识别号</option>
+                            </select>
+                            <span class="t-r ml20"
+                                  ng-if="add.taxPayerId.$dirty&&add.taxPayerId.$error.required">必填项！</span>
+                        </li>
+                        <!--<li>-->
+                        <!--<span class="left-txt-4 fl">柜台号：</span>-->
+                        <!--<input type="text"-->
+                        <!--name="counterNumber"-->
+                        <!--ng-model="params.counterNumber"-->
+                        <!--class="ipt ipt-large"-->
+                        <!--placeholder="请输入柜台号">-->
+                        <!--</li>-->
+                    </div>
+                </div>
+
+
+                <div ng-if="params.firstType===2 ">
+                    <li>
+                        <span class="left-txt-4 fl"><i>*</i>账户别名：</span>
+                        <input type="text"
+                               ng-model="params.accountAlias"
+                               class="ipt ipt-large"
+                               name="accountAlias"
+                               required
+                               ng-class="{'ng-invalid':params.validate===2||params.validate===1,'ng-pristine':params.validate===0}"
+                               ng-keyup="events.validateName(params)"
+                               placeholder="请输入帐户别名">
+                        <span class="t-r ml20" ng-if="params.validate===1">帐户别名不可重复。</span>
+                        <span class="t-r ml20"
+                              ng-if="add.accountAlias.$dirty&&add.accountAlias.$error.required">必填项！</span>
+                    </li>
+                    <li>
+                        <span class="left-txt-4 fl"><i>*</i>开户号：</span>
+                        <input type="text"
+                               name="accountNo"
+                               ng-model="params.accountNo"
+                               class="ipt ipt-large"
+                               required
+                               placeholder="请输入开户号">
+                        <span class="t-r ml20" ng-if="add.accountNo.$dirty&&add.accountNo.$error.required">必填项！</span>
+                    </li>
+                    <li>
+                        <span class="left-txt-4 fl">开户银行：</span>
+                        <input type="text"
+                               name="depositBank"
+                               ng-model="params.depositBank"
+                               class="ipt ipt-large"
+                               placeholder="请输入开户银行">
+                    </li>
+                    <li>
+                        <span class="left-txt-4 fl">开户户名：</span>
+                        <input type="text"
+                               ng-model="params.merchantName"
+                               name="merchantName"
+                               class="ipt ipt-large"
+                               placeholder="请输入开户户名">
+                    </li>
+                    <li>
+                        <span class="left-txt-4 fl">柜台号：</span>
+                        <input type="text"
+                               name="counterNumber"
+                               ng-model="params.counterNumber"
+                               class="ipt ipt-large"
+                               placeholder="请输入柜台号">
+                    </li>
+                    <li ng-if="params.realSupportIssuingElectronInvoice">
+                        <span class="left-txt-4  fl"><i>*</i>纳税人识别号：</span>
+                        <select class="slt slt-medium"
+                                ng-model="params.taxPayerId"
+                                required
+                                name="taxPayerId"
+                                ng-options="taxPayer.id as taxPayer.name for taxPayer in params.taxPayerList">
+                            <option ng-selected="" value="">纳税人识别号</option>
+                        </select>
+                        <span class="t-r ml20" ng-if="add.taxPayerId.$dirty&&add.taxPayerId.$error.required">必填项！</span>
+                    </li>
+                </div>
+
+                <!--<li class="clear">-->
+                <!--<span class="left-txt-4 fl">备注：</span>-->
+                <!--<div class="w-9 fl">-->
+                <!--<textarea-->
+                <!--ng-model="params.remark"-->
+                <!--class="textare wp-m-full fl"></textarea>-->
+                <!--</div>-->
+                <!--</li>-->
+
+                <li>
+                    <span class="left-txt-4 fl">&nbsp;</span>
+                    <!--<a href="javascript:void(0)" class="btn btn-r" ng-click="events.create()">保存账号</a>-->
+                    <!--微信-->
+                    <button href="javascript:void(0)"
+                            ng-if="params.firstType===1&&(params.createType===2||params.createType===4||params.createType===5)"
+                            ng-disabled="params.validate===1||add.accountAlias.$invalid||add.appId.$invalid||add.merchantKey.$invalid||add.accountNo.$invalid||add.privateKeyPwd.$invalid||add.uploadResult.$invalid||add.taxPayerId.$invalid"
+                            class="btn btn-r" ng-click="events.create()">保存账号
+                    </button>
+                    <!--支付宝 新版-->
+                    <button href="javascript:void(0)" ng-if="params.firstType===1&&params.createType===1"
+                            ng-disabled="params.validate===1||add.accountAlias.$invalid||add.appId.$invalid||add.merchantKey.$invalid||add.accountNo.$invalid||add.alipayAppPrivateKey.$invalid||add.alipayPublicKey.$invalid||add.alipayAppId.$invalid||add.taxPayerId.$invalid"
+                            class="btn btn-r" ng-click="events.create()">保存账号
+                    </button>
+
+                    <!--建设银行-->
+                    <button href="javascript:void(0)" ng-if="params.firstType===1&&params.createType===3"
+                            ng-disabled="params.validate===1||add.accountAlias.$invalid||add.branchBankId.$invalid||add.posId.$invalid||add.accountNo.$invalid||add.publicKey.$invalid||add.operator.$invalid||add.password.$invalid||add.taxPayerId.$invalid"
+                            class="btn btn-r" ng-click="events.create()">保存账号
+                    </button>
+                    <!--线下收款账号-->
+                    <button href="javascript:void(0)" ng-if="params.firstType===2"
+                            ng-disabled="params.validate===1||add.accountAlias.$invalid||add.accountNo.$invalid"
+                            class="btn btn-r" ng-click="events.create()">保存账号
+                    </button>
+                    <a href="javascript:void(0)" class="btn btn-g ml10"
+                       ng-click="$state.go('states.paymentAccount');events.accountList();">取消</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

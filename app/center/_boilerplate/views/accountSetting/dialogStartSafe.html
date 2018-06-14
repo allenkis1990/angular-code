@@ -1,0 +1,142 @@
+<!--第一步-->
+<div class="m-order-process mop-2" ng-if="model.dialogSafeShow === 1">
+    <div class="process-line"><span class="current" style="width: 0;"></span></div>
+    <ul class="process-bd clear">
+        <li class="li-ed">
+            <span class="p-ico"></span>
+            <p>填写密保问题</p>
+        </li>
+        <li>
+            <span class="p-ico"></span>
+            <p>验证密保问题</p>
+        </li>
+        <li>
+            <span class="p-ico"></span>
+            <p>保护设置成功</p>
+        </li>
+    </ul>
+</div>
+<div class="safe-form-box" ng-if="model.dialogSafeShow === 1">
+    <p class="mt20">为了避免遗忘，请您填写相关问题，这将帮助您以后通过回答问题快速找回密码。</p>
+    <ul class="m-form-1 mt20 pl30">
+        <li>
+            <span class="left-txt b">问题一</span>
+            <select class="ui-slt slt-l"
+                    ng-model="model.safeProModelOne"
+                    ng-options="item.id as item.title for item in model.questionOne">
+            </select>
+
+        </li>
+        <li>
+            <span class="left-txt b">答案</span>
+            <input type="text" ng-model="model.startAnwserOne" class="ui-ipt ipt-l">
+        </li>
+        <li>
+            <span class="left-txt b">问题二</span>
+            <select class="ui-slt slt-l"
+                    ng-model="model.safeProModelTwo"
+                    ng-options="item.id as item.title for item in model.questionTwo">
+            </select>
+
+        </li>
+        <li>
+            <span class="left-txt b">答案</span>
+            <input type="text" ng-model="model.startAnwserTwo" class="ui-ipt ipt-l">
+        </li>
+        <li class="mt20">
+            <span class="left-txt"></span>
+            <button ng-click="events.nextProOne()"
+                    ng-disabled="model.safeProModelOne === -1 || model.safeProModelTwo === -1 || !model.startAnwserTwo || !model.startAnwserOne"
+                    class="btn-m">下一步
+            </button>
+        </li>
+    </ul>
+</div>
+
+
+<!--第二步-->
+
+<div class="m-order-process mop-2" ng-if="model.dialogSafeShow === 2">
+    <div class="process-line"><span class="current" style="width: 50%;"></span></div>
+    <ul class="process-bd clear">
+        <li class="li-ed">
+            <span class="p-ico"></span>
+            <p>填写密保问题</p>
+        </li>
+        <li class="li-ed">
+            <span class="p-ico"></span>
+            <p>验证密保问题</p>
+        </li>
+        <li>
+            <span class="p-ico"></span>
+            <p>保护设置成功</p>
+        </li>
+    </ul>
+</div>
+<div class="safe-form-box" ng-if="model.dialogSafeShow === 2">
+    <p class="mt20">为了避免遗忘，请您填写相关问题，这将帮助您以后通过回答问题快速找回密码。</p>
+    <ul class="m-form-1 mt20 pl30">
+        <li>
+            <span class="left-txt b">问题一</span>
+            <span ng-bind="model.safeProModelOneTitle"></span>
+        </li>
+        <li>
+            <span class="left-txt b">答案</span>
+            <input ng-model="model.showTwoAnwserOne" type="text" class="ui-ipt ipt-l">
+        </li>
+        <li>
+            <span class="left-txt b">问题二</span>
+            <span ng-bind="model.safeProModelTwoTitle"></span>
+        </li>
+        <li>
+            <span class="left-txt b">答案</span>
+            <input type="text" ng-model="model.showTwoAnwserTwo" class="ui-ipt ipt-l">
+        </li>
+        <li class="mt20">
+            <span class="left-txt"></span>
+            <a href="javascript:void (0);" ng-click="events.pastPro($event)" class="btn-m">上一步</a>
+            <button href="javascript:void (0);"
+                    ng-disabled="!model.showTwoAnwserTwo || !model.showTwoAnwserOne"
+                    ng-click="events.showAnswerTwoNext($event)"
+                    class="btn-m ml10">下一步
+            </button>
+        </li>
+    </ul>
+</div>
+
+
+<!--第三步-->
+
+
+<div class="m-order-process mop-2" ng-if="model.dialogSafeShow === 3">
+    <div class="process-line"><span class="current" style="width: 100%;"></span></div>
+    <ul class="process-bd clear">
+        <li class="li-ed">
+            <span class="p-ico"></span>
+            <p>填写密保问题</p>
+        </li>
+        <li class="li-ed">
+            <span class="p-ico"></span>
+            <p>验证密保问题</p>
+        </li>
+        <li class="li-ed">
+            <span class="p-ico"></span>
+            <p>保护设置成功</p>
+        </li>
+    </ul>
+</div>
+<div class="safe-form-box no-p" ng-if="model.dialogSafeShow === 3">
+    <div class="dialog-tip tc mt50">
+        <span class="p-ico complete"></span>
+        <span class="txt">保密问题设置成功！</span>
+    </div>
+    <div class="tc fs14 t-g">
+        您已成功为账号：<span ng-bind="model.user.identify"></span>，设置了保密问题
+    </div>
+    <ul class="m-form-1 mt20 pl30">
+        <li class="mt20">
+            <span class="left-txt"></span>
+            <a class="btn-m" ng-click="events.closeStartSafe()" style="margin-left: 25%">确定</a>
+        </li>
+    </ul>
+</div>

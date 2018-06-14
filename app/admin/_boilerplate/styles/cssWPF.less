@@ -1,0 +1,368 @@
+/* 业务逻辑当中需要的样式----翁鹏飞 */
+@import "animates/animate";
+@import "modules/tip";
+
+@dialogContainerIndex: 15001;
+@markIndex: 15001;
+@dialogContentIndex: 15002;
+
+.visibility-show {
+  visibility: visible;
+}
+
+.visibility-hide {
+  visibility: hidden;
+}
+
+.left-730 {
+  left: 730px !important;
+}
+
+.width-600 {
+  width: 600px;
+}
+
+.play-area {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(167, 116, 116, 0.98);
+  .play-area-close {
+    position: absolute;
+    right: 0;
+    font-size: 50px;
+    z-index: 100000;
+    font-family: '微软雅黑';
+    text-decoration: none;
+    color: black;
+    width: 70px;
+    text-align: center;
+  }
+}
+
+.main-wrap-cont {
+  background: #f2f2f2 !important;
+}
+
+.resource-category-operators {
+  position: absolute;
+  right: 0;
+  .k-icon {
+    cursor: pointer;
+    font-size: 12px;
+  }
+}
+
+.tree-container-flow {
+  position: absolute;
+  left: 0;
+  z-index: 22;
+  width: 200px;
+  padding: 3px;
+  margin-top: 3px;
+  box-shadow: 0 0 2px gray;
+  border: 1px solid #deecf3;
+  background-color: #fff;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.grid-null-data {
+  margin: 0 auto;
+  text-align: center;
+  padding: 23px 0px;
+  border: 1px solid rgb(198, 198, 198);
+  border-left: 0;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.initHideMenu {
+  display: none;
+}
+
+.showHideMenu {
+  display: block !important;
+}
+
+.menu-loading-mark {
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  .menu-loading-mark-bg {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    background-color: black;
+    opacity: .5;
+    filter: alpha(opacity=50);
+  }
+  .menu-loading-mark-img {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    left: 50%;
+    margin-left: -10px;
+  }
+}
+
+/**
+ * angular-ui-notification - Angular.js service providing simple notifications using Bootstrap 3 styles with css transitions for animating
+ * @author Alex_Crack
+ * @version v0.2.0
+ * @link https://github.com/alexcrack/angular-ui-notification
+ * @license MIT
+ */
+.ui-notification {
+  position: fixed;
+  z-index: 9999;
+
+  width: 300px;
+
+  -webkit-transition: all ease .5s;
+  -o-transition: all ease .5s;
+  transition: all ease .5s;
+
+  color: #fff;
+  border-radius: 0;
+  background: #337ab7;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
+}
+
+.ui-notification.clickable {
+  cursor: pointer;
+}
+
+.ui-notification.clickable:hover {
+  opacity: .7;
+}
+
+.ui-notification.killed {
+  -webkit-transition: opacity ease 1s;
+  -o-transition: opacity ease 1s;
+  transition: opacity ease 1s;
+
+  opacity: 0;
+}
+
+.ui-notification > h3 {
+  font-size: 14px;
+  font-weight: bold;
+
+  display: block;
+
+  margin: 10px 10px 0 10px;
+  padding: 0 0 5px 0;
+
+  text-align: left;
+
+  border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+
+.ui-notification a {
+  color: #fff;
+}
+
+.ui-notification a:hover {
+  text-decoration: underline;
+}
+
+.ui-notification > .message {
+  margin: 10px 10px 10px 10px;
+}
+
+.ui-notification.warning {
+  color: #fff;
+  background: #f0ad4e;
+}
+
+.ui-notification.error {
+  color: #fff;
+  background: #d9534f;
+}
+
+.ui-notification.success {
+  color: #fff;
+  background: #5cb85c;
+}
+
+.ui-notification.info {
+  color: #fff;
+  background: #5bc0de;
+}
+
+.nav-prev {
+  width: 10px;
+  background-position: -420px -185px;
+  height: 15px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.nav-next {
+  background-position: -440px -185px;
+  width: 10px;
+  height: 15px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.nav-toggle {
+  width: 20px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  background: #3ca2e2;
+
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -ms-transition: all .5s;
+  -o-transition: all .5s;
+  transition: all .5s;
+
+  &.l {
+    left: 0;
+    &:hover {
+      box-shadow: 2px -5px 20px;
+    }
+  }
+
+  &.r {
+    right: 0;
+    &:hover {
+      box-shadow: -2px -5px 20px;
+    }
+  }
+}
+
+.title-view {
+  -webkit-transition: left .5s, right .5s;
+  -moz-transition: left .5s, right .5s;
+  -ms-transition: left .5s, right .5s;
+  -o-transition: left .5s, right .5s;
+  transition: left .5s, right .5s;
+
+  margin-left: 20px;
+  position: relative;
+}
+
+.nav-tool {
+  float: left;
+  display: inline-flex;
+  span {
+    width: 16px;
+    cursor: pointer;
+    height: 16px;
+    display: inline-block;
+    margin: 20px 0 0 5px;
+  }
+  .nav-refresh {
+    background-position: -470px -187px;
+  }
+
+  .nav-closeAll {
+    background-position: -497px -187px;
+  }
+}
+
+.summaryRow {
+  background: #3ca2e2;
+  color: white;
+}
+
+.sty {
+  height: 170px;
+  overflow: auto;
+
+  input {
+    cursor: pointer;
+  }
+  .sty-lab {
+    padding: 4px;
+    display: inline-block;
+    border-radius: 4px;
+    background: #ececec;
+    margin: 3px;
+    -webkit-transition: box-shadow .5s;
+    -moz-transition: box-shadow .5s;
+    -ms-transition: box-shadow .5s;
+    -o-transition: box-shadow .5s;
+    transition: box-shadow .5s;
+    &:hover {
+      background: #ddd;
+      box-shadow: 0 0 7px;
+    }
+  }
+}
+
+.loading-btnimg {
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  line-height: normal;
+  margin: 2px;
+}
+
+div[loading-biu] {
+  -webkit-transition: width .5s;
+  -moz-transition: width .5s;
+  -ms-transition: width .5s;
+  -o-transition: width .5s;
+  transition: width .5s;
+}
+
+/*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/*定义滚动条的轨道，内阴影及圆角*/
+::-webkit-scrollbar-track {
+}
+
+/*定义滑块，内阴影及圆角*/
+::-webkit-scrollbar-thumb {
+  width: 8px;
+  height: 8px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #555;
+}
+
+.report-success {
+  background: #3cb371;
+  color: #fff;
+  width: 240px;
+  height: 100px;
+  padding: 0 30px;
+  line-height: 100px;
+}
+
+.success-tip {
+
+}
+
+.error-tip {
+
+}
+
+.startTime, .endTime {
+  display: inline-block;
+}
+
+.mustOfferEndTime {
+  .endTime {
+    .k-picker-wrap {
+      border-color: red;
+    }
+  }
+}

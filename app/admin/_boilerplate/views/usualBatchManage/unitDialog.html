@@ -1,0 +1,14 @@
+<div class="search-bar">
+    <ul class="ul-form li-fl clear">
+        <li><input type="text" ng-model="model.unitQuery.unitName" placeholder="单位名称" class="ipt ipt-middle"
+                   hb-clear-input>
+        </li>
+        <li><a href="javascript:void(0)"
+               ng-click="events.doSearchUnit()"
+               class="btn btn-b">搜索</a>
+        <li>
+    </ul>
+</div>
+
+<div kendo-grid="node.unitGrid" k-options="ui.unitGrid.options" style="max-height: 400px;">
+</div>

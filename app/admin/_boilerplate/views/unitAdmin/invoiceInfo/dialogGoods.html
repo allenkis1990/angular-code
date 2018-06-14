@@ -1,0 +1,18 @@
+<div class="dialog-cont">
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="tl">班级信息</th>
+            <th width="100">单价（元）</th>
+            <th width="80">数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in invoiceModel.dialogContent">
+            <td class="tl" ng-bind="item.productName"></td>
+            <td ng-bind="item.dealPrice"></td>
+            <td ng-bind="item.purchaseQuantity"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

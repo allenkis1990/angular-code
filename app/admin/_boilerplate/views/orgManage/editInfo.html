@@ -1,0 +1,70 @@
+<div class="dialog w-textarea3" style="width:560px;">
+    <div class="dialog-body">
+        <form name="orgInfo" novalidate>
+            <div class="dialog-tit"><span ng-bind="title"></span><a href="javascript:void(0);" class="ico ico-close"
+                                                                    ng-click="events.closeEditWin();orgInfo.$setPristine()"></a>
+            </div>
+            <div class="dialog-cont">
+                <!--<div class="dialog-sub-tit">机构信息</div>-->
+                <input type="hidden" name="unitId" ng-model="model.editInfo.unitId">
+                <input type="hidden" name="orgId" ng-model="model.editInfo.orgId">
+                <ul class="ul-d-form ml30">
+                    <li><span class="left-txt"><i>*</i>名称：</span><input type="text"
+                                                                        class="ipt ipt-medium"
+                                                                        ng-model="model.editInfo.orgName"
+                                                                        name="unitName"
+                                                                        ajax-data="validateOrgNameParam"
+                                                                        ajax-validate
+                                                                        ajax-url="/web/admin/organization/validateOrgName.action"
+                                                                        required
+                                                                        ng-maxlength="150"
+                    />
+                        <span ng-show="orgInfo.unitName.$error.required" class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+
+              </span>
+              请输入机构名称！
+          </span>
+                        <span ng-show="orgInfo.unitName.$dirty &&
+             !orgInfo.unitName.$error.required &&
+            orgInfo.unitName.$error.ajaxValidate"
+                              class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+              </span>
+              机构名称已被使用！
+            </span>
+                        <span ng-show="orgInfo.unitName.$error.maxlength" class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+
+              </span>
+              机构名称长度不能超过150！
+          </span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">描述：</span><textarea class="textarea w-1 fl"
+                                                                                    ng-model="model.editInfo.orgDis"
+                                                                                    ng-maxlength="1500"
+                                                                                    name="unitDis"
+                    >
+                        </textarea>
+                        <span ng-show="orgInfo.unitDis.$error.maxlength" class="li-prompt lip-2">
+              <span class="ico ico-prompt">
+
+              </span>
+            机构名称长度不能超过1500！
+          </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-center">
+                <input type="button" ng-click="events.saveEdit();orgInfo.$setPristine()"
+                       ng-disabled="orgInfo.$invalid||showDisabled"
+                       ng-class="{'btn-g': !orgInfo.$valid || showDisabled, 'btn-r': orgInfo.$valid && !showDisabled}"
+                       class="btn" value="保存">
+                <!--<input type="button" class="btn btn-r" ng-disabled="orgInfo.$invalid" ng-click="events.saveEdit();;orgInfo.$setPristine()" value="保存"/>-->
+                <input type="button" class="btn btn-g ml10" value="取消"
+                       ng-click="events.closeEditWin();;orgInfo.$setPristine()"/>
+            </div>
+        </form>
+    </div>
+</div>
+

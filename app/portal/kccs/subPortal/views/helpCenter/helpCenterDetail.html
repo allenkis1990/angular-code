@@ -1,0 +1,55 @@
+<div class="p-wrap-full pos-nav  clear"><a href="#">首页</a><span class="plr3">&gt;</span>
+    <a ui-sref="states.accountant.helpCenter">帮助中心</a>
+    <span class="plr3">&gt;</span>
+    {{model.detail.title}}
+</div>
+<div class="p-wrap-full clear mb20">
+    <div class="w880 fl" style="width: 1200px">
+        <div class="helpwrap clear">
+            <div class="left mh500 rel">
+                <div class="helptitle"><i class="p-ico help-ico"></i>帮助中心</div>
+                <ul class="help-navlist">
+                    <li ng-class="{'current':model.categoryType===item.categoryType}"
+                        ng-click="events.getCourseList(item)" ng-repeat="item in model.sort">
+                        <a><i class="p-ico arrow-left"></i>{{item.name}} </a></li>
+                </ul>
+            </div>
+            <div class="right mh500 w880">
+
+                <div class="m-notice-detail" ng-if="!model.nohelp">
+                    <p class="fs18 tc bor-b mb30 pb20 pt20 b rel">{{model.detail.title}}<a
+                            ng-click=" $state.go('states.accountant.helpCenter',{id:''}) " class="btn-r return-btn abs">返回上一级</a>
+                    </p>
+                    <!--    <div class="notice-bd fs15">
+                            <p><b>{{model.detail.content}}</b></p>
+
+                        </div>-->
+                    <div class="notice-bd" ng-bind-html="model.detail.content| trustHtml">
+                    </div>
+                </div>
+                <div class="m-no-data tc" ng-if="model.nohelp">
+                    <img src="kccs/subPortal/images/no-data.png" alt="空数据">
+                    <p class="txt">消息资讯已被删除！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    <div class="w310 fr">
+            <div class="white-bg clear">
+                <div class="title-box mt18  clear"><h2 class="title">热门课程</h2><a href="#" class="more">MORE+</a></div>
+                <div class="plr10 pt10">
+                    <ul class="classlist_1">
+                        <li><a href="#" class="img"><img src="images/course-pic-01.jpg"></a>
+                            <p class="class_name"><a href="###" class="more">AI零基础入门课程 / 适合菜鸟小白零基础入门UI【设计必学教程】</a></p>
+                        </li>
+                        <li><a href="#" class="img"><img src="images/course-pic-02.jpg"></a>
+                            <p class="class_name"><a href="###" class="more">课程名称课程名称课程名称2</a></p>
+                        </li>
+                        <li><a href="#" class="img"><img src="images/course-pic-03.jpg"></a>
+                            <p class="class_name"><a href="###" class="more">课程名称课程名称课程名称1课程名称课程名称课程名称</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>-->
+</div>

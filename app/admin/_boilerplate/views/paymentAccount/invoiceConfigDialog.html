@@ -1,0 +1,96 @@
+<!--发票配置信息-->
+<div  class="col-tit" style="margin-left: 10px" ng-show=" flagModel.clickType == 1">
+    <button ng-click="events.popInvoiceConfigRecordDialog()"   class="btn-r btn mt5 mb5 fr" style="margin-left: 10px" >日志</button>
+    <button ng-click="events.editInvoiceConfig()"   class="btn-r btn mt5 mb5 fr" ng-show="flagModel.invoiceConfigState === 'VIEW'">编辑</button>
+    <button ng-click="events.cancelInvoiceConfig()" class="btn-r btn mt5 mb5 fr" ng-show="flagModel.invoiceConfigState === 'EDIT'" style="background: #ccc">取消</button>
+    <button ng-click="events.saveInvoiceConfig()"   class="btn-r btn mt5 mb5 fr" ng-show="flagModel.invoiceConfigState === 'EDIT'" style="margin-right: 10px" >保存配置</button>
+</div>
+</br ng-show=" flagModel.clickType == 1">
+<div style="margin-top: 20px" ng-show=" flagModel.clickType == 1">
+    <hr style="border-bottom:2px solid #3ca2e2;">
+</div>
+<div style="margin-top: 10px">
+<ul class="ul-d-form lh-1">
+    <li>
+        <span class="left-txt"><i>*</i>是否提供发票：</span>
+        <label><input type="radio" class="chk" value=2 ng-model="model.billConfig.isProvide"
+                      ng-disabled="flagModel.invoiceConfigState === 'VIEW'" ng-click="events.selectNotProvideBill(1)">提供发票</label>
+        <label class="ml30"><input type="radio" class="chk" value=1 ng-model="model.billConfig.isProvide"
+                                   checked ng-disabled="flagModel.invoiceConfigState === 'VIEW'"
+                                   ng-click="events.selectNotProvideBill(2)">不提供发票</label>
+
+        <!--选择不提供发票时添加 no-provide-->
+        <div class="clear">
+            <div class="add-address-bd mt10">
+                <span class="left-txt"></span>
+                <label><input type="radio" class="chk" value=1 ng-model="model.billConfig.provideType"
+                              ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">开放学员自选是否需要发票</label>
+                <label class="ml30"><input type="radio" class="chk" value=2
+                                           ng-model="model.billConfig.provideType"
+                                           ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">强制向学员提供发票</label>
+
+
+                <div class="mt10">
+                    <span class="left-txt"><i>*</i>发票类型：</span>
+
+                            <span>
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-click="events.onNodeClick($event,node)"
+                                       ng-model="model.billConfig.selectCommonVAT"
+                                       ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">
+                                增值税普通发票
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig"
+                                       ng-model="model.billConfig.selectCommonElectron"
+                                       ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">
+                                电子普通发票
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectVATOnly"
+                                       ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">
+                                增值税专用发票
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectNonTax"
+                                       ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">
+                                非税务票（纸质）
+                            </label>
+                            </span>
+                </div>
+
+
+                <div class="mt10"
+                     ng-if="!(model.billConfig.selectVATOnly && !model.billConfig.selectCommonVAT && !model.billConfig.selectCommonElectron && !model.billConfig.selectNonTax)">
+                    <span class="left-txt"><i>*</i>发票抬头：</span>
+
+                            <span>
+                            <label style="margin-right:20px;" ng-if="model.type!=='COLLECTIVE'">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectPersonal"
+                                       ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">
+                                个人
+                            </label>
+
+                            <label style="margin-right:20px;">
+                                <input type="checkbox" class="chk crbig" ng-model="model.billConfig.selectUnit"
+                                       ng-disabled="flagModel.invoiceConfigState === 'VIEW'|| model.notProvide">
+                                单位
+                            </label>
+                            </span>
+                </div>
+            </div>
+        </div>
+    </li>
+
+</ul>
+<div class="dash-line-5"></div>
+</div>
+<!--<div class="column mt20">-->
+    <!--<div class="col-tit">-->
+        <!--<button ng-click="events.modify()" class="btn-r btn mt5 mb5 fr">修改</button>-->
+    <!--</div>-->
+    <!--<div class="tab-tit" style="margin-top: 0px;height: 0px;"></div>-->
+<!--</div>-->

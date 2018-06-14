@@ -1,0 +1,60 @@
+<div class="p-wrap-full pos-nav  clear"><a ui-sref="states.accountant">首页</a><span class="plr3">&gt;</span>学时验证</div>
+
+<div class="p-wrap-full white-bg mb20">
+    <div class="w840 margin-auto">
+        <div class="tabheadtow clear">
+            <h2 class="title">学时验证</h2>
+        </div>
+        <div class="tips-box mt20">请填写正确的身份证号码和姓名进行查询。</div>
+        <div class="learning-time-panel white-bg clear">
+            <div class="tc mt30">
+                <input type="text"
+                       ng-model="model.idNum"
+                       class="ui-ipt iptform ml50"
+                       placeholder="请输入身份证号">
+                <input type="text"
+                       ng-model="model.userName"
+                       class="ui-ipt iptform ml10"
+                       placeholder="请输入姓名">
+                <button class="ui-btn btn-r ml10"
+                        ng-disabled="submitAble"
+                        ng-click="events.findUserPeriod()"
+                        type="button">
+                    立即验证
+                </button>
+            </div>
+        </div>
+        <div class="learning-result-box" ng-if="model.showResult">
+            <p>姓名：<span ng-bind="model.userName"></span></p>
+            <p>身份号码：<span ng-bind="model.idNum"></span></p>
+            <table class="ui-table mt20">
+                <tbody>
+                <tr>
+                    <th>培训内容</th>
+                    <th>继续教育年度</th>
+                    <th>学时</th>
+                    <th>考核结果</th>
+                </tr>
+                <tr ng-repeat="item in model.userPeriodList">
+                    <td>[<span ng-bind="item.type==='class'?'培训班':'课程'"></span>]<span
+                            ng-bind="item.trainingContent"></span></td>
+                    <td ng-bind="item.trainingYear"></td>
+                    <td ng-bind="item.period"></td>
+                    <td><span ng-if="item.trainingResult===-1||item.trainingResult===0">未合格</span
+                    ><span ng-if="item.trainingResult===1">合格</span></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="m-no-data tc" ng-if="!model.showResult">
+            <img src="ahzj/kccs/images/no-data.png" alt="空数据">
+            <p class="txt">当前还没有数据哦</p>
+        </div>
+
+        <div class="lwhLoading" ng-if="submitAble===true">
+            <img src="ahzj/kccs/images/loading1.gif"/>
+        </div>
+
+    </div>
+</div>

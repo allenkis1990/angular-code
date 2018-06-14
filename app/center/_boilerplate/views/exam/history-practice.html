@@ -1,0 +1,118 @@
+<div class="correct-exam mt20">
+    <div class="test-search-bar">
+        <div class="p-wrap-full">
+            <select ng-options="questionType.name for questionType in questionTypeList"
+                    ng-model="query.questionType"
+                    class="ui-slt slt-s ">
+            </select>
+            <button style="vertical-align: middle;" class="btn-auto ml10"
+                    ng-click="events.loadingHistory()">
+                确定
+            </button>
+
+            <div class="fr m-pages" ng-if="practicePaper.length>0">
+                <div pagination
+                     style="margin: 0;display: inline-block;"
+                     ng-change="events.loadingHistory()"
+                     ng-model="model.pageNo"
+                     total-items="model.total"
+                     items-per-page="model.pageSize"
+                     max-size="model.maxSize"
+                     previous-text="上一页"
+                     next-text="下一页"></div>
+
+                <!--<div style="display: inline-block;margin: 0 10px;color: #3ca2e2;">-->
+                <!--<span ng-bind="model.pageNo"></span>-->
+                <!--/-->
+                <!--<span ng-bind="model.totalPageSize"></span>-->
+                <!--页-->
+                <!--</div>-->
+                <!--<div style="display: inline-block;">-->
+                <!--<span class="slt-num">到第-->
+                <!--<input type="number" ng-model="model.toNumber" min="0" max="b{{model.total}}"-->
+                <!--style="width: 60px;"-->
+                <!--class="ui-ipt"> 页</span>-->
+                <!--<a href="" ng-click="events.jump()"-->
+                <!--class="go btn-like">跳转</a>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+    <div class="p-wrap-full clear">
+        <div class="m-no-data tc ng-scope" ng-show="!practicePaper ||practicePaper.length<=0" style="padding: 100px 0;">
+            <img src="@systemUrl@/images/no-data.png" alt="空数据">
+            <p class="txt" ng-bind="errors.queryResultMessage"></p>
+        </div>
+
+        <div ng-show="loading" style="position: absolute;top: 250px;left: 50%;z-index: 100;margin-left: -25px;">
+            <img src="@systemUrl@/images/loading.gif" style="width: 50px;" alt="">
+        </div>
+        <div class="question-type " ng-repeat="question in practicePaper"
+             id="b{{question.id}}"
+             style="margin-top: 20px;" id="b{{question.id}}">
+            <div class="ce-body  cb-2 ">
+                <div class="ce-cont ce-cont-2">
+                    <div wpf-single
+                         index="$index"
+                         question="question"
+                         ng-if="question.questionType === questionType.RADIO"></div>
+
+                    <div wpf-judge
+                         index="$index"
+                         question="question"
+                         ng-if="question.questionType === questionType.OPINION"></div>
+
+                    <div wpf-multi
+                         index="$index"
+                         question="question"
+                         ng-if="question.questionType === questionType.MULTIPLE"></div>
+
+
+                    <div class="parsing-block mt10 clear">
+                        <span class="label-b{{question.userCorrect?'r':'m'}}">
+                            <i class="ico ico-b{{question.userCorrect?'r':'w'}}"></i><span
+                                ng-bind="question.userCorrect?'正确':'错误'"></span></span>
+                        <div class="parsing-cont">
+                            <div class="r-answer">正确答案：<span ng-bind="question.answerResultAn.join(', ')"></span> ，我的答案：<span
+                                    ng-bind="question.userAnswerResult.join(', ')"></span>
+                            </div>
+                            <div class="fr mr5 t-g" ng-bind="'练习时间：' + question.answerTime"></div>
+                        </div>
+                    </div>
+                    <div class="parsing-block-1">
+                        <span class="b">试题解析：</span>
+                        <span ng-bind-html="question.description||'无'"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fr m-pages" ng-if="practicePaper.length>0">
+
+
+            <div pagination
+                 style="margin: 0;display: inline-block;"
+                 ng-change="events.loadingHistory()"
+                 ng-model="model.pageNo"
+                 total-items="model.total"
+                 items-per-page="model.pageSize"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+            <!--<div style="display: inline-block;margin: 0 10px;color: #3ca2e2;">-->
+            <!--<span ng-bind="model.pageNo"></span>-->
+            <!--/-->
+            <!--<span ng-bind="model.totalPageSize"></span>-->
+            <!--页-->
+            <!--</div>-->
+            <!--<div style="display: inline-block;">-->
+            <!--<span class="slt-num">到第-->
+            <!--<input type="number" ng-model="model.toNumber" min="0" max="b{{model.total}}"-->
+            <!--style="width: 60px;"-->
+            <!--class="ui-ipt"> 页</span>-->
+            <!--<a href="" ng-click="events.jump()"-->
+            <!--class="go btn-like">跳转</a>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+</div>

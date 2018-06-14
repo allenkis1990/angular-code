@@ -1,0 +1,76 @@
+<ul class="ul-d-form lh-1">
+    <li class="clear">
+        <span class="left-txt fl">培训课程名称：</span>
+        <div class="fl">
+            <label ng-bind="model.itemTemplateList[model.currentIndex].name"></label>
+        </div>
+    </li>
+    <li class="clear">
+        <span class="left-txt fl">开课时长：</span>
+        <div class="fl">
+            <label ng-bind="model.itemTemplateList[model.currentIndex].timeLength+'分钟'"></label>
+        </div>
+    </li>
+    <li class="clear">
+        <span class="left-txt fl">课程简介：</span>
+        <div class="fl w-2">
+            <label ng-bind-html="model.itemTemplateList[model.currentIndex].abouts|trustHtml"></label>
+        </div>
+    </li>
+    <li class="clear">
+        <span class="left-txt fl">学习资料：</span>
+        <div class="fl w-2">
+            <div class="tab-tit mt10">
+                <a href="javascript:void(0)" ng-class="model.resType==0?'current':''"
+                   ng-click="events.selectResType($event,0)">在线播放材料</a>
+                <a href="javascript:void(0)" ng-class="model.resType==1?'current':''"
+                   ng-click="events.selectResType($event,1)">附件材料</a>
+            </div>
+            <div class="tab-bd pt10">
+                <dl class="ftf-list" ng-if="model.resType==0">
+                    <dt>
+                        <span class="tit2">课程名称</span>
+                        <span class="gs2">课程分类</span>
+                        <span class="op2">操作</span>
+                    </dt>
+                    <dd ng-repeat="course in model.courseSelectedList">
+                        <span class="tit2" ng-bind="course.name"></span>
+                        <span class="gs2" ng-bind="course.resourceData.categoryName"></span>
+                        <span class="op2">
+                            <a href="javascript:void(0)"
+                               ng-click="events.previewCourse($event,course.resourceData.courseId)">试听</a>
+                        </span>
+                    </dd>
+                </dl>
+                <dl class="ftf-list" ng-if="model.resType==1">
+                    <dt>
+                        <span class="tit2">机构名称</span>
+                        <span class="gs2">格式</span>
+                        <span class="jd2"></span>
+                        <span class="op2">操作</span>
+                    </dt>
+                    <dd ng-repeat="resource in model.attachmentList">
+                        <span class="tit2" ng-bind="resource.name"></span>
+                        <span class="gs2" ng-bind="resource.resourceData.extension"></span>
+                        <span class="jd2"></span>
+                        <span class="op2">
+                            <a href="b{{urlPrefix+resource.resourceData.path}}">下载</a>
+                        </span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </li>
+    <li class="clear">
+        <span class="left-txt fl">教师姓名：</span>
+        <div class="fl">
+            <label ng-bind="model.itemTemplateList[model.currentIndex].teacherName">显示教师名称</label>
+        </div>
+    </li>
+    <li class="clear">
+        <span class="left-txt fl">教师简介：</span>
+        <div class="fl w-2">
+            <label ng-bind="model.itemTemplateList[model.currentIndex].teacherAbouts"></label>
+        </div>
+    </li>
+</ul>

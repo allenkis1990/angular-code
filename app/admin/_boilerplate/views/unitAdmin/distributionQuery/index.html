@@ -1,0 +1,45 @@
+<style>
+    .grid-null-data{
+        padding:10px;
+    }
+
+
+</style>
+
+
+<!--配送查询-->
+<div class="no-data w-4 pt20 pb20 clear"
+     ng-show="model.noUserInformation">
+    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+    <div class="p-txt">请先输入相关信息进行搜索！</div>
+</div>
+<div class="tab-bd clear" ng-if="!model.noUserInformation">
+<ul class="ul-form li-fl lh-1 mt20 clear">
+    <li>
+        <select ng-model="deliveryQueryParam.state" class="slt slt-small" >
+            <option value="-1">配送状态</option>
+            <option value="0">未就绪</option>
+            <option value="1">就绪</option>
+            <option value="g">已取货</option>
+        </select>
+    </li>
+    <li><input type="text" ng-model="deliveryQueryParam.waybillOrderNo"   hb-clear-input ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"  class="ipt ipt-large" placeholder="请输入运单号"></li>
+    <li><input type="text" class="ipt ipt-large" ng-model="deliveryQueryParam.orderNo"  hb-clear-input ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''" placeholder="请输入批次号"></li>
+<!--    <li><a href="javascript:void(0)" class="btn btn-b"     ng-click="events.MainPageQueryList()">查询</a></li>-->
+    <li><a href="javascript:void(0)" class="btn btn-b"  has-permission="unitAdmin/searchPackage"    ng-click="events.MainPageQueryList()">查询</a></li>
+</ul>
+<p>当前共有<span class="txt-r"><span ng-bind="model.total"></span>个</span>包裹</p>
+
+    <div style="margin-top:10px;"
+         class="table table-nf mt20"
+         kendo-grid="kendoPlus.deliveryQueryInstance"
+         k-ng-delay="kendoPlus.gridDelay"
+         k-options="deliveryQueryGrid.options">
+
+    </div>
+
+
+
+
+
+</div>

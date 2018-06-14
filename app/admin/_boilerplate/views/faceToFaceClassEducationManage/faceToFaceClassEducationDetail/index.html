@@ -1,0 +1,613 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goManage($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goManage($event)">面授班教务管理</a>
+        &gt;教务管理
+    </div>
+</div>
+<div class="main-wrap-body" >
+    <div>
+        <div class="tab-tit mt10">
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.classTab === 0,'kGLoading':!model.noUserInformation&&model.mark===false}"
+               ng-click="events.clickTab(0)">培训学员管理</a>
+
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.classTab === 1,'kGLoading':!model.noUserInformation&&model.mark===false}"
+               ng-click="events.clickTab(1)">线下考试成绩管理</a>
+
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.classTab === 2,'kGLoading':!model.noUserInformation&&model.mark===false}"
+               ng-click="events.clickTab(2)">学员学习明细</a>
+
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.classTab === 3,'kGLoading':!model.noUserInformation&&model.mark===false}"
+               ng-click="events.clickTab(3)">调查问卷结果统计</a>
+
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.classTab === 4,'kGLoading':!model.noUserInformation&&model.mark===false}"
+               ng-click="events.clickTab(4)">教师课程评级</a>
+
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.classTab === 5,'kGLoading':!model.noUserInformation&&model.mark===false}"
+               ng-click="events.clickTab(5)">班级通知</a>
+
+            <a href="javascript:void (0);"
+               ng-class="{'current':model.classTab === 6,'kGLoading':!model.noUserInformation&&model.mark===false}"
+               ng-click="events.clickTab(6)">培训风采</a>
+
+        </div>
+
+        <div ng-if="model.classTab === 0">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" ng-model="model.params.userName" class="ipt ipt-medium" placeholder="请输入学员姓名">
+                    </li>
+                    <li>
+                        <input type="text" ng-model="model.params.identity" class="ipt ipt-medium" placeholder="请输入身份证号">
+                    </li>
+                    <li>
+                        <input type="text" ng-model="model.params.phoneNumber" class="ipt ipt-medium" placeholder="请输入学员手机号">
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.params.signUpStatus">
+                            <option value="-1">请选择报名状态</option>
+                            <option value="1">已报名</option>
+                            <option value="2">已退班</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.params.hadReport">
+                            <option value="-1">请选择报到状态</option>
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.params.accommodationInfoStatus">
+                            <option value="-1">请选择住宿信息状态</option>
+                            <option value="1">已设置</option>
+                            <option value="2">未设置</option>
+                        </select>
+                    </li>
+                    <li><a href="javascript:void(0)" ng-click="events.mainPageQueryList($event,'studentInfoGridInstance','page')" class="btn btn-b">查询</a></li>
+                    <li><a href="javascript:void(0)" ng-click="events.exportStudentInfo()" class="btn-r btn">导出名单</a></li>
+                    <li><a href="javascript:void(0)" ng-click="events.exportAccommodationsInfo()" class="btn-r btn">导出住宿信息</a></li>
+                    <li><a href="javascript:void(0)" ng-click="events.openKendoWindow('importWindowOptions')" class="btn-r btn">导入住宿信息</a></li>
+                </ul>
+            </div>
+            <div class="column mt10">
+                <div kendo-grid="kendoPlus.studentInfoGridInstance"
+                     k-options="studentInfoGrid.options">
+                </div>
+            </div>
+
+        </div>
+
+        <div ng-if="model.classTab === 1">1</div>
+
+        <div ng-if="model.classTab === 2">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入学员姓名" ng-model="model.params.userName">
+                    </li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入身份证号" ng-model="model.params.identity">
+                    </li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入学员手机号" ng-model="model.params.phoneNumber">
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.params.signUpStatus">
+                            <option value="-1">是否合格</option>
+                            <option value="1">合格</option>
+                            <option value="2">不合格</option>
+                        </select>
+                    </li>
+                    <li><a href="javascript:void(0)" class="btn btn-b" ng-click="events.mainPageQueryList($event,'studentLearningGridInstance','page')">查询</a></li>
+                    <li><a href="javascript:void(0)" class="btn btn-b">导出名单</a></li>
+                </ul>
+            </div>
+            <div class="tips-box-1 clear">
+                <span>班级考核规则：有效签到次数：
+                    <span class="t-i">X次</span>，有效签退次数：
+                    <span class="t-i">Y次</span>，考试成绩合格分：
+                    <span class="t-i">Z分</span>，需要完成：
+                    <span class="t-i">X份</span>调查问卷
+                </span>
+            </div>
+            <div class="column mt10">
+                <div kendo-grid="kendoPlus.studentLearningGridInstance"
+                     k-options="studentLearningGrid.options">
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="model.classTab === 3">
+            <div class="tab-tit-sub mt10">
+                <a ng-click="events.switchTable(0)"
+                   ng-class="{'btn btn-b': model.paperInvoiceShow, 'current':model.paperInvoiceShow, 'btn btn-g ml5': !model.paperInvoiceShow}">整体报告</a>
+                <a ng-click="events.switchTable(1)"
+                   ng-class="{'btn btn-b': !model.paperInvoiceShow, 'current':!model.paperInvoiceShow, 'btn btn-g ml5': model.paperInvoiceShow}">问卷答题记录</a>
+            </div>
+            <!--普通问卷整体报告-->
+            <div class="tab-bd" ng-show="model.generalQuestionnaire === false && model.questionnaireType == 1">
+                <div class="wenjun-mod">
+                    <ul>
+                        <li><span class="tit">调查问卷名称：</span><span class="con" ng-bind="model.overallReport.questionnaireName"></span></li>
+                        <li><span class="tit">调查问卷试题：</span><span class="con"><a href="#">预览</a></span></li>
+                        <li><span class="tit">参与问卷情况：</span><span class="con">参与且提交问卷人数<span class="t-i" ng-bind="model.overallReport.joinAndSubmitOfUserCount"></span>人</span></li>
+                        <li class="op"><a href="#" class="btn btn-b">下载此报告</a><a href="#" class="btn btn-b ml10">下载试题选项问答内容</a></li>
+                    </ul>
+                    <div class="wenjun-ques">
+                        <div class="title">
+                            <span class="num">第1题：</span>
+                            <span class="tit">显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目</span>
+                            <span class="type">[单选题]</span>
+                        </div>
+                        <div class="content mt10">
+                            <table class="table-answer">
+                                <tr>
+                                    <th>选项</th>
+                                    <th>选择数</th>
+                                    <th>比例</th>
+                                </tr>
+                                <tr>
+                                    <td>选项A<span class="op"><a href="#">[详细]</a></span></td>
+                                    <td>3</td>
+                                    <td>60%</td>
+                                </tr>
+                                <tr>
+                                    <td>选项B<span class="op"><a href="#">[详细]</a></span></td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>选项C</td>
+                                    <td>2</td>
+                                    <td>40%</td>
+                                </tr>
+                                <tr>
+                                    <td><b>本次填写有效次数</b></td>
+                                    <td>5</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="op mt10">
+                            <a href="#" class="btn btn-b">导出问答文本到EXECL</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--普通问卷答题记录-->
+            <div class="tab-bd" ng-show="model.generalQuestionnaire === true && model.questionnaireType == 1">
+                <div class="search-bar mt10">
+                    <ul class="ul-form li-fl clear">
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入学员姓名" ng-model="model.recordParams.userName">
+                        </li>
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入学员手机号" ng-model="model.recordParams.phoneNumber">
+                        </li>
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入身份证号" ng-model="model.recordParams.identity">
+                        </li>
+                        <li><a href="javascript:void(0)" class="btn btn-b" ng-click="events.mainPageQueryList($event,'recordGridInstance','page')">查询</a></li>
+                    </ul>
+                </div>
+                <div class="tips-box-1 clear">
+                    <span>共<span class="t-i">X人</span>已问卷，剩余<span class="t-i">Y人</span>未问卷</span>
+                </div>
+                <div class="column mt10">
+                    <div kendo-grid="kendoPlus.recordGridInstance"
+                         k-options="recordGrid.options">
+                    </div>
+                </div>
+            </div>
+
+            <!--度量表整体报告-->
+            <div class="tab-bd" ng-show="model.generalQuestionnaire === false && model.questionnaireType == 2">
+                <div class="wenjun-mod">
+                    <ul>
+                        <li><span class="tit">调查问卷名称：</span><span class="con" ng-bind="model.overallReport.questionnaireName"></span></li>
+                        <li><span class="tit">调查问卷试题：</span><span class="con"><a href="#">预览</a></span></li>
+                        <li><span class="tit">参与问卷情况：</span><span class="con">参与且提交问卷人数<span class="t-i" ng-bind="model.overallReport.joinAndSubmitOfUserCount"></span>人</span></li>
+                        <li><span class="tit">本次问卷得分：</span><span class="con"><span class="t-i" ng-bind="model.overallReport.questionnaireScore">5</span>分</span></li>
+                        <li class="op"><a href="#" class="btn btn-b">下载此报告</a></li>
+                    </ul>
+                    <div class="wenjun-ques">
+                        <div class="title">
+                            <span class="num">第1题：</span>
+                            <span class="score">【本题评分得分:5分】</span>
+                            <span class="tit">显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目显示试题题目</span>
+                            <span class="type">[量表题]</span>
+                        </div>
+                        <div class="content mt10">
+                            <table class="table-answer">
+                                <tr>
+                                    <th>选项</th>
+                                    <th>分值</th>
+                                    <th>选择数</th>
+                                    <th>比例</th>
+                                </tr>
+                                <tr>
+                                    <td>1(非常不满意)</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>60%</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>80%</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>3</td>
+                                    <td>3</td>
+                                    <td>40%</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>4</td>
+                                    <td>3</td>
+                                    <td>20%</td>
+                                </tr>
+                                <tr>
+                                    <td>5(非常满意)</td>
+                                    <td>5</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td><b>本题有效填写次数</b></td>
+                                    <td></td>
+                                    <td>5</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--度量问卷答题记录-->
+            <div class="tab-bd" ng-show="model.generalQuestionnaire === true && model.questionnaireType == 2">
+                <div class="search-bar mt10">
+                    <ul class="ul-form li-fl clear">
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入学员姓名" ng-model="model.recordParams.userName">
+                        </li>
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入学员手机号" ng-model="model.recordParams.phoneNumber">
+                        </li>
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入身份证号" ng-model="model.recordParams.identity">
+                        </li>
+                        <li><a href="javascript:void(0)" class="btn btn-b" ng-click="events.mainPageQueryList($event,'gaugeGridInstance','page')">查询</a></li>
+                    </ul>
+                </div>
+                <div class="tips-box-1 clear">
+                    <span>共<span class="t-i">X人</span>已问卷，剩余<span class="t-i">Y人</span>未问卷</span>
+                </div>
+                <div class="column mt10">
+                    <div kendo-grid="kendoPlus.gaugeGridInstance"
+                         k-options="gaugeGrid.options">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="model.classTab === 4 && model.modelTCE.teacherCurriculumEvaluationList">
+            <div class="tab-bd" ng-repeat="item in model.modelTCE.teacherCurriculumEvaluationList">
+                <div class="title">
+                    b{{item.teacherName}}， 在本班级授课平均得分b{{item.avgEvaluationScore}}分
+                </div>
+                <table class="table table-nf">
+                    <thead>
+                    <tr>
+                        <th width="100">课程名称</th>
+                        <th width="100">总评平均得分</th>
+                        <th width="200">评论人数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="itemChild in item.courseEvaluationList">
+                        <td ng-bind="itemChild.courseName"></td>
+                        <td ng-bind="itemChild.avgEvaluationScore"></td>
+                        <td ng-bind="itemChild.EvaluationCount"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div ng-if="model.classTab === 5">
+            <div class="tab-bd">
+                <div class="search-bar mt10">
+                    <ul class="ul-form li-fl clear">
+                        <li>
+                            <input type="text" class="ipt ipt-medium" placeholder="请输入资讯标题"
+                                   ng-model="model.modelCN.classNoticeQuery.title"
+                                   ng-keyup="events.pressEnterKeyCN($event)"
+                                   hb-clear-input/>
+                        </li>
+                        <li>
+                            <select class="slt slt-medium"ng-model="model.modelCN.classNoticeQuery.isPop">
+                                <option value="-1">是否弹窗公告</option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </li>
+                        <li>
+                            <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                                   ng-model="model.modelCN.classNoticeQuery.publishStartTime" type="text" class="ipt ipt-s"
+                                   placeholder="发布时间开始" hb-clear-input />
+                            <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                                   ng-model="model.modelCN.classNoticeQuery.publishEndTime" type="text" class="ipt ipt-s"
+                                   placeholder="发布时间结束" hb-clear-input />
+                        </li>
+                        <li><a href="javascript:void(0)" class="btn btn-b" ng-click="events.queryClassNotice($event)">查询</a></li>
+                    </ul>
+                </div>
+                <dl class="dl-form">
+                    <dt><a href="javascript:void(0)" class="btn btn-c" ng-click="events.toAddClassNotice($event)">新建资讯</a></dt>
+                    <dd ng-if="model.modelCN.classNoticeList.length > 0" ng-repeat="item in model.modelCN.classNoticeList">
+                        <div class="left">
+                            <div class="tit">
+                                <span class="t-i" ng-if="item.status==='0'">[草稿]</span>
+                                <span class="t-i" ng-if="item.status==='1'">[发布]</span>
+                                <span ng-bind="item.title" title="item.title"></span>
+                            </div>
+                            <div class="info">
+                                <span>发布者：b{{item.publishPersonName}}</span>
+                                <span>发布时间：b{{item.publishTimeStr}}</span>
+                                <span>是否弹窗公告：b{{item.isPop === '1' ? '是':'否'}}</span>
+                            </div>
+                        </div>
+                        <!--<div class="mid">
+                            <div class="pic"><img src="/admin/_boilerplate/images/afei.jpg" /></div>
+                        </div>-->
+                        <div class="right">
+                            <a href="javascript:void(0)" class="btn-data btn-edit" title="编辑" ng-click="events.toEditClassNotice($event,item)"></a>
+                            <a href="javascript:void(0)" class="btn-data btn-del ml10" title="删除" ng-click="events.deleteClassNotice($event,item)"></a>
+                        </div>
+                    </dd>
+                </dl>
+                <div ng-if="model.modelCN.classNoticeList.length > 0" class="col-body mt20 clear">
+                    <div kendo-pager="node.classNoticePager" k-options="ui.classNoticePager"></div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="model.classTab === 6">
+            <div class="tab-bd">
+                <div class="rel">
+                    <div class="column">
+                        <div class="col-tit">上传培训风采
+                        </div>
+                    </div>
+                    <dl class="dl-form dl-fengcai">
+                        <dt>
+                            <div>
+                                <a href="javascript:void(0)" class="btn btn-c" ng-click="model.uploadTrainingAndDemeanor = true">选择文件</a>
+                            </div>
+                            <span>温馨提示：文件格式须为*.jpg，*.jepg，*.gif，*.bem，*.png的图片，文件大小2M以内。</span>
+                        </dt>
+                        <dd>
+                            <div class="pic-view">
+                                <img ng-src="b{{model.modelTAD.imgSrc}}"/>
+                            </div>
+                        </dd>
+                        <dd>
+                            <a href="javascript:void(0)" class="btn btn-r"
+                               ng-disabled="!model.modelTAD.submitAble" ng-click="events.saveDemeanorImgUrl($event)">确定上传</a>
+                            <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="events.deleteDemeanorImgUrl($event)">取消</a>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="rel">
+                    <div class="column">
+                        <div class="col-tit">培训风采墙
+                        </div>
+                    </div>
+                    <ul class="ul-fengcai"  ng-if="model.modelTAD.trainingAndDemeanorList.length > 0">
+                        <li ng-repeat="item in model.modelTAD.trainingAndDemeanorList">
+                            <img ng-src="/mfsb{{item.demeanorImgPath}}" />
+                        </li>
+                        <!--<li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>
+                        <li>
+                            <img src="/admin/_boilerplate/images/afei.jpg" />
+                        </li>-->
+                    </ul>
+                </div>
+                <div ng-if="model.modelTAD.trainingAndDemeanorList.length > 0" class="col-body mt20 clear">
+                    <div kendo-pager="node.trainingAndDemeanorPager" k-options="ui.trainingAndDemeanorPager"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dialog w-2" k-options="kendoPlus.importWindowOptions" kendo-window="importWindowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">导入住宿信息<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('importWindowOptions')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <!--<div class="tips-box">
+                温馨提示:<br>
+                1.导入前请先下载导入模板<span class="b t-r"><a ng-click="events.toDownQuestionMode()" target="_blank" class="t-r" href="b{{model.downloadModelUrl}}/mfs/resource/file//40289b7c601f2d9701601f2ff9a60001/40289b7c601f731801601f75227f0003/scjs_userManage_importUser_temp.xls"
+            >[导入学员模板]</a></span>，根据表格内容填写后导入；<br>
+            </div>-->
+            <ul class="ul-d-form mt20">
+                <li>
+                    <span class="left-txt left-txt-4">选择导入文件：</span>
+                    <input type="text"
+                           ng-model="model.upload.result.fileName"
+                           readonly class="ipt w-4"
+                           placeholder="选择导入文件">
+
+                    <div hb-file-uploader="test"
+                         ng-if="windowLoaded" auto="true" style=" display: inline-block;margin: 0;padding: 0;" ng-model="model.upload.result"
+                         class="upload btn">
+                    </div>
+                </li>
+                <li>
+                    <span class="left-txt left-txt-4"></span>
+                    <br><span class="left-txt left-txt-4"></span>
+                    <a ng-click="events.importUserAccommodationsInfo()" class="btn btn-r mt10">导入</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="dialog w-2" k-options="kendoPlus.detailWindowOptions" kendo-window="detailWindowOptions">
+    <div class="dialog-body">
+
+        <div style="font-size: large">学员信息
+            <a href="javascript:void(0)" ng-click="events.closeKendoWindow('detailWindowOptions')" class="ico ico-close" style="width: 20px; top: 17px;"></a>
+        </div>
+        <br><br>
+        <div class="dialog-tit">
+            基础信息
+        </div>
+        <div>
+            <form name="baseInfoForm">
+                <ul class="ul-d-form ml30">
+                    <li><span class="left-txt">姓名：</span><span ng-bind="model.userInfo.userName"></span></li>
+                    <li><span class="left-txt">手机号：</span><span ng-bind="model.userInfo.phoneNumber"></span></li>
+                    <li><span class="left-txt">职位：</span><span ng-bind="model.userInfo.identity"></span></li>
+                    <li><span class="left-txt">报名时间：</span><span ng-bind="model.userInfo.signUpTime"></span></li>
+                    <li><span class="left-txt">报名状态：</span>
+                        <span ng-if="model.userInfo.signUpStatus === 1">已报名</span>
+                        <span ng-if="model.userInfo.signUpStatus === 2">已退班</span>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <br>
+        <div class="dialog-tit">
+            住宿信息
+        </div>
+        <div>
+            <form name="AccommodationsForm">
+                <ul class="ul-d-form ml30">
+                    <li><span class="left-txt">宾馆名称：</span><span ng-bind="model.userInfo.hotelName"></span></li>
+                    <li><span class="left-txt">宾馆地址：</span><span ng-bind="model.userInfo.hotelAddress"></span></li>
+                    <li><span class="left-txt">楼号/楼名：</span><span ng-bind="model.userInfo.hotelBuildingName"></span></li>
+                    <li><span class="left-txt">楼层：</span><span ng-bind="model.userInfo.floor"></span></li>
+                    <li><span class="left-txt">房号：</span><span ng-bind="model.userInfo.roomNum"></span></li>
+                    <li><span class="left-txt">房型：</span><span ng-bind="model.userInfo.roomType"></span></li>
+                </ul>
+            </form>
+        </div>
+        <br>
+        <div class="dash-line-2"></div>
+        <div class="btn-center">
+            <a href="javascript:void(0)" ng-click="events.closeKendoWindow('detailWindowOptions')" class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>
+
+<div class="dialog w-2" k-options="kendoPlus.signInDetailWindowOptions" kendo-window="signInDetailWindowOptions">
+    <div class="dialog-body">
+
+        <div style="font-size: large">查看打卡明细 注：只记录有效的签到信息
+            <a href="javascript:void(0)" ng-click="events.closeKendoWindow('signInDetailWindowOptions')" class="ico ico-close" style="width: 20px; top: 17px;"></a>
+        </div>
+        <br><br>
+        <div class="dialog-tit">
+            基础信息
+        </div>
+        <div>
+            <ul class="ul-d-form ml30">
+                <li><span class="left-txt">姓名：</span><span ng-bind="model.userInfo.userName"></span></li>
+                <li><span class="left-txt">手机号：</span><span ng-bind="model.userInfo.phoneNumber"></span></li>
+                <li><span class="left-txt">身份证：</span><span ng-bind="model.userInfo.identity"></span></li>
+                <li><span class="left-txt">报名时间：</span><span ng-bind="model.userInfo.signUpTime"></span></li>
+                <li><span class="left-txt">报名状态：</span>
+                    <span ng-if="model.userInfo.signUpStatus === 1">已报名</span>
+                    <span ng-if="model.userInfo.signUpStatus === 2">已退班</span>
+                </li>
+            </ul>
+        </div>
+        <div class="ul-d-form ml30">
+            <div kendo-grid="kendoPlus.studentLearningGridInstance"
+                 k-options="studentLearningGrid.options">
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+<div class="dialog w-2" k-options="kendoPlus.createClassNoticeWindowOptions" kendo-window="createClassNoticeWindowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">b{{model.modelCN.titleClassNotice}}
+            <a href="javascript:void(0)" class="ico ico-close" ng-click="events.closeKendoWindow('createClassNoticeWindowOptions')"></a>
+        </div>
+        <ul class="ul-d-form lh-1">
+            <li><span class="left-txt"><i>*</i>资讯标题：</span>
+                <input type="text" class="ipt w-textarea"placeholder="请输入资讯标题"
+                       maxlength="151" ng-maxLength="150"
+                       name="title" ng-model="model.modelCN.createClassNotice.title"
+                       required ng-required="true">
+            </li>
+            <li class="clear"><span class="left-txt fl"><i>*</i>资讯内容：</span>
+                <div class="fl width-600">
+                    <textarea class="textarea w-textarea fl"
+                           required ng-required="true"
+                           name="content" ng-model="model.modelCN.createClassNotice.content"
+                           kendo-editor k-options="ui.editor"></textarea>
+                </div>
+            </li>
+            <li>
+                <span class="left-txt">弹窗展示通知</span>
+                <input  type="radio" value='1' id="popYes" ng-model="model.modelCN.createClassNotice.isPop"><label for="popYes">是</label>
+                <input  type="radio" value='0' id="popNo" ng-model="model.modelCN.createClassNotice.isPop"><label for="popNo">否</label>
+            </li>
+        </ul>
+        <div class="btn-center mt20">
+            <input type="button" class="btn btn-r mt10" value="发布"
+                   ng-disabled="!model.modelCN.submitAble" ng-click="events.publishClassNotice($event)"/>
+            <input type="button" class="btn btn-g ml10" value="清空内容"
+                   ng-click="events.clearClassNotice($event)" />
+        </div>
+    </div>
+</div>
+
+<div ng-if="model.uploadTrainingAndDemeanor">
+    <div upload-head
+         aspect-ratio="aspectRatio"
+         template-url="@systemUrl@/templates/tpls/tpl-upload-images-img-tpl.html"
+         ng-model="model.uploaderTrainingAndDemeanor"
+         close="model.uploadTrainingAndDemeanor" style="display: none;">
+    </div>
+</div>

@@ -1,0 +1,545 @@
+<div class="steps pb10 lwh-steps">
+    <div class="bg-line rd3"><span class="bg-l-current rd3" ng-style="model.linePreStyle"></span>
+    </div>
+    <ul class="ul-step ul-step-3 li-fl clear">
+        <li ng-class="{'current':item.processed===true}"
+            ng-style="model.lineWidthStyle"
+            ng-repeat="item in model.orderDetail.statusLogList"
+        ><span class="ico"
+               ng-class="{'s-1':$index===0,'s-2':$index===1,'s-3':$index===2,'s-4':$index===3}"
+        ></span
+        >
+            <p class="step-name"
+            ><span ng-if="item.status===1">提交订单</span
+            ><span ng-if="item.status===3">已付款</span
+            ><span ng-if="item.status===5">已发货</span
+            ><span ng-if="item.status===6">交易成功</span
+            ><span ng-if="item.status===7">交易关闭</span
+            ><br><span ng-bind="item.operateTime"></span></p>
+        </li>
+    </ul>
+</div>
+
+<div class="column mt20">
+    <div class="col-tit">当前订单状态</div>
+    <p class="ml15">
+
+        订单号：<span ng-bind="model.orderDetail.orderNo"></span> <span class="ml50"
+    >状态：<span ng-if="model.orderDetail.status===1">待付款</span
+    ><span ng-if="model.orderDetail.status===2||model.orderDetail.status===3||model.orderDetail.status===4||model.orderDetail.status===5">开通中</span
+    ><span ng-if="model.orderDetail.status===6">交易成功</span
+    ><span ng-if="model.orderDetail.status===7">交易关闭</span
+    ><span ng-if="model.orderDetail.status===8">支付中</span
+    ></span>
+
+        <span class="ml15" ng-if="model.orderDetail.closeReason!==null">理由：<span style="color:red;"
+                                                                                 ng-bind="model.orderDetail.closeReason"></span></span>
+
+        <!--<a href="javascript:void(0)"
+           has-permission="orderManage/closeOrder"
+           ng-if="model.orderDetail.status===1 || model.orderDetail.status===8"
+           ng-click="events.closeTheOrder()"
+           class="btn btn-g ml5">关闭订单</a>-->
+
+        <a href="javascript:void(0)"
+           has-permission="orderManage/openClass"
+           ng-if="model.orderDetail.status===2||model.orderDetail.status===3||model.orderDetail.status===4||model.orderDetail.status===5"
+           ng-click="events.openTheClass()"
+           class="btn btn-b ml5">继续发货</a>
+        <!--<span class="ml15">订单创建人：<span ng-bind="model.orderDetail.creator.name"></span></span>-->
+    </p>
+    <p ng-if="model.orderDetail.tradeChannel==='COLLECTIVE'" class="ml15">
+        批次号：<span ng-bind="model.orderDetail.batchNo"></span>
+        订单创建人：<span ng-bind="model.orderDetail.creator.name"></span>
+        登录账号：<span ng-bind="model.orderDetail.creator.loginInput"></span>
+        单位名称：<span ng-bind="model.orderDetail.creator.unitName"></span>
+    </p>
+    <div class="dash-line-2"></div>
+</div>
+
+<div ng-if="model.orderDetail.tradeChannel!=='COLLECTIVE'"
+     class="column mt20">
+    <div class="col-tit">订单信息</div>
+    <p class="ml15 b">购买人信息</p>
+    <p class="ml15 mt5">购买人：<span ng-bind="model.orderDetail.buyer.name"></span
+    > <span class="ml50">手机号：<span ng-bind="model.orderDetail.buyer.phoneNumber"></span></span
+    > <span class="ml50">身份证：<span ng-bind="model.orderDetail.buyer.loginInput"></span></span
+    ><br/><!--<span>职称：<span ng-bind="model.orderDetail.buyer.loginInput"></span></span>-->
+    </p>
+
+
+    <div ng-if="model.orderDetail.needInvoice===true && model.orderDetail.orderInvoice.electron===false">
+        <div class="dash-line-5"></div>
+        <p class="ml15 b">发票收货信息</p>
+
+        <div ng-if="model.orderDetail.deliverType===2">
+            <p class="ml15 mt5">寄送方式：自取 </p>
+            <p class="ml15 mt5">领取地点：<span ng-bind="model.orderDetail.orderInvoice.selfAddress"></span></p>
+            <p class="ml15 mt5">领取时间：<span ng-bind="model.orderDetail.orderInvoice.drawTime"></span></p>
+            <p class="ml15 mt5">备注：<span ng-bind="model.orderDetail.orderInvoice.remark"></span></p>
+        </div>
+
+        <div ng-if="model.orderDetail.deliverType===1">
+            <p class="ml15 mt5">寄送方式：邮寄 </p>
+            <p class="ml15 mt5">收件人：<span ng-bind="model.orderDetail.orderInvoice.receiverName||'-'"></span></p>
+            <!--<p class="ml15 mt5">手机号：<span ng-bind="model.orderDetail.orderInvoice.mobileNo"></span></p>-->
+            <p class="ml15 mt5">收件详址：<span ng-bind="model.orderDetail.orderInvoice.postAddress||'-'"></span></p>
+            <p class="ml15 mt5">邮政编码：<span ng-bind="model.orderDetail.orderInvoice.postCode||'-'"></span></p>
+            <!--<p class="ml15 mt5">快递公司：<span ng-bind="model.orderDetail.orderInvoice.expressCompany||'-'"></span></p>-->
+            <!--<p class="ml15 mt5">快递单号：<span ng-bind="model.orderDetail.orderInvoice.expressNumber||'-'"></span></p>-->
+        </div>
+    </div>
+
+    <div ng-if="model.orderDetail.paymentRecordList!==null">
+        <div class="dash-line-5"></div>
+        <p class="ml15 b">支付信息</p>
+        <div class="clear">
+
+            <div class="wp-5 fl pb10" ng-repeat="item in model.orderDetail.paymentRecordList">
+                <p class="ml15 mt5">支付方式：
+                    <span ng-if="model.orderDetail.payType==1">网上报名</span>
+                    <span ng-if="model.orderDetail.payType==2">线下报名</span>-
+                    <span ng-bind="model.orderDetail.tradeChannelName"></span>-
+                    <span ng-bind="item.payChanelName"></span>
+                </p>
+                <p class="ml15 mt5">交易号：<span ng-bind="item.payFlowNo"></span></p>
+                <!--<p class="ml15 mt5">收款帐号别名：<span ng-bind="model.orderDetail.paymentRecordList[0].accountAlias"></span></p>-->
+                <p class="ml15 mt5">付款时间：<span ng-bind="item.payTime"></span></p>
+                <p class="ml15 mt5">付款成功时间：<span ng-bind="item.paySuccessTime||'-'"></span></p>
+            </div>
+        </div>
+    </div>
+    <div ng-if="model.orderDetail.paymentRecordList==null">
+        <div class="dash-line-5"></div>
+        <p class="ml15 b">支付信息</p>
+        <div class="clear">
+            <div class="wp-5 fl pb10">
+                <!--<p class="ml15 mt5">交易 <span class="b t-r fs16">1</span>:</p>-->
+                <p class="ml15 mt5">支付方式：
+                    <span ng-if="model.orderDetail.payType==1">网上报名</span>
+                    <span ng-if="model.orderDetail.payType==2">线下报名</span>-
+                    <span ng-bind="model.orderDetail.tradeChannelName"></span>
+                    <span ng-if="model.orderDetail.depositBank">
+                        -<span ng-bind="model.orderDetail.depositBank"></span>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-line-5"></div>
+    <p class="ml15 b">发票信息及配送信息</p>
+    <!--没发票-->
+    <p class="ml15 mt5" ng-if="model.orderDetail.needInvoice===false">是否需要发票：否 </p>
+    <!-- 需要发票 -->
+    <div ng-if="model.orderDetail.needInvoice===true">
+        <p class="ml15 mt5">
+             <span class="mr20">发票类型：
+                 <span ng-if="model.orderDetail.orderInvoice.electron">普通电子发票</span>
+                 <span ng-if="!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===2">普通发票</span>
+                 <span ng-if="!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===3">增值税专用发票</span>
+                 <span ng-if="model.orderDetail.orderInvoice.noTaxBill===true">非税务发票</span>
+             </span>
+
+
+            <span class="ml50"
+                  ng-if="model.orderDetail.orderInvoice.titleType==1&&model.orderDetail.orderInvoice.paperInvoiceType!==3">
+                发票抬头:[个人]<span ng-bind="model.orderDetail.orderInvoice.title||'-'"></span>
+            </span>
+            <span class="ml50"
+                  ng-if="model.orderDetail.orderInvoice.titleType==2&&model.orderDetail.orderInvoice.paperInvoiceType!==3">
+                发票抬头:[单位]<span ng-bind="model.orderDetail.orderInvoice.title||'-'"></span>
+            </span>
+            <span class="ml50"
+                  ng-if="(!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===3)">
+                单位名称:<span ng-bind="model.orderDetail.orderInvoice.title||'-'">
+            </span>
+            </span>
+            <span class="ml50"
+                  ng-if="(model.orderDetail.orderInvoice.titleType==2||(!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===3))&&model.orderDetail.orderInvoice.noTaxBill===false">纳税人识别号：<span
+                    ng-bind="model.orderDetail.orderInvoice.taxpayerNo||'-'"></span></span>
+        </p>
+        <!--增值税发票才有的选项-->
+        <p class="ml15 mt5"
+           ng-if="!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===3"
+        >开户银行：<span ng-bind="model.orderDetail.orderInvoice.bankName"></span>
+        </p>
+
+        <p class="ml15 mt5"
+           ng-if="!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===3"
+        >开户账号：<span ng-bind="model.orderDetail.orderInvoice.account"></span>
+        </p>
+
+        <p class="ml15 mt5"
+           ng-if="!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===3"
+        >注册电话：<span ng-bind="model.orderDetail.orderInvoice.unitPhone"></span>
+        </p>
+
+        <p class="ml15 mt5"
+           ng-if="!model.orderDetail.orderInvoice.electron&&model.orderDetail.orderInvoice.paperInvoiceType===3"
+        >注册地址：<span ng-bind="model.orderDetail.orderInvoice.unitAddress"></span>
+        </p>
+        <!--增值税发票才有的选项-->
+
+        <p class="ml15 mt5">
+            <span>开票状态：
+                <span ng-switch="model.orderDetail.orderInvoice.state">
+                    <!-- 发票状态 0：未打印1:已打印2:已发货3:已作废 -->
+                    <span ng-switch-when="0">待开票</span>
+                    <span ng-switch-when="1">已开票</span>
+                    <span ng-switch-when="2">已开票</span>
+                    <span ng-switch-when="3">已作废</span>
+                    <span ng-switch-default>-</span>
+                </span>
+            </span>
+            <span class="ml50">发票号码：<span ng-bind="model.orderDetail.orderInvoice.invoiceNo||'-'"></span></span>
+            <!-- 电子票的额外信息 -->
+            <!--<span ng-if="model.orderDetail.orderInvoice.electron===true" class="ml50">发票代码：<span ng-bind="model.orderDetail.orderInvoice.code||'-'"></span></span>-->
+        </p>
+
+        <!-- 电子票的额外信息 -->
+        <!--<p ng-if="model.orderDetail.orderInvoice.electron===true" class="ml15 mt5">-->
+        <!--<span>查询验证码：<span ng-bind="model.orderDetail.orderInvoice.verifyCode||'-'"></span></span>-->
+        <!--<span class="ml50">开票日期：<span ng-bind="model.orderDetail.orderInvoice.createTime||'-'"></span></span>-->
+        <!--<span class="ml50">下载地址：<span ng-bind="model.orderDetail.orderInvoice.code||'-'"></span></span>-->
+        <!--</p>-->
+    </div>
+
+
+    <div ng-if="model.orderDetail.needInvoice===true && model.orderDetail.orderInvoice.electron===false">
+        <div class="dash-line-5"></div>
+        <p class="ml15 b">配送信息</p>
+
+        <div ng-if="model.orderDetail.deliverType===2">
+            <p class="ml15 mt5">配送方式：自取 </p>
+            <p class="ml15 mt5">领取地点：<span ng-bind="model.orderDetail.orderInvoice.selfAddress"></span></p>
+            <p class="ml15 mt5">领取时间：<span ng-bind="model.orderDetail.orderInvoice.drawTime"></span></p>
+            <p class="ml15 mt5">备注：<span ng-bind="model.orderDetail.orderInvoice.remark"></span></p>
+        </div>
+
+        <div ng-if="model.orderDetail.deliverType===1">
+            <p class="ml15 mt5">配送方式：邮寄
+                <!--<p class="ml15 mt5">收件人：<span ng-bind="model.orderDetail.orderInvoice.receiverName||'-'"></span></p>-->
+                <!--<p class="ml15 mt5">手机号：<span ng-bind="model.orderDetail.orderInvoice.mobileNo"></span></p>-->
+                <!--<p class="ml15 mt5">收件详址：<span ng-bind="model.orderDetail.orderInvoice.postAddress||'-'"></span></p>-->
+                <!--<p class="ml15 mt5">邮政编码：<span ng-bind="model.orderDetail.orderInvoice.postCode||'-'"></span></p>-->
+                <span class="ml50">快递公司：<span
+                        ng-bind="model.orderDetail.orderInvoice.expressCompany||'-'"></span></span></p>
+            <p class="ml15 mt5">运单号：<span ng-bind="model.orderDetail.orderInvoice.expressNumber||'-'"></span>
+                <span class="ml50" ng-show="model.orderDetail.orderInvoice.expressNumber">
+                    <a copy-man-three class="txt-b mt10" style="display: inline-block;"
+                       after-copy="events.afterCopy(model.orderDetail.orderInvoice.expressCompanyUrl)"
+                       data-clipboard-text="b{{model.orderDetail.orderInvoice.expressNumber}}">复制运单号并查询</a></span>
+            </p>
+            <p class="ml15 mt5">发货时间：<span ng-bind="model.orderDetail.orderInvoice.sendTime||'-'"></span></p>
+        </div>
+    </div>
+
+
+    <div class="dash-line-5"></div>
+    <p class="ml15 b">物品清单</p>
+    <table class="table ml15 mt10">
+        <thead>
+        <tr>
+            <th>物品名称</th>
+            <th width="200">属性</th>
+            <th width="200">所属培训方案</th>
+            <th width="80">学时总数</th>
+            <th width="80">数量</th>
+            <th width="100">金额</th>
+            <th width="120">状态</th>
+            <th width="80">售后</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in model.orderDetail.subOrderList">
+            <td>
+                <a href="javascript:void(0)" class="c-lab hide">换入</a>
+                <a href="javascript:void(0)" class="c-lab hide">换出</a>
+                <span ng-if="item.commodityType==='TRAINING_CLASS'">[培训班]</span>
+                <span ng-if="item.commodityType==='COURSE'">[课程]</span>
+                <span ng-if="item.commodityType==='PERIOD'">[课程]</span>
+                <span ng-bind="item.name"></span>
+                <p class="op" has-permission="orderManage/relationOrder" ng-if="item.associatedOrderCount>0"><a
+                        href="javascript:void(0)" ng-click="events.openKendoWindow(item)">关联订单<span
+                        ng-bind="item.associatedOrderCount"></span></a></p>
+            </td>
+            <td>
+                <div ng-repeat="subItem in item.skuPropertyNameList">
+                    <span ng-bind="subItem.skuPropertyName"></span>：
+                    <span ng-bind="subItem.skuPropertyValueName?subItem.skuPropertyValueName:'-'"></span>
+                </div>
+            </td>
+            <td ng-bind="item.schemeName||'-'"></td>
+            <td ng-bind="item.hour"></td>
+            <td>1</td>
+            <td ng-bind="item.totalAmount"></td>
+            <td>
+                <span ng-if="item.status===1">待付款</span>
+                <span ng-if="item.status===2">未发货</span>
+                <span ng-if="item.status===3">发货中</span>
+                <span ng-if="item.status===4">已发货</span>
+                <span ng-if="item.status===5">买家已签收</span>
+                <span ng-if="item.status===6">已换货</span>
+                <span ng-if="item.status===7">退货中</span>
+                <span ng-if="item.status===8">已退货</span>
+                <span ng-if="item.status===9">已取消</span>
+                <span ng-if="item.status===10">发货失败</span>
+                <span ng-if="item.status===11">退货并退款成功</span>
+                <span ng-if="item.status===12">退货失败</span>
+                <span ng-if="item.status===13">退货中</span>
+                <span ng-if="item.status===14">换货单原班级退货中</span>
+                <span ng-if="item.status===15">换货单原班级已退货</span>
+                <span ng-if="item.status===16">换货单原班级退货失败</span>
+                <span ng-if="item.status===17">退款失败</span>
+                <span ng-if="item.status===18">退货不退款成功</span>
+            </td>
+            <td class="op">
+                <button style="color:#54b1ec"
+                        has-permission="orderManage/applyRefund"
+                        ng-click="events.openRefunWindow(item)"
+                        ng-if="utils.validateIsNull(item.refundOrderNo)===true&&item.status===5&&model.orderDetail.status===6">
+                    退款
+                </button>
+                <a href="javascript:void(0)"
+                   has-permission="orderManage/refundDetail"
+                   ng-click="events.goRefunDetail(item)"
+                   ng-if="utils.validateIsNull(item.refundOrderNo)===false">退款详情</a>
+
+                <span ng-if="item.refundOrderNo===null&&model.orderDetail.status!==6">-</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="order-sum tr">
+        <p>总学时：<span ng-bind="model.orderDetail.hour"></span> 学时</p>
+        <p>商品总金额：<span class="price">￥b{{model.total}}</span></p>
+        <p class="all">实付金额：<span class="t-r b">¥b{{model.orderDetail.totalAmount}}</span></p>
+    </div>
+    <div class="dash-line-2"></div>
+
+
+</div>
+<div ng-if="model.orderDetail.tradeChannel==='COLLECTIVE'"
+     class="column mt20">
+    <div class="col-tit">订单信息</div>
+    <div >
+        <p class="ml15 b">学员信息</p>
+        <p class="ml15 mt5">学员：<span ng-bind="model.orderDetail.buyer.name"></span
+        > <span class="ml50">手机号：<span ng-bind="model.orderDetail.buyer.phoneNumber"></span></span
+        > <span class="ml50">身份证：<span ng-bind="model.orderDetail.buyer.loginInput"></span></span
+        ><br/><!--<span>职称：<span ng-bind="model.orderDetail.buyer.loginInput"></span></span>-->
+        </p>
+    </div>
+
+    <div class="dash-line-5"></div>
+    <p class="ml15 b">物品清单</p>
+    <table class="table ml15 mt10">
+        <thead>
+        <tr>
+            <th>物品名称</th>
+            <th width="200">属性</th>
+            <th width="200">所属培训方案</th>
+            <th width="80">学时总数</th>
+            <th width="80">数量</th>
+            <th width="100">金额</th>
+            <th width="120">状态</th>
+            <th width="80">售后</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in model.orderDetail.subOrderList">
+            <td>
+                <a href="javascript:void(0)" class="c-lab hide">换入</a>
+                <a href="javascript:void(0)" class="c-lab hide">换出</a>
+                <span ng-if="item.commodityType==='TRAINING_CLASS'">[培训班]</span>
+                <span ng-if="item.commodityType==='COURSE'">[课程]</span>
+                <span ng-if="item.commodityType==='PERIOD'">[课程]</span>
+                <span ng-bind="item.name"></span>
+                <p class="op" has-permission="orderManage/relationOrder" ng-if="item.associatedOrderCount>0"><a
+                        href="javascript:void(0)" ng-click="events.openKendoWindow(item)">关联订单<span
+                        ng-bind="item.associatedOrderCount"></span></a></p>
+            </td>
+            <td>
+                <div ng-repeat="subItem in item.skuPropertyNameList">
+                    <span ng-bind="subItem.skuPropertyName"></span>：
+                    <span ng-bind="subItem.skuPropertyValueName?subItem.skuPropertyValueName:'-'"></span>
+                </div>
+            </td>
+            <td ng-bind="item.schemeName||'-'"></td>
+            <td ng-bind="item.hour"></td>
+            <td>1</td>
+            <td ng-bind="item.totalAmount"></td>
+            <td>
+                <span ng-if="item.status===1">待付款</span>
+                <span ng-if="item.status===2">未发货</span>
+                <span ng-if="item.status===3">发货中</span>
+                <span ng-if="item.status===4">已发货</span>
+                <span ng-if="item.status===5">买家已签收</span>
+                <span ng-if="item.status===6">已换货</span>
+                <span ng-if="item.status===7">退货中</span>
+                <span ng-if="item.status===8">已退货</span>
+                <span ng-if="item.status===9">已取消</span>
+                <span ng-if="item.status===10">发货失败</span>
+                <span ng-if="item.status===11">退货并退款成功</span>
+                <span ng-if="item.status===12">退货失败</span>
+                <span ng-if="item.status===13">退货中</span>
+                <span ng-if="item.status===14">换货单原班级退货中</span>
+                <span ng-if="item.status===15">换货单原班级已退货</span>
+                <span ng-if="item.status===16">换货单原班级退货失败</span>
+                <span ng-if="item.status===17">退款失败</span>
+                <span ng-if="item.status===18">退货不退款成功</span>
+            </td>
+            <td class="op">
+                <button style="color:#54b1ec"
+                        has-permission="orderManage/applyRefund"
+                        ng-click="events.openRefunWindow(item)"
+                        ng-if="model.orderDetail.businessType!=='BATCH'&&model.orderDetail.businessType!=='BATCH_SWAP_OUT'&&utils.validateIsNull(item.refundOrderNo)===true&&item.status===5&&model.orderDetail.status===6">
+                    退款
+                </button>
+                <a href="javascript:void(0)"
+                   has-permission="orderManage/refundDetail"
+                   ng-click="events.goRefunDetail(item)"
+                   ng-if="utils.validateIsNull(item.refundOrderNo)===false">退款详情</a>
+
+                <span ng-if="item.refundOrderNo===null&&model.orderDetail.status!==6">-</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="order-sum tr">
+        <p>总学时：<span ng-bind="model.orderDetail.hour"></span> 学时</p>
+        <p>商品总金额：<span class="price">￥b{{model.total}}</span></p>
+        <p class="all">实付金额：<span class="t-r b">¥b{{model.orderDetail.totalAmount}}</span></p>
+    </div>
+    <div class="dash-line-2"></div>
+
+</div>
+<div class="dialog w-2"
+     style="width:1200px;"
+     k-options="kendoPlus.windowOptions" kendo-window="kendoWindow">
+    <div class="dialog-body mt30">
+        <div class="dialog-tit">关联订单信息<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow()"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div style="font-weight:bold;font-size:16px;margin-bottom:10px;">初始订单</div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="200">订单号</th>
+                    <th>物品名称</th>
+                    <th width="80">单价</th>
+                    <th width="60">状态</th>
+                    <th width="120">换出时间</th>
+                    <th width="120">订单创建人</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td title="b{{model.initOrder.orderNo}}">b{{model.initOrder.orderNo}}</td>
+                    <td title="b{{model.initOrder.subOrderList[0].name}}">
+                        <span ng-if="model.initOrder.subOrderList[0].commodityType==='TRAINING_CLASS'">[培训班]</span>
+                        <span ng-if="model.initOrder.subOrderList[0].commodityType==='COURSE'">[课程]</span>
+                        <span ng-if="model.initOrder.subOrderList[0].commodityType==='PERIOD'">[课程]</span>
+                        <span ng-bind="model.initOrder.subOrderList[0].name"></span>
+                    </td>
+                    <td ng-bind="model.initOrder.subOrderList[0].dealPrice"></td>
+                    <td><span ng-if="model.initOrder.businessType==='SWAP_OUT'">换出</span
+                    ><span ng-if="model.initOrder.businessType==='SWAP_IN'">换入</span
+                    ><span ng-if="model.initOrder.businessType==='SWAP_IN_AND_OUT'">换入、换出</span></td>
+                    <td><span ng-if="model.initOrder.swapOutTime!==null" ng-bind="model.initOrder.swapOutTime"></span
+                    ><span ng-if="model.initOrder.swapOutTime===null">-</span></td>
+                    <td><span ng-if="model.initOrder.creator!==null" ng-bind="model.initOrder.creator.name"></span
+                    ><span ng-if="model.initOrder.creator===null">-</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div style="font-weight:bold;font-size:16px;margin:10px 0px;">关联订单</div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="200">订单号</th>
+                    <th>培训班</th>
+                    <th width="80">单价</th>
+                    <th width="60">状态</th>
+                    <th width="120">换入时间</th>
+                    <th width="200">订单创建人/换班操作人</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.guanlianOrder">
+                    <td title="b{{item.orderNo}}" ng-bind="item.orderNo"></td>
+                    <td title="b{{item.subOrderList[0].name}}">
+                        <span ng-if="item.subOrderList[0].commodityType==='TRAINING_CLASS'">[培训班]</span>
+                        <span ng-if="item.subOrderList[0].commodityType==='COURSE'">[课程]</span>
+                        <span ng-if="item.subOrderList[0].commodityType==='PERIOD'">[课程]</span>
+                        <span ng-bind="item.subOrderList[0].name"></span>
+                    </td>
+                    <td ng-bind="item.subOrderList[0].dealPrice"></td>
+                    <!--SWAP_IN_AND_OUT-->
+                    <td><span ng-if="item.businessType==='SWAP_OUT'">换出</span
+                    ><span ng-if="item.businessType==='SWAP_IN'">换入</span
+                    ><span ng-if="item.businessType==='SWAP_IN_AND_OUT'">换入、换出</span>
+                    </td>
+                    <td><span ng-if="item.swapInTime!==null" ng-bind="item.swapInTime"></span><span
+                            ng-if="item.swapInTime===null">-</span></td>
+                    <td><span ng-if="item.creator!==null"
+                              ng-bind="item.creator.name+'/'+item.swapOperator.loginInput"></span
+                    ><span ng-if="item.creator===null">-</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="dialog w-textarea3" k-options="kendoPlus.windowOptions" kendo-window="refunWindow">
+    <div class="dialog-body">
+        <div class="dialog-tit">退款申请<a href="javascript:void(0)" ng-click="events.closeRefunWindow()"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+
+            <li class="clear wp-4" style="width:500px;list-style-type: none;">
+                <span class="left-txt">退款金额：</span>
+                <span class="left-txt" ng-bind="dealPrice"></span>
+                <span class="left-txt" ng-if="dealPrice !== tempRefunPrice && tempRefunPrice === 0" style="color: red">(改退款单退的是原始子订单)</span>
+            </li>
+
+            <li class="clear wp-4 mt20" style="width:500px;list-style-type: none;">
+                <div>
+                    请选择退款的理由：
+                    <select class="slt w-7"
+                            ng-model="model.refunId"
+                            ng-options="item.id as item.name for item in model.refunList">
+                        <option value="">请选择关闭理由</option>
+                    </select>
+                </div>
+            </li>
+            <li class="clear wp-4 mt20" style="width:500px;list-style-type: none;">
+                <span class="left-txt fl">退款说明：</span>
+                <div class="w-12 fl" style="width:400px;">
+                    <textarea style="height:100px;"
+                              ng-model="model.refunDesc"
+                              class="textare wp-m-full fl"
+                              placeholder="请输入具体的退款说明，建议200字以内">
+
+                    </textarea>
+                </div>
+            </li>
+        </div>
+        <div class="btn-center">
+            <button ng-click="events.confirmRefun()"
+                    has-permission="orderManage/confirmRefund"
+                    ng-disabled="refunSubmitAble"
+                    class="btn btn-r">确定
+            </button>
+            <a href="javascript:void(0)"
+               has-permission="orderManage/cacelRefund"
+               ng-click="events.closeRefunWindow()"
+               class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>

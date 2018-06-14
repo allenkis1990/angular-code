@@ -1,0 +1,241 @@
+<div class="main-wrap-body">
+    <div class="tips-box">
+        温馨提示:<br>
+        1. 需为学员缴费，请先创建缴费批次，再选择对应批次缴费的人员及培训班；<br>
+        2. 平台提供手动加班和批量导班两种方式，批量导班需先下载导入模版再提交，导入任务成功的记录会直接显示在报名批次中；<br>
+        3. 缴费批次提交后，请在 <span class="t-r">24小时</span> 内进行缴费，超过时间未缴则系统将默认关闭批次，需重新创建批次进行缴费。
+    </div>
+    <p class="mt20">报名批次号：b{{model.createBatchInfo.no}}</p>
+    <div class="column mt20">
+        添加方式：
+        <a  has-permission="createBatch/addGoodsToBatchList" class="btn-b btn"   ng-click="events.openKendoWindow ( 'handWindowOptions' );">手动加班</a>
+        <a  has-permission="createBatch/addGoodsToBatchList" class="btn-b btn ml10"  ng-click="events.openKendoWindow ( 'batchWindowOptions' );">批量导班</a>
+        <a  has-permission="createBatch/importSrarch" ng-click="events.openKendoWindow ( 'importBatchWindowOptions' );" class="ml10 a-b">查看导入任务</a>
+    </div>
+    <div class="column mt30">
+        <div class="col-tit">已添加报班人员列表</div>
+        <div class="dash-line-2"></div>
+    </div>
+    <div class="search-bar mt20">
+        <ul class="ul-form li-fl clear" has-permission="createBatch/search">
+            <li><input type="text" class="ipt ipt-medium"
+                       ng-model="model.batchParams.identify"
+                       hb-clear-input
+                       placeholder="请输入身份证号"></li>
+            <li><input type="text" class="ipt ipt-medium"
+                       ng-model="model.batchParams.name"
+                       hb-clear-input
+                       placeholder="请输入姓名"></li>
+            <li style="position:relative;">
+                <input type="text" ng-click="events.openKendoWindow('classWindow')"
+                       class="ipt ipt-middle"
+                       ng-model="model.batchParams.trainClassName"
+                       placeholder="请选择培训班">
+                <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                      ng-click="events.clearTextContent()"
+                      class="k-icon k-i-close" role="button">select
+                </span>
+            </li>
+            <li><a ng-click="events.search($event)"  has-permission="createBatch/search" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.createbatchGrid" k-options="ui.createbatchGrid.options">
+        </div>
+    </div>
+
+    <div class="btn-center mt20">
+        <a  class="btn btn-r" has-permission="batchManage/commit" ng-click="events.commitOrder()">提交批次</a>
+        <a  ng-click="$state.go('states.batchManage')" class="btn btn-g ml10">返回列表</a>
+    </div>
+</div>
+<div class="dialog w-2" k-options="kendoPlus.handWindowOptions" kendo-window="handWindowOptions" style="width:1050px;">
+    <div class="dialog-body ">
+        <div class="dialog-tit">手动添加班级<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('handWindowOptions')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="tab-tit">
+                <a class="current">选择人员</a>
+            </div>
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear" has-permission="createBatch/search">
+                    <li><input type="text"
+                               class="ipt ipt-medium"
+                               hb-clear-input
+                               ng-model="model.choosePeopleParam.IDNum"
+                               placeholder="请输入身份证号"></li>
+                    <li><input type="text"
+                               ng-model="model.choosePeopleParam.name"
+                               hb-clear-input
+                               class="ipt ipt-medium" placeholder="请输入姓名"></li>
+                    <li><a ng-click="events.MainPageQueryList($event,'chosePeopleGridInstance','chosePeoplePage')" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+            <div class="col-body table-box mt20">
+               <!-- <div kendo-grid="node.chosePeopleGrid" k-options="ui.chosePeopleGrid.options">
+                </div>-->
+                <div kendo-grid="kendoPlus.chosePeopleGridInstance"
+                     k-options="chosePeopleGrid.options">
+                </div>
+            </div>
+            <div class="tab-tit mt20">
+                <a class="current">选择培训班</a>
+            </div>
+
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear" has-permission="createBatch/search">
+                    <li>
+                        <div hb-sku-directive
+                             ng-model="skuParamsChoose"
+                             lwhmodel="skuParamsChoose"
+                             templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html">
+
+                        </div>
+                 <!--        <div hb-sku-directive templateurl="templates/common/hb-sku-anthorpl.html" ng-model="bbb"></div>-->
+                    </li>
+                    <li><input type="text" ng-model="model.chooseQueryParam.commodityName" class="ipt ipt-medium" placeholder="请输入培训班名称"></li>
+                    <li><a ng-click="events.MainPageQueryList($event,'choseClassGridInstance','chooseClassPage')" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+            <div class="col-body table-box mt20">
+                <!-- <div kendo-grid="node.choseClassGrid" k-options="ui.choseClassGrid.options">
+                 </div>-->
+                <div kendo-grid="kendoPlus.choseClassGridInstance"
+                     k-options="choseClassGrid.options">
+                </div>
+            </div>
+        </div>
+        <div class="btn-center">
+            <a  ng-click="events.addGoodsToBatchList(1)" has-permission="createBatch/addGoodsToBatchList" class="btn btn-r">确认提交</a>
+            <a  ng-click="events.addGoodsToBatchList(2)" has-permission="createBatch/addGoodsToBatchList"  class="btn btn-r ml10">继续添加</a>
+            <a  ng-click="events.closeKendoWindow('handWindowOptions')" class="btn btn-g ml10">取消</a>
+        </div>
+        <!-- <div class="btn-center">
+             <button class="btn btn-r">保存</button>
+             <a href="javascript:void(0)"
+                ng-click="events.closeKendoWindow('handWindowOptions')"
+                class="btn btn-g ml10">取消</a>
+         </div>-->
+    </div>
+</div>
+
+<div class="dialog w-2" k-options="kendoPlus.importBatchWindowOptions" kendo-window="importBatchWindowOptions" style="width:1200px;">
+    <div class="dialog-body ">
+        <div class="dialog-tit">查看导入任务<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('importBatchWindowOptions')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <!--<div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text"
+                               class="ipt ipt-medium"
+                               ng-model="model.choosePeopleParam.identify"
+                               placeholder="请输入身份证号"></li>
+                    <li><input type="text"
+                               ng-model="model.choosePeopleParam.name"
+                               class="ipt ipt-medium" placeholder="请输入姓名"></li>
+                    <li><a ng-click="events.MainPageQueryList($event,'chosePeopleGridInstance','chooseClassPage')" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>-->
+            <div class="col-body table-box mt20">
+                <div kendo-grid="kendoPlus.importGrid" k-options="importGrid.options">
+                </div>
+            </div>
+
+
+        </div>
+
+       <!-- <div class="btn-center">
+            <button class="btn btn-r">保存</button>
+            <a href="javascript:void(0)"
+               ng-click="events.closeKendoWindow('handWindowOptions')"
+               class="btn btn-g ml10">取消</a>
+        </div>-->
+    </div>
+</div>
+
+<div class="dialog w-8" k-options="kendoPlus.batchWindowOptions" kendo-window="batchWindowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">批量导入人员<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('batchWindowOptions')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="tips-box">
+                温馨提示：1.批量导入班级前，请先下载导入模版，根据模版要求导入培训班！
+                <span style="margin-left: 69px">2.选择批量导班功能，请在导入成功后，刷新页面查询导入情况。</span>
+            </div>
+            <div class="mt10">
+                <a  target="_blank" class="btn-b btn" href="b{{urlPrefix}}/mfs/resource/file/SM2BatchListImport.xls">导入模版下载</a>
+                <a  ng-click="events.goClass()" has-permission="createBatch/goClass"  class="a-b ml10">查询平台可报班级</a>
+            </div>
+            <ul class="ul-d-form mt20">
+             <!--   <li>
+                    <span class="left-txt left-txt-4">选择导入文件：</span>
+                    <input type="text" class="ipt w-6" placeholder="选择导入文件">
+                    <a href="#" class="upload upload-3">
+                        <input type="button" class="btn btn-b" value="选择文件">
+                        <input type="file" class="file">
+                    </a>
+                </li>-->
+
+                <li>
+                    <span class="left-txt left-txt-4">选择导入文件：</span>
+                    <input type="text"
+                           ng-model="model.upload.result.fileName"
+                           readonly class="ipt w-6"
+                           placeholder="选择导入文件">
+                    <!-- <a   class="upload upload-3">
+                        <input type="button" class="btn btn-b" value="选择文件">
+                        <input type="file" class="file">
+                    </a>-->
+                    <div hb-file-uploader="test"
+                         ng-if="windowLoaded" auto="true" style=" display: inline-block;margin: 0;padding: 0;" ng-model="model.upload.result"
+                         class="upload btn">
+                    </div>
+                </li>
+                <li>
+                    <span class="left-txt left-txt-4"></span>
+                    <a ng-click="events.importOrder()" has-permission="createBatch/importOrder" class="btn btn-r mt10">导入</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<!--培训班弹窗-->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="classWindow" style="width:1200px;" >
+    <div class="dialog-body">
+        <div class="dialog-tit">选择班级<a href="javascript:void(0)"
+                                       class="ico ico-close"
+                                       ng-click="events.closeKendoWindow('classWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear" has-permission="createBatch/search" >
+                    <li>
+                      <!--  <div hb-sku-directive templateurl="templates/common/hb-sku-anthorpl.html" ng-model="aaa"></div>
+                      -->  <div hb-sku-directive
+                             ng-model="skuParamsConfiged"
+                             lwhmodel="skuParamsConfiged"
+                             templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html">
+
+                        </div>
+                    </li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.MainPageQueryList($event,'classGridInstance','classPage')"
+                           class="btn btn-b">搜索</a></li>
+                </ul>
+            </div>
+            <div kendo-grid="kendoPlus.classGridInstance"
+                 k-options="classGrid.options">
+            </div>
+
+        </div>
+        <div class="btn-center">
+            <a href="javascript:void(0)"
+               class="btn btn-g ml10"
+               ng-click="events.closeKendoWindow('classWindow')">取消</a>
+        </div>
+    </div>
+</div>

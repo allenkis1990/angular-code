@@ -1,0 +1,97 @@
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit">个人基础信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-6">
+        <ul class="ul-d-form lh-1">
+            <li><span class="left-txt">姓名：</span>b{{model.person.name}}</li>
+            <li><span class="left-txt">邮箱：</span>b{{model.person.email}}</li>
+            <li><span class="left-txt">所在单位：</span>b{{model.person.unit}}</li>
+            <li><span class="left-txt">所在部门：</span>b{{model.person.organization}}</li>
+        </ul>
+        <div class="course-pic course-pic-1" ng-mouseleave="imgShow=false"
+             ng-mouseenter="imgShow=!imgShow">
+            <img
+                    ng-src="b{{model.person.image ? '/mfs'+ model.person.image : (model.uploadHeadValue ? '/mfs'+ model.uploadHeadValue.convertResult[0].url : '@systemUrl@/images/user-img.jpg')}}">
+
+            <div class="pic-hover" ng-class="{'visibility-hide': !imgShow,'visibility-show':imgShow}">
+                <span class="pic-mask"></span>
+                <a href="javascript:void(0)" class="upload upload-2">
+                    <!--<input type="button" class="btn btn-r" ng-click="events.viewUploadImg()" value="上传图片">-->
+                    <input type="button" class="btn btn-r" ng-click="model.uploadHead = true" value="上传图片">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="column mt30">
+        <div class="col-tit">修改密码</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <form name="passwordForm" novalidate>
+        <div class="rel udf-6">
+            <ul class="ul-d-form mt30 lh-1">
+                <li><span class="left-txt">旧密码：</span>
+                    <input type="password" ng-model="model.person.oldPassword" name="oldPassword" class="ipt ipt-large"
+                           placeholder="请输入旧密码" required/>
+                    <span ng-show="passwordForm.oldPassword.$dirty && passwordForm.oldPassword.$error.required"
+                          class="li-prompt">
+                <span class="ico ico-prompt"></span>请输入旧密码！</span>
+                </li>
+                <li><span class="left-txt">新密码：</span>
+                    <input type="password" class="ipt ipt-large"
+                           placeholder="请输入新密码"
+                           ng-model="model.person.password"
+                           name="password"
+                           ng-minlength="6"
+                           ng-maxlength="20"
+                           ng-pattern=/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{6,20}$/
+ required
+                    />
+                    <span style="margin-left: 40px;"
+                          ng-show="passwordForm.password.$dirty && passwordForm.password.$error.required"
+                          class="li-prompt lip-2 lip-2">
+                         <span class="ico ico-prompt"></span>密码不能为空。
+                    </span>
+                    <span style="margin-left: 40px;"
+                          ng-show="passwordForm.password.$dirty && !passwordForm.password.$error.required && passwordForm.password.$error.pattern"
+                          class="li-prompt lip-2 lip-2"><span class="ico ico-prompt"></span>密码最少由字母、数字,特殊符号中的2种组成,长度在6~20之间！
+                    </span>
+                </li>
+                <li><span class="left-txt">确认密码：</span>
+                    <input type="password" class="ipt ipt-large"
+                           placeholder="请再次输入新密码"
+                           ng-model="model.person.confirmPassword"
+                           name="confirmPassword"
+                           hb-compare="model.person.password"
+                           ng-minlength="6"
+                           ng-maxlength="20"
+                           required
+                    />
+                    <span ng-show="passwordForm.confirmPassword.$dirty && passwordForm.confirmPassword.$error.required"
+                          class="li-prompt">
+                        <span class="ico ico-prompt"></span>请再次输入新密码！</span>
+                    <span
+                            ng-show="!passwordForm.confirmPassword.$error.required && passwordForm.confirmPassword.$error.compare"
+                            class="li-prompt">
+                <span class="ico ico-prompt"></span>两次输入的密码不一致！</span>
+                </li>
+                <li><span class="left-txt"></span>
+                    <input type="button" ng-click="events.updatePwd();passwordForm.$setPristine()"
+                           ng-disabled="passwordForm.$invalid"
+                           ng-class="{'btn-g': !passwordForm.$valid, 'btn-r': passwordForm.$valid}" class="btn"
+                           value="保存">
+                    <input type="button" class="btn btn-g ml10" ng-click="events.cannel();" value="取消"/></li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div ng-if="model.uploadHead">
+    <div upload-head template-url="@systemUrl@/templates/tpls/tpl-upload-head-img-tpl.html"
+         aspect-ratio="aspectRatio"
+         ng-model="model.uploadHeadValue"
+         close="model.uploadHead" style="display: none;">
+
+    </div>
+</div>
+

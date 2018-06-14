@@ -1,0 +1,24 @@
+<!--导入银行流水弹窗-->
+<ul class="ul-d-form pt20 pl20 lh-1">
+    <li>
+        <span class="left-txt">交易成功时间：</span>
+        <input type="text"
+               kendo-date-picker="node.workBeginTime"
+               k-options="ui.datePicker.begin.options"
+               ng-model="model.paperSearch.startCreateTime"
+               class="ipt ipt-small"> -
+        <input type="text"
+               kendo-date-picker="node.workEndTime"
+               k-options="ui.datePicker.end.options"
+               ng-model="model.paperSearch.endCreateTime"
+               class="ipt ipt-small">
+    </li>
+    <li><span class="left-txt">导入文件：</span>
+        <a class="upload" hb-file-uploader="aaa"
+           auto="true"
+           href="javascript:void(0)"
+           ng-model="model.upload.result">
+        </a>
+        <span ng-bind="model.upload.result.fileName"></span>
+    </li>
+</ul>

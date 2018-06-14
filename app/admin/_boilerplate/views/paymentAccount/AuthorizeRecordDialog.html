@@ -1,0 +1,35 @@
+<!--授权日志-->
+<div class="op-list">
+    <div class="list-items" ng-repeat="item in model.authorizeRecordList">
+        <p ng-if="item.type === 2">【<span ng-bind="item.operatorName"></span>】在
+           【<span ng-bind="item.operateTime"></span>】将该收款账号
+            <span ng-bind="item.operationType ==1?'授权':'取消授权'"></span>给单位：
+            <span ng-repeat="unit in item.unitList track by $index">
+                【
+                    <span ng-bind="unit"></span>
+                】
+            </span>
+        </p>
+        <p ng-if="item.type === 1">【<span ng-bind="item.operatorName"></span>】在
+            【<span ng-bind="item.operateTime"></span>】将该收款账号的开票规则为
+            【<span ng-bind="item.isProvide ==1?'不提供发票':'提供发票'"></span>】
+            <label   ng-if="item.isProvide ==2">
+            【<span ng-bind="item.provideType ==1?'开放自选':'强制提供'"></span>】,
+            发票类型
+                <span ng-if="item.selectCommonVAT">【增值税普通发票】</span>
+                <span ng-if="item.selectCommonElectron">【电子普通发票】</span>
+                <span ng-if="item.selectVATOnly">【增值税专用发票】</span>
+                <span ng-if="item.selectNonTax">【非税务发票】</span>,
+            发票抬头
+                <span ng-if="item.selectPersonal">【个人】</span>
+                <span ng-if="item.selectUnit">【单位】</span>
+            </label>
+
+        </p>
+    </div>
+    <!-- 无记录 -->
+    <div ng-if="model.authorizeRecordList.length === 0" class="no-data pt30 clear">
+        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+        <div class="p-txt">该功能本期未实现，敬请期待!</div>
+    </div>
+</div>

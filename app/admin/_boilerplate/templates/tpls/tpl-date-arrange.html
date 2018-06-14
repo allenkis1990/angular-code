@@ -1,0 +1,20 @@
+<div style="display: inline-block;"
+     ng-class="{mustOfferEndTime: mustOfferEndTime}">
+    <div class="startTime">
+        <input kendo-date-picker="node.startDate" hb-readonly hb-clear-input k-options="datePickerConfig"
+               ng-model="startDate"
+               k-ng-model="startDate"
+               placeholder="b{{arrangeConfig.startPlaceholder}}"/>
+    </div>
+    -
+    <div class="endTime">
+        <input kendo-date-picker="node.endDate"
+               ng-model="endDate"
+               k-ng-model="endDate"
+               hb-readonly hb-clear-input k-options="datePickerConfig"
+               placeholder="b{{arrangeConfig.endPlaceholder}}"/>
+        <div ng-if="mustOfferEndTime" style="position: absolute;top: 30px;color: red;">
+            请选择结束时间
+        </div>
+    </div>
+</div>

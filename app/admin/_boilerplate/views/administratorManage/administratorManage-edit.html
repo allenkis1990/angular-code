@@ -1,0 +1,133 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goAdministratorManage($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goAdministratorManage($event)">管理员管理</a>
+        &gt; 修改帐号
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit">帐号基础信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2">
+        <form name="administratorValidate" novalidate>
+            <ul class="ul-d-form udf-2 lh-1">
+
+                <li><span class="left-txt"><i>*</i>账号：</span><span ng-bind="model.userMessage.loginInput"></span></li>
+
+                <li><span class="left-txt"><i>*</i>姓名：</span><input type="text" class="ipt ipt-large"
+                                                                    name="name"
+                                                                    ng-model="model.userMessage.name"
+                                                                    placeholder="请填实真实姓名"
+                                                                    required ng-required="true"
+                                                                    style="width: 355px">
+                    <span class="li-prompt" style="margin-left: 130px;"
+                          ng-show="administratorValidate.name.$dirty&&administratorValidate.name.$error.required"><span
+                            class="ico ico-prompt"></span>姓名不能为空。</span>
+                </li>
+
+                <!--<li><span class="left-txt"><i>*</i>单位名称：</span>
+                    <input type="text" name="type" class="ipt ipt-large"
+                           ng-click="events.openLessonTypeTree()"
+                           placeholder="请选择单位"
+                           ng-model="model.userMessage.unitName" required
+                           ng-required="true" readonly="true">
+
+                    <div class="hide-block hb-1 mh-1" ng-show="areaShow" ng-click="$event.stopPropagation()">
+                        <div kendo-tree-view="node.tree"
+                             k-options="ui.tree.options"
+                             k-on-change="model.selectedItem = dataItem">
+                            <span k-template ng-click="events.getArea(dataItem)">
+                              <label style="width: 100px;"><span ng-bind="dataItem.name"></span></label>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+-->
+
+                <!-- <li><span class="left-txt"><i></i>单位地区：</span>
+                     <span ng-bind="model.userMessage.areaName"> </span>
+                 </li>
+ -->
+
+                <li>
+                    <span class="left-txt"><i>*</i>性别：</span>
+                    <input type="radio" ng-model="model.userMessage.sex" value="1">男
+                    <input type="radio" ng-model="model.userMessage.sex" value="2">女
+                </li>
+
+
+                <li><span class="left-txt"><i></i>手机：</span><input type="text" class="ipt ipt-large"
+                                                                   placeholder="请输入手机"
+                                                                   name="phoneNumber"
+                                                                   style="width: 355px"
+                                                                   ng-pattern=/^[0-9]{11}$/
+ ng-model="model.userMessage.phoneNumber">
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="administratorValidate.phoneNumber.$dirty&&administratorValidate.phoneNumber.$error.pattern">手机号必须是11位数字</span>
+                </li>
+
+                <li><span class="left-txt"><i></i>邮箱：</span><input type="email" class="ipt ipt-large"
+                                                                   placeholder="请输入邮箱" style="width: 355px"
+                                                                   name="email"
+                                                                   ng-model="model.userMessage.email">
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="administratorValidate.email.$dirty&&administratorValidate.email.$error.email">邮箱不符合格式</span>
+                </li>
+
+                <li>
+                    <span class="left-txt"><i>*</i>启用状态：</span>
+                    <input ng-model="model.userMessage.status" value="1" type="radio" checked="checked">启用
+                    <input ng-model="model.userMessage.status" value="2" type="radio">禁用
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<div class="main-wrap-body-1 mt20 clear">
+    <div class="column mb20">
+        <div class="col-tit">所属角色权限
+            <a style="margin-left: 10px" href="javascript:void(0)"
+               has-permission="administratorManage/administratorManageAddRole" ng-click="events.showRoleWindow($event)"
+               class="btn-r btn">添加角色</a>
+        </div>
+        <div class="dash-line-1">
+        </div>
+        <table class="table tablezp mt-1">
+            <thead>
+            <tr>
+                <th width="50">No.</th>
+                <th width="200">角色名称</th>
+                <th>角色说明</th>
+                <th width="260">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="role in model.roleMessage">
+                <td ng-bind="$index+1"></td>
+                <td ng-bind="role.roleName"></td>
+                <td ng-bind="role.description"></td>
+                <td>
+                    <a href="javascript:void(0)" has-permission="administratorManage/editAdminQuery"
+                       ng-click="events.viewRole(role.roleId)" class="table-btn">查看</a>
+                    <a href="javascript:void(0)" has-permission="administratorManage/editAdminDelete"
+                       ng-click="events.remove(role.roleId)" class="table-btn">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="btn-center">
+    <a href="javascript:void(0)" class="btn btn-r ml10"
+       ng-class="{'btn-disable':!administratorValidate.$valid||!model.save}"
+       has-permission="administratorManage/editSaveUserRole"
+       ng-click="events.editAdministrator($event)">保存</a>
+    <a href="javascript:void(0)" ng-click="events.cancel($event)" class="btn btn-g ml10"
+       has-permission="administratorManage/editCancelUserRole">取消</a>
+</div>
+<div kendo-window="node.windows.addWindow" k-options="ui.windows.addWindow"></div>

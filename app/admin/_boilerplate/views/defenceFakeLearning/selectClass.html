@@ -1,0 +1,53 @@
+<div class="search-bar">
+    <ul class="ul-form li-fl clear">
+        <!--<div hb-sku-directive-->
+        <!--category-id="model.queryParam.categoryId"-->
+        <!--lwhmodel="skuParamsDefenceFakeLearning"-->
+        <!--ng-model="skuParamsDefenceFakeLearning"-->
+        <!--templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>-->
+
+
+        <!--<li ng-class="{'margin-left15':model.queryParam.categoryId}">-->
+        <!--<select class="slt slt-small"-->
+        <!--ng-model="model.queryParam.categoryId">-->
+        <!--&lt;!&ndash;<option value="">培训方案形式</option>&ndash;&gt;-->
+        <!--<option value="35f84aea57d24cc299a397c1">培训班学习</option>-->
+        <!--<option value="35f84aea57d24cc299a397c2">自主选课学习</option>-->
+        <!--</select>-->
+        <!--</li>-->
+
+        <li>
+            <select class="slt slt-small"
+                    ng-model="model.queryParam.categoryType">
+                <!--<option value="">培训方案形式</option>-->
+                <option value="TRAINING_CLASS_GOODS">培训班学习</option>
+                <option value="COURSE_SUPERMARKET_GOODS">自主选课学习</option>
+            </select>
+        </li>
+
+        <div hb-sku-directive
+             category-type="model.queryParam.categoryType"
+             lwhmodel="skuParamsDefenceFakeLearning"
+             ng-model="skuParamsDefenceFakeLearning"
+             templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+
+        <li ng-class="{'margin-left15':model.queryParam.categoryType}">
+            <input type="text" ng-model="model.query.schemeName" placeholder="培训方案名称" class="ipt ipt-middle"
+                   hb-clear-input>
+        </li>
+        <li>
+            <div hb-sku-directive
+                 lwhmodel="skuParamsFjxAdd"
+                 templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"
+                 ng-model="skuParamsFjxAdd">
+            </div>
+        </li>
+        <li><a href="javascript:void(0)"
+               ng-click="events.doSearch()"
+               class="btn btn-b">搜索</a>
+        <li>
+    </ul>
+</div>
+
+<div kendo-grid k-options="selectClassGridOptions">
+</div>

@@ -1,0 +1,136 @@
+<div class="main-wrap-body">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li ng-if="model.isSuperAdmin">
+                <select class="slt slt-small"
+                        ng-options="sbItem.id as sbItem.name for sbItem in model.unitInfoList"
+                        ng-model="model.condition.currentUnitId">
+                </select>
+            </li>
+
+            <li>
+                <input type='button' has-permission="infoCategory/reloadInfoCategoryList" value='查询' ng-click='events.reload($event)' class='btn-r btn'>
+            </li>
+            <li>
+                <a href="javascript:void(0);" has-permission="infoCategory/toAddInfoCategory" ng-click="events.openNewsCategoryInfoWindow($event,'新建分类')"
+                   class="btn-r btn">新建分类</a>
+            </li>
+
+        </ul>
+    </div>
+
+
+    <div class="column table-box mt10">
+        <div kendo-treelist="node.newsCategoryTreeList" k-options="treelistOptions"></div>
+    </div>
+
+
+    <!-- 新增的Dialog -->
+    <div class="dialog w-8" kendo-window="node.newsCategoryInfoWindow" k-options="ui.newsCategoryInfoWindow"
+         ng-click="model.showTree = false">
+        <div class="dialog-body">
+            <div class="dialog-tit"><span ng-bind="model.operateType"></span><a href="javascript:void(0)" class="ico ico-close"
+                                                             ng-click="events.closeNewsCategoryInfoWindow($event)"></a>
+            </div>
+            <div class="dialog-cont">
+                <form name="newsCategoryForm" novalidate>
+                    <ul class="ul-d-form lh-1 ml65">
+                        <li><span class="left-txt"><i>*</i> 所属分类：</span><input ng-model="model.dto.parentName"
+                                                                               name="parentName"
+                                                                               class="ipt ipt-medium"
+                                                                               ng-click="events.openTree($event)"
+                                                                               placeholder="请选择所属分类"
+                                                                               readonly
+                                                                               required
+                        />
+                            <div class="column-block w-tree fl"
+                                 ng-click="events.openTree($event)"
+                                 ng-show="model.showTree"
+                                 style="position: absolute;
+                                   z-index: 10;
+                                   left: 120px;
+                                   width:195px;
+                                   max-height: 166px;
+                                   overflow: auto;"
+                            >
+                                <div kendo-tree-view="node.selectTree"
+                                     k-options="ui.selectTree.options"
+                                     k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.selectParentCategory($event,dataItem)">
+                      <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i>*</i>分类名称：</span><input type="text" class="ipt ipt-medium"
+                                                                              ng-model="model.dto.name"
+                                                                              name="name"
+                                                                              maxlength="16"
+                                                                              ng-maxlength="15"
+                                                                              required ng-required="true"
+                                                                              placeholder="请输入分类名称"
+                        >
+                    <span ng-show="newsCategoryForm.name.$dirty && newsCategoryForm.name.$error.required"
+                          class="li-prompt lip-3"><span class="ico ico-prompt"></span>请输入分类名称</span>
+                    <span ng-show="newsCategoryForm.name.$dirty && newsCategoryForm.name.$error.maxlength"
+                          class="li-prompt lip-3"><span class="ico ico-prompt"></span>长度不能超过15</span>
+                        </li>
+                        <li class="clear">
+                            <span class="left-txt fl">分类说明：</span>
+                            <textarea name="description" class="textarea w-6 fl" ng-model="model.dto.description"
+                                      ng-maxlength="300"></textarea>
+                            <span ng-show="newsCategoryForm.description.$dirty && newsCategoryForm.description.$error.maxlength"
+                                  class="li-prompt lip-3"><span class="ico ico-prompt"></span>说明最多300个字</span>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div ng-if="model.operateType === '新建分类'" class="btn-center">
+                <input type="button" ng-click="events.save($event);newsCategoryForm.$setPristine()"
+                       has-permission="infoCategory/saveInfoCategory"
+                       ng-disabled="!model.submitAble || !newsCategoryForm.$valid" class="btn btn-r" value="保存"/>
+                <input type="button"
+                       has-permission="infoCategory/cancelAddInfoCategory"
+                       ng-click="events.closeNewsCategoryInfoWindow($event);newsCategoryForm.$setPristine();"
+                       class="btn btn-g ml10" value="取消"/>
+            </div>
+            <div ng-if="model.operateType === '编辑分类'" class="btn-center">
+                <input type="button" ng-click="events.save($event);newsCategoryForm.$setPristine()"
+                       has-permission="infoCategory/saveUpdateInfoCategory"
+                       ng-disabled="!model.submitAble || !newsCategoryForm.$valid" class="btn btn-r" value="保存"/>
+                <input type="button"
+                       has-permission="infoCategory/cancelUpdateInfoCategory"
+                       ng-click="events.closeNewsCategoryInfoWindow($event);newsCategoryForm.$setPristine();"
+                       class="btn btn-g ml10" value="取消"/>
+            </div>
+        </div>
+    </div>
+    <!------------- 查看详情  ---------------->
+    <div class="dialog" kendo-window="node.detailNewsCategoryWindow" k-options="ui.detailNewsCategoryWindow">
+        <div class="dialog-body">
+            <div class="dialog-tit">查看分类<a href="javascript:void(0)" class="ico ico-close"
+                                           ng-click="events.closeDetailNewsCategoryWindow($event)"></a></div>
+            <div class="dialog-cont">
+                <ul class="ul-d-form ml10">
+                    <li class="clear"><span class="left-txt fl">所属学科：</span><span class="fl w-1" ng-bind="model.detailInfo.parentName"></span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">分类名：</span><span class="fl w-1" ng-bind="model.detailInfo.name"></span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">分类说明：</span><span class="fl w-1" ng-bind="model.detailInfo.description"></span>
+                    </li>
+                    <li><span class="left-txt">分类状态：</span><span ng-bind="model.detailInfo.status"></span></li>
+
+                    <li>
+                        <div ng-show="model.detailInfo.internal">
+                            <span class="left-txt">资讯数：</span><span ng-bind="model.detailInfo.newsCount"></span>
+                            <a href="javascript:void(0);" has-permission="infoCategory/findInfoCategoryDetail"
+                               class="txt-a ml20"
+                               ng-click="events.goNewsNotice($event,model.detailInfo)">查看详情</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

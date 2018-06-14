@@ -1,0 +1,11 @@
+<div style="position: relative;display:inline-block">
+    <span ng-if="utils.validateIsNull(commodityName)===false"
+          style="position:absolute;color:#666;font-size:16px;z-index:99;right:10px;top:3px;cursor:pointer"
+          ng-click="events.clearModel($event)">x</span>
+    <input type="text"
+           class="ipt"
+           ng-class="{'ipt-large': iptLarge === 'true', 'ipt-medium': iptLarge !== 'true'}"
+           ng-model="commodityName"
+           placeholder="b{{defaultTxt}}"
+           ng-click="events.openSelectWin()"/>
+</div>

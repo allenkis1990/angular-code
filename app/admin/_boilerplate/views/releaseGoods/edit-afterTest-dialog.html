@@ -1,0 +1,62 @@
+<div class="dialog-body">
+    <div class="dialog-tit">编辑课后测验信息<a href="javascript:void(0)"
+                                       class="ico ico-close"
+                                       ng-click="events.cacelEditPractice()"></a></div>
+    <div class="dialog-cont">
+
+
+        <div class="cb-right" style="margin:inherit">
+
+            <a href="javascript:void(0)"
+               ng-if="submitData.practicePaperConfig.practicePaperId"
+               class="add-box mt10 clear">课后测验名称：<span ng-bind="model.practicePaperName"></span>
+                <span class="fr" ng-click="events.openExcriseKendoDialog()">[替换测验]</span>
+            </a>
+        </div>
+
+        <div class="cb-tit mt20 clear">课后测验要求</div>
+        <div class="mt10 pl10">
+            <div class="mtb10">
+                <p>前置条件-配置开始培训内容的前提条件</p>
+                <p class="txt-g pt5" ng-if="!submitData.practicePaperConfig.practicePaperId">无</p>
+                <p class="pt5" style="color:red;" ng-if="submitData.practicePaperConfig.practicePaperId">
+                    <input ng-model="submitData.practicePaperConfig.enableAfterCourseLearning"
+                        class="chk"
+                        ng-checked="submitData.practicePaperConfig.enableAfterCourseLearning"
+                        ng-click="events.toggleEnableAfterCourseLearning($event)"
+                        type="checkbox">通过课程学习考核判断，才可参加课后测验</p>
+                <p class="pt5" style="color:red;" ng-if="submitData.practicePaperConfig.practicePaperId">
+                    <input ng-if="submitData.practicePaperConfig.practicePaperId && submitData.practicePaperConfig.addPracticePaperAssess === 'false'"
+                            class="chk"
+                            ng-model="submitData.practicePaperConfig.enableRedoPracticePaper"
+                            ng-checked="submitData.practicePaperConfig.enableRedoPracticePaper && submitData.practicePaperConfig.addPracticePaperAssess === 'true'"
+                            ng-click="events.toggleEnableRedoPracticePaper($event)"
+                            type="checkbox">通过整体培训考核要求后不可再参加课后测验</p>
+            </div>
+            <div class="mtb10">
+                <p class="dash-line-6">考核判断-配置培训内容通过条件</p>
+                <p class="txt-g pt5">无</p>
+            </div>
+            <div class="mtb10">
+                <p class="dash-line-6">通过成果-配置培训内容通过后所得成果</p>
+                <p class="txt-g pt5">无</p>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-if="$state.current.name==='states.releaseGoods'"
+           ng-click="events.closeKendoWindow('afterTestWindow')"
+           class="btn btn-r">保存</a>
+        <button ng-if="$state.current.name!=='states.releaseGoods'"
+                ng-disabled="submitAble"
+                ng-click="events.submitPractice()"
+                class="btn btn-r">保存
+        </button>
+        <a href="javascript:void(0)"
+           class="btn btn-g ml10"
+           ng-click="events.cacelEditPractice()">取消</a>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+@import "../public/variables";
+
+.pos-nav {
+  color: #666;
+  line-height: 36px;
+  height: 36px;
+  .return-ico {
+    background-position: -211px -221px;
+    width: 24px;
+    height: 18px;
+    margin-right: 6px;
+  }
+  a {
+    color: #666;
+    &:hover {
+      color: @base;
+      text-decoration: underline;
+      .return-ico {
+        background-position: -211px -240px;
+      }
+    }
+
+  }
+  span {
+    padding: 0 3px;
+  }
+  .location-ico {
+    width: 18px;
+    height: 22px;
+    background-position: -128px -382px;
+
+  }
+  .trigger {
+    display: inline-block;
+    margin-left: 20px;
+    .conditions-btn {
+      display: inline-block;
+      background-color: #fff;
+      padding-left: 8px;
+      padding-right: 30px;
+      line-height: 24px;
+      height: 24px;
+      font-size: 12px;
+      color: #333;
+      margin-top: 5px;
+      margin-right: 5px;
+      border: 1px solid #ddd;
+      position: relative;
+      vertical-align: top;
+      .txt {
+        color: @base;
+      }
+      .close-ico {
+        background-position: -94px -374px;
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        margin-left: 5px;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      &:hover {
+        border: 1px solid @base;
+        text-decoration: none;
+        &:hover {
+          text-decoration: none;
+        }
+        .close-ico {
+          background-position: -94px -389px;
+          background-color: @base;
+        }
+      }
+
+    }
+    .conditions-btn-2 {
+      padding-right: 5px;
+    }
+    .clear-btn {
+      display: inline-block;
+      color: #666;
+      font-size: 12px;
+      &:hover {
+        color: @base;
+        text-decoration: none;
+      }
+    }
+  }
+}

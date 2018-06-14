@@ -1,0 +1,46 @@
+<!-- 填写信息 -->
+<div class="ml20 mr40 mt10" invoice-dialog save-invoice-callback="events.saveInvoiceCallback()">
+    <p>开票方式：
+        <label class="ui-label">
+            <input type="radio"
+                   checked="checked"
+                   class="radio">
+            <a href="#"></a>
+            <span class="ipt-txt">电子发票</span>
+        </label>
+    </p>
+    <p>发票抬头：
+        <label class="ui-label">
+            <input type="radio"
+                   checked="checked"
+                   class="radio">
+            <a href="#"></a>
+            <span class="ipt-txt">个人</span>
+        </label>
+    </p>
+    <div class="content-sub-tit mt10"><span>发票接收信息确认</span></div>
+    <div class="m-tips-important mt10">请正确填写手机号（建议优先填写电信手机号）并认真核实电子邮箱以便接收电子发票信息，若填写错误将无法再次开票，敬请配合！</div>
+    <form name="invoiceForm">
+        <ul class="m-form-1 mt20">
+            <!--<input type="text" ng-model="model.userInfo.email" />-->
+            <li><span class="left-txt"><i class="rs">*</i>手机号</span><input type="text"
+                                                                           name="telephone"
+                                                                           ng-model="diruserInfo.phoneNumber"
+                                                                           ng-required="true"
+                                                                           ng-pattern="/^[\d]{11}$/"
+                                                                           class="ui-ipt w4"
+                                                                           placeholder="请输入您的手机号以便及时接收培训信息（如：发票）"></li>
+            <li><span class="left-txt"><i class="rs">*</i>邮箱号</span><input type="text"
+                                                                           name="email"
+                                                                           ng-required="true"
+                                                                           ng-model="diruserInfo.email"
+                                                                           class="ui-ipt w4"
+                                                                           placeholder="请输入常用邮箱号以便及时接收培训信息（如：发票）"></li>
+            <!--b{{invoiceForm.email.$error}}-->
+            <li><span class="left-txt"></span><a href="javascript:void(0)"
+                                                 ng-click="saveInvoice(invoiceForm)"
+                                                 class="btn-m">保存信息</a></li>
+        </ul>
+    </form>
+</div>
+<!-- /填写信息 -->

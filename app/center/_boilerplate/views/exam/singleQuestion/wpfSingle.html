@@ -1,0 +1,11 @@
+<div>
+    <span class="q-type">单选题</span>
+    <div class="exam-tit" ng-bind-html="question.topic"></div>
+    <div class="answer a-k">
+        <p ng-repeat="option in question.configurationItems"
+           ng-class="{'ans-choose-1': question.userAnswers[0] === option.id}">
+            <span class="ans-num" ng-bind="$index|filterNumberToLetter"></span>
+            <span class="ans-content" ng-bind-html="option.content"></span>
+        </p>
+    </div>
+</div>

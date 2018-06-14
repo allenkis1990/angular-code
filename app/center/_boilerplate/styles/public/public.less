@@ -1,0 +1,319 @@
+@import "variables";
+/* 清除浮动 */
+.clear {
+  clear: both;
+  *zoom: 1;
+
+  &:after, &:before {
+    display: block;
+    content: "clear";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+
+/* font */
+.b {
+  font-weight: bold;
+}
+
+/* hide */
+.hide {
+  display: none;
+}
+
+/* float */
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+/* Text */
+.to {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tc {
+  text-align: center;
+}
+
+.tr {
+  text-align: right;
+}
+
+.tl {
+  text-align: left;
+}
+
+/* position */
+.rel {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+/* sprite 图片 */
+.p-ico {
+  background: url("../../../../../@systemUrl@/images/icon.png") no-repeat;
+  display: inline-block;
+}
+
+/* 页面内容宽度 */
+.p-wrap-full {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-frame {
+  position: relative;
+  min-height: 100%;
+  z-index: 1;
+  background-color: #f2f2f2;
+
+  .main-frame-bd {
+    padding: 0 0 140px;
+    zoom: 1;
+
+  }
+}
+
+/* margin/padding */
+.m20 {
+  margin: 20px;
+}
+
+.mt-1 {
+  margin-top: -1px;
+}
+
+.ml5 {
+  margin-left: 5px;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.ml15 {
+  margin-left: 15px;
+}
+
+.ml20 {
+  margin-left: 20px;
+}
+
+.ml40 {
+  margin-left: 40px;
+}
+
+.ml50 {
+  margin-left: 50px;
+}
+
+.ml100 {
+  margin-left: 100px;
+}
+
+.mt5 {
+  margin-top: 5px;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mt25 {
+  margin-top: 25px;
+}
+
+.mt30 {
+  margin-top: 30px;
+}
+
+.mt40 {
+  margin-top: 40px;
+}
+
+.mt50 {
+  margin-top: 50px;
+}
+
+.mt70 {
+  margin-top: 70px;
+}
+
+.mt100 {
+  margin-top: 100px;
+}
+
+.mr5 {
+  margin-right: 5px;
+}
+
+.mr20 {
+  margin-right: 20px;
+}
+
+.mr40 {
+  margin-right: 40px;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.p0 {
+  padding: 0;
+}
+
+.p10 {
+  padding: 10px;
+}
+
+.p20 {
+  padding: 20px;
+}
+
+.pt10 {
+  padding-top: 10px;
+}
+
+.pb20 {
+  padding-bottom: 20px;
+}
+
+.pl30 {
+  padding-left: 30px;
+}
+
+.ptb20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.pr10{padding-right: 10px;}
+
+.txt-g {
+  color: #999;
+}
+.txt-b{
+  color: @base;
+}
+
+.w3 {
+  width: 300px;
+}
+
+.w4 {
+  width: 400px;
+}
+
+.w5 {
+  width: 500px;
+}
+
+.w6 {
+  width: 600px;
+}
+
+.w8 {
+  width: 800px;
+}
+
+.w10 {
+  width: 1000px;
+}
+
+.ab {
+  color: @base;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.ar {
+  color: @important;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.ag {
+  color: #999;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.t-r {
+  color: @important;
+}
+
+.t-b {
+  color: @base;
+}
+
+.t-g {
+  color: #999;
+}
+
+.fs14 {
+  font-size: 14px;
+}
+
+.fs16 {
+  font-size: 16px;
+}
+
+.fs18 {
+  font-size: 18px;
+}
+
+.fs20 {
+  font-size: 20px;
+}
+
+.fs30 {
+  font-size: 30px;
+}
+
+.bor-dt {
+  border-top: 1px dashed #ddd;
+}
+
+.bor-r {
+  border-right: 1px solid #ddd;
+}
+
+.rs {
+  color: @important;
+  position: relative;
+  margin-right: 8px;
+  top: 3px;
+}
+
+.h-1 {
+  height: 300px;
+}
+
+.wp-70 {
+  width: 70%;
+  margin: 0 auto;
+}

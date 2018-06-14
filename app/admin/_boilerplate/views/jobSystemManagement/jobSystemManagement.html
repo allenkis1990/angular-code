@@ -1,0 +1,156 @@
+<div class="main-wrap-body-1 clear">
+    <div class="column-block w-tree fl">
+        <div class="col-tit">岗位管理<a href="#" class="ico tit-new"></a></div>
+        <div class="col-body">
+            <div class="search-bar">
+                <form novalidate="novalidate" name="jobForm">
+                    <ul class="ul-form uf-2 li-fl clear">
+                        <li><input type="text" class="ipt ipt-small" name="jobname" ng-model="model.jobname"
+                                   placeholder="岗位名称" required ng-required="true"/>
+                        </li>
+                        <li><input type="button" ng-disabled="" ng-click="events.queryJob($event)" class="btn btn-b"
+                                   value="搜索"></li>
+                    </ul>
+                </form>
+                <ul class="ul-tree">
+                    <li ng-repeat="jobInfo in jobInfos">
+                        <div class="tree-item" ng-click="erji$index=!erji$index">
+                            <span ng-class="{'ico ico-open': !erji$index, 'ico ico-close': erji$index}"></span>
+                            <span class="tree-item-name">b{{jobInfo.name}}</span>
+                            <div class="op-ico"><a href="javascript:void(0)"
+                                                   ng-click="events.queryeditJob($event, jobInfo)"
+                                                   class="ico-op ico-edit mr10"></a><a href="javascript:void(0)"
+                                                                                       ng-click="events.deleteJob($event, jobInfo)"
+                                                                                       class="ico-op ico-del"></a></div>
+                        </div>
+                        <ul class="sub-content-3" ng-show="!erji$index">
+                            <li ng-repeat="jobs in jobInfo.listjobInfo track by $index"><a href="javascript:void(0);"
+                                                                                           ng-click="events.queryCourse($event, jobs)">b{{jobs.name}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--<div>
+                    <div ng-click="erjii=!erjii">关于我们<span style="margin-left:10px;"><button class='k-button' ng-click='events.queryeditJob($event)'>编</button><button class='k-button' ng-click='events.deleteJob($event)'>删</button></span></div>
+                    <ul ng-show="erjii">
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">新闻管理</a></li>
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">新闻管理</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div ng-click="erjif=!erjif">业务系统<span style="margin-left:10px;"><button class='k-button' ng-click='events.queryeditJob($event)'>编</button><button class='k-button' ng-click='events.deleteJob($event)'>删</button></span></div>
+                    <ul ng-show="erjif">
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">新闻管理</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div ng-click="erjis=!erjis">招商加盟<span style="margin-left:10px;"><button class='k-button' ng-click='events.queryeditJob($event)'>编</button><button class='k-button' ng-click='events.deleteJob($event)'>删</button></span></div>
+                    <ul ng-show="erjis">
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">添加新闻</a></li>
+                        <li><a href="#">新闻管理</a></li>
+                    </ul>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+    <!--<div kendo-panel-bar="panelBar" k-options="ui.panelBar" k-ng-delay="ui.panelBar"
+         k-on-change="model.selectedItem = dataItem">
+                <span k-template ng-click="">
+                  &lt;!&ndash;b{{dataItem.unitId}}&ndash;&gt;
+                  <label>&lt;!&ndash;b{{dataItem.type==='1'?'单位':'部门'}}&nbsp;&nbsp;&ndash;&gt;b{{dataItem.name}}</label>
+                  &lt;!&ndash;b{{dataItem.sort}}&ndash;&gt;
+                  &lt;!&ndash;<button class='k-button' ng-click='events.activate($event,dataItem)'>建</button>&ndash;&gt;
+                    <span>
+                      <button class='k-button' ng-click='events.queryCreate($event,dataItem)'>建</button>
+                      <button class='k-button' ng-click='events.deleteResourceCategory($event,dataItem)'>删</button>
+                      <button class='k-button' ng-click='events.queryModify($event,dataItem)'>修</button>
+                    </span>
+                </span>
+
+    </div>-->
+    <div class="right-pre fl">
+        <div class="column w-pre">
+            <div class="col-body clear">
+                <div class="search-bar">
+                    <ul class="ul-form li-fl clear">
+                        <li><input type="text" class="ipt ipt-medium" name="courseName"
+                                   ng-model="model.param.courseName" placeholder="课程名称"/></li>
+                        <li><a href="javascript:void(0)" class="btn btn-b" ng-click="events.queryCourse($event)">搜索</a>
+                        </li>
+                        <li class="fr"><a href="#" class="btn btn-r">查看岗位</a></li>
+                    </ul>
+                </div>
+                <div class="dash-line-3"></div>
+                <div class="tr">总b{{model.totalCredits}}学分</div>
+                <table class="table mt10">
+                    <thead>
+                    <tr>
+                        <th width="30">No.</th>
+                        <th>课程名称</th>
+                        <th width="80">学分</th>
+                        <th width="100">课程分类</th>
+                        <th width="100">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="courseInfo in courseInfos">
+                        <td>b{{$index+1}}</td>
+                        <td class="tl">b{{courseInfo.name}}</td>
+                        <td>b{{courseInfo.credit}}</td>
+                        <td>b{{courseInfo.lessonTypeName}}</td>
+                        <td class="op">
+                            <a href="#">试听</a>
+                            <a href="#">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function onSelect (e) {
+        console.log('Select: ' + $(e.item).find('> .k-link').text());
+    }
+
+    function onExpand (e) {
+        console.log('Expand: ' + $(e.item).find('> .k-link').text());
+    }
+
+    function onCollapse (e) {
+        console.log('Collapse: ' + $(e.item).find('> .k-link').text());
+    }
+
+    function onActivate (e) {
+        console.log('Activate: ' + $(e.item).find('> .k-link').text());
+    }
+
+    function onContentLoad (e) {
+        console.log('Content loaded in <b>' + $(e.item).find('> .k-link').text() +
+            '</b> and starts with <b>' + $(e.contentElement).text().substr(0, 20) + '...</b>');
+    }
+
+    function onError (e) {
+        console.error('Loading failed with ' + e.xhr.statusText + ' ' + e.xhr.status);
+    }
+
+    $('#panelbar').kendoPanelBar({
+        expandMode: 'single',
+        select: onSelect,
+        expand: onExpand,
+        collapse: onCollapse,
+        activate: onActivate,
+        contentLoad: onContentLoad,
+        error: onError,
+        contentUrls: [, , , '../content/web/panelbar/ajax/ajaxContent1.html', 'error.html']
+    }).css({width: '300px'}).css({margin: '0 auto'});
+</script>

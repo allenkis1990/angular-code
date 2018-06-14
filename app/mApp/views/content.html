@@ -1,0 +1,13 @@
+<div>
+    <div class="helpbox">
+        <div class="helpblcok app_bor-r" ng-repeat="item in list">
+            <a ng-click="events.goList(item)">
+                <image class="help-ico" ng-if="item.name==='常见问题'" src="images/help_ico_1.png"/>
+                <image class="help-ico" ng-if="item.name==='业务流程'" src="images/help_ico_2.png"/>
+                <image class="help-ico" ng-if="item.name==='操作手册'" src="images/help_ico_3.png"/>
+                <span>b{{item.name}}</span>
+            </a>
+
+        </div>
+    </div>
+</div>

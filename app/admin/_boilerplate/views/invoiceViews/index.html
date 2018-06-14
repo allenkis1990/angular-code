@@ -1,0 +1,54 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.invoiceViews'"
+     ng-click="lessonTypeShow=false">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li>
+                <select class="select-small" ng-model="model.groupType">
+                    <option value="billingResultImport">发票导入</option>
+                    <option value="IMPORT_BATCH_BILL">批次发票导入</option>
+                    <!--<option value="IMPORT_ELECTRON_BATCH_BILL" selected="selected">电子批次发票导入</option>-->
+                </select>
+            </li>
+            <li>
+                <select class="slt slt-medium" ng-model="model.status">
+                    <!--<option ng-selected="true" value="">执行状态</option>-->
+                    <!--<option value="-1">全部</option>-->
+                    <!--<option value="running">处理中</option>-->
+                    <!--<option value="executed">处理成功</option>-->
+                    <!--<option value="fail">处理失败</option>-->
+                    <option ng-selected="true" value="">执行状态</option>
+                    <option value="executed">已执行</option>
+                    <option value="toExecuted">正在执行</option>
+                    <option value="fail">执行失败</option>
+                </select>
+            </li>
+            <li>
+                <input kendo-date-picker="node.workBeginTime"
+                       k-options="ui.datePicker.begin.options"
+                       ng-model="model.beginCreateTime"
+                       type="text"
+                       class="ipt ipt-s"
+                       placeholder="任务执行开始时间"
+                       ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                /> -
+                <input kendo-date-picker="node.workEndTime"
+                       k-options="ui.datePicker.end.options"
+                       ng-model="model.endCreateTime"
+                       type="text"
+                       class="ipt ipt-s"
+                       placeholder="任务执行结束时间"
+                       ng-keyup="$event.keyCode==13?events.MainPageQueryList($event):''"
+                />
+            </li>
+
+            <li><a href="javascript:void(0)"
+                   has-permission="invoiceViews/search"
+                   ng-click="events.MainPageQueryList($event)"
+                   class="btn btn-b">查询</a></li>
+        </ul>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid.options">
+            </div>
+        </div>
+    </div>
+</div>

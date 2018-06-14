@@ -1,0 +1,52 @@
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <select class="select-small" ng-model="model.queryParam.status">
+                        <option selected="selected" value="-1">执行状态</option>
+                        <option value="executed">已执行</option>
+                        <option value="toExecuted">正在执行</option>
+                        <option value="fail">执行失败</option>
+                    </select>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="任务执行时间开始"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.startDate"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParam.startDate"
+                    /> -
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="任务执行时间结束"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.endDate"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParam.endDate"
+                    />
+                </li>
+                <li><a href="javascript:void(0);"
+                       has-permission="orderAsynchExport/query"
+                       class="btn btn-b" ng-click="events.query($event)">查询</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="dash-line-4"></div>
+    <div kendo-grid="node.grid" k-options="ui.grid.options" data-role="grid" class="k-grid k-widget">
+    </div>
+</div>
+
+
+<!--查看未发布人员-->
+<div class="dialog w-textarea" kendo-window="node.windows.teacherWindow" k-options="ui.windowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">未发布人员<a href="" ng-click="node.windows.teacherWindow.close()"
+                                        class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div kendo-grid="node.personGrid" k-options="ui.personGrid.options" data-role="personGrid"></div>
+        </div>
+    </div>
+</div>

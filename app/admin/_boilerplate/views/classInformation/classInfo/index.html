@@ -1,0 +1,586 @@
+<div class="column">
+    <div class="tab-tit mt20">
+        <a href="javascript:void (0);"
+           has-permission="learningContent/courseTab"
+           ng-class="{'current':model.currenTab === 'course'}"
+           ng-click="events.switchTab(1)"
+        >自主选课学习</a>
+        <a href="javascript:void (0);"
+           has-permission="learningContent/trainingClassTab"
+           ng-class="{'current':model.currenTab === 'trainingClass'}"
+           ng-click="events.switchTab(2)"
+        >培训班学习</a>
+    </div>
+</div>
+
+
+<!--课程信息-->
+<div class="tab-bd clear" ng-show="model.classTab === 0 && model.noUserInformation && model.currenTab === 'course'">
+    <div class="wp-9 fl" style="width: 30%">
+        <div class="col-tit">已购课程</div>
+        <div class="column-block clear">
+            <div class="col-body bt0 mh-3">
+                <div class="search-bar">
+                </div>
+                <div class="no-data w-4 pt50 clear">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">请先输入相关信息进行搜索！</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wp-10 fr" style="width: 70%">
+        <div class="col-tit">课程信息</div>
+        <div class="column-block bt0 clear">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10">
+                    <div class="no-data w-4 pt50 clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">请先输入相关信息进行搜索！</div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-bd clear" ng-show="model.classTab === 0 && !model.noUserInformation && model.currenTab === 'course'">
+    <div class="wp-9 fl" style="width: 30%">
+        <div class="col-tit">已购课程</div>
+        <div class="column-block clear">
+            <div class="col-body bt0 mh-3">
+                <div class="search-bar">
+                    <ul class="ul-form uf-3 li-fl clear">
+                        <div hb-sku-directive
+                             category-type="model.categoryType"
+                             lwhmodel="skuParamsCustomServiceCourseInfo"
+                             ng-model="skuParamsCustomServiceCourseInfo"
+                             templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+                        <li><a href="javascript:void (0);"
+                               ng-click="events.searchCourse()"
+                               has-permission="learningContent/courseSearchButton"
+                               class="btn btn-b">搜索</a>
+                        </li>
+                    </ul>
+                </div>
+                <div kendo-grid="node.course"
+                     k-ng-delay="kendoPlus.courseGridDelay"
+                     k-options="ui.course.options">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wp-10 fr" style="width: 70%">
+        <div class="column-block bt0 clear" ng-if="courseInfoModel.noCourseformarion">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10">
+                    <div class="no-data w-4 pt50 clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">请先输入相关信息进行搜索！</div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+            </div>
+        </div>
+        <div class="column-block bt0 clear" ng-if="!courseInfoModel.noCourseformarion">
+            <div class="col-body bt0 mh-3">
+                <div class="col-tit">课程信息</div>
+
+                <div class="tab-tit-3">
+                    <a href="javascript:void (0);"
+                       ng-class="{'current':courseInfoModel.courseInfoTab === 0}"
+                       ng-click="courseInfoModel.courseInfoTab = 0"
+                       class="current">基本信息</a>
+                    <a href="javascript:void (0);"
+                       ng-if="courseInfoModel.courseRealInfo.hasCoursePracticeAssess"
+                       ng-class="{'current':courseInfoModel.courseInfoTab === 1}"
+                       ng-click="events.changeCourseInfoTab($event,2)">课后测验</a>
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10 " ng-show="courseInfoModel.courseInfoTab === 0">
+                    <div class="mt10 ml20 mr20">
+                        <div class="mt10">
+                            <div class="dash-line-4 mt10"></div>
+                            <ul class="ul-d-form udf-14 li-fl clear">
+                                <ul class="ul-d-form udf-14 li-fl clear">
+                                    <li><span class="left-txt">课程名称：</span><span style="color: #f47d95"
+                                                                                 ng-bind="courseInfoModel.courseRealInfo.courseName"></span>
+                                    </li>
+                                    <li><span class="left-txt">课程学时：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.credit"></span>学时
+                                    </li>
+                                    <li><span class="left-txt">科目：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.skuPropertyNameList[1].skuPropertyValueName"></span>
+                                    </li>
+                                    <li><span class="left-txt">年度：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.skuPropertyNameList[0].skuPropertyValueName"></span>年
+                                    </li>
+                                    <li><span class="left-txt">学习进度：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.schedule"></span>%
+                                    </li>
+                                    <li ng-if="courseInfoModel.courseRealInfo.hasCoursePracticeAssess"><span
+                                            class="left-txt">课后测验：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.coursePracticeScore===null?'暂无考试记录':courseInfoModel.courseRealInfo.coursePracticeScore"></span><span
+                                            ng-if="classInfoModel.classRealInfo.paperScore!==null">分</span></li>
+                                    <li ng-if="courseInfoModel.courseRealInfo.hasPopQuestionAssess"><span
+                                            class="left-txt">弹窗题成绩:</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.popQuestionScore===null?'暂无弹窗题答题记录':courseInfoModel.courseRealInfo.popQuestionScore"></span>分
+                                    </li>
+                                    <li><span class="left-txt">购买时间：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.activeTime"></span></li>
+                                    <li ><span class="left-txt">开通方式：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.activeType"></span></li>
+                                    <li ><span class="left-txt">来源方案：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.schemeName"></span></li>
+                                    <li><span class="left-txt">考核结果：</span><span
+                                            ng-bind="courseInfoModel.courseRealInfo.assessStatus"></span>
+                                        <button href="javascript:void(0);"
+                                                class="btn btn-b btn-mini ml20"
+                                                has-permission="learningContent/oneKeyPassForCourse"
+                                                ng-click="events.oneKeyOkForCourse()"
+                                                ng-disabled="courseInfoModel.courseRealInfo.state === 1"
+                                                ng-if="courseInfoModel.courseRealInfo.assessStatus !== '合格'"
+                                        >
+                                            一键合格
+                                        </button>
+                                    </li>
+                                    <!--<has-permission="classInformation/onekeyStud>-->
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+                <!-- 课后测验 -->
+                <div class="tab-bd mt10" ng-show="courseInfoModel.courseInfoTab === 1">
+                    <table class="table table-nf table-s mt10">
+                        <thead>
+                        <tr>
+                            <th width="20%" class="tl">测验名称</th>
+                            <th width="20%">总分</th>
+                            <th width="20%">测验次数</th>
+                            <th width="20%">已测验次数</th>
+                            <th width="20%">测验最高分成绩</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="bg-g">
+                            <td class="tl" ng-bind="courseInfoModel.coursePracticeExam.name"></td>
+                            <td ng-bind="courseInfoModel.coursePracticeExam.totalScore + '分'"></td>
+                            <td ng-bind="courseInfoModel.coursePracticeExam.limitPracticeNum? courseInfoModel.coursePracticeExam.practiceNum:'无限次'"></td>
+                            <td ng-bind="courseInfoModel.coursePracticeExam.hasPracticeNum >= 0 ? courseInfoModel.coursePracticeExam.hasPracticeNum : '-'"></td>
+                            <td ng-bind="(courseInfoModel.coursePracticeExam.historyBestScore === null ? '-':courseInfoModel.coursePracticeExam.historyBestScore) + '分'"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" class="p0">
+                                <table class="table table-noline">
+                                    <tbody>
+                                    <tr ng-repeat="data in courseInfoModel.coursePracticeExam.historyPracticeList">
+                                        <td width="53%" class="tl"><span
+                                                class="pl20">答卷时间：<span ng-bind="data.enterTime"></span>至<span
+                                                ng-bind="data.completeTime"></span></span></td>
+                                        <td width="40%">成绩：<span ng-bind="data.score"></span>分</td>
+                                        <td width="5%" class="op">
+                                            <a href="javascript:void (0);"
+                                               ng-click="events.deleteCoursePracticeRecord(data)"
+                                               ng-if="courseInfoModel.courseRealInfo.assessStatus !== '合格'"
+                                            >删除</a>
+                                            <!--  has-permission="classInformation/detailText"-->
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /课后测验 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--班级信息-->
+<div class="tab-bd clear"
+     ng-show="model.classTab === 0 && model.noUserInformation && model.currenTab === 'trainingClass'">
+    <div class="wp-9 fl" style="width: 30%">
+        <div class="col-tit">已报班级</div>
+        <div class="column-block clear">
+            <div class="col-body bt0 mh-3">
+                <div class="search-bar">
+                </div>
+                <div class="no-data w-4 pt50 clear">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">请先输入相关信息进行搜索！</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wp-10 fr" style="width: 70%">
+        <div class="col-tit">已报班级</div>
+        <div class="column-block bt0 clear">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10">
+                    <div class="no-data w-4 pt50 clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">请先输入相关信息进行搜索！</div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-bd clear"
+     ng-show="model.classTab === 0 && !model.noUserInformation&& model.currenTab === 'trainingClass'">
+    <div class="wp-9 fl" style="width: 30%">
+        <div class="col-tit">已报班级</div>
+        <div class="column-block clear">
+            <div class="col-body bt0 mh-3">
+                <div class="search-bar">
+                    <ul class="ul-form uf-3 li-fl clear">
+                        <div hb-sku-directive
+                             category-type="model.categoryType"
+                             lwhmodel="skuParamsCustomServiceClassInfo"
+                             ng-model="skuParamsCustomServiceClassInfo"
+                             templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+                        <li><a href="javascript:void (0);"
+                               ng-click="events.searchClassPage()"
+                               has-permission="learningContent/classSearchButton"
+                               class="btn btn-b">搜索</a>
+                        </li>
+                        <!--has-permission="classInformation/searchClass"-->
+                    </ul>
+                </div>
+                <div kendo-grid="node.learningClass"
+                     k-options="ui.learningClass.options">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wp-10 fr" style="width: 70%">
+        <div class="col-tit">班级信息</div>
+        <div class="column-block bt0 clear" ng-if="classInfoModel.noClassInformarion">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10">
+                    <div class="no-data w-4 pt50 clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">请先输入相关信息进行搜索！</div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+            </div>
+        </div>
+        <div class="column-block bt0 clear" ng-if="!classInfoModel.noClassInformarion">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                    <a href="javascript:void (0);"
+                       ng-class="{'current':classInfoModel.classInfoTab === 0}"
+                       ng-click="classInfoModel.classInfoTab = 0"
+                       class="current">基本信息</a>
+                    <a href="javascript:void (0);"
+                       ng-if="classInfoModel.createType !== 4"
+                       ng-class="{'current':classInfoModel.classInfoTab === 1}"
+                       ng-click="events.changeClassInfoTab($event,2)">学习情况</a>
+                    <a href="javascript:void (0);"
+                       ng-if="classInfoModel.createType !== 4 && classInfoModel.classRealInfo.hasExamAssess"
+                       ng-class="{'current':classInfoModel.classInfoTab === 2}"
+                       ng-click="events.getClassTestInfo()">班级考试</a>
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10 " ng-show="classInfoModel.classInfoTab === 0">
+                    <div class="mt10 ml20 mr20">
+                        <div class="mt10">
+                            <div class="dash-line-4 mt10"></div>
+                            <ul class="ul-d-form udf-14 li-fl clear">
+                                <li><span class="left-txt">班级名称：</span><span style="color: #f47d95"
+                                                                             ng-bind="classInfoModel.classRealInfo.className"></span>
+                                </li>
+                                <li><span class="left-txt">班级学时：</span><span
+                                        ng-bind="classInfoModel.classRealInfo.credit"></span>学时
+                                </li>
+
+                                <li ng-repeat=" item in classInfoModel.classRealInfo.skuPropertyNameList">
+                                    <span class="left-txt" ng-bind="item.skuPropertyName" style="margin-left: -15px">
+                                    </span>:
+                                    <span ng-bind="item.skuPropertyValueName===null?'-':item.skuPropertyValueName"></span>
+                                </li>
+                                <!--<li><span class="left-txt">年度：</span><span-->
+                                        <!--ng-bind="classInfoModel.classRealInfo.skuPropertyNameList[0].skuPropertyValueName"></span>年-->
+                                <!--</li>-->
+
+
+                                <li><span class="left-txt">学习进度：</span><span
+                                        ng-bind="classInfoModel.classRealInfo.courseLearningSchedule"></span>%
+                                </li>
+                                <li ng-if="classInfoModel.classRealInfo.paperRequireScore!==null"><span
+                                        class="left-txt">考试成绩：</span><span
+                                        ng-bind="classInfoModel.classRealInfo.paperScore===null?'暂无考试记录':classInfoModel.classRealInfo.paperScore"></span><span
+                                        ng-if="classInfoModel.classRealInfo.paperScore!==null">分</span></li>
+                                <li ng-if="classInfoModel.classRealInfo.popQuestionRequireScore!==null"><span
+                                        class="left-txt">弹窗题成绩:</span><span
+                                        ng-bind="classInfoModel.classRealInfo.popQuestionScore===null?'-':classInfoModel.classRealInfo.popQuestionScore"></span>分
+                                </li>
+                                <li><span class="left-txt">开通时间：</span><span
+                                        ng-bind="classInfoModel.classRealInfo.activeTime"></span></li>
+                                <li ng-if="classInfoModel.createType !== 4"><span class="left-txt">开通方式：</span><span
+                                        ng-bind="classInfoModel.classRealInfo.activeType"></span></li>
+                                <li><span class="left-txt">考核结果：</span><span
+                                        ng-bind="classInfoModel.classRealInfo.examinationResult"></span>
+                                    <button href="javascript:void(0);"
+                                            class="btn btn-b btn-mini ml20"
+                                            has-permission="learningContent/oneKeyPassForClass"
+                                            ng-click="events.oneKeyOkForClass()"
+                                            ng-disabled="!classInfoModel.classRealInfo.fullCourseRequireCredit || classInfoModel.classUserState === 1|| classInfoModel.classUserState === 2"
+                                            ng-if="classInfoModel.classRealInfo.examinationResult !== '合格'  && classInfoModel.createType !== 4">
+                                        一键合格
+                                    </button>
+                                </li>
+                                <!--<has-permission="classInformation/onekeyStud>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+
+                <!-- 学习情况 -->
+                <div class="tab-bd mt10" ng-show="classInfoModel.classInfoTab === 1">
+                    <div class="b fs16">课程整体信息</div>
+                    <div class="sta-pic-1">
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t1">
+                                    <span><span ng-bind="classInfoModel.classTotalLearning.totalCredit"></span>学分</span>
+                                </div>
+                            </div>
+                            <span class="sp-info">整体选课要求</span>
+                        </div>
+
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t2">
+                                    <span>学习进度</span>
+                                    <p>已学：<span ng-bind="classInfoModel.classTotalLearning.userLearningSchedule"></span>%
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="sp-info">学习进度</span>
+                        </div>
+
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t3">
+                                    <span>已选学分</span>
+                                    <p>已选学分：<span ng-bind="classInfoModel.classTotalLearning.userSelectedCredit"></span>学分
+                                    </p>
+                                    <p>还需选学分：<span ng-bind="(classInfoModel.classTotalLearning.totalCredit -
+                                        classInfoModel.classTotalLearning.userSelectedCredit >= 0 ?
+                                        classInfoModel.classTotalLearning.totalCredit -
+                                        classInfoModel.classTotalLearning.userSelectedCredit : 0 )"></span>学分</p>
+                                </div>
+                            </div>
+                            <span class="sp-info">已选学分</span>
+                        </div>
+
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t4">
+                                    <p>共<span ng-bind="classInfoModel.classTotalLearning.totalPopQuestionNum"></span>题
+                                    </p>
+                                    <p>已答<span
+                                            ng-bind="classInfoModel.classTotalLearning.answeredPopQuestionNum"></span>题(答对<span
+                                            ng-bind="classInfoModel.classTotalLearning.correctPopQuestionNum"></span>)题
+                                    </p>
+                                    <p>未答<span ng-bind="classInfoModel.classTotalLearning.unAnswerQuestionNum"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="sp-info">弹窗答题</span>
+                        </div>
+                    </div>
+                    <div class="b fs16 mt10">课程学习情况</div>
+                    <div class="mw-1">
+                        <div class="no-data w-4 pt20 pb20 clear" ng-if="classInfoModel.learnStatusList.length<=0">
+                            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                            <div class="p-txt">当前班级下还没有课程学习情况！</div>
+                        </div>
+                        <div ng-if="classInfoModel.learnStatusList.length>0">
+                            <table class="table table-nf table-s mt10">
+                                <thead>
+                                <tr>
+                                    <th width="30">No.</th>
+                                    <th width="210">课程名称</th>
+                                    <th width="60">学时</th>
+                                    <th width="80">时长</th>
+                                    <th width="60">学习进度</th>
+                                    <th width="120">开始学习时间</th>
+                                    <th width="120">最后学习时间</th>
+                                    <th width="80">弹窗答题</th>
+                                    <th width="70">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody ng-repeat="item in classInfoModel.learnStatusList" ng-init="parentIndex=$index">
+                                <tr>
+                                    <td ng-bind="$index+1"></td>
+                                    <!-----------  打开  ------------->
+                                    <td class="tl">
+                                        <span class="ico" ng-click="events.toggleChildren(item)"
+                                              ng-class="{'ico-open':item.ischecked,'ico-close':!item.ischecked}"></span>
+                                        <span ng-bind="item.courseName"></span>
+                                    </td>
+                                    <td ng-bind="item.courseHours"></td>
+                                    <td ng-bind="item.timeLength"></td>
+                                    <td>b{{item.learningSchedule}}%</td>
+                                    <td ng-bind="item.learningStartTime===null?'-':item.learningStartTime"></td>
+                                    <td ng-bind="item.lastLearningTime===null?'-':item.lastLearningTime"></td>
+                                    <td>b{{item.totalPopQuestionNum}}(对:b{{item.correctPopQuestionNum}}
+                                        错:b{{item.errorPopQuestionNum}})
+                                    </td>
+                                    <td class="op">
+                                        <button
+                                                ng-disabled="classInfoModel.classRealInfo.examinationResult === '合格' || classInfoModel.classUserState !== 0"
+                                                class="table-btn"
+                                                has-permission="learningContent/oneKeyStudyForClassCourse"
+                                                ng-click="events.feedLearning(item)">一键学习
+                                        </button>
+                                        <!-- has-permission="classInformation/onekeyLearn"-->
+                                    </td>
+                                </tr>
+                                <tr ng-if="item.ischecked">
+                                    <td colspan="9" class="p0">
+                                        <table class="table table-4">
+                                            <tbody ng-repeat="subItem in item.childrenList">
+                                            <tr>
+                                                <td width="30"></td>
+                                                <td width="210" class="tl"><span class="ico ico-sub"></span>b{{subItem.chapterName}}
+                                                </td>
+                                                <td width="60"></td>
+                                                <td width="80"></td>
+                                                <td width="60"></td>
+                                                <td width="120"></td>
+                                                <td width="120"></td>
+                                                <td width="80"></td>
+                                                <td width="70" class="op">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="9" class="p0">
+                                                    <table class="table table-noline">
+                                                        <tbody>
+                                                        <tr ng-repeat="grItem in subItem.userCourseWareList">
+                                                            <td width="30"></td>
+                                                            <td width="210" class="tl"><span
+                                                                    class="ico ico-sub-1"></span>b{{grItem.name}}
+                                                            </td>
+                                                            <td width="60"></td>
+                                                            <td width="80" ng-bind="grItem.timeLength"></td>
+                                                            <td width="60">b{{grItem.learningSchedule}}%</td>
+                                                            <td width="120"
+                                                                ng-bind="grItem.learningStartTime===null?'-':grItem.learningStartTime"></td>
+                                                            <td width="120"
+                                                                ng-bind="grItem.lastLearningTime===null?'-':grItem.lastLearningTime"></td>
+                                                            <td width="80">
+                                                                b{{grItem.totalPopQuestionNum}}(对:b{{grItem.correctPopQuestionNum}}
+                                                                错:b{{grItem.errorPopQuestionNum}})
+                                                            </td>
+                                                            <td width="70" class="op">
+                                                                <button
+                                                                        ng-disabled="classInfoModel.classRealInfo.examinationResult === '合格' || classInfoModel.classUserState !== 0"
+                                                                        class="table-btn"
+                                                                        has-permission="learningContent/oneKeyStudyForCourseWare"
+                                                                        ng-click="events.oneKeyCourseWareLearned(grItem,item,parentIndex)">
+                                                                    一键学习
+                                                                </button>
+                                                                <!--has-permission="classInformation/onekeyLearn"-->
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <!--<button ng-click="events.refresh()" ng-disabled="refreshAble" class="k-pager-refresh k-link"-->
+                                    <!--title="刷新"><span class="k-icon k-i-refresh">刷新</span>-->
+                            <!--</button>-->
+                            <div ng-if="classInfoModel.learnStatusList.length > 0" class="col-body mt20 clear">
+                                <div kendo-pager="node.courseTable" k-options="ui.courseTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /学习情况 -->
+
+                <!-- 班级考试 -->
+                <div class="tab-bd mt10" ng-if="classInfoModel.classInfoTab === 2">
+                    <p>当前共<span class="t-r" ng-bind="classInfoModel.classTestInfomation.length + '场'"></span>考试</p>
+                    <table class="table table-nf table-s mt10">
+                        <thead>
+                        <tr>
+                            <th width="17%" class="tl">考试名称</th>
+                            <th width="12%">总分</th>
+                            <th width="12%">考试时长</th>
+                            <th width="29%">考试周期</th>
+                            <th width="10%">考试次数</th>
+                            <th width="10%">已考次数</th>
+                            <th width="10%">考试成绩</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="item in classInfoModel.classTestInfomation">
+                        <tr class="bg-g">
+                            <td class="tl" ng-bind="item.examRoundName"></td>
+                            <td ng-bind="item.totalScore + '分'"></td>
+                            <td ng-bind="item.examTime + '分钟'"></td>
+                            <td><span ng-bind="item.examBeginTime"></span> 至 <span ng-bind="item.examEndTime"></span>
+                            </td>
+                            <td ng-bind="item.examTimes === 0 ? '无限次':item.examTimes"></td>
+                            <td ng-bind="item.haveExamTimes > 0 ? item.haveExamTimes : '-'"></td>
+                            <td ng-bind="(item.userScore === null ? '-':item.userScore) + '分'"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" class="p0">
+                                <table class="table table-noline">
+                                    <tbody>
+                                    <tr ng-repeat="data in item.examTimesDetail">
+                                        <td width="53%" class="tl"><span
+                                                class="pl20">答卷时间：<span ng-bind="data.answerPaperTime"></span></span>
+                                        </td>
+                                        <td width="40%">成绩：<span ng-bind="data.score"></span>分</td>
+                                        <td width="5%" class="op">
+                                            <a href="javascript:void (0);"
+                                               has-permission="learningContent/delExamRecord"
+                                               ng-if="classInfoModel.classUserState === 0 && classInfoModel.classRealInfo.examinationResult !== '合格' && classInfoModel.classInfoStatus !== '冻结'"
+                                               ng-click="events.deleteClassTest(item,data)">删除</a>
+                                            <!--  has-permission="classInformation/detailText"-->
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /班级考试 -->
+            </div>
+        </div>
+    </div>
+</div>

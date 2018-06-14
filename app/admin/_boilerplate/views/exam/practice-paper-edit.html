@@ -1,0 +1,214 @@
+<!--//组卷第一步-->
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.practicePaperConfig" class="ico return"></a>
+        <a href="javascript: void(0);" ui-sref="states.practicePaperConfig" class="aw">试卷管理</a> >
+        <span ng-show="!show.addQuestion">修改试卷</span>
+        <a href="javascript: void(0);" ng-show="show.addQuestion" ng-click="events.cancleAddQuestion()"
+           class="aw">修改试卷</a>
+        <span ng-show="show.addQuestion"> > 配置试题</span>
+    </div>
+</div>
+<div class="main-wrap-body">
+    <form name="paper" novaildate ng-if="showback===false">
+        <div class="column">
+            <div class="col-tit">试卷基本信息</div>
+            <div class="dash-line-1"></div>
+            <ul class="ul-d-form pt20 lh-1">
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>试卷名称：</span>
+                    <input type="text"
+                           name="name"
+                           ng-model="model.name"
+                           class="ipt slt-medium"
+                           ng-class="{'ng-invalid':paper.name.$dirty&&!paper.name.$error.required&&model.validonly===false}"
+                           required
+                           ng-blur="events.validonly()"
+                           placeholder="请输入试卷名称">
+                    <span class="li-prompt" ng-if="paper.name.$dirty&&paper.name.$error.required">
+                    <span class="ico ico-prompt">
+                    </span>
+                    试卷名称不可为空
+                </span>
+                    <span class="li-prompt"
+                          ng-if="paper.name.$dirty&&!paper.name.$error.required&&model.validonly===false">
+                    <span class="ico ico-prompt">
+                    </span>
+                    试卷名称已存在
+                </span>
+                    </span>
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>试卷分类：</span>
+                    <!-- <select class="slt slt-medium mr10" style="margin-left: 0;width:212px;">
+                         <option>请选择试卷分类</option>
+                     </select>-->
+
+                    <input type="text" class="ipt ipt-medium "
+                           placeholder="请选择试卷类别"
+                           ng-model="model.libraryName"
+                           ng-click="events.openTree($event)"
+                           name="parentId"
+                           required ng-required="true">
+                    <div class="column-block w-tree fl" ng-show="examTypeTreeShows" ng-click="$event.stopPropagation()"
+                         style="position: absolute;
+                       z-index: 10;
+                       left: 120px;
+                       width:195px;
+                       max-height: 200px;
+                       overflow: auto;"
+                    >
+                        <div class="col-body">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getOrgInfo(dataItem)">
+                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a ng-click="events.sort()" class="t-b">+新建分类</a>
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>出题方式：</span>
+                    <input type="text" class="ipt slt-medium" disabled placeholder="智能组卷">
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>试卷类型：</span>
+                    课后测验卷
+                </li>
+                <li style="clear: both;">
+                    <span class="left-txt"><i>*</i>试卷总分：</span>b{{model.totalScore}}分
+                </li>
+                <!-- <li class="clear">
+                     <span class="left-txt fl"><i>*</i>试卷总分：</span>
+                     <input type="text"
+                            class="ipt slt-medium"
+                            ng-pattern="/^[0-9]*$/"
+                            ng-model="model.totalScore"
+                            required
+                            name="totalScore"
+                     > 分
+                 <span class="li-prompt" ng-if="paper.totalScore.$dirty&&paper.totalScore.$error.required">
+                     <span class="ico ico-prompt"></span>试卷总分不可为空</span>
+                 <span class="li-prompt" ng-if="paper.totalScore.$error.pattern">
+                     <span class="ico ico-prompt"></span>总分只可为数字类型</span>
+                     </span>
+                 </li>-->
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>建议及格分：</span>
+                    <input type="text"
+                           class="ipt slt-medium"
+                           ng-pattern="/^[0-9]*$/"
+                           ng-model="model.passScore"
+                           required
+                           name="passScore"> 分
+                    <span class="li-prompt" ng-if="paper.passScore.$dirty&&paper.passScore.$error.required">
+                    <span class="ico ico-prompt"></span>建议及格分数不可为空</span>
+                    <span class="li-prompt" ng-if="paper.passScore.$error.pattern">
+                    <span class="ico ico-prompt"></span>建议及格分只可为数字类型</span>
+                    </span>
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl">组卷试题范围：</span>
+                    按课程ID出题
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>试卷状态：</span>
+                    <lable class="mr30" ng-click="model.enable=true">
+                        <input type="radio" ng-checked="model.enable===true">启用
+                    </lable>
+                    <lable ng-click="model.enable=false">
+                        <input type="radio" ng-checked="model.enable===false">停用
+                    </lable>
+                </li>
+            </ul>
+        </div>
+        <div class="column mt50">
+            <div class="col-tit">配置试题</div>
+            <div class="dash-line-1"></div>
+            <ul class="ul-d-form pt20 lh-1">
+                <li class="clear">
+                    <span class="left-txt fl"><i>*</i>测验试题数量：</span>
+                    <input type="text"
+                           ng-pattern="/^\+?[1-9]\d*$/"
+                           class="ipt slt-medium"
+                           required
+                           ng-class="{'ng-invalid':showerror===true}"
+                           ng-blur="events.check()"
+                           name="questionNum"
+                           ng-model="model.questionNum"> 题
+                    <span class="li-prompt"
+                          ng-if="paper.questionNum.$dirty&&paper.questionNum.$error.required&&paper.questionNum.$error.pattern">
+                    <span class="ico ico-prompt">
+                    </span>
+                    请输入大于0的试题数！
+                </span>
+                    <span class="li-prompt" ng-if="showerror===true">
+                    <span class="ico ico-prompt">
+                    </span>
+                    请调整试题每题分值为小数点后一位为0或5的数值！
+                </span></span>
+                </li>
+                <li class="clear t-r">
+                    <span class="left-txt fl">&nbsp;</span>
+                    说明：测验关联的课程若试题数达不到要求，则抽取关联课程所有的试题。
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl">试题每题分值：</span>
+                    <span ng-if="model.totalScore/model.questionNum"
+                          ng-bind="model.totalScore/model.questionNum | number : 1"></span>分
+                </li>
+            </ul>
+        </div>
+        <div class="column mt50">
+            <div class="col-tit">配置试卷规则
+            </div>
+            <div class="dash-line-1"></div>
+            <ul class="ul-d-form pt20 lh-1">
+                <li class="clear">
+                    <span class="left-txt fl">测验次数：</span>
+                    <lable class="mr30" ng-click="model.limitPracticeNum=false;model.practiceNum=null">
+                        <input type="radio" ng-checked="model.limitPracticeNum===false">不限
+                    </lable>
+                    <lable ng-click="model.limitPracticeNum=true">
+                        <input type="radio" ng-checked="model.limitPracticeNum===true">限制
+                        <input type="text"
+                               ng-pattern="/^\+?[1-9]\d*$/"
+                               ng-model="model.practiceNum"
+                               ng-disabled="model.limitPracticeNum===false"
+                               class="ipt ipt-c-xm"> 次
+                    </lable>
+                </li>
+                <li class="clear">
+                    <span class="left-txt fl">测验结果：</span>
+                    <lable class="mr30" ng-click="model.publiced=true"><input type="radio"
+                                                                              ng-checked="model.publiced===true">公布试题解析
+                    </lable>
+                    <!--     <lable  ng-click="model.publiced=false" ><input type="radio" ng-checked="model.publiced===false" >不公布试题解析</lable>
+                     --></li>
+            </ul>
+        </div>
+
+        <div class="bor-t mt30">
+            <div class="mt20 ml150">
+                <button class="btn btn-r" ng-disabled="paper.$invalid||showerror===true||model.validonly===false"
+                        ng-click="events.update()">保存试卷
+                </button>
+                <a href="javascript: void(0);" ui-sref="states.practicePaperConfig" class="btn btn-g ml10">取消</a>
+            </div>
+        </div>
+    </form>
+    <div class="prompt-box" ng-if="showback===true">
+        <div class="p-img fl"><img src="@systemUrl@/images/img-complete.png"></div>
+        <div class="p-txt fr">
+            <p>修改试卷完成并保存成功!</p>
+            <span>是否继续修改试卷?<a href="javascript:void(0)" ng-click="events.continue()">继续修改试卷</a></span>
+            <!--has-permission="practicePaperConfig/continueAddPaper"-->
+            <span>是否返回试卷列表?<a href="javascript: void(0);" ui-sref="states.practicePaperConfig">返回试卷列表</a></span>
+            <!--has-permission="practicePaperConfig/backPaperPage"-->
+        </div>
+    </div>
+</div>

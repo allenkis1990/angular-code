@@ -1,0 +1,13 @@
+<div style="display: inline-block;vertical-align: middle;">
+    <input type="text" class="ipt ipt-small placeholder"
+           data-id="pop"
+           hb-readonly
+           placeholder="请选择地区" ng-model="model.regionName" ng-click="openTree()">
+    <div class="column-block w-tree fl mh-2"
+         style="min-width: 135px;"
+
+         kendo-popup="node.kendoPopup" k-options="popConfig">
+        <div kendo-treeview="node.tree"
+             k-options="treeConfig"></div>
+    </div>
+</div>

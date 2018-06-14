@@ -1,0 +1,104 @@
+<div class="m-box-1" ng-show="$state.current.name === 'states.merchant'">
+    <div class="m-box-2">
+        <div class="m-box-3">
+            <div class="main-wrap-body">
+                <div class="search-bar">
+                    <ul class="ul-form li-fl clear">
+                        <li><input type="text" class="ipt ipt-small"
+                                   placeholder="请输入企业名称"
+                                   clear-operator
+                                   ng-keyup="events.pressEnterKey($event)"
+                                   ng-model="model.queryParam.companyName"/></li>
+                        <li><input type="text" class="ipt ipt-small"
+                                   placeholder="请输入商学院名称"
+                                   clear-operator
+                                   ng-keyup="events.pressEnterKey($event)"
+                                   ng-model="model.queryParam.businessSchoolName"
+                        /></li>
+                        <li>
+                            <input type="text" class="ipt ipt-medium"
+                                   placeholder="请选择申请开始日期"
+                                   hb-readonly
+                                   hb-clear-input
+                                   kendo-date-picker="node.applyBeginTime"
+                                   k-options="ui.datePicker.begin.options"
+                                   ng-model="model.queryParam.applyTimeBegin"
+                            /> -
+                            <input type="text" class="ipt ipt-medium"
+                                   placeholder="请选择申请结束日期"
+                                   hb-readonly
+                                   hb-clear-input
+                                   kendo-date-picker="node.applyEndTime"
+                                   k-options="ui.datePicker.end.options"
+                                   ng-model="model.queryParam.applyTimeEnd"
+                            />
+                        </li>
+                        <li><a href="javascript:void(0);" class="btn btn-b" ng-click="events.MainPageQueryList()">查询</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--<div class="zt-a mt10">性质：<a href="javascript:void(0);" class="ml10 "
+                                             ng-click="model.countParam.nature=0;events.MainPageQueryList()"
+                                             ng-class="{'current':model.countParam.nature==0}">全部(2)</a><a
+                    href="javascript:void(0);" class="ml10"
+                    ng-click="model.countParam.nature=1;events.MainPageQueryList()"
+                    ng-class="{'current':model.countParam.nature==1}">正式(0)</a><a
+                    href="javascript:void(0);" class="ml10"
+                    ng-click="model.countParam.nature=2;events.MainPageQueryList()"
+                    ng-class="{'current':model.countParam.nature==2}">体验(0)</a></div>
+                <div class="zt-a mt10">状态：<a href="javascript:void(0);" class="ml10"
+                                             ng-click="model.countParam.status=0;events.MainPageQueryList()"
+                                             ng-class="{'current':model.countParam.status==0}">全部(2)</a><a
+                    href="javascript:void(0);" class="ml10"
+                    ng-click="model.countParam.status=1;events.MainPageQueryList()"
+                    ng-class="{'current':model.countParam.status==1}">正常(0)</a><a
+                    href="javascript:void(0);" class="ml10"
+                    ng-click="model.countParam.status=2;events.MainPageQueryList()"
+                    ng-class="{'current':model.countParam.status==2}">停用(0)</a><a href="javascript:void(0);"
+                                                                                  class="ml10"
+                                                                                  ng-click="model.countParam.status=3;events.MainPageQueryList()"
+                                                                                  ng-class="{'current':model.countParam.status==3}">注销(0)</a>
+                </div>-->
+
+                <div class="column">
+                    <div class="dash-line-2"></div>
+                    <input type="button" class="btn-r btn" ng-click="$state.go('states.merchant.add')" value="新建商学院"/>
+                    <input type="button"
+                           ng-class="{'btn-g': showFunctionButtonDisabled, 'btn-r':!showFunctionButtonDisabled}"
+                           class="btn-r btn ml10" ng-disabled="showFunctionButtonDisabled"
+                           ng-click="events.toPushSolutionPage($event)" value="推送"/>
+                    <!--<input type="button"
+                    ng-class="{'btn-g': showFunctionButtonDisabled, 'btn-r':!showFunctionButtonDisabled}"
+                           class="btn-r btn ml10"  ng-disabled="showFunctionButtonDisabled" value="升级为正式"/>-->
+                    <input type="button"
+                           ng-class="{'btn-g': showFunctionButtonDisabled, 'btn-r':!showFunctionButtonDisabled}"
+                           class="btn-r btn ml10" ng-disabled="showFunctionButtonDisabled"
+                           ng-click="events.openModifyServeTimeWindow($event)" value="调整服务期"/>
+                    <input type="button"
+                           ng-class="{'btn-g': showFunctionButtonDisabled, 'btn-r':!showFunctionButtonDisabled}"
+                           class="btn-r btn ml10" ng-disabled="showFunctionButtonDisabled"
+                           ng-click="events.openExpandAccountWindow($event)" value="拓展账号并发数"/>
+                    <input type="button"
+                           ng-class="{'btn-g': showFunctionButtonDisabled, 'btn-r':!showFunctionButtonDisabled}"
+                           class="btn-r btn ml10" ng-disabled="showFunctionButtonDisabled"
+                           ng-click="events.openResetPasswordWindow($event)" value="重置密码">
+                </div>
+                <div class="column mt20">
+                    <div kendo-grid="node.gridInstance" k-options="ui.grid.options">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view></div>
+
+<div kendo-window="node.windows.pauseTipWindow" k-options="ui.windows.pauseTipWindow"></div><!-- 停用提示窗 -->
+<div kendo-window="node.windows.startTipWindow" k-options="ui.windows.startTipWindow"></div><!-- 启用提示窗 -->
+<div kendo-window="node.windows.deleteTipWindow" k-options="ui.windows.deleteTipWindow"></div><!-- 注销提示窗 -->
+
+<div kendo-window="node.windows.modifyServeTimeWindow" style="width: 1050px;"
+     k-options="ui.windows.modifyServeTimeWindow"></div><!-- 调整服务器窗口 -->
+<div kendo-window="node.windows.expandAccountWindow" k-options="ui.windows.expandAccountWindow"></div><!-- 拓展账号并发数窗口 -->
+<div kendo-window="node.windows.resetPasswordWindow" k-options="ui.windows.resetPasswordWindow"></div><!-- 重置密码窗口 -->

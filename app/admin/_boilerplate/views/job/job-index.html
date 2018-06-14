@@ -1,0 +1,93 @@
+<div class="main-wrap-body-1 clear" ng-if="$state.current.name === 'states.job'">
+    <div class="column-block w-tree fl" style="top: 0;">
+        <div class="col-tit">岗位管理<a href="#" has-permission="job.editNew" ng-click="events.editNew($event)"
+                                    class="ico tit-new"></a></div>
+        <div class="col-body">
+            <div class="search-bar">
+                <form novalidate="novalidate" name="jobForm">
+                    <ul class="ul-form uf-2 li-fl clear">
+                        <li><input type="text" class="ipt ipt-small" name="jobname" ng-model="model.jobname"
+                                   placeholder="岗位名称"/></li>
+                        <li><input type="button" ng-disabled="" ng-click="events.queryJob()" class="btn btn-b"
+                                   value="搜索"></li>
+                    </ul>
+                </form>
+                <ul class="ul-tree">
+                    <li ng-repeat="jobInfo in jobInfos">
+                        <div class="tree-item" ng-click="erji$index=!erji$index">
+                            <span ng-class="{'ico ico-open': !erji$index, 'ico ico-close': erji$index}"></span>
+                            <span class="tree-item-name">b{{jobInfo.name}}</span>
+
+                            <div class="op-ico">
+                                <span has-permission="job.edit" ng-click="events.edit($event, jobInfo)" title="编辑"
+                                      class="k-icon k-i-pencil"></span>
+                                <span has-permission="job.delete" ng-click="events.deleteJob($event, jobInfo)"
+                                      title="删除" class="k-icon k-i-close"></span>
+                            </div>
+                        </div>
+                        <ul class="sub-content-3" ng-show="!erji$index">
+                            <li ng-repeat="jobs in jobInfo.listjobInfo track by $index">
+                                <a href="#" ng-click="events.queryCourse($event, jobs)">b{{jobs.name}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div ng-if="noJob" class="no-data clear">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">请配置职位的相应岗位课程!</div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="right-pre fl">
+        <div class="column w-pre">
+            <div class="col-body clear">
+                <div class="search-bar clear">
+                    <ul class="ul-form li-fl fl">
+                        <li><input type="text" class="ipt ipt-medium" name="courseName"
+                                   ng-model="model.param.courseName" placeholder="课程名称"/></li>
+                        <li><a href="javascript:void(0)" class="btn btn-b" ng-click="events.queryCourse($event)">搜索</a>
+                        </li>
+                        <!-- <li class="fr"><a href="#" ng-click="events.queryJobInfo()" class="btn btn-r">查看岗位</a></li>-->
+                    </ul>
+                    <div class="tr fr pt10">总b{{model.totalCredits}}学分</div>
+                </div>
+
+                <div class="dash-line-3"></div>
+                <table class="table mt10">
+                    <thead>
+                    <tr>
+                        <th width="30">No.</th>
+                        <th>课程名称</th>
+                        <th width="80">学分</th>
+                        <th width="100">课程分类</th>
+                        <th width="100">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="courseInfo in courseInfos">
+                        <td>b{{$index+1}}</td>
+                        <td class="tl">b{{courseInfo.name}}</td>
+                        <td>b{{courseInfo.credit}}</td>
+                        <td>b{{courseInfo.lessonTypeName}}</td>
+                        <td class="op">
+                            <a href="#" ng-click="events.openListenWindow($event, courseInfo.id)">试听</a>
+                            <a has-permission="job.delete" href="#"
+                               ng-click="events.deleteJobGradeCourse($event, courseInfo.id)">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div ng-if="noData" class="no-data clear">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">Sorry~未搜索到相关课程！</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view></div>
+

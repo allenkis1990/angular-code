@@ -1,0 +1,41 @@
+<!-- 位置导航 -->
+<div class="pos-nav mb30"><a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span>课程列表页</div>
+<!-- /位置导航 -->
+<div class="p-wrap-full">
+    <div loading ng-if="loadingLessonList"
+         outer-width="980" outer-height="400" img-width="0.05"></div>
+    <div class="p20 clear" ng-if="model.lessonListInfo.length !== 0">
+        <div style="min-height: 480px">
+            <table class="ui-table table-class">
+                <thead>
+                <tr>
+                    <th class="tl">课程名称</th>
+                    <th width="120" style="text-align: center">讲师</th>
+                    <th width="150" style="text-align: center">学时</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.lessonListInfo" ng-click="events.goListInfo(item)">
+                    <td class="tl"><a href="javascript:void (0);" class="tit" ng-bind="item.name"></a></td>
+                    <td ng-bind="item.teacher"></td>
+                    <td ng-bind="item.hour"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="m-pages mt20">
+            <div pagination
+                 ng-change="events.pageChange()"
+                 ng-model="model.currentPage"
+                 total-items="model.total"
+                 items-per-page="model.itemsPerPage"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+        </div>
+    </div>
+    <div class="m-no-data tc" ng-if="model.lessonListInfo.length === 0">
+        <img src="kccs/subPortal/images/no-data.png" alt="空数据">
+        <p class="txt">当前还没有数据哦</p>
+    </div>
+</div>

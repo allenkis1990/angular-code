@@ -1,0 +1,301 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="$state.go('states.trainClassManage')"></a>
+        <a class="aw" href="javascript:void(0);" ng-click="$state.go('states.trainClassManage')">培训班管理</a>
+        &gt;b{{model.trainClassName}}&gt;统计
+    </div>
+</div>
+<div class="m-box-2">
+    <div class="m-box-3">
+        <div class="main-wrap-body"
+             ng-click="events.statistic.studentDimension.closeUnitTree($event);events.statistic.courseDimension.closeCourseCategoryTree($event);events.statistic.checkDimension.closeUnitTree($event)">
+            <div class="tab-tit mt10">
+                <a href="javascript:void(0);"
+                   ng-click="events.changeFunction('statistic')"
+                   ng-class="{'current':model.states.currentState==='statistic','':model.states.currentState!=='statistic'}"
+                >统计</a>
+                <a href="javascript:void(0);"
+                   ng-if="model.states.hasExamRound"
+                   ng-click="events.changeFunction('markExam')"
+                   ng-class="{'current':model.states.currentState==='markExam','':model.states.currentState!=='markExam'}"
+                >阅卷</a>
+                <a href="javascript:void(0);"
+                   ng-if="!model.states.hasExamRound"
+                   ng-class="{'disable':!model.states.hasExamRound}"
+                >阅卷</a>
+                <!-- <a href="javascript:void(0);">评价</a>-->
+            </div>
+
+            <!---------  统计  ----------->
+            <div ng-class="{'column':model.states.currentState==='statistic','column hide':model.states.currentState!=='statistic'}">
+                <div class="tab-tit-1 mt10">
+                    <a href="javascript:void(0);"
+                       ng-click="events.changeStatisticDimension('student');"
+                       ng-class="{'current':model.states.statisticDimension==='student','':model.states.statisticDimension!=='student'}"
+                    >学员维度</a>
+                    <a href="javascript:void(0);"
+                       ng-click="events.changeStatisticDimension('course');"
+                       ng-class="{'current':model.states.statisticDimension==='course','':model.states.statisticDimension!=='course'}"
+                    >课程维度</a>
+                    <a href="javascript:void(0);"
+                       ng-click="events.changeStatisticDimension('check');"
+                       ng-class="{'current':model.states.statisticDimension==='check','':model.states.statisticDimension!=='check'}"
+                    >考核情况</a>
+                </div>
+                <!---------  学员维度  ----------->
+                <div ng-class="{'column':model.states.statisticDimension==='student','column hide':model.states.statisticDimension!=='student'}">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <li><input type="text"
+                                       class="ipt ipt-small"
+                                       ng-model="model.statistic.student.queryParam.studentName"
+                                       placeholder="请输入学员姓名"
+                                       hb-clear-input
+                                       ng-keyup="events.statistic.studentDimension.studentPagePressEnterKey($event)"
+                            /></li>
+                            <li>
+                                <input ng-model="model.statistic.student.queryParam.unitName"
+                                       class="ipt ipt-medium"
+                                       hb-clear-input
+                                       ng-click="events.statistic.studentDimension.openUnitTree($event);"
+                                       placeholder="请选择单位"
+                                />
+                                <div class="column-block w-tree fl"
+                                     ng-click="events.statistic.studentDimension.openUnitTree($event)"
+                                     ng-show="model.statistic.student.showUnitTree"
+                                     style="position: absolute;
+                                     z-index: 10;
+                                     left: 0px;
+                                     width:195px;
+                                     max-height: 190px;
+                                     overflow: auto;">
+                                    <div kendo-tree-view="node.statistic.student.unitTree"
+                                         k-options="ui.statistic.studentDimension.unitTree.options"
+                                         k-on-change="model.statistic.student.selectedUnitTreeItem = dataItem">
+                    <span k-template ng-click="events.statistic.studentDimension.getUnit($event,dataItem)">
+                      <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <!--<li>
+                                <input ng-model="model.statistic.student.queryParam.organizationName"
+                                       class="ipt ipt-medium"
+                                       hb-clear-input
+                                       ng-click="events.statistic.studentDimension.openOrganizationTree($event);events.statistic.studentDimension.closeUnitTree($event);"
+                                       placeholder="请选择部门"
+                                       />
+                                <div class="column-block w-tree fl"
+                                     ng-click="events.statistic.studentDimension.openOrganizationTree($event)"
+                                     ng-show="model.statistic.student.showOrganizationTree"
+                                     style="position: absolute;
+                                     z-index: 10;
+                                     left: 0px;
+                                     width:195px;
+                                     max-height: 190px;
+                                     overflow: auto;">
+                                    <div kendo-tree-view="node.statistic.student.organizationTree"
+                                         k-options="ui.statistic.studentDimension.organizationTree.options"
+                                         k-on-change="model.statistic.student.selectedOrganizationTreeItem = dataItem">
+                    <span k-template ng-click="events.statistic.studentDimension.getOrganization($event,dataItem)">
+                      <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                                    </div>
+                                </div>
+                            </li>-->
+                            <li>
+                                <a href="javascript:void(0)"
+                                   class="btn btn-b"
+                                   ng-click="events.statistic.studentDimension.studentPageQuery($event)"
+                                >查询</a>
+                                <!--<a href="#" class="btn btn-b">导出</a>
+                                <a href="#" class="btn btn-r">提醒学习</a>-->
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="mb10 mr5 fr">培训班课程总数：<span class="txt-r">b{{model.statistic.student.courseCount}}</span> 门
+                    </p>
+                    <div class="column">
+                        <div class="col-body mt30">
+                            <div kendo-grid="node.statistic.student.studentGrid"
+                                 k-options="ui.statistic.studentDimension.studentGrid.options">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!---------  课程维度  ----------->
+                <div ng-class="{'column':model.states.statisticDimension==='course','column hide':model.states.statisticDimension!=='course'}">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <li><input type="text"
+                                       class="ipt ipt-small"
+                                       placeholder="请输入课程名称"
+                                       hb-clear-input
+                                       ng-keyup="events.statistic.courseDimension.coursePagePressEnterKey($event)"
+                                       ng-model="model.statistic.course.queryParam.courseName"
+                            /></li>
+                            <li>
+                                <input ng-model="model.statistic.course.queryParam.courseCategoryName"
+                                       class="ipt ipt-medium"
+                                       hb-clear-input
+                                       ng-click="events.statistic.courseDimension.openCourseCategoryTree($event);"
+                                       placeholder="请选择课程分类"
+                                />
+                                <div class="hide-block hb-2 mh-1"
+                                     ng-click="events.statistic.courseDimension.openCourseCategoryTree($event)"
+                                     ng-show="model.statistic.course.showCourseCategoryTree"
+                                     style="position: absolute;
+                                     z-index: 10;
+                                     left: 0px;
+                                     width:195px;
+                                     max-height: 190px;
+                                     overflow: auto;">
+                                    <div kendo-tree-view="node.statistic.course.courseCategoryTree"
+                                         k-options="ui.statistic.courseDimension.courseCategoryTree.options"
+                                         k-on-change="model.statistic.course.selectedCourseCategoryTreeItem = dataItem">
+                    <span k-template ng-click="events.statistic.courseDimension.getCourseCategory($event,dataItem)">
+                      <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"
+                                   class="btn btn-b"
+                                   ng-click="events.statistic.courseDimension.coursePageQuery($event)"
+                                >查询</a>
+                                <!--<a href="#" class="btn btn-b">导出</a>-->
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="mb10 mr5 fr">培训班学员总数：<span class="txt-r">b{{model.statistic.course.studentCount}}</span> 人
+                    </p>
+                    <div class="column">
+                        <div class="col-body mt30">
+                            <div kendo-grid="node.statistic.course.courseGrid"
+                                 k-options="ui.statistic.courseDimension.courseGrid.options">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!---------  考核情况  ----------->
+                <div ng-class="{'column':model.states.statisticDimension==='check','column hide':model.states.statisticDimension!=='check'}">
+                    <ul class="ul-d-form mt20">
+                        <li><span class="left-txt">考核通过条件:</span></li>
+                        <li ng-repeat="item in model.statistic.check.assessRule.itemList">
+                            <span ng-if="item.apiId===4"><span class="left-txt"></span>b{{$index+1}}、学员学完的课程数，需达到b{{item.ruleValue}}门，才算考核通过。</span>
+                            <span ng-if="item.apiId===0"><span class="left-txt"></span>b{{$index+1}}、学员通过的考试场次数，需要达到b{{item.ruleValue}}场 ，才算考核通过。</span>
+                        </li>
+                        </li>
+                        <li ng-if="model.statistic.check.assessRule.itemList.length==2"><span class="left-txt"
+                                                                                              ng-show="model.statistic.check.manyConditionObject.isManyCondition"></span>以上两条件是“b{{model.statistic.check.manyConditionObject.relationType}}”的关系
+                        </li>
+                        <li>当前考核通过人数：<span class="fs-1 b">b{{model.statistic.check.checkPassObject.pass}}</span>/b{{model.statistic.check.checkPassObject.total}}
+                        </li>
+                    </ul>
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <li><input type="text"
+                                       class="ipt ipt-small"
+                                       placeholder="请输入学员姓名"
+                                       hb-clear-input
+                                       ng-keyup="events.statistic.checkDimension.checkPagePressEnterKey($event)"
+                                       ng-model="model.statistic.check.queryParam.studentName"
+                            /></li>
+                            <li>
+                                <input ng-model="model.statistic.check.queryParam.unitName"
+                                       class="ipt ipt-medium"
+                                       hb-clear-input
+                                       ng-click="events.statistic.checkDimension.openUnitTree($event);"
+                                       placeholder="请选择单位"
+                                />
+                                <div class="column-block w-tree fl"
+                                     ng-click="events.statistic.checkDimension.openUnitTree($event)"
+                                     ng-show="model.statistic.check.showUnitTree"
+                                     style="position: absolute;
+                                     z-index: 10;
+                                     left: 0px;
+                                     width:195px;
+                                     max-height: 190px;
+                                     overflow: auto;">
+                                    <div kendo-tree-view="node.statistic.check.unitTree"
+                                         k-options="ui.statistic.checkDimension.unitTree.options"
+                                         k-on-change="model.statistic.check.selectedUnitTreeItem = dataItem">
+                    <span k-template ng-click="events.statistic.checkDimension.getUnit($event,dataItem)">
+                      <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <select class="slt slt-small" ng-model="model.statistic.check.queryParam.isPass">
+                                    <option selected value="-1">是否合格</option>
+                                    <option value="1">合格</option>
+                                    <option value="0">不合格</option>
+                                </select>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"
+                                   ng-click="events.statistic.checkDimension.checkPageQuery($event)" class="btn btn-b">查询</a>
+                                <!--<a href="#" class="btn btn-b">导出</a>-->
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="col-body mt30">
+                            <div kendo-grid="node.statistic.check.grid"
+                                 k-options="ui.statistic.checkDimension.grid.options">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---------  阅卷  ----------->
+            <div ng-class="{'column':model.states.currentState==='markExam','column hide':model.states.currentState!=='markExam'}">
+                <!-------------  考试  --------------->
+                <div class="column mt20">
+                    <div class="col-tit">培训班配置的所有考试</div>
+                    <div class="dash-line-1"></div>
+                    <table class="table mt10">
+                        <thead>
+                        <tr>
+                            <th width="40">No.</th>
+                            <th>考试名称</th>
+                            <th width="80">试卷类型</th>
+                            <th width="100">考试总分</th>
+                            <th width="100">考试及格分数</th>
+                            <th width="100">考试时长(分钟)</th>
+                            <th width="100">考试前置条件</th>
+                            <th width="100">考试状态</th>
+                            <th width="150">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="exam in model.markExam.exams">
+                            <td><span ng-bind="$index+1"></span></td>
+                            <td><span ng-bind="exam.name"></span></td>
+                            <td><span ng-bind="exam.examRange==1?'考试':(exam.examRange == 2?'练习':'模拟')"></span></td>
+                            <td><span ng-bind="exam.totalScore"></span></td>
+                            <td><span ng-bind="exam.passScore"></span></td>
+                            <td><span ng-bind="exam.examTimeLength"></span></td>
+                            <td><span ng-bind="exam.completeQuantity?'学完'+exam.completeQuantity+'门':'暂无条件'"></span></td>
+                            <td><span ng-bind="exam.released?'正常':'已停用'"></span></td>
+                            <td class="op">
+                                <a href="javascript:void(0);" ng-click="events.markExam.preview($event,exam)">预览试卷</a>
+                                <a ng-if="exam.released" href="javascript:void(0);"
+                                   ng-click="events.markExam.toExamAnswerPaperManagePage($event,exam)">答卷管理</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div kendo-window="node.statistic.student.detailWindow" k-options="ui.statistic.studentDimension.detailWindow"></div>
+<div kendo-window="node.statistic.course.detailWindow" k-options="ui.statistic.courseDimension.detailWindow"></div>
+

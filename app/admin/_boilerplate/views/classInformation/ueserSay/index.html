@@ -1,0 +1,247 @@
+<!--用户留言-->
+<div class="no-data w-4 pt20 pb20 clear"
+     ng-show="model.noUserInformation">
+    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+    <div class="p-txt">请先输入相关信息进行搜索！</div>
+</div>
+
+<div class="no-data w-4 pt20 pb20 clear"
+     ng-show="initNodata==='0'">
+    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+    <div class="p-txt">当前还没有留言</div>
+</div>
+
+
+<div class="tab-bd clear" ng-if="!model.noUserInformation&&initNodata==='1'">
+    <div class="tab-bd clear">
+        <ul class="ul-form li-fl lh-1 mt20 clear">
+            <li>
+                <select class="slt slt-middle"
+                        ng-model="userSay.categoryId"
+                        ng-options="item.id as item.name for item in userSay.categoryList">
+                </select>
+            </li>
+            <li>
+                <select class="slt slt-middle" ng-model="userSay.messageType">
+                    <option value="-1">留言状态</option>
+                    <option value="1">未回复</option>
+                    <option value="2">已完成回复(含标记完结)</option>
+                </select>
+            </li>
+
+            <li><input type="text"
+                       hb-clear-input
+                       ng-model="userSay.messageTimeStart"
+                       k-options="kendoPlus.timeOptions"
+                       kendo-date-picker="kendoPlus.timeModel"
+                       hb-readonly
+                       class="ipt ipt-middle"
+                       placeholder="留言时间">
+                - <input type="text"
+                         hb-clear-input
+                         ng-model="userSay.messageTimeEnd"
+                         k-options="kendoPlus.timeOptions"
+                         kendo-date-picker="kendoPlus.timeModel"
+                         hb-readonly
+                         class="ipt ipt-middle"
+                         placeholder="留言时间"></li>
+            <li>
+                <button ng-disabled="searchSubmitAble"
+                        has-permission="ueserSay/searchUeserSay"
+                        ng-click="events.searchLeaveMessagePage()"
+                        class="btn btn-b">查询
+                </button>
+            </li>
+        </ul>
+        <div class="leave-msg-block" ng-if="noData==='1'">
+            <div class="column">
+                <div class="user-message-box mt10" ng-repeat="item in userSay.messageList">
+                    <div class="message-info">
+                        <p ng-if="item.cha>0"><span ng-bind="item.cha"></span>天前的留言内容</p>
+                        <p ng-if="item.cha<=0">1天内的留言内容</p>
+                        <!--<a href="javascript:void(0)"
+                           ng-click="events.findLeaveMessageList(item)"
+                           class="btn btn-b">共b{{item.count}}条留言记录
+                        </a>-->
+                    </div>
+                    <div class="message-bd" ng-if="subItem.lessThanFour===true"
+                         ng-repeat="subItem in item.leaveMessages">
+                        <div class="msg-cont" ng-bind="subItem.content"></div>
+                        <div class="msg-info clear">
+                            <div class="fl"><span ng-bind="subItem.createTime"></span><span
+                                    class="ml100">留言类型：<span ng-bind="item.topicCategoryName"></span></span></div>
+                            <div class="fr">
+                                <button class="btn btn-b btn-mini"
+                                        has-permission="questionAsk/closeReply"
+                                        ng-click="events.setFinish(item)"
+                                        ng-class="{'hide':!(item.count>1&&subItem.reply===false&&subItem.editing===false&&(item.finish===false&&$index===0))}">
+                                    标记完结
+                                </button>
+                                <button class="btn btn-b btn-mini"
+                                        disabled=""
+                                        ng-if="item.finish===true&&$index===0">已标记完结
+                                </button>
+                                <button class="btn btn-r btn-xs"
+                                        has-permission="questionAsk/reply"
+                                        ng-click="events.clickReplyBtn(subItem,subItem.replies[0].content,'saveReply')"
+                                        ng-class="{'hide':!(subItem.reply===false&&subItem.editing===false&&item.finish===false)}">
+                                    回复
+                                </button>
+                                <button class="btn btn-r btn-xs ml10"
+                                        has-permission="questionAsk/editReply"
+                                        ng-click="events.clickReplyBtn(subItem,subItem.replies[0].content,'updateReply')"
+                                        ng-class="{'hide':!(subItem.reply===true&&subItem.editing===false&&item.finish===false)}">
+                                    修改
+                                </button>
+                                <button class="btn btn-r btn-xs"
+                                        ng-disabled="saveSubmitAble"
+                                        ng-click="events.saveMessage(subItem.id,item.topicCategoryId,subItem.replies[0].content,subItem.replies[0].id)"
+                                        ng-class="{'hide':!(subItem.editing)}">保存
+                                </button>
+                                <button class="btn btn-g btn-xs ml10"
+                                        ng-click="events.cacelSaveMessage(subItem,'main')"
+                                        ng-class="{'hide':!(subItem.editing)}">取消
+                                </button>
+                            </div>
+                        </div>
+
+                        <!--客服回复-->
+                        <div class="reply-block" ng-if="subItem.reply===true&&subItem.editing===false">
+                            <div class="reply-cont">
+                                <span class="t-r b">【客服】</span>回复留言：<span ng-bind="subItem.replies[0].content"></span>
+                            </div>
+                            <div class="reply-info">
+                                <span class="ml10" ng-bind="subItem.replies[0].createTime"></span>
+                            </div>
+                        </div>
+
+                        <!------------  点击回复后出现  -------------->
+                        <div class="reply-block" ng-if="subItem.editing===true">
+                            <div class="reply-cont">
+                                <textarea class="textarea textarea-3"
+                                          ng-model="subItem.replies[0].content">回复
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-left:220px;padding-bottom:10px;" ng-if="item.count>3">
+                        <a href="javascript:void(0)"
+                           ng-if="userSay.showMessage==='all'"
+                           ng-click="events.showAllMessage(item.leaveMessages)"
+                           style="color:#3ca2e2">还有<span ng-bind="item.count-3"></span>个留言被隐藏
+                        </a>
+
+                        <a href="javascript:void(0)"
+                           ng-if="userSay.showMessage==='three'"
+                           ng-click="events.showThreeMessage(item.leaveMessages)"
+                           style="color:#3ca2e2">收起
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="no-data w-4 pt20 pb20 clear"
+             ng-if="noData==='0'">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">没有查询到相关信息</div>
+        </div>
+
+    </div>
+    <div class="col-body mt20 clear" ng-if="noData==='1'">
+        <div pagination
+             total-pagesize="userSay.totalPagesize"
+             current-page="userSay.currentPage"
+             ng-change="events.findLeaveMessagePage()"
+             ng-model="userSay.currentPage"
+             total-items="userSay.total"
+             items-per-page="userSay.itemsPerPage"
+             max-size="userSay.maxSize"
+             previous-text="上一页"
+             next-text="下一页"></div>
+    </div>
+</div>
+
+
+<div class="dialog w-10" k-options="kendoPlus.windowOptions" kendo-window="detailMessageWindow">
+    <div class="dialog-body mt30">
+        <div class="dialog-tit">留言记录<a href="javascript:void(0)"
+                                       ng-click="events.closeKendoWindow()"
+                                       class="ico ico-close"></a>
+        </div>
+        <div class="dialog-cont">
+            <p>与<span class="txt-b" has-permission="ueserSay/lookUeserSay" ng-bind="topicCreatorName"></span>共有<span
+                    ng-bind="itemMessageCount"></span>条留言记录：</p>
+            <div class="user-message-box mt10" ng-repeat="item in userSay.detailMessage.leaveMessages">
+                <div class="msg-record">
+                    <div class="user-img tc">
+                        <img src="@systemUrl@/images/img-user.jpg" alt=" ">
+                        <p ng-bind="topicCreatorName"></p>
+                    </div>
+                    <div class="message-bd">
+                        <div class="msg-cont" ng-bind="item.content"></div>
+                        <div class="msg-info clear">
+                            <div class="fl"><span ng-bind="item.createTime"></span><span class="ml100">留言类型：<span
+                                    ng-bind="userSay.detailMessage.categoryName"></span></span></div>
+                            <div class="fr">
+                                <button class="btn btn-r btn-xs ml10"
+                                        has-permission="questionAsk/editReply"
+                                        ng-click="events.clickReplyBtn(item,item.replies[0].content,'updateReply')"
+                                        ng-class="{'hide':!(item.reply===true&&item.editing===false&&userSay.detailMessage.finish===false)}">
+                                    修改
+                                </button>
+                                <button class="btn btn-r btn-xs ml10"
+                                        has-permission="questionAsk/reply"
+                                        ng-class="{'hide':!(item.reply===false&&item.editing===false&&userSay.detailMessage.finish===false)}"
+                                        ng-click="events.clickReplyBtn(item,item.replies[0].content,'saveReply')">回复
+                                </button>
+                                <!--<button class="btn btn-r btn-xs ml10"
+                                        ng-class="{'hide':!(item.editing)}"
+                                        ng-disabled="saveSubmitAble"
+                                        ng-click="events.saveMessage(item.replies[0].leaveMessageId,item.replies[0].categoryId,item.replies[0].content)">保存</button>
+                                <button class="btn btn-g btn-xs ml10"
+                                        ng-class="{'hide':!(item.editing)}"
+                                        ng-click="events.cacelSaveMessage(item,item.replies[0].content)">取消</button>-->
+
+
+                                <!--
+
+
+                                 <button ng-class="{'hide':!(item.editing)}"
+                                         style="background:#b7b7b7;"
+                                         ng-click="events.cacelSaveMessage(item)"
+                                         class="btn btn-xs ml10">取消</button>-->
+                            </div>
+                        </div>
+                        <!--客服回复-->
+                        <div class="reply-block" ng-if="item.reply===true&&item.editing===false">
+                            <div class="reply-cont">
+                                <span class="txt-r">【客服】</span>回复留言：b{{item.replies[0].content}}
+                            </div>
+                            <div class="reply-info">
+                                <span class="ml10" ng-bind="item.replies[0].createTime"></span>
+                            </div>
+                        </div>
+
+                        <!--编辑状态-->
+                        <div class="reply-block" ng-if="item.editing===true">
+                            <div class="reply-cont">
+                                <textarea class="textarea textarea-3" ng-model="item.replies[0].content">回复</textarea>
+                            </div>
+                            <button class="btn btn-b mt10"
+                                    ng-disabled="saveSubmitAble"
+                                    ng-click="events.saveMessage(item.id,userSay.detailMessage.categoryId,item.replies[0].content,item.replies[0].id)">
+                                保存
+                            </button>
+                            <button ng-click="events.cacelSaveMessage(item,'dialog')"
+                                    class="btn btn-g mt10 ml10">取消
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

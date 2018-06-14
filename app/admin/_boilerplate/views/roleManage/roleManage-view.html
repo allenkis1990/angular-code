@@ -1,0 +1,83 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <span ng-show="model.showReturn">
+            <a href="javascript:void(0)" class="ico return" ng-click="events.goRoleManage($event)"></a>
+            <a class="aw" href="javascript:void(0)" ng-click="events.goRoleManage($event)">角色管理</a>
+            &gt;
+        </span><span style="margin-left: 8px;">查看详情</span>
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit">角色信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2">
+        <form name="roleValidate" novalidate>
+            <ul class="ul-d-form udf-2 lh-1" style="margin-left: -310px;">
+
+                <li><span class="left-txt fl">角色名称：</span>
+                    b{{model.roleMessage.name}}
+                </li>
+
+                <li><span class="left-txt fl">角色说明：</span>
+                    b{{model.roleMessage.description}}
+                </li>
+                <li><span class="left-txt fl">角色类型：</span>
+                    b{{model.roleMessage.dataType}}
+                </li>
+                <li><span class="left-txt fl">创建人：</span>
+                    b{{model.roleMessage.creatorName}}
+                </li>
+                <li><span class="left-txt fl">创建时间：</span>
+                    b{{model.roleMessage.createDate}}
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit">关联的管理员账号</div>
+        <div class="dash-line-1"></div>
+    </div>
+
+    <div class="column mt10">
+        <div kendo-grid="kendoPlus.configedGridInstance"
+             k-options="configedGrid.options">
+
+        </div>
+    </div>
+</div>
+<div class="main-wrap-body-1 mt20 clear">
+    <div class="column mb20">
+        <div class="col-tit">配置权限</div>
+        <div class="dash-line-1"></div>
+        <div class="expand-content">
+
+            <div class="expand-smbox" ng-repeat="root in model.permissionMessage | orderBy:'sort'">
+                <div class="expand-mintit">
+                    b{{root.name}}<span class="ico open"></span>
+                </div>
+
+                <ul class="expand-list" style="padding-left: 35px;padding-bottom: 10px">
+                    <li ng-repeat="item in root.children | orderBy:'sort'">
+                               <span style="width:117px" class="expand-list-txt">
+                                         <i class="expand-icon abs"></i>
+                                    b{{item.name}}
+                                </span>
+
+                        <div class="btn-date-box" ng-show="item.children.length>0">
+                                    <span ng-repeat="node in item.children | orderBy:'sort'">
+                                       <label class="btn-date first">
+                                           b{{node.name}}
+                                       </label>
+                                    </span>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

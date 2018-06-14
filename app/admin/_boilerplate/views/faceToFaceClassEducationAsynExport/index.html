@@ -1,0 +1,47 @@
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <select class="select-small" ng-model="model.queryParam.groupType">
+                        <option value="EXPORT_USER_INFO_IN_CLASS">班级学员信息导出</option>
+                        <option value="EXPORT_ACCOMMODATIONS">住宿信息导出</option>
+                        <option value="IMPORT_ACCOMMODATIONS">住宿信息导入</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="select-small" ng-model="model.queryParam.status">
+                        <option selected="selected" value="-1">执行状态</option>
+                        <option value="executed">已执行</option>
+                        <option value="toExecuted">正在执行</option>
+                        <option value="fail">执行失败</option>
+                    </select>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="任务执行时间开始"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.startDate"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParam.startDate"
+                    /> -
+                    <input type="text" class="ipt ipt-medium"
+                           placeholder="任务执行时间结束"
+                           hb-readonly
+                           hb-clear-input
+                           kendo-date-picker="node.endDate"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParam.endDate"
+                    />
+                </li>
+                <li><a href="javascript:void(0);"
+                       has-permission="userAsynExport/find"
+                       class="btn btn-b" ng-click="events.query($event)">查询</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="dash-line-4"></div>
+    <div kendo-grid="node.grid" k-options="ui.grid.options" data-role="grid" class="k-grid k-widget">
+    </div>
+</div>

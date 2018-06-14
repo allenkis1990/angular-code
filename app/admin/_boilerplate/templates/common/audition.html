@@ -1,0 +1,227 @@
+<div class="body-bg">
+    <div class="outside-box">
+        <div class="scroll">
+            <div class="main-wrap pt10" ng-class="{'o-v':model.type=='three'}" style="overflow: visible;">
+                <div class="mb10 clearfix">
+                    <span class="course-tit"><a href="javascript:void(0);" ng-click="closePlayArea()"><span
+                            class="ico"></span> 返回课程</a><span ng-bind="model.course.courseUpdate.name"></span></span>
+                </div>
+                <div class="clearfix">
+                    <div ng-class="{'pull-left':model.type!='three'}">
+                        <div class="video-block" ng-class="{'w-1':model.type!='three'}">
+                            <iframe class="video" id="play_content" ng-if="model.type=='pdf'||model.type=='scorm'"
+                                    ng-class="{'pw-1':model.type=='scorm'}">
+                                视频区视频区
+                            </iframe>
+                            <div ng-if="model.type=='single'">
+                                <div class="video" id="video_content">
+                                    视频区视频区
+                                </div>
+                            </div>
+                            <div class="video" ng-if="model.type=='three'">
+                                <div class="wrap-three-screen-1 clear">
+                                    <div class="playpage-left-block-1 fl">
+                                        <div class="video-block" id="media-container">
+                                            视频区
+                                        </div>
+                                        <div class="video-info-block mt10">
+                                            <ul class="ul-cont" id="media-catalog">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <iframe class="playpage-right-block-1 fr prb-1" id="media-document">
+                                        <!--<div class="course-cont-block">-->
+                                        <!--课件讲义区-->
+                                        <!--</div>-->
+                                    </iframe>
+                                </div>
+                            </div>
+                            <!--ng-if="showThree"ng-init="showThree=true"-->
+
+
+                            <div class="video-side clearfix" style="z-index: 10000"
+                                 ng-style="{'right': showCourseOutline?'0px':'-34px'}">
+                                <div class="side-tab pull-left">
+                                    <a href="javascript:void(0)"
+                                       ng-click="showCourseOutline=!showCourseOutline;showCoursewareCont=false"
+                                       ng-class="{'current':showCourseOutline}"><span class="ico"></span><span
+                                            class="side-tab-tit">课程目录</span></a>
+                                    <a href="javascript:void(0)"
+                                       ng-click="showCoursewareCont=!showCoursewareCont;showCourseOutline=false"
+                                       ng-class="{'current':!showCourseOutline}"
+                                       ng-show="showCourseware"><span class="ico"></span><span
+                                            class="side-tab-tit">课件内容</span></a>
+                                </div>
+                                <div class="side-cont pull-right" ng-if="showCourseOutline||showCoursewareCont">
+                                    <!-------------  课程目录  -------------->
+                                    <div class="course-directory" ng-if="showCourseOutline">
+                                        <div class="side-cont-tit">课程章节</div>
+                                        <ul class="ul-tree h-2">
+                                            <li ng-repeat="courseOutline in model.course.courseUpdate.courseOutlineDtos">
+                                                <!-----------  未展开时调用 ico-close  ---------->
+                                                <div class="item-name to"
+                                                     ng-click="courseOutline.isOpen=!courseOutline.isOpen">
+                                        <span
+                                                ng-class="{'ico ico-close':!courseOutline.isOpen,'ico ico-open':courseOutline.isOpen}"></span>
+                                                    <span ng-bind="courseOutline.name"></span>
+                                                </div>
+                                                <ul class="sub-item" ng-if="courseOutline.isOpen">
+                                                    <li ng-repeat="subCourseOutline in courseOutline.subCourseOutlines">
+                                                        <a
+                                                                href="javascript:void(0)"
+                                                                ng-class="{'current':subCourseOutline.select}"
+                                                                ng-click="events.selectSubCourseOutline($event,subCourseOutline)"><span
+                                                                ng-bind="subCourseOutline.name"></span></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-------------  课件内容 （有父子关系的） -------------->
+                                    <div ng-if="showCoursewareCont&&showParent" class="course-cont">
+                                        <div class="side-cont-tit"><span
+                                                ng-bind="model.course.courseUpdate.unitName"></span></div>
+                                        <div class="head-cont mt10">
+                                            <ul class="ul-course-cont">
+                                                <li>
+                                                    <span class="col-1">课件内容清单</span>
+                                                    <span class="col-2">时长</span>
+                                                    <span class="col-3">操作</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="h-3">
+                                            <ul class="ul-course-cont">
+                                                <li ng-repeat="coursewareOutline in model.coursewareOutlineDtos">
+                                                    <div class="course-cont-tit"><span
+                                                            ng-bind="coursewareOutline.name"></span></div>
+                                                    <ul class="ul-sub-cont">
+                                                        <li ng-class="{'current':subCoursewareOutline.id==model.subCoursewareOutlineId}"
+                                                            ng-repeat="subCoursewareOutline in coursewareOutline.subCoursewareOutlineDto">
+                                                <span class="col-1 text-overflow"><span
+                                                        class="mr10">第<span ng-bind="$index+1"></span>讲</span><span
+                                                        ng-bind="subCoursewareOutline.name"></span></span>
+                                                            <span class="col-2"
+                                                                  ng-init="subCoursewareOutline.time=events.getTime(subCoursewareOutline.timeLength)"><span
+                                                                    ng-bind="subCoursewareOutline.time.hour+':'+subCoursewareOutline.time.minute+':'+subCoursewareOutline.time.second"></span></span>
+                                                            <span class="col-3"><a href="javascript:void(0)"
+                                                                                   ng-click="events.enterCourseware(subCoursewareOutline,$event)">进入课程</a></span>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-------------  课件内容（没有父子关系的）  -------------->
+                                    <div ng-if="showCoursewareCont&&!showParent" class="course-cont">
+                                        <div class="side-cont-tit"><span
+                                                ng-bind="model.course.courseUpdate.unitName"></span></div>
+                                        <div class="head-cont mt10">
+                                            <ul class="ul-course-cont">
+                                                <li>
+                                                    <span class="col-1">课件内容清单</span>
+                                                    <span class="col-2">时长</span>
+                                                    <span class="col-3">操作</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="h-3">
+                                            <ul class="ul-course-cont ul-sub-cont">
+                                                <li ng-class="{'current':coursewareOutline.id==model.subCoursewareOutlineId}"
+                                                    ng-repeat="coursewareOutline in model.coursewareOutlineDtos">
+                                                    <span class="col-1 text-overflow"><span
+                                                            class="mr10">第<span ng-bind="$index+1"></span>讲</span><span
+                                                            ng-bind="coursewareOutline.name"></span></span>
+                                                    <span class="col-2" ng-if="coursewareOutline.moduleType==3">-</span>
+                                                    <span class="col-2" ng-if="coursewareOutline.moduleType==2"
+                                                          ng-init="coursewareOutline.time=events.getTime(coursewareOutline.timeLength)"><span
+                                                            ng-bind="coursewareOutline.time.hour+':'+coursewareOutline.time.minute+':'+coursewareOutline.time.second"></span></span>
+                                                    <span class="col-3"><a href="javascript:void(0)"
+                                                                           ng-click="events.enterCourseware(coursewareOutline,$event)">进入课程</a></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="introduce-block mt20">
+                            <div class="intr-top">
+                                <p class="intr-tit"><span title="b{{model.course.courseUpdate.name}}"
+                                                          ng-bind="model.course.courseUpdate.name"></span></p>
+
+                                <p class="intr-info">
+                                    <span class="ico ico-1"
+                                          title="b{{model.course.courseUpdate.teacherInfo}}"></span><span
+                                        title="b{{model.course.courseUpdate.teacherInfo}}"
+                                        ng-bind="model.course.courseUpdate.teacherInfo" class="di"></span>
+                                    <span class="ico ico-2 ml20"
+                                          title="b{{model.course.courseUpdate.createTime}}"></span>
+                                    <span title="b{{model.course.courseUpdate.createTime}}" class="di"
+                                          ng-bind="model.course.courseUpdate.createTime"> </span>
+                                    <span class="ico ico-3 ml20"
+                                          title="b{{model.course.courseUpdate.period}}"></span><span
+                                        title="b{{model.course.courseUpdate.period}}"
+                                        ng-bind="model.course.courseUpdate.period"></span>学分
+                                </p>
+                                <span class="intr-like">
+                               <span class="view-ico current di"><span class="ico ico-like"></span>(<span
+                                       ng-bind="model.course.likeNumber"></span>)</span>
+                                                    <span class="view-ico"><span class="ico ico-unlike"></span>(<span
+                                                            ng-bind="model.course.treadNumber"></span>)</span>
+
+                        </span>
+                            </div>
+                            <div class="intr-cont" ng-class="{'ic-1':model.type=='three'}">
+                                b{{model.course.courseUpdate.abouts?model.course.courseUpdate.abouts:'暂无简介'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb20" ng-class="{'pull-right':model.type!='three'}">
+                        <div class=" comments-block" ng-class="{'w-2':model.type!='three'}">
+                            <!--<textarea class="form-control" rows="3"></textarea>-->
+                            <!--<div class="comments-box mt5 clearfix">-->
+                            <!--<span class="txt-g">还可以输入140个字！</span>-->
+                            <!--<button class="btn btn-b btn-sm pull-right" type="button">发 布</button>-->
+                            <!--</div>-->
+                            <div class="h-1">
+                                <div ng-repeat="review in model.reviews" class="comment clearfix">
+                                    <div class="img-user">
+                                        <img
+                                                ng-src="b{{review.headPortrait?'/mfs/'+review.headPortrait:'@systemUrl@/images/user-img.jpg'}}">
+                                        <span class="img-mask"><img src="@systemUrl@/images/mask-user-img.png"></span>
+                                    </div>
+                                    <div class="com-txt">
+                                        <p class="tit"><span ng-bind="review.userName"></span> <span class="fr"
+                                                                                                     ng-bind="review.createTime"></span>
+                                        </p>
+
+                                        <p class="cont"><span ng-bind="review.contents"></span></p>
+                                    </div>
+                                </div>
+                                <div class="mt5 clearfix">
+                                    <div class="pages fr">
+                                        <a href="#" ng-if="model.front" ng-click="events.front($event)">....</a>
+                                        <a ng-repeat="pageIndex in model.pageIndexs"
+                                           ng-class="{'current': pageIndex.index==model.pageNo}"
+                                           href="javascript:void(0)"
+                                           ng-click="events.selectPageIndex(pageIndex.index,$event)"><span
+                                                ng-bind="pageIndex.index"></span></a>
+                                        <a href="#" ng-if="model.behind" ng-click="events.behind($event)">....</a>
+                                    </div>
+                                </div>
+                                <div ng-if="model.reviews.length==0" class="no-data clear">
+                                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                                    <div class="p-txt">暂时没有数据!</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

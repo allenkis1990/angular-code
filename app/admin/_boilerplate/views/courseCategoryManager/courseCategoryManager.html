@@ -1,0 +1,178 @@
+<form novalidate="novalidate" name="createCourseCategoryForm">
+    <div class="tab-tit mt10" ng-if="events.isSubProjectManager()">
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.myself.code}"
+           ng-click="events.chooseTab($event,tabMap.myself.code)"
+           ng-bind="tabMap.myself.name"
+        ></a>
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.all.code}"
+           ng-click="events.chooseTab($event,tabMap.all.code)"
+           ng-bind="tabMap.all.name"
+        ></a>
+    </div>
+    <div class="main-wrap-body-1 clear">
+        <!-- 本单位 -->
+        <div class="tab-bd" ng-show="currentTab===tabMap.myself.code">
+            <div class="column-block w-tree fl" style="top:0" has-permission="courseCategoryManager/view">
+                <div class="col-tit">课程分类列表
+                    <a href="javascript:void(0);" class="ico tit-new" title="添加"
+                       has-permission="courseCategoryManager/add"
+                       ng-click="events.createActivity();createCourseCategoryForm.$setPristine()"></a>
+                </div>
+                <div class="col-body">
+                    <div kendo-tree-view="node.tree"
+                         id="courseCategoryTree"
+                         k-options="ui.tree.options"
+                         k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getCourseCategoryInfo($event,dataItem)">
+                      <label><span ng-bind="dataItem.name"></span></label>
+                        <span class="resource-category-operators">
+                            <span class="k-icon k-i-plus" title="添加" has-permission="courseCategoryManager/add"
+                                  ng-click='events.queryCreate($event,dataItem);createCourseCategoryForm.$setPristine()'></span>
+                            <span class="k-icon k-i-pencil" title="修改" has-permission="courseCategoryManager/update"
+                                  ng-click='events.queryModify($event,dataItem);createCourseCategoryForm.$setPristine()'></span>
+                            <span class="k-icon k-i-close" title="删除" has-permission="courseCategoryManager/delete"
+                                  ng-click='events.deleteResourceCategory($event,dataItem);createCourseCategoryForm.$setPristine()'></span>
+                        </span>
+                    </span>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--  保存资源分类状态-->
+
+            <div class="right-pre fl" ng-show="categorySave">
+                <div class="column-block w-pre">
+                    <div class="col-tit" ng-if="saveVisible">创建课程分类</div>
+                    <div class="col-tit" ng-if="modifyVisible">编辑课程分类</div>
+
+                    <div class="col-body">
+                        <ul class="ul-d-form udf-3 ml30">
+                            <li><span class="left-txt">所属节点分类：</span>
+                                <input id="index_course_input" ng-model="model.orgName" readonly="true"
+                                       ng-click="events.showCourseCategory($event)"
+                                       ng-keyup="events.keyUpIndexUnit($event)"
+                                       ng-change="events.refreshIndexUnit($event)" placeholder="课程分类列表" type="text"
+                                       class="ipt ipt-large" name="courseResourseCategoryType"/>
+                                <div kendo-popup="node.courseResourcePopup" k-options="ui.popup.indexUnit"
+                                     style="min-width: 244px; max-height: 360px; overflow: auto;">
+                                    <div kendo-tree-view="node.trees" k-options="ui.treeView.indexUnit" id="selectTree">
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="left-txt txt-long"><i>*</i>课程资源分类名称：</span>
+                                <input type="text" name="courseResourseCategory" class="ipt ipt-large"
+                                       placeholder="请输入课程分类名称"
+                                       ng-model="model.courseCategoryAdd.name"
+                                       ng-maxlength="30"
+                                       ng-keyup="events.initValue($event)"
+                                       ng-blur="events.loseValue($event)"
+                                       ajax-validate ajax-data="iscourseCategoryName"
+                                       ajax-url="/web/admin/courseCategoryAction/validate"
+                                       required ng-required="true"
+                                />
+                            <span ng-show="createCourseCategoryForm.courseResourseCategory.$dirty && createCourseCategoryForm.courseResourseCategory.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入资源分类名称</span>
+                            <span
+                                    ng-show="createCourseCategoryForm.courseResourseCategory.$dirty && !createCourseCategoryForm.courseResourseCategory.$error.required && createCourseCategoryForm.courseResourseCategory.$error.maxlength"
+                                    class="li-prompt"><span class="ico ico-prompt"></span> 资源分类字符长度不可超过30个！</span>
+                            <span ng-show="createCourseCategoryForm.courseResourseCategory.$dirty && !createCourseCategoryForm.courseResourseCategory.$error.required && !createCourseCategoryForm.courseResourseCategory.$error.maxlength &&
+            createCourseCategoryForm.courseResourseCategory.$error.ajaxValidate" class="li-prompt"><span
+                                    class="ico ico-prompt"></span>资源分类已存在，请重新输入。</span>
+                            </li>
+                        </ul>
+                        <div class="btn-center" ng-if="saveVisible">
+
+                            <input ng-if="saveVisible" type="button" ng-model="saveUpdateValue"
+                                   has-permission="courseCategoryManager/create"
+                                   ng-click="events.save($event);createCourseCategoryForm.$setPristine()"
+                                   ng-class="{'btn-g': !createCourseCategoryForm.$valid||saving, 'btn-r': createCourseCategoryForm.$valid&&!saving}"
+                                   class="btn" value="保存">
+                            <input type="button"
+                                   ng-click="events.cannel($event);createCourseCategoryForm.$setPristine()"
+                                   class="btn btn-g ml10" value="取消">
+                        </div>
+                        <div class="btn-center" ng-if="modifyVisible">
+
+                            <input type="button"
+                                   has-permission="courseCategoryManager/save"
+                                   ng-click="events.modifyResourceCategory($event);createCourseCategoryForm.$setPristine()"
+                                   ng-class="{'btn-g': !createCourseCategoryForm.$valid, 'btn-r': createCourseCategoryForm.$valid}"
+                                   class="btn" value="修改">
+                            <input type="button"
+                                   ng-click="events.cannel($event);createCourseCategoryForm.$setPristine()"
+                                   class="btn btn-g ml10" value="取消">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- 以下为查看课程分类状态-->
+            <div class="right-pre fl" ng-show="categoryText" has-permission="courseCategoryManager/view">
+                <div class="column-block w-pre">
+                    <div class="col-tit">查看课程分类</div>
+                    <div class="col-body">
+                        <ul class="ul-d-form udf-3 ml30">
+                            <li><span class="left-txt">所属节点分类：</span>
+                                <span ng-bind="model.orgNames"></span>
+                            </li>
+                            <li>
+                                <span class="left-txt txt-long">课程分类名称：</span>
+                                <span ng-bind="iscourseCategoryName.queryName"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 全部 -->
+        <div class="tab-bd" ng-show="currentTab===tabMap.all.code">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <div unit-id="model.authorizedFromUnitId" hb-unit-select default-choose="true"
+                         unit-set-callback="events.unitSetCallback(unitId)"
+                         default-txt="请选择查看单位"   ></div>
+                </ul>
+            </div>
+            <br/>
+            <div class="column-block w-tree fl" style="top:0" has-permission="courseCategoryManager/view">
+                <div class="col-tit">课程分类列表
+                </div>
+                <div class="col-body">
+                    <div kendo-tree-view="node.allTree"
+                         id="allCourseCategoryTree"
+                         k-options="ui.allTree.options"
+                         k-on-change="model.allSelectedItem = dataItem">
+                    <span k-template ng-click="events.allGetCourseCategoryInfo($event,dataItem)">
+                      <label><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <!-- 以下为查看课程分类状态-->
+            <div class="right-pre fl" ng-show="categoryText" has-permission="courseCategoryManager/view">
+                <div class="column-block w-pre">
+                    <div class="col-tit">查看课程分类</div>
+                    <div class="col-body">
+                        <ul class="ul-d-form udf-3 ml30">
+                            <li><span class="left-txt">所属节点分类：</span>
+                                <span ng-bind="model.allOrgNames"></span>
+                            </li>
+                            <li>
+                                <span class="left-txt txt-long">课程分类名称：</span>
+                                <span ng-bind="allIscourseCategoryName.queryName"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <!-- /全部 -->
+    </div>
+</form>

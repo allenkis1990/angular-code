@@ -1,0 +1,116 @@
+@import "../public/variables";
+
+.pos-nav {
+  padding: 10px 0;
+  font-size: 16px;
+  .p-ico {
+    width: 13px;
+    height: 16px;
+    background-position: -30px -90px;
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+  }
+
+  .btn-return {
+    .btn-size(65px, 28px, 14px);
+    .btn-style(#fff, @base);
+    border: 1px solid @base;
+    margin-right: 5px;
+
+    &:hover {
+      background-color: @base;
+      color: #fff;
+      .p-ico {
+        background-position: -70px -90px;
+      }
+    }
+
+    .p-ico {
+      width: 17px;
+      height: 11px;
+      background-position: -50px -90px;
+      top: 0;
+    }
+  }
+  .st {
+    background-color: #d7edff;
+    color: @base;
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 2px 4px;
+    position: relative;
+    top: 1px;
+  }
+  .name {
+    width: 70%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .change-class {
+    position: relative;
+    .p-ico {
+      width: 7px;
+      height: 12px;
+      background-position: -90px -90px;
+      margin-left: 5px;
+      margin-right: 0;
+      top: 1px;
+    }
+
+    .hover-block {
+      position: absolute;
+      right: 0;
+      top: 40px;
+      z-index: 999;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+
+      &:before {
+        content: " ";
+        width: 0;
+        height: 0;
+        border: 8px solid;
+        border-color: transparent transparent #ddd transparent;
+        position: absolute;
+        left: 359px;
+        top: -15px;
+        margin-left: -7px;
+      }
+      .arrow-top(6px, #fff, 360px);
+      &:after {
+        top: -11px;
+      }
+    }
+    .class-more {
+      width: 400px;
+      max-height: 205px;
+      overflow: auto;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+
+      li {
+        line-height: 40px;
+        border-bottom: 1px dashed #ddd;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        a {
+          color: #444;
+          padding: 0 10px;
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          &:hover {
+            color: @base;
+            background-color: #d7edff;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,141 @@
+<!--tab按钮-->
+<div class="main-wrap-body" ng-show="$state.current.name==='states.coursePackageManager'">
+    <div class="tab-tit mt10">
+        <a class="current" ng-class="{current: flagModel.tabType === 'OWN'}" ng-click="events.tabClick($event,'OWN')">本单位</a>
+        <a class="" ng-class="{current: flagModel.tabType === 'PROJECT'}" ng-click="events.tabClick($event, 'PROJECT')" ng-if="events.isSubProjectManager()">项目级</a>
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.coursePackageManager'"
+     ng-click="lessonTypeShow=false">
+
+    <!--本单位-->
+    <div ng-if="flagModel.tabType === 'OWN'">
+        <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <div hb-authorized-option
+                 lock-range-for-res="coursePool"
+                 query-params="model.authorizeQuery"></div>
+            <li><input type="text" class="ipt ipt-medium" ng-model="model.queryParams.poolName"
+                       placeholder="请输入课程包名称" hb-clear-input
+                       ng-keyup="events.search($event)"/>
+            </li>
+            <li>
+                <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                       ng-model="model.queryParams.createStartTime" hb-readonly hb-clear-input type="text"
+                       class="ipt ipt-medium"
+                       placeholder="课程包创建时间"/> -
+                <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                       ng-model="model.queryParams.createEndTime" hb-readonly hb-clear-input type="text"
+                       class="ipt ipt-s"
+                       placeholder="课程包创建时间"/>
+
+            </li>
+            <!--<li>-->
+            <!--<select class="slt slt-medium ng-pristine ng-valid" ng-model="model.queryParams.required">-->
+            <!--<option ng-selected="true" value="" selected="selected">是否必修包</option>-->
+            <!--<option value="true">是</option>-->
+            <!--<option value="false">否</option>-->
+            <!--</select>-->
+            <!--</li>-->
+            <li><a href="javascript:void(0)" has-permission="coursePackageManager/find"
+                   ng-click="events.searchCoursePackage($event)" class="btn btn-b">查询</a></li>
+        </ul>
+            <div class="column">
+                <div class="dash-line-3"></div>
+                <a href="#" has-permission="coursePackageManager/addCoursePool"
+                   ng-click="events.addCoursePackage($event)"
+                   class="btn-r btn">新建课程包</a>
+            </div>
+    </div>
+    </div>
+
+    <!--项目级-->
+    <div ng-if="flagModel.tabType === 'PROJECT'">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <div hb-authorized-option
+                     lock-range-for-res="coursePool"
+                     query-all="true"
+                     query-params="model.authorizeQuery"
+                     change-unit-callback="events.initAllGrid(unitId)"></div>
+                <li><input type="text" class="ipt ipt-medium" ng-model="model.queryParams.poolName"
+                           placeholder="请输入课程包名称" hb-clear-input
+                           ng-keyup="events.search($event)"/>
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParams.createStartTime" hb-readonly hb-clear-input type="text"
+                           class="ipt ipt-medium"
+                           placeholder="课程包创建时间"/> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.queryParams.createEndTime" hb-readonly hb-clear-input type="text"
+                           class="ipt ipt-s"
+                           placeholder="课程包创建时间"/>
+
+                </li>
+                <!--<li>-->
+                <!--<select class="slt slt-medium ng-pristine ng-valid" ng-model="model.queryParams.required">-->
+                <!--<option ng-selected="true" value="" selected="selected">是否必修包</option>-->
+                <!--<option value="true">是</option>-->
+                <!--<option value="false">否</option>-->
+                <!--</select>-->
+                <!--</li>-->
+                <li><a href="javascript:void(0)" has-permission="coursePackageManager/find"
+                       ng-click="events.searchCoursePackage($event)" class="btn btn-b">查询</a></li>
+            </ul>
+            <div class="dash-line-3"></div>
+        </div>
+    </div>
+
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.coursePackageGrid" k-options="ui.coursePackageGrid.options">
+        </div>
+    </div>
+</div>
+<div ui-view></div>
+<div kendo-window="node.windows.copyDialog" k-options="ui.windows.copyDialogOptions">
+
+    <div class="dialog" style="width: 600px;">
+        <div class="dialog-body">
+            <div class="dialog-tit">复制选课包<a href="" ng-click="events.closeCopyWindow()" class="ico ico-close"></a></div>
+            <div class="dialog-cont">
+                <div class="mt10">
+                    <form name="coursePackageValidate" novalidate>
+                        <ul class="ul-d-form lh-1">
+                            <li>
+                                您正在复制【<span class="b t-r" ng-bind="model.copyCoursePool.originName"></span>】
+                                ，课程包内含<span class="b t-r" ng-bind="model.copyCoursePool.courseCount"></span>门课程
+                                ，合计<span class="b t-r" ng-bind="model.copyCoursePool.totalPeriod"></span>学时！
+                            </li>
+                            <li><span class="left-txt"><i>*</i>课程包名称：</span><input type="text" class="ipt ipt-large"
+                                                                                   ng-model="model.copyCoursePool.copyName"
+                                                                                   name="name"
+                                                                                   ajax-data="validateParams"
+                                                                                   ng-maxlength="50"
+                                                                                   required ng-required="true"
+                                                                                   ajax-validate
+                                                                                   ajax-url="/web/admin/coursePoolAction/validate">
+                                <span class="li-prompt"
+                                      ng-show="coursePackageValidate.name.$dirty&&coursePackageValidate.name.$error.required"><span
+                                        class="ico ico-prompt"></span>课程包名称不能为空。</span>
+                                <span class="li-prompt"
+                                      ng-show="coursePackageValidate.name.$dirty && coursePackageValidate.name.$error.ajaxValidate&& !coursePackageValidate.name.$error.maxlength"><span
+                                        class="ico ico-prompt"></span>课程包名称不能重复。</span>
+                                <span ng-show="coursePackageValidate.name.$dirty && coursePackageValidate.name.$error.maxlength"
+                                      class="li-prompt">
+            <span class="ico ico-prompt"></span>课程包名称长度不能超过50</span>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+            <div class="btn-center">
+                <input type="button" class="btn btn-g ml10" ng-click="events.closeCopyWindow()" value="取消"/>
+                <input type="button" ng-class="{'btn-disable':!coursePackageValidate.$valid||model.saving}"
+                       has-permission="coursePackageManager/copyCoursePool" class="btn btn-r"
+                       ng-click="events.copyCoursePool()"
+                       value="确定"/>
+            </div>
+        </div>
+    </div>
+</div>

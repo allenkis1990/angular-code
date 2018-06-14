@@ -1,0 +1,274 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goLessonResourceManage($event)"></a>
+        <a href="#" class="aw" ng-click="events.goLessonResourceManage($event)">课程管理</a>
+        &gt; 修改课程
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit">课程基础信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2">
+        <form name="lessonValidate" novalidate>
+            <ul class="ul-d-form udf-2 lh-1">
+                <li><span class="left-txt"><i>*</i>课程名称：</span><input type="text" class="ipt ipt-large"
+                                                                      ng-model="model.course.name" name="name"
+                                                                      ajax-data="validateParams"
+                                                                      ng-maxlength="50"
+                                                                      required ng-required="true"
+                                                                      ajax-validate
+                                                                      ajax-url="/web/admin/courseManager/validate">
+                    <span class="li-prompt"
+                          ng-show="lessonValidate.name.$dirty&&lessonValidate.name.$error.required"><span
+                            class="ico ico-prompt"></span>课程名称不能为空。</span>
+                    <span class="li-prompt"
+                          ng-show="lessonValidate.name.$dirty && lessonValidate.name.$error.ajaxValidate&& !lessonValidate.name.$error.maxlength"><span
+                            class="ico ico-prompt"></span>课程名称不能重复。</span>
+                    <span ng-show="lessonValidate.name.$dirty && lessonValidate.name.$error.maxlength"
+                          class="li-prompt">
+            <span class="ico ico-prompt"></span>课程名称长度不能超过50</span>
+                </li>
+                <li style="margin-top: 50px;"><span class="left-txt"><i>*</i>课程分类：</span><input type="text" name="type"
+                                                                                                class="ipt ipt-large"
+                                                                                                ng-click="events.openCourseTypeTree()"
+                                                                                                placeholder="请选择课程分类"
+                                                                                                ng-model="model.course.typeName"
+                                                                                                required
+                                                                                                ng-required="true"
+                                                                                                readonly="true">
+                    <span class="li-prompt" ng-show="lessonValidate.type.$dirty&&lessonValidate.type.$error.required">
+            <span class="ico ico-prompt"></span>请选择课程分类</span>
+
+                    <div class="hide-block hb-1 mh-1" ng-show="lessonTypeShow">
+                        <div kendo-tree-view="node.courseCategoryTree"
+                             k-options="ui.tree.courseCategoryOptions"
+                             k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getTypeInfo(dataItem)">
+                      <label style="width: 50px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                        </div>
+                    </div>
+                </li>
+                <li><span style="margin-top: 50px;" class="left-txt">供应商：</span><span
+                        ng-bind="model.course.supplier"></span></li>
+                <li style="margin-top: 50px;" class="clear"><span class="left-txt fl">课程简介：</span>
+                    <textarea name="about" ng-maxlength="250" class="textarea w-textarea fl"
+                              ng-model="model.course.abouts"></textarea>
+                    <span style="margin-left:430px;"
+                          ng-show="lessonValidate.about.$dirty && lessonValidate.about.$error.maxlength"
+                          class="li-prompt">
+                    <span class="ico ico-prompt"></span>课程简介长度不能超过250</span>
+                </li>
+            </ul>
+        </form>
+        <div class="course-pic" ng-mouseleave="imgShow=false"
+             ng-mouseenter="imgShow=!imgShow">
+            <a href="javascript:void(0)"
+               ng-show="imgShow"
+               style="position:absolute;z-index:99;left:100px;top:100px;"
+               ng-click="model.uploadHead = true"
+               class="btn btn-r fl">上传图片</a>
+            <img ng-src="b{{model.image}}">
+
+            <div class="pic-hover" ng-class="{'visibility-hide': !imgShow,'visibility-show':imgShow}">
+                <span class="pic-mask"></span>
+                <!--<div class="upload upload-1">
+                    <div upload-image
+                         ng-model="model.uploadImage"
+                            ></div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="model.course.changeable" class="main-wrap-body-1 mt20 clear">
+    <div class="column mb20">
+        <div class="col-tit">章节设置</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="column-block w-tree fl">
+        <div class="col-tit bl0">
+            <a href="javascript:void(0)" ng-click="events.addCourseOutline()"
+               has-permission="courseManager/updateAddChapter"
+               class="ico-add"><span class="ico"></span>
+                添加章节</a>
+            <span class="fr-ico">
+                                <a href="javascript:void(0)" has-permission="courseManager/updateUpChapter"
+                                   ng-click="events.courseOutlineUp($event)"
+                                   class="ico-op ico-up-t"></a>
+                                <a href="javascript:void(0)" has-permission="courseManager/updateDownChapter"
+                                   ng-click="events.courseOutlineDown($event)"
+                                   class="ico-op ico-down-t"></a>
+                            </span>
+        </div>
+        <div class="col-body p0">
+            <ul class="ul-chapter hp-1">
+                <li ng-click="events.selectCourseOutline($index,$event)"
+                    ng-class="{'bg-g':courseOutline.select}"
+                    ng-repeat="courseOutline in model.courseOutlines">
+            <span class="chapter-tit"><span
+                    ng-show="!courseOutline.update">  <span ng-bind="courseOutline.name"></span></span>
+              <input type="text" class="ipt ipt-edit"
+                     focus-me
+                     ng-model="courseOutline.name" ng-blur="events.checkName($index,courseOutline,$event)"
+                     ng-show="courseOutline.update">
+            </span>
+                    <span class="fr-ico">
+                                        <a href="javascript:void(0)"
+                                           ng-click="events.saveCourseOutline($index,courseOutline,$event)"
+                                           ng-class="{'ico-op': true,'ico-edit':!courseOutline.update,'ico-complete-hl':courseOutline.update}"></a>
+                                        <a href="javascript:void(0)"
+                                           ng-click="events.deleteCourseOutline($index,courseOutline,$event)"
+                                           class="ico-op ico-del"></a>
+                                    </span>
+                    <span class="li-prompt lip-1" ng-show="!courseOutline.nameNull"><span
+                            class="ico ico-prompt"></span>名称不能为空</span>
+                    <span class="li-prompt lip-1" ng-show="!courseOutline.nameToo"><span class="ico ico-prompt"></span>名称最多32个字符</span>
+                    <span class="li-prompt lip-1" ng-show="!courseOutline.nameRepeat"><span
+                            class="ico ico-prompt"></span>名称已重复</span>
+
+                </li>
+                <!-------空数据------->
+                <div class="empty-data" ng-show="model.courseOutlines.length==0">
+                    <span class="ico"></span>
+
+                    <p class="txt">请新增章节</p>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div class="right-pre fl">
+        <div class="column-block w-pre">
+            <div class="col-body">
+                <div ng-if="model.courseOutlines.length>0" class="udf-8">
+                    <ul class="ul-d-form udf-4 lh-1">
+                        <li><span class="left-txt txt-long">选择课件：</span>
+                            <a class="btn-b btn" has-permission="courseManager/updateChooseCourseWare"
+                               ng-click="events.toChoosePage($event)">选择课件</a>
+                            <a class="btn-r btn" has-permission="courseWareManager/add"
+                               ng-click="events.toAddPage($event)">添加课件</a>
+                        </li>
+
+                    </ul>
+                    <div class="dash-line"></div>
+                    <table class="table table-sp"
+                           ng-show="model.courseOutlines[model.selectIndex].subCourseOutlines.length>0">
+                        <thead>
+                        <tr>
+                            <th>课件名称</th>
+                            <th width="80">课件类型</th>
+                            <th width="100">课件老师</th>
+                            <th width="80">转换状态</th>
+                            <th width="80">时长</th>
+                            <th width="200">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr ng-repeat="item in  model.courseOutlines[model.selectIndex].subCourseOutlines">
+                            <td><span title="b{{item.name}}" ng-bind="item.name"></span></td>
+                            <td><span ng-bind="item.type==1?'文档':(item.type==2?'单视频':(item.type==3?'视频包':'未知'))"></span>
+                            </td>
+                            <td><span ng-bind="item.teacherName"></span></td>
+                            <td><span
+                                    ng-bind="item.status==0?'转换中':(item.status==1?'转换成功':(item.status==2?'转换失败':'草稿'))"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="((item.timeLength-item.timeLength%3600)/3600==0?'':(item.timeLength-item.timeLength%3600)/3600 +'小时')+((item.timeLength%3600)-(item.timeLength%3600)%60)/60 +'分'+(item.timeLength%3600)%60 +'秒'"></span>
+                            </td>
+                            <td class="op">
+                                <label><input type="checkbox" ng-checked="item.customeStatus===1"
+                                              ng-click="events.check(item)" class="chk">试听</label>
+                                <a href="javascript:void(0)" ng-click="events.delselect(item)">删除</a>
+                                <a href="javascript:void(0)" ng-click="events.toReplaceSelect(item)">替换</a>
+                                <a href="javascript:void(0)"
+                                   ng-click="events.subCourseOutlineUp($index,item,$event)">上移</a>
+                                <a href="javascript:void(0)" ng-click="events.subCourseOutlineDown($index,item,$event)">下移</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-show="model.courseOutlines[model.selectIndex].subCourseOutlines.length==0"
+                     class="no-data clear">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">暂时没有数据!</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div ng-show="!model.course.changeable" class="main-wrap-body-1 mt20 clear">
+    <div class="column mb20">
+        <div class="col-tit">课程章节</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="column-block w-tree wt-2 fl">
+        <div class="col-tit">课程章节（<span ng-bind="model.courseOutlines.length"></span>）</div>
+        <div class="col-body p0">
+            <ul class="ul-chapter">
+                <li ng-class="{'bg-g': model.selectIndex==$index}" ng-click="model.selectIndex=$index"
+                    ng-repeat="courseOutline in model.courseOutlines"><span class="chapter-tit"><span
+                        ng-bind="$index+1"></span>. <span ng-bind="courseOutline.name"></span></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="right-pre fl">
+        <div class="column-block w-pre">
+            <div class="col-tit">课件（<span
+                    ng-bind="model.courseOutlines[model.selectIndex].subCourseOutlines.length"></span>）
+            </div>
+            <div class="col-body h-9">
+                <div class="udf-8">
+                    <div class="file-upload-box">
+                        <ul class="ul-file-upload">
+                            <li ng-repeat="subCourseOutline in model.courseOutlines[model.selectIndex].subCourseOutlines">
+                              <span class="file-state-1"
+
+                                    ng-bind="subCourseOutline.status==0?'转换中':(subCourseOutline.status==1?'转换成功':(subCourseOutline.status==2?'转换失败':'草稿'))"></span>
+                                <span class="file-tit to" style="width:500px;">
+                                <span ng-bind="$index+1"></span>.<span
+                                        ng-class="{'ico ico-document':subCourseOutline.type==1,'ico ico-video':subCourseOutline.type==2,'ico ico-scorm':subCourseOutline.type==3}"></span><span
+                                        title="b{{subCourseOutline.name}}"
+                                        ng-bind="subCourseOutline.name"></span></span>
+
+
+                                <span class="file-state">上传完成</span>
+                                <label class="file-state " style="left:520px;"><input type="checkbox"
+                                                                                      ng-checked="subCourseOutline.customeStatus===1"
+                                                                                      ng-click="events.check(subCourseOutline)"
+                                                                                      class="chk">试听</label>
+
+                                <span class="fr-ico">
+                                                    <a href="javascript:void(0)"
+                                                       ng-click="events.play(subCourseOutline)" class="ico-play"><span
+                                                            class="ico"></span>播放</a>
+                                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="btn-center">
+    <a href="javascript:void(0)" class="btn btn-r" ng-class="{'btn-disable':!model.updateCourse}"
+       has-permission="courseCategoryManager/save" ng-click="events.updateLesson($event)" class="btn btn-r">保存</a>
+    <a href="javascript:void(0)" ng-click="events.cancel($event)" class="btn btn-g ml10">取消</a>
+</div>
+<div kendo-window="node.windows.CourseWareChoose" k-options="ui.windows.CourseWareChooseOptions"></div>
+
+<div ng-if="model.uploadHead">
+    <div upload-head
+         aspect-ratio="aspectRatio"
+         template-url="@systemUrl@/templates/tpls/tpl-upload-images-img-tpl.html"
+         ng-model="model.uploadImage"
+         close="model.uploadHead" style="display: none;">
+
+    </div>
+</div>

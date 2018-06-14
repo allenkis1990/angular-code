@@ -1,0 +1,28 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ui-sref="states.classSchedule"></a>
+        <a class="aw" href="javascript:void(0)" ui-sref="states.classSchedule">培训课表管理</a>&gt;培训课表详情
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mt20">
+        <span>培训课表：</span>
+        <span ng-bind="model.planTemplate.name"></span>
+    </div>
+    <div class="column mt20">
+        <span>创建人：</span>
+        <span ng-bind="model.planTemplate.createUserName"></span>
+    </div>
+    <div class="column mt20">
+        <span>创建时间：</span>
+        <span ng-bind="model.planTemplate.createTime"></span>
+    </div>
+    <div class="column mt30">
+        <div class="col-tit">配置课程</div>
+        <div class="dash-line-2"></div>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.itemTemplateGrid" k-options="itemTemplateGrid.options">
+        </div>
+    </div>
+</div>

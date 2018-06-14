@@ -1,0 +1,14 @@
+<ul class="ul-d-form pt20 pl20">
+    <li>
+        <span class="fs16 b">请选择合并包裹规则：</span>
+    </li>
+    <li>
+        <label><input type="radio" name="combineRule" value="1"
+                      ng-model="query.combineRule">相同收货人(姓名、手机号)且收货地址相同</label>
+    </li>
+    <li>
+        <label><input type="radio" name="combineRule" value="2"
+                      ng-model="query.combineRule">不同收货人，但收货地址相同(除自取包裹外)</label>
+    </li>
+    <li class="txt-r"> 注：未就绪的包裹或不同的配送方式，无法合并！</li>
+</ul>

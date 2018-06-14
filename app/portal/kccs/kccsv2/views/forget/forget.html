@@ -1,0 +1,215 @@
+<!--
+<div class="lwhLoading" ng-if="model.lwhLoading===true">
+    <img src="kccs/kccsv2/images/loading1.gif" alt="" />
+</div>
+&lt;!&ndash; 位置导航 &ndash;&gt;
+<div class="pos-nav mb30"><a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span>找回密码</div>
+&lt;!&ndash; /位置导航 &ndash;&gt;
+<div class="p-wrap-full w8" ng-if="!model.successShow && !model.showSafeProblem">
+    <div class="p20">
+        <div class="colhead">
+            <div class="leadbox clear">
+                <span class="coltit fl">找回密码</span>
+            </div>
+            <div class="tipcon">如果您忘记密码，请在下面输入姓名、证书档案号，并提交。提交成功后，您的密码将重置为000000，登录成功后请即时修改您的密码。</div>
+        </div>
+        <ul class="fhlist">
+            <form name="user">
+                <li> <span class="title"><em class="fvx">*</em>姓名</span>
+                    <input type="text"
+                           name="name"
+                           ng-model="model.user.name"
+                           ng-required="true"
+                           class="ui-ipt iptform"
+                           placeholder="请输入姓名">
+                </li>
+                <li> <span class="title"><em class="fvx">*</em>证书档案号</span>
+                    <input type="text"
+                           name="identy"
+                           ng-model="model.user.identy"
+                           ng-required="true"
+                           class="ui-ipt iptform"
+                           placeholder="请输入18位身份证号">
+                    &lt;!&ndash;<span ng-show="user.identy.$error.pattern" class="formver">请输入正确的证书档案号</span>&ndash;&gt;
+                </li>
+                <li> <span class="title">&nbsp;</span>
+                    <input
+                            ng-disabled="user.$invalid"
+                           ng-click="events.findPassword($event)"
+                           class="ui-btn btn-r" type="button" value="立即找回">
+                </li>
+            </form>
+        </ul>
+    </div>
+</div>
+
+&lt;!&ndash;密保问题显示&ndash;&gt;
+<div class="p-wrap-full w8" ng-if="!model.successShow && model.showSafeProblem">
+    <div class="p20">
+        <div class="colhead">
+            <div class="leadbox clear">
+                <span class="coltit fl">找回密码</span>
+            </div>
+            <div class="tipcon">您已设置了密码保护，为了您的账号安全，请对以下保密问题进行验证：</div>
+        </div>
+        <ul class="fhlist">
+            <li> <span class="title">问题一：</span><span class="ml5" ng-bind="model.safeInForProblem[0].title"></span> </li>
+            <li> <span class="title">答案：</span>
+                <input type="text" ng-model="model.safeAnswerOne" class="ui-ipt iptform" value="">
+            </li>
+            <li class="mt30"> <span class="title">问题二：</span><span class="ml5" ng-bind="model.safeInForProblem[1].title"></span></li>
+            <li> <span class="title">答案：</span>
+                <input type="text" ng-model="model.safeAnswerTwo" class="ui-ipt iptform" value="">
+            </li>
+            <li> <span class="title">&nbsp;</span>
+                <input class="ui-btn btn-r"
+                       type="button"
+                       ng-click="events.submitSafeAnswer()"
+                       ng-disabled="!model.safeAnswerOne || !model.safeAnswerTwo"
+                       value="确定">
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+&lt;!&ndash;找回密码成功&ndash;&gt;
+<div class="p-wrap-full w8" ng-if="model.successShow">
+    <div class="p20">
+        <div class="completed-info">
+            <div class="fpsucc">
+                <p class="fptit"><i class="p-ico icofpsucc"></i>密码重置成功！</p>
+                <p class="mt10 ml20">新密码为：000000</p>
+                <div class="mt20">
+                    <input ng-click="events.goHome($event)" class="ui-btn btn-r" type="button" value="去登录">
+                    <span class="ml20 t-b" ng-bind="model.successTime + '秒'"></span> 后返回首页
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<div class="lwhLoading" ng-if="model.lwhLoading===true">
+    <img src="kccs/kccsv2/images/loading1.gif" alt=""/>
+</div>
+<div class="p-wrap-full pos-nav"><a href="#">首页</a><span class="plr3">&gt;</span>忘记密码</div>
+<div class="p-wrap-full white-bg mb30 clear mh500">
+    <div class="m-order-process">
+        <div class="process-line"><span class="current" ng-style="events.getCurrentStyle()"></span></div>
+        <ul class="process-bd clear">
+            <li ng-class="{'li-ed':model.registStep==='one'||model.registStep==='two'||model.registStep==='three'}">
+                <span class="p-ico circle">1</span>
+                <p>验证身份</p>
+            </li>
+            <li ng-class="{'li-ed':model.registStep==='two'||model.registStep==='three'}">
+                <span class="p-ico circle">2</span>
+                <p>设置新密码</p>
+            </li>
+            <li ng-class="{'li-ed':model.registStep==='three'}">
+                <span class="p-ico circle">3</span>
+                <p>完成</p>
+            </li>
+        </ul>
+    </div>
+    <div ng-if="model.registStep==='one'" class="clear mb50">
+        <div class="w8  margin-auto">
+            <form name="firstForm">
+                <ul class="fhlist">
+                    <li class="mb5"><span class="title">&nbsp;</span>
+                        <span class="t-r">找回密码需要您的姓名和身份证号。</span>
+                    </li>
+                    <li><span class="title"><em class="fvx">*</em>姓名</span>
+                        <input type="text"
+                               class="ui-ipt iptform"
+                               ng-required="true"
+                               ng-model="model.name"
+                               name="name"
+                               placeholder="请输入姓名">
+                        <span ng-if="firstForm.name.$dirty&&firstForm.name.$invalid" class="formver">
+                        <span class="p-ico ico-formver"></span>
+                        <span class="p-ico ico-worm "></span>姓名不能为空
+                    </span>
+                    </li>
+                    <li><span class="title"><em class="fvx">*</em>身份证号</span>
+                        <input type="text"
+                               class="ui-ipt iptform"
+                               ng-required="true"
+                               name="identy"
+                               ng-pattern="/(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/"
+                               ng-model="model.identy"
+                               placeholder="请填写15-18位身份证号">
+                        <span ng-if="(firstForm.identy.$dirty&&firstForm.identy.$error.pattern) || (firstForm.identy.$dirty&&firstForm.identy.$error.required)"
+                              class="formver">
+                        <span class="p-ico ico-formver"></span>
+                        <span class="p-ico ico-worm "></span>
+                        身份证号格式不正确
+                    </span>
+                    </li>
+                    <li><span class="title">&nbsp;</span>
+                        <input class="ui-btn btn-r" ng-disabled="firstForm.$invalid" type="button"
+                               ng-click="events.nextStep($event)" value="下一步">
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <div ng-if="model.registStep==='two'" class="clear mb50">
+        <div class="w8  margin-auto">
+            <form name="secendForm">
+                <ul class="fhlist">
+                    <li class="mb5"><span class="title"><em class="fvx">*</em>新密码</span>
+                        <input type="password"
+                               class="ui-ipt iptform"
+                               ng-required="true"
+                               name="password"
+                               ng-pattern="/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{6,18}$/"
+                               ng-model="model.password"
+                               value=""
+                               placeholder="请输入6~18位由字母、数字组合的登录密码">
+
+                        <span class="formver"
+                              style="width:300px;"
+                              ng-if="secendForm.password.$dirty && secendForm.password.$invalid"><span
+                                class="p-ico ico-formver"></span><span class="p-ico ico-worm "></span>请输入6~18位由字母、数字组合的登录密码
+                        </span>
+                    </li>
+                    <!-- 密码未激发样式 -->
+                    <li class="mb5"><span class="title">&nbsp;</span>
+                        <span class="code-case"><em
+                                ng-class="{'c1':passwordLevel==='sick'&&secendForm.password.$valid,'c2':passwordLevel==='middle'&&secendForm.password.$valid,'c3':passwordLevel==='strong'&&secendForm.password.$valid}">低</em
+                        ><em ng-class="{'c2':passwordLevel==='middle'&&secendForm.password.$valid,'c3':passwordLevel==='strong'&&secendForm.password.$valid}">中</em
+                        ><em class="last" ng-class="{'c3':passwordLevel==='strong'&&secendForm.password.$valid}">高</em></span>
+                    </li>
+
+                    <li><span class="title"><em class="fvx">*</em>确认密码</span>
+                        <input type="password"
+                               name="confirmPassword"
+                               validate-password
+                               pass="model.password"
+                               ng-model="model.confirmPassword"
+                               ng-required="true"
+                               class="ui-ipt iptform" value="" placeholder="请再次输入新密码">
+                        <span ng-if="secendForm.password.$valid && secendForm.confirmPassword.$dirty && secendForm.confirmPassword.$invalid"
+                              class="formver" style="width: 213px;">
+                            <span class="p-ico ico-formver"></span>
+                            <span class="p-ico ico-worm "></span>前后密码不一致，请重新输入！
+                    </span>
+                    </li>
+
+                    <li><span class="title">&nbsp;</span>
+                        <input ng-disabled="secendForm.$invalid" class="ui-btn btn-r" ng-click="events.submit()"
+                               type="button" value="提交新密码">
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
+    <div ng-if="model.registStep==='three'" class="clear mb50">
+        <div class="w1 margin-auto pt30 clear">
+            <i class="p-ico ico-success fl"></i><span class="fl pt10"><b class="fs24 t-b">新密码设置成功！</b><br/><br/><a
+                href="#" class="btn-b-b">前往登录</a></span>
+        </div>
+
+    </div>
+</div>
+

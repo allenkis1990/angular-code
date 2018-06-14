@@ -1,0 +1,100 @@
+<div class="dialog">
+    <div class="dialog-body">
+        <div class="dialog-tit"> 历史课件记录<a href="javascript:void(0)" ng-click="node.windows.historyCourseware.close()"
+                                          class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" class="ipt ipt-medium" ng-keyup="events.search($event)"
+                               ng-model="model.coursewarePageParams.name" placeholder="请输入课件名称"/>
+                    </li>
+                    <li><a href="javascript:void(0)" ng-click="events.searchCourseware($event)" class="btn btn-b">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="no-data clear" ng-show="model.coursewareList.length==0">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂时没有数据!</div>
+            </div>
+            <table class="table" ng-show="model.coursewareList.length>0">
+                <thead>
+                <tr>
+                    <th width="30">NO.</th>
+                    <th>课件名称</th>
+                    <th width="50">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="courseware in model.coursewareList">
+                    <td><span ng-bind="$index+1"></span></td>
+                    <td class="tl"><span ng-bind="courseware.name"></span></td>
+                    <td class="op">
+                        <a href="javascript:void(0)"
+                           ng-click="events.selectCourseware(courseware,$event)" ng-if="!courseware.select">选择</a>
+                        <a href="javascript:void(0)"
+                           ng-click="events.deselect(courseware,$event)" ng-if="courseware.select">取消选择</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="clear mt10" ng-if="model.coursewareList.length>0">
+                <div class="pages fr">
+                    <a href="#" ng-if="model.front" ng-click="events.front($event)">....</a>
+                    <a ng-repeat="pageIndex in model.pageIndexs"
+                       ng-class="{'current': pageIndex.index==model.coursewarePageParams.pageNo}"
+                       href="javascript:void(0)" ng-click="events.selectPageIndex(pageIndex.index,$event)"><span
+                            ng-bind="pageIndex.index"></span></a>
+                    <a href="#" ng-if="model.behind" ng-click="events.behind($event)">....</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="dialog">-->
+<!--<div class="dialog-body mt30">-->
+<!--<div class="dialog-tit"> 历史课件记录<a href="#" class="ico ico-close"></a></div>-->
+<!--<div class="dialog-cont">-->
+<!--<div class="search-bar">-->
+<!--<ul class="ul-form li-fl clear">-->
+<!--<li><input type="text" class="ipt ipt-medium" placeholder="请输入课件名称"/></li>-->
+<!--<li><a href="#" class="btn btn-b">查询</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<table class="table">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th width="30">NO.</th>-->
+<!--<th>课件名称</th>-->
+<!--<th width="50">操作</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr>-->
+<!--<td>1</td>-->
+<!--<td class="tl">课件名称课件名称课件名称</td>-->
+<!--<td class="op"><a href="#">选择</a></td>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td>1</td>-->
+<!--<td class="tl">课件名称课件名称课件名称</td>-->
+<!--<td class="op"><a href="#">选择</a></td>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td>1</td>-->
+<!--<td class="tl">课件名称课件名称课件名称</td>-->
+<!--<td class="op"><a href="#">选择</a></td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--<div class="clear mt10">-->
+<!--<div class="pages fr">-->
+<!--<a class="current" href="#">1</a>-->
+<!--<a href="#">2</a>-->
+<!--<a href="#">3</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

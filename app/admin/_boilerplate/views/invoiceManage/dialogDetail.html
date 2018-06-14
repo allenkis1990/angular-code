@@ -1,0 +1,38 @@
+<div ng-if="model.dialogDetail">
+    <div class="search-bar mt10">
+        <ul class="ul-form ml10 clear">
+            <li ng-show="model.electron === true">查询验证码： <input type="text"
+                                                                class="ipt ipt-medium"
+                                                                placeholder="请输入查询验证码"
+                                                                ng-model="model.invoiceVeriCode"></li>
+            <li ng-show="model.electron === true">发票代码 ： <input type="text"
+                                                                class="ipt ipt-medium"
+                                                                placeholder="请输入发票代码"
+                                                                ng-model="model.invoiceCode"></li>
+            <li>发票号码 ： <input type="text"
+                              class="ipt ipt-medium"
+                              placeholder="请输入发票号码"
+                              ng-model="model.invoiceNum"></li>
+            <li>
+                <a href="javascript:void (0);"
+                   ng-click="events.sureDetail($event,1,$index)"
+                   class="btn btn-b">确定</a>
+                <a href="javascript:void (0);" ng-click="dialog.cancel($index)" class="btn btn-g ml5">取消</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div ng-if="!model.dialogDetail">
+    <div class="search-bar mt10">
+        <ul class="ul-form lh-1 ml10 clear">
+            <li ng-show="model.electron === true">验证码：<span ng-bind="model.invoiceItemDetail.billVeriCode"></span></li>
+            <li ng-show="model.electron === true">发票代码：<span ng-bind="model.invoiceItemDetail.billCode"></span></li>
+            <li>发票号码：<span ng-bind="model.invoiceItemDetail.billNo"></span></li>
+            <a href="javascript:void (0);"
+               ng-click="events.sureDetail($event,2,$index)"
+               class="btn btn-b">作废发票</a>
+            <a href="javascript:void (0);" ng-click="dialog.cancel($index)" class="btn btn-g ml5">取消</a>
+            </li>
+        </ul>
+    </div>
+</div>

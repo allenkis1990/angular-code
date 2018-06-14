@@ -1,0 +1,96 @@
+<div class="main-wrap-body">
+    <div class="search-bar mt10">
+        <ul class="ul-form li-fl lh-1 clear">
+            <li has-permission="permission.region" exp="true">
+                <div query-region model="model.query"
+                     default-region="model.query.defaultRegion"
+                     view-name="OWN_VIEW_NAME"></div>
+            </li>
+            <li>
+                <div hb-date-arrange
+                     template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                     config="timeConfig"
+                     start-date="model.query.startTime"
+                     end-date="model.query.endTime"
+                     start-placeholder="从业证获得时间"
+                     end-placeholder="从业证获得时间"></div>
+            </li>
+            <li>
+                <select kendo-combo-box
+                        hb-clear-input
+                        style="width:110px;"
+                        k-options="config.titleLevelCombo"
+                        k-ng-model="model.query.titleLevel">
+                </select>
+            </li>
+            <li>
+                <select kendo-combo-box
+                        hb-clear-input
+                        style="width:100px;"
+                        k-options="config.activationCombo"
+                        k-ng-model="model.query.activation">
+                </select>
+            </li>
+            <li has-permission="permission.learnTimeYear" exp="true" ng-if="model.query.activation.optionId===1"
+                ng-init="events.loadYears()">
+                <input type="text"
+                       hb-readonly
+                       list-input="model.query.tempLearningYears"
+                       ng-click="events.selectYear()"
+                       class="ipt ipt-small" placeholder="选择年度"/>
+                未报班次数
+                <div style="display: inline-block;position: relative;border: 1px solid transparent;border-radius: 4px;">
+                    <select kendo-combo-box="model.node.condisionCombo"
+                            k-enable="b{{model.query.tempLearningYears.length>0}}"
+                            hb-clear-input
+                            style="width:75px;"
+                            k-options="config.notEstablishConditionCombo"
+                            k-ng-model="model.query.notEstablishCondition">
+                    </select>
+                    <select
+                            k-enable="b{{model.query.tempLearningYears.length>0}}"
+                            kendo-combo-box="model.node.resetCombo"
+                            hb-clear-input
+                            style="width:75px;"
+                            k-options="config.timesCombo"
+                            k-ng-model="model.query.times">
+                    </select>
+                    <div ng-if="model.query.tempLearningYears.length > 0 && (!model.query.notEstablishCondition || !model.query.times) "
+                         style="display: inline-block;position: absolute;left: 0;color: red;top: 30px;">
+                        请选择<span ng-show="!mustSelectCondition">条件</span><span
+                            ng-show="!mustSelectCondition && !mustSelectTimes">、</span><span
+                            ng-show="!mustSelectTimes">次数</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox"
+                           ng-true-value="0"
+                           ng-false-value="-1"
+                           ng-model="model.query.isOver55" class="chk">55周岁以下
+                </label>
+            </li>
+            <li>
+                <div command-tool
+                     before-query="events.beforeQuery()"
+                     is-not-sb-mode="true"
+                     permission="permission"
+                     report-query="events.genReportQuery()"
+                     model="model.query"
+                     grid="node.grid"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="column mt10">
+        <div class="tips-box-1 clear">
+            <span class="b">搜索结果合计</span>：共 <span class="t-r b" ng-bind="model.totalSize ? model.totalSize:'?'"></span>
+            人
+            <span class="fr">单位：人</span>
+            <span summary-desc view-name="OWN_VIEW_NAME"></span>
+        </div>
+
+        <div class="mt10" kendo-grid="node.grid" k-options="mainGridOptions">
+        </div>
+    </div>
+</div>

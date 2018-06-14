@@ -1,0 +1,62 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.systemProcessTask'">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li><input type="text" ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       class="ipt ipt-medium" ng-model="model.selectParames.taskKeyword"
+                       placeholder="请输入任务名称"/></li>
+            <!--<li>
+                <input type="text" ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       class="ipt ipt-medium"
+                       placeholder="请选择反馈单位"
+                       ng-model="model.parentName"
+                       ng-click="events.openTree($event)"
+                       name="parentId"
+                       required ng-required="true">
+
+                <div class="column-block w-tree fl" ng-show="showUnitTree"
+                     style="position: absolute;
+                z-index: 10;
+                width:194px;
+                max-height: 220px;
+                overflow: auto;">
+                    <div kendo-tree-view="node.tree"
+                         k-options="ui.trees.options"
+                         k-on-change="model.selectedItem = dataItem">
+                <span k-template ng-click="events.getUnitInfo(dataItem)">
+                  <label style="width: 100px;">b{{dataItem.name}}</label>
+                </span>
+                    </div>
+                </div>
+            </li>-->
+            <li>
+                <select class="slt slt-medium" ng-model="model.selectParames.type">
+                    <option selected="selected" value="0">请选择任务状态</option>
+                    <option value="1">未运行</option>
+                    <option value="2">运行中</option>
+                    <option value="3">处理成功</option>
+                    <option value="4">处理失败</option>
+                </select>
+            </li>
+            <li>
+                <input kendo-date-picker="node.startCreateTime"
+                       ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       k-options="ui.datePicker.begin.options"
+                       ng-model="model.selectParames.startCreateTime" type="text" hb-readonly hb-clear-input
+                       class="ipt ipt-s"
+                       placeholder="任务开始时间"/> -
+                <input kendo-date-picker="node.endCreateTime"
+                       ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       k-options="ui.datePicker.end.options"
+                       ng-model="model.selectParames.endCreateTime" type="text" hb-readonly hb-clear-input
+                       class="ipt ipt-s"
+                       placeholder="任务结束时间"/>
+            </li>
+            <li><a href="#" ng-click="events.getFeedbackPage($event)" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="column table-box mt20">
+        <div kendo-grid="node.feedbackGrid" k-options="ui.feedbackGrid.options"></div>
+    </div>
+</div>
+<div ui-view></div>
+

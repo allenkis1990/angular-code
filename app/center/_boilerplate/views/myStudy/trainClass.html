@@ -1,0 +1,99 @@
+<div class="m-screen">
+
+
+    <!--not-need-item-params="yes"-->
+    <div hb-sku-directive
+         clear-event="model.clearEvent"
+         category-type="model.categoryType"
+         lwh-loading="lwhLoading"
+         callback="events.fn()"
+         ng-model="skuParams"
+         templateurl="@systemUrl@/templates/common/sku-searlist.html">
+
+        <a href="javascript:void(0)"
+           ng-if="model.choseTrainResult"
+           class="conditions-btn"><span ng-bind="model.choseTrainResult.name+': '"></span><span class="txt"
+                                                                                                ng-bind="model.choseTrainResult.value"></span>
+            <span class="p-ico close-ico"
+                  ng-click="events.cacelSearch('choseTrainResult','trainingResult','','showTrainResult')"></span></a>
+
+
+    </div>
+
+    <div class="screen-style" ng-if="model.showTrainResult">
+        <span class="style-name">培训结果</span>
+        <a href="javascript:void(0)"
+           ng-click="events.tabTrainingResult('','培训结果','全部')">全部</a>
+        <a href="javascript:void(0)"
+           ng-click="events.tabTrainingResult(0,'培训结果','未合格')">未合格</a>
+        <a href="javascript:void(0)"
+           ng-click="events.tabTrainingResult(1,'培训结果','已合格')">已合格</a>
+    </div>
+</div>
+<ul class="m-course-list clear mt10"
+    ng-if="model.classList.length>0">
+    <li ng-repeat="item in model.classList">
+        <div class="course-bd">
+            <div class="course-img">
+                <img ng-src="b{{item.photoPath}}" alt=" ">
+                <div class="hover-block">
+                    <div class="mask-bg"></div>
+                    <span ng-if="item.trainingState===2" class="ui-btn btn-o disabled">培训已结束</span>
+                    <a href="javascript:void(0)"
+                       ng-if="item.trainingState!==2"
+                       ng-click="events.validateUserClassAccess(item)"
+                       class="ui-btn btn-o">进班学习</a>
+                </div>
+            </div>
+            <a href="javascript:void(0)"
+               class="course-name"
+               ng-bind="item.className"
+               title="b{{item.className}}"></a>
+            <div class="course-info clear">
+                <div class="w1 fl"
+                     ng-bind="item.skuPropertyNameList[1].skuPropertyValueName"></div>
+                <div class="fr"><span class="txt-gr" ng-bind="item.credit"></span>学时</div>
+            </div>
+            <span ng-if="item.trainingResult===1" class="p-ico ico-passed"></span>
+        </div>
+    </li>
+    <!--<li>
+        <div class="course-bd">
+            <div class="course-img">
+                <img src="@systemUrl@/images/course-img.jpg" alt=" ">
+                <div class="hover-block">
+                    <div class="mask-bg"></div>
+                    <span class="ui-btn btn-o disabled">培训已结束</span>
+                </div>
+            </div>
+            <a href="#" class="course-name">劳动关系协调员基础知识</a>
+            <div class="course-info clear">
+                <div class="w1 fl">公需课</div>
+                <div class="fr"><span class="txt-gr">56</span>学时</div>
+            </div>
+            <span class="p-ico ico-passed"></span>
+        </div>
+    </li>-->
+</ul>
+
+<div pagination
+     ng-if="model.classList.length>0"
+     ng-change="events.getCourseList()"
+     ng-model="model.currentPage"
+     total-items="model.total"
+     items-per-page="model.itemsPerPage"
+     max-size="model.maxSize"
+     previous-text="上一页"
+     next-text="下一页"></div>
+
+<!--空数据-->
+<div class="m-no-data tc mh391" ng-if="model.classList.length<=0">
+    <img src="@systemUrl@/images/no-data.png" alt="空数据">
+    <p class="txt">当年度还没有正在学习的培训班，切换个年度看看或者去找找适合自己的培训班！</p>
+    <a href="javascript:void(0)"
+       ng-click="events.goOntrainingView()"
+       class="ui-btn mt20"><span class="p-ico"></span>选择培训班</a>
+</div>
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

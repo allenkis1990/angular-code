@@ -1,0 +1,253 @@
+<div class="opacity-modal" ng-if="confirmAble===true"></div>
+<div class="lwhLoading" ng-if="confirmAble===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>
+
+<div class="lwhLoading" ng-if="model.imgLoding===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>
+<!-- 位置导航 -->
+
+<div class="p-wrap-full m-return-block clear">
+    <div class="fl">
+        <a ui-sref="states.myRealClass"
+           class="btn-return"><span class="p-ico"></span>返回
+        </a>
+        <!--<a ui-sref="states.myStudy.trainClass"><span class="p-ico"></span>返回我的培训班列表</a>-->
+        <span class="name to">选课</span>
+    </div>
+
+
+    <!--整体选课为false的时候-->
+    <div class="m-tips m-tips-1 "
+         ng-if="!model.forbidOptionalPackageRequires"
+         style="margin-top:35px;"
+    >选课提示：<span title="b{{item.packageName}}" ng-repeat="item in model.getTimeLenArr">[b{{item.shortName}}]还需选
+        <span ng-if="item.needTimeLength>0" class="t-b">b{{item.needTimeLength}}学时</span
+        ><span ng-if="item.needTimeLength<=0" class="t-b">0学时</span
+        ><span ng-if="$index!==model.getTimeLenArr.length-1">，</span></span>
+    </div>
+
+
+    <!--整体选课为true的时候-->
+    <div class="m-tips m-tips-1 "
+         ng-if="model.forbidOptionalPackageRequires"
+         style="margin-top:35px;"
+    >选课提示：选修课学时还差<span ng-bind="copyRequireHours"></span>学时，请从以下课程包选择!
+    </div>
+
+</div>
+
+<!--<div class="p-wrap-full pos-nav clear m-content">
+    &lt;!&ndash;<div class="mb5 mr20 fl">
+        <a href="#" class="btn-return" ui-sref="states.myRealClass"><span class="p-ico"></span>返回</a>
+        <span class="p-ico"></span>选课
+    </div>&ndash;&gt;
+    <div class="m-tips m-tips-1 fr"
+    >选课提示：<span title="b{{item.packageName}}" ng-repeat="item in model.getTimeLenArr">[b{{item.shortName}}]还需选
+        <span ng-if="item.needTimeLength>0" class="t-b">b{{item.needTimeLength}}学时</span
+    ><span ng-if="item.needTimeLength<=0" class="t-b">0学时</span
+        ><span ng-if="$index!==model.getTimeLenArr.length-1">，</span></span>
+    </div>
+</div>-->
+<!-- /位置导航 -->
+<!-- 内容 -->
+<div class="p-wrap-full content-bd-1 p0 mt-1">
+    <div class="content-tit tab-tit clear">
+        <a href="javascript:void(0)" ng-repeat="item in model.courseTabArr"
+           ng-click="events.tabCourse(2,item.packageId,$index,item)"
+           ng-class="{'current':model.courseType===2&&model.courseId===item.packageId}">b{{item.packageName}}</a>
+        <a href="javascript:void(0)"
+           ng-click="events.tabCourse(3,'')"
+           ng-class="{'current':model.courseType===3&&model.courseId===''}">已选课程</a>
+    </div>
+    <!-- 选修课1 -->
+    <div class="tab-bd tab-bd-1 pb20"
+         ng-repeat="item in model.courseBigArr"
+         ng-show="model.courseType===2&&model.courseId===item.packageId">
+        <div class="gray-bar clear">
+
+
+            <!--<span style="vertical-align: -5px;color:#08af9c"> 当前勾选<span ng-bind="model.hasChoseHour"></span>学时，还需选择<span
+                    ng-bind="model.requireHours<=0?0:model.requireHours"></span>学时</span>-->
+            <!--<a href="javascript:void(0)"
+               style="padding:3px;"
+               ng-click="events.chooseIntrest($event)"
+               class="ui-btn btn-o">+ 选择兴趣课程</a>-->
+
+            <button class="ui-btn btn-o fl"
+                    ng-if="!model.forbidOptionalPackageRequires"
+                    style="padding:4px 5px;"
+                    ng-click="events.confirmChose(item.packageId)"
+                    ng-disabled="copyTimeLenArr[$index].needTimeLength<=0 || confirmAble===true"
+                    ng-class="{'lwh-disabled':(copyTimeLenArr[$index].needTimeLength<=0 || confirmAble===true)}">确认选中的课程
+            </button>
+
+
+            <button class="ui-btn btn-o fl"
+                    ng-if="model.forbidOptionalPackageRequires"
+                    style="padding:4px 5px;"
+                    ng-click="events.confirmChose(item.packageId)"
+                    ng-disabled="model.hasChoseHour<=0 || confirmAble===true"
+                    ng-class="{'lwh-disabled':(model.hasChoseHour<=0 || confirmAble===true)}">确认选中的课程
+            </button>
+
+
+            <span ng-if="copyTimeLenArr[$index].needTimeLength>0" style="vertical-align:-5px;">
+                <span class="ml10">当前勾选</span> <span class="t-b"> <span ng-if="item.hasChoseCreit<=0">0</span>
+                <span ng-if="item.hasChoseCreit>0">b{{item.hasChoseCreit}}</span>学时</span>
+                ,还需选 <span class="t-b"
+                           ng-bind="model.getTimeLenArr[model.tabIndex].needTimeLength<=0?0+'学时':model.getTimeLenArr[model.tabIndex].needTimeLength+' 学时'"></span>
+            </span>
+
+            <!--
+                        <span class="ml10" ng-if="copyTimeLenArr[$index].needTimeLength<=0">本课程包选课学时已达标，无须再选</span>
+            -->
+            <div class="lwh-choseLesson fl ml10"
+                 style="margin-top: 5px;margin-right:5px;"
+                 ng-if="copyTimeLenArr[$index].needTimeLength<=0&&!model.forbidOptionalPackageRequires"><span
+                    class="full-label"></span>选课已达标
+            </div>
+
+            <div class="fr intro pl30" style="margin-top:5px;">
+                本班选课及考核要求<span class="p-ico qus"
+                               style="background-position:-90px -270px;top:0"
+                               ng-click="events.dialogRequirements($event)"></span>
+            </div>
+            <div class="tip fr" style="margin-top:5px;"><span class="p-ico"></span> 贴士：课程选取成功后不可删除，请谨慎选课！</div>
+        </div>
+        <div class="ml20 mr20 mt10">
+            <table class="ui-table table-class" ng-if="item.courseList.length>0">
+                <thead>
+                <tr>
+                    <th width="50">选择</th>
+                    <th class="tl">课程</th>
+                    <th width="100">类型</th>
+                    <th width="120">来源</th>
+                    <th width="100">讲师</th>
+                    <th width="100">学时</th>
+                    <!-- <th width="100">课程时长</th>-->
+                    <th width="80">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="subItem in item.courseList">
+                    <td>
+                        <label class="ui-label"
+                               ng-if="!model.forbidOptionalPackageRequires"
+                               ng-class="{'checked':subItem.ischecked}">
+                            <input type="checkbox"
+                                   ng-checked="subItem.ischecked"
+                                   ng-click="events.choseCourse($event,item,subItem)"
+                                   class="checkbox">
+                            <a href="javascript:void(0)"
+                               class="checkbox-a">
+                            </a>
+                            <span class="ipt-txt"></span>
+                        </label>
+
+
+                        <label class="ui-label"
+                               ng-if="model.forbidOptionalPackageRequires"
+                               ng-class="{'checked':subItem.ischecked}">
+                            <input type="checkbox"
+                                   ng-checked="subItem.ischecked"
+                                   ng-click="events.choseCourse2($event,item,subItem)"
+                                   class="checkbox">
+                            <a href="javascript:void(0)"
+                               class="checkbox-a">
+                            </a>
+                            <span class="ipt-txt"></span>
+                        </label>
+
+
+                    </td>
+                    <td class="tl" title="b{{subItem.name}}">b{{subItem.shortName}}</td>
+                    <td><span ng-if="subItem.type===2">选修</span><span ng-if="subItem.type===1">必修</span></td>
+                    <td>b{{subItem.packageName}}</td>
+                    <td>b{{subItem.teacherName}}</td>
+                    <td>b{{subItem.period}}</td>
+                    <!-- <td>b{{subItem.timeLength}}</td>-->
+                    <td class="op"><a href="javascript:void(0)" ng-click="events.tryListen($event,subItem)">试听</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="m-no-data tc h-1" ng-if="item.courseList.length<=0">
+                <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                <p class="txt">当前分类下还没有课程</p>
+            </div>
+        </div>
+
+        <div pagination
+             ng-if="item.courseList.length>0"
+             ng-change="events.changePage()"
+             ng-model="model.currentPage"
+             total-items="model.total"
+             items-per-page="model.itemsPerPage"
+             max-size="model.maxSize"
+             previous-text="上一页"
+             next-text="下一页"></div>
+
+    </div>
+    <!-- /选修课1 -->
+
+
+    <!-- 已选课程 -->
+    <div class="tab-bd tab-bd-1 pb20 " ng-show="model.courseType===3&&model.courseId===''">
+        <div class="gray-bar clear">
+            本班累计已选 b{{total}}学时
+            <div class="fr intro pl30">
+                本班选课及考核要求<span class="p-ico qus" style="background-position:-90px -270px;top:0"
+                               ng-click="events.dialogRequirements($event)"></span>
+            </div>
+        </div>
+        <div class="ml20 mr20 mt10">
+            <table class="ui-table table-class" ng-if="model.hasChoseCourseList.length>0">
+                <thead>
+                <tr>
+                    <th width="50">NO</th>
+                    <th class="tl">课程</th>
+                    <th width="80">类型</th>
+                    <th width="120">来源</th>
+                    <th width="80">讲师</th>
+                    <th width="80">学时</th>
+                    <!--  <th width="80">课程时长</th>-->
+                    <th width="80">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.hasChoseCourseList">
+                    <td>
+                        b{{$index+1}}
+                    </td>
+                    <td class="tl" title="b{{item.name}}">b{{item.shortName}}</td>
+                    <td>选修</td>
+                    <td>b{{item.packageName}}</td>
+                    <td>b{{item.teacherName}}</td>
+                    <td>b{{item.period}}</td>
+                    <!--  <td>b{{item.timeLength}}</td>-->
+                    <td class="op"><a href="javascript:void(0)" ng-click="events.tryListen($event,item)">试听</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="m-no-data tc h-1" ng-if="model.hasChoseCourseList.length<=0">
+                <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                <p class="txt">当前分类下还没有课程</p>
+            </div>
+        </div>
+
+        <!--<div pagination
+             ng-change="events.changePage()"
+             ng-model="model.currentPage"
+             total-items="model.total"
+             items-per-page="model.itemsPerPage"
+             max-size="model.maxSize"
+             previous-text="上一页"
+             next-text="下一页"></div>-->
+    </div>
+    <!-- /已选课程 -->
+
+
+</div>
+<!-- /内容 -->

@@ -1,0 +1,65 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.feedback'">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li><input type="text" ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       class="ipt ipt-medium" ng-model="model.selectParames.descKeyword"
+                       clear-operator
+                       placeholder="请输入内容关键字"/></li>
+            <li>
+                <input type="text" ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       class="ipt ipt-medium"
+                       placeholder="请选择反馈单位"
+                       ng-model="model.parentName"
+                       clear-operator
+                       ng-click="events.openTree($event)"
+                       name="parentId"
+                >
+
+                <div class="column-block w-tree fl" ng-show="showUnitTree"
+                     style="position: absolute;
+                    z-index: 10;
+                    width:194px;
+                    max-height: 220px;
+                    overflow: auto;">
+                    <div kendo-tree-view="node.tree"
+                         k-options="ui.trees.options"
+                         k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getUnitInfo(dataItem)">
+                      <label style="width: 100px;">b{{dataItem.name}}</label>
+                    </span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <select class="slt slt-small" ng-model="model.selectParames.type">
+                    <option selected="selected" value="0">请选择问题类型</option>
+                    <option value="1">故障投诉</option>
+                    <option value="2">改善建议</option>
+                    <option value="3">新手咨询</option>
+                    <option value="4">其他</option>
+                </select>
+            </li>
+            <li>
+                <!--<input type="date"  class="ipt ipt-small" placeholder="反馈时间" ng-model="model.selectParames.startCreateTime" />
+                <input type="date"  class="ipt ipt-small" placeholder="反馈时间" ng-model="model.selectParames.endCreateTime" />-->
+                <input kendo-date-picker="node.startCreateTime"
+                       ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       k-options="ui.datePicker.begin.options"
+                       ng-model="model.selectParames.startCreateTime" type="text" hb-readonly hb-clear-input
+                       class="ipt ipt-s"
+                       placeholder="反馈开始时间"/> -
+                <input kendo-date-picker="node.endCreateTime"
+                       ng-keyup="$event.keyCode==13?events.getFeedbackPage($event):''"
+                       k-options="ui.datePicker.end.options"
+                       ng-model="model.selectParames.endCreateTime" type="text" hb-readonly hb-clear-input
+                       class="ipt ipt-s"
+                       placeholder="反馈结束时间"/>
+            </li>
+            <li><a href="#" ng-click="events.getFeedbackPage($event)" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="column table-box mt20">
+        <div kendo-grid="node.feedbackGrid" k-options="ui.feedbackGrid.options"></div>
+    </div>
+</div>
+<div ui-view></div>

@@ -1,0 +1,1 @@
+define(function() {"use strict"; return  {"modules":[{"reconfig":true,"name":"app.kccsv2.states.index","files":["kccs/kccsv2/js/states/index-state"]}],"futureStates":[{"module":"app.kccsv2.states.index","stateName":"states.index","url":"/index","type":"ocLazyLoad"}]}    });

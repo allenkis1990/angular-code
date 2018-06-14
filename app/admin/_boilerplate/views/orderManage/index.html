@@ -1,0 +1,341 @@
+<div class="pos-nav-box" ng-if="$state.current.name==='states.orderManage.orderDetail'">
+    <div class="pos-nav"><span ng-if="$stateParams.from==='1'"><a href="javascript:void(0)"
+                                                                  ng-click="$state.go('states.orderManage')"
+                                                                  class="ico return"></a>
+        <a class="aw"
+           ng-click="$state.go('states.orderManage')"
+           href="javascript:void(0)">订单管理</a> &gt;</span> <span ng-class="{'ml10':$stateParams.from!=='1'}">订单详情</span>
+    </div>
+</div>
+
+<!--tab按钮-->
+<div class="main-wrap-body" ng-show="$state.current.name==='states.orderManage'">
+    <div class="tab-tit mt10">
+        <a class="current" ng-class="{current: flagModel.tabType === 'OWN'}" ng-click="events.tabClick($event,'OWN')">本单位</a>
+        <a class="" ng-class="{current: flagModel.tabType === 'PROJECT'}" ng-click="events.tabClick($event, 'PROJECT')" ng-if="events.isSubProjectManager()">项目级</a>
+    </div>
+</div>
+
+<div class="main-wrap-body" ng-show="$state.current.name==='states.orderManage'">
+    <div ng-if="flagModel.tabType === 'OWN'">
+        <div class="search-bar">
+            <ul class="ul-form li-fl lh-1 clear">
+                <div hb-authorized-option use-type="order" query-params="model.authorizedQuery"></div>
+
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-disabled="model.orderQueryParam.flowNo!==''&& model.orderQueryParam.flowNo!==undefined&& model.orderQueryParam.flowNo!==null"
+                                                                   ng-model="model.orderQueryParam.orderNo"
+                                                                   class="ipt ipt-middle lwh-ipt"
+                                                                   placeholder="订单号"></li>
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-model="model.orderQueryParam.flowNo"
+                                                                   ng-disabled="model.orderQueryParam.orderNo!==''&& model.orderQueryParam.orderNo!==undefined&& model.orderQueryParam.orderNo!==null"
+                                                                   class="ipt ipt-middle lwh-ipt"
+                                                                   placeholder="银行交易流水号">
+                </li>
+                <li style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle"
+                            ng-model="model.orderQueryParam.orderStatus">
+                        <option value="ALL">订单状态</option>
+                        <option value="WAIT_FOR_PAYMENT">等待付款</option>
+                        <option value="PAYING">支付中</option>
+                        <option value="OPENING">开通中</option>
+                        <option value="TRADE_SUCCESS">交易成功</option>
+                        <option value="TRADE_CLOSE">交易关闭</option>
+                    </select>
+                </li>
+
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-model="model.orderQueryParam.loginInput"
+                                                                   class="ipt ipt-middle"
+                                                                   placeholder="身份证号">
+                </li>
+                <li style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle" ng-model="model.orderQueryParam.tradeChannel">
+                    <option value="">请选择缴费类型</option>
+                    <option value="WEB">web端</option>
+                    <option value="ANDROID">Android客户端</option>
+                    <option value="IOS">ios客户端</option>
+                    <option value="WECHAT_OFFICIAL_ACCOUNTS">微信公众号（订阅号）</option>
+                    <option value="WECHAT_MINI_PROGRAMS">微信小程序</option>
+                    <option value="PRESENT">导入开通</option>
+                    <option value="COLLECTIVE">单位缴费</option>
+                </select>
+                </li>
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-model="model.orderQueryParam.batchNo"
+                                                                   class="ipt ipt-middle"
+                                                                   ng-hide="lockBatchNo"
+                                                                   placeholder="请输入单位缴费批次号">
+                </li>
+
+
+                <!--<li style="height:28px;margin-bottom:15px;">-->
+                <!--<select class="slt slt-middle"-->
+                <!--ng-change="events.changeCity(model.orderQueryParam.city)"-->
+                <!--ng-options="item.id as item.name for item in model.cityList"-->
+                <!--ng-model="model.orderQueryParam.city">-->
+                <!--<option value="">请选择城市</option>-->
+                <!--</select>-->
+                <!--</li>-->
+
+                <!--<li style="height:28px;margin-bottom:15px;">-->
+                <!--<select class="slt slt-middle"-->
+                <!--ng-options="item.regionPath as item.name for item in model.areaList"-->
+                <!--ng-model="model.orderQueryParam.region">-->
+                <!--<option value="">请选择地区</option>-->
+                <!--</select>-->
+                <!--</li>-->
+
+                <li has-permission="orderManage/fetchTest" style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle" ng-model="model.orderQueryParam.test">
+                        <option value="">全部</option>
+                        <option value="true">测试</option>
+                        <option value="false">非测试</option>
+                    </select>
+                </li>
+
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   class="ipt ipt-large"
+                                                                   hb-clear-input
+                                                                   ng-model="model.orderQueryParam.createStartTimeMills"
+                                                                   k-options="kendoPlus.timeOptions"
+                                                                   kendo-date-picker="kendoPlus.timeModel"
+                                                                   hb-readonly
+                                                                   placeholder="订单创建时间"/> -
+                    <input type="text"
+                           hb-clear-input
+                           ng-model="model.orderQueryParam.createEndTimeMills"
+                           k-options="kendoPlus.timeOptions"
+                           kendo-date-picker="kendoPlus.timeModel"
+                           hb-readonly
+                           class="ipt ipt-large"
+                           placeholder="订单创建时间"/>
+                </li>
+
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   class="ipt ipt-large"
+                                                                   hb-clear-input
+                                                                   ng-model="model.orderQueryParam.tradeStartTimeMills"
+                                                                   k-options="kendoPlus.timeOptions"
+                                                                   kendo-date-picker="kendoPlus.timeModel"
+                                                                   hb-readonly
+                                                                   placeholder="交易成功时间"/> -
+                    <input type="text"
+                           hb-clear-input
+                           ng-model="model.orderQueryParam.tradeEndTimeMills"
+                           k-options="kendoPlus.timeOptions"
+                           kendo-date-picker="kendoPlus.timeModel"
+                           hb-readonly
+                           class="ipt ipt-large"
+                           placeholder="交易成功时间"/>
+                </li>
+                <li style="height:28px;margin-bottom:15px;">
+                    <input type="text"
+                           class="ipt ipt-medium"
+                           ng-model="tempClass.schemeName"
+                           placeholder="选择培训方案"
+                           ng-click="events.selectClass()"/>
+                    <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                          ng-click="events.clearSchemeTextContent()"
+                          ng-if="tempClass.schemeName"
+                          class="k-icon k-i-close" role="button">select
+                    </span>
+                </li>
+                <li has-permission="orderManage/fetchTest" style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle" ng-model="model.orderQueryParam.eliminateFreeOrder">
+                        <option value="">是否剔除0元订单</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="orderManage/searchOrderPage"
+                       ng-click="events.MainPageQueryList($event,'orderGridInstance','orderQueryParam')"
+                       class="btn btn-b">查询</a>
+                    <button ng-click="events.exportOrder()"
+                            class="btn btn-b ml10"
+                            has-permission="orderManage/export"
+                            ng-disabled="submitExportOrder">批量导出
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="column mt10">
+        <div class="tips-box-1">
+            <span class="b">搜索结果合计</span>：订单成交 <span class="t-r b" ng-bind="model.searTotalInfo.normalCount"></span>
+            笔<span ng-if="showTotal">，成交总额 <span class="t-r b"
+                                                 ng-bind="'¥'+model.searTotalInfo.totalAmount"></span></span>
+        </div>
+        <div style="margin-top:10px;" kendo-grid="kendoPlus.orderGridInstance"
+             k-options="orderGrid.options">
+        </div>
+    </div>
+    </div>
+    <div ng-if="flagModel.tabType === 'PROJECT'">
+        <div class="search-bar">
+            <ul class="ul-form li-fl lh-1 clear">
+                <div hb-authorized-option
+                     query-all="true"
+                     use-type="order"
+                     query-params="model.authorizedQuery"
+                     change-unit-callback="events.initAllGrid(unitId)"></div>
+
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-disabled="model.orderQueryParam.flowNo!==''&& model.orderQueryParam.flowNo!==undefined&& model.orderQueryParam.flowNo!==null"
+                                                                   ng-model="model.orderQueryParam.orderNo"
+                                                                   class="ipt ipt-middle lwh-ipt"
+                                                                   placeholder="订单号"></li>
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-model="model.orderQueryParam.flowNo"
+                                                                   ng-disabled="model.orderQueryParam.orderNo!==''&& model.orderQueryParam.orderNo!==undefined&& model.orderQueryParam.orderNo!==null"
+                                                                   class="ipt ipt-middle lwh-ipt"
+                                                                   placeholder="银行交易流水号">
+                </li>
+                <li style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle"
+                            ng-model="model.orderQueryParam.orderStatus">
+                        <option value="ALL">订单状态</option>
+                        <option value="WAIT_FOR_PAYMENT">等待付款</option>
+                        <option value="PAYING">支付中</option>
+                        <option value="OPENING">开通中</option>
+                        <option value="TRADE_SUCCESS">交易成功</option>
+                        <option value="TRADE_CLOSE">交易关闭</option>
+                    </select>
+                </li>
+
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-model="model.orderQueryParam.loginInput"
+                                                                   class="ipt ipt-middle"
+                                                                   placeholder="身份证号">
+                </li>
+                <li style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle" ng-model="model.orderQueryParam.tradeChannel">
+                    <option value="">请选择缴费类型</option>
+                    <option value="WEB">web端</option>
+                    <option value="ANDROID">Android客户端</option>
+                    <option value="IOS">ios客户端</option>
+                    <option value="WECHAT_OFFICIAL_ACCOUNTS">微信公众号（订阅号）</option>
+                    <option value="WECHAT_MINI_PROGRAMS">微信小程序</option>
+                    <option value="PRESENT">导入开通</option>
+                    <option value="COLLECTIVE">单位缴费</option>
+                </select>
+                </li>
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   ng-model="model.orderQueryParam.batchNo"
+                                                                   class="ipt ipt-middle"
+                                                                   ng-hide="lockBatchNo"
+                                                                   placeholder="请输入单位缴费批次号">
+                </li>
+
+
+                <!--<li style="height:28px;margin-bottom:15px;">-->
+                <!--<select class="slt slt-middle"-->
+                <!--ng-change="events.changeCity(model.orderQueryParam.city)"-->
+                <!--ng-options="item.id as item.name for item in model.cityList"-->
+                <!--ng-model="model.orderQueryParam.city">-->
+                <!--<option value="">请选择城市</option>-->
+                <!--</select>-->
+                <!--</li>-->
+
+                <!--<li style="height:28px;margin-bottom:15px;">-->
+                <!--<select class="slt slt-middle"-->
+                <!--ng-options="item.regionPath as item.name for item in model.areaList"-->
+                <!--ng-model="model.orderQueryParam.region">-->
+                <!--<option value="">请选择地区</option>-->
+                <!--</select>-->
+                <!--</li>-->
+
+                <li has-permission="orderManage/fetchTest" style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle" ng-model="model.orderQueryParam.test">
+                        <option value="">全部</option>
+                        <option value="true">测试</option>
+                        <option value="false">非测试</option>
+                    </select>
+                </li>
+                </ul>
+            <ul class="ul-form li-fl lh-1 clear">
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   class="ipt ipt-large"
+                                                                   hb-clear-input
+                                                                   ng-model="model.orderQueryParam.createStartTimeMills"
+                                                                   k-options="kendoPlus.timeOptions"
+                                                                   kendo-date-picker="kendoPlus.timeModel"
+                                                                   hb-readonly
+                                                                   placeholder="订单创建时间"/> -
+                    <input type="text"
+                           hb-clear-input
+                           ng-model="model.orderQueryParam.createEndTimeMills"
+                           k-options="kendoPlus.timeOptions"
+                           kendo-date-picker="kendoPlus.timeModel"
+                           hb-readonly
+                           class="ipt ipt-large"
+                           placeholder="订单创建时间"/>
+                </li>
+
+                <li style="height:28px;margin-bottom:15px;"><input type="text"
+                                                                   class="ipt ipt-large"
+                                                                   hb-clear-input
+                                                                   ng-model="model.orderQueryParam.tradeStartTimeMills"
+                                                                   k-options="kendoPlus.timeOptions"
+                                                                   kendo-date-picker="kendoPlus.timeModel"
+                                                                   hb-readonly
+                                                                   placeholder="交易成功时间"/> -
+                    <input type="text"
+                           hb-clear-input
+                           ng-model="model.orderQueryParam.tradeEndTimeMills"
+                           k-options="kendoPlus.timeOptions"
+                           kendo-date-picker="kendoPlus.timeModel"
+                           hb-readonly
+                           class="ipt ipt-large"
+                           placeholder="交易成功时间"/>
+                </li>
+                <li style="height:28px;margin-bottom:15px;">
+                    <input type="text"
+                           class="ipt ipt-medium"
+                           ng-model="tempClass.schemeName"
+                           placeholder="选择培训方案"
+                           ng-click="events.selectClass()"/>
+                    <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                          ng-click="events.clearSchemeTextContent()"
+                          ng-if="tempClass.schemeName"
+                          class="k-icon k-i-close" role="button">select
+                    </span>
+                </li>
+                <li has-permission="orderManage/fetchTest" style="height:28px;margin-bottom:15px;">
+                    <select class="slt slt-middle" ng-model="model.orderQueryParam.eliminateFreeOrder">
+                        <option value="">是否剔除0元订单</option>
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"
+                       has-permission="orderManage/searchOrderPage"
+                       ng-click="events.MainPageQueryList($event,'orderGridInstance','orderQueryParam')"
+                       class="btn btn-b">查询</a>
+                    <button ng-click="events.exportOrder()"
+                            class="btn btn-b ml10"
+                            has-permission="orderManage/export"
+                            ng-disabled="submitExportOrder">批量导出
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="column mt10">
+        <div class="tips-box-1">
+            <span class="b">搜索结果合计</span>：订单成交 <span class="t-r b" ng-bind="model.searTotalInfo.normalCount"></span>
+            笔<span ng-if="showTotal">，成交总额 <span class="t-r b"
+                                                 ng-bind="'¥'+model.searTotalInfo.totalAmount"></span></span>
+        </div>
+        <div style="margin-top:10px;" kendo-grid="kendoPlus.orderGridInstance"
+             k-options="orderGrid.options">
+        </div>
+    </div>
+    </div>
+</div>
+
+<div ui-view="orderManageItem"></div>
+
+

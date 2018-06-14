@@ -1,0 +1,36 @@
+<li>
+    <select class="slt slt-medium" ng-model="queryParams.belongsType">
+        <option value="">请选择培训方案的所属权</option>
+        <option value="MYSELF">自建的</option>
+        <option value="AUTHORIZED_FROM">代销的</option>
+        <option value="AUTHORIZE_TO">我授权出的</option>
+    </select>
+</li>
+<li ng-if="queryParams.belongsType==='AUTHORIZE_TO'">
+    <div unit-id="queryParams.authorizeToUnitId" hb-unit-select
+         authorized-search="true"
+         range-type="queryParams.rangeType" belongs-type="queryParams.belongsType"
+         default-txt="请选择授权出的单位"></div>
+</li>
+<li ng-if="queryParams.belongsType==='AUTHORIZED_FROM'">
+    <div unit-id="queryParams.authorizedFromUnitId" hb-unit-select
+         authorized-search="true"
+         range-type="queryParams.rangeType" belongs-type="queryParams.belongsType"
+         default-txt="请选择授权代销的单位"></div>
+</li>
+<li ng-if="queryParams.belongsType==='MYSELF'">
+    <select class="slt slt-medium" ng-model="queryParams.hasAuthorize">
+        <option value="">是否授权</option>
+        <option value="true">已授权</option>
+        <option value="false">未授权</option>
+    </select>
+</li>
+<li ng-if="queryParams.belongsType==='AUTHORIZED_FROM'">
+    <select class="slt slt-small"
+            ng-model="queryParams.authorizedState">
+        <option value="0">代销状态</option>
+        <option value="1">代销中</option>
+        <option value="2">已取消代销</option>
+    </select>
+</li>
+<li></li>

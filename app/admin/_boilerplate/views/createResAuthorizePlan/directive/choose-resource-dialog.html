@@ -1,0 +1,78 @@
+<div class="dialog-body">
+    <div ng-if="!resType||resType==='course'" class="dialog-tit">待选课程<a href="javascript:void(0)"
+                                     ng-click="events.cancelSelect()"
+                                     class="ico ico-close"></a></div>
+    <div ng-if="resType==='coursePool'" class="dialog-tit">待选课程包<a href="javascript:void(0)"
+                                     ng-click="events.cancelSelect()"
+                                     class="ico ico-close"></a></div>
+    <div ng-if="resType==='examLibrary'" class="dialog-tit">待选题库<a href="javascript:void(0)"
+                                     ng-click="events.cancelSelect()"
+                                     class="ico ico-close"></a></div>
+    <div ng-if="resType==='examPaper'"class="dialog-tit">待选试卷<a href="javascript:void(0)"
+                                     ng-click="events.cancelSelect()"
+                                     class="ico ico-close"></a></div>
+    <div class="dialog-cont" >
+
+
+        <div class="search-bar mt10" ng-if="resType!=='examPaper'">
+            <ul class="ul-form li-fl clear">
+                <div ng-if="!resType||resType==='course'">
+                    <li>
+                        <div course-category-pop-tree category-id="model.queryParam.categoryId"
+                             root-id-name="index_pop_input_course_res_dialog"
+                             url="/web/admin/courseCategoryAction/findByQuery?authorizedBelongsType=MYSELF"
+                             default-txt="请选择课程分类"></div>
+                    </li>
+                    <li>
+                        <input type="text"
+                               class="ipt ipt-medium"
+                               ng-keyup="events.pressEnterKey($event)"
+                               ng-model="model.queryParam.name"
+                               placeholder="请输入课程名称"/>
+                    </li>
+                    <li></li>
+                </div>
+
+                <div ng-if="resType==='coursePool'">
+                    <li>
+                        <input type="text"
+                               class="ipt ipt-medium"
+                               ng-keyup="events.pressEnterKey($event)"
+                               ng-model="model.queryParam.name"
+                               placeholder="请输入课程包名称"/>
+                    </li>
+                    <li></li>
+                </div>
+
+                <div ng-if="resType==='examLibrary'">
+                    <li>
+                        <input type="text"
+                               class="ipt ipt-medium"
+                               ng-keyup="events.pressEnterKey($event)"
+                               ng-model="model.queryParam.name"
+                               placeholder="请输入题库名称"/>
+                    </li>
+                    <li></li>
+                </div>
+
+                <li><a href="javascript:void(0)"
+                       ng-click="events.MainPageQueryList($event)"
+                       class="btn btn-b">查询</a>
+                </li>
+            </ul>
+        </div>
+
+        <div style="min-height:240px;"
+                kendo-grid="kendoPlus.gridInstance"
+             k-options="gird.options">
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.confirmSelect()"
+           class="btn btn-r ml10">确定</a>
+        <a href="javascript:void(0)"
+           ng-click="events.cancelSelect()"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

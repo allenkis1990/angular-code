@@ -1,0 +1,104 @@
+{
+  "status": "true",
+  "info": [
+    {
+      "name": "我的必修课",
+      "bgColor": "#b352a3",
+      "icon": "myJobLesson.png",
+      "tip": "我的必修课",
+      "width": "300",
+      "height": "300",
+      "size": "middle",
+      "menuId": "nunununun300",
+      "url": "states.myObligatory.job"
+    },
+    {
+      "name": "我的选修课",
+      "bgColor": "#ecb729",
+      "icon": "myOptionLesson.png",
+      "tip": "我的选修课",
+      "size": "middle",
+      "width": "300",
+      "height": "300",
+      "menuId": "nunununun300",
+      "url": "states.mySelectCourse"
+    },
+    {
+      "name": "选课中心",
+      "bgColor": "#8f4f9b",
+      "icon": "lessonShop.png",
+      "tip": "选课中心",
+      "size": "middle",
+      "width": "300",
+      "height": "300",
+      "menuId": "nunununun300",
+      "url": "states.chooseCourseCenter"
+    },
+    {
+      "name": "个人中心",
+      "bgColor": "#63c53c",
+      "icon": "personCenter.png",
+      "tip": "个人中心",
+      "width": "300",
+      "height": "300",
+      "size": "middle",
+      "menuId": "nunununun300",
+      "url": "states.personInfo.basicInfo"
+    },
+    {
+      "name": "在学课程",
+      "bgColor": "#63c53c",
+      "icon": "studyingLesson.png",
+      "tip": "在学课程",
+      "width": "300",
+      "height": "300",
+      "size": "middle",
+      "menuId": "nunununun300",
+      "url": "states.courseStudy.basicCourseStudy"
+    },
+    {
+      "name": "我的考试",
+      "bgColor": "#6d7ddd",
+      "icon": "myExam.png",
+      "tip": "我的考试",
+      "width": "300",
+      "height": "300",
+      "menuId": "nunununun300",
+      "size": "middle",
+      "url": "states.exam.all"
+    },
+    {
+      "name": "学习档案",
+      "bgColor": "#01a0bd",
+      "icon": "studyHistory.png",
+      "tip": "学习档案",
+      "size": "middle",
+      "width": "300",
+      "height": "300",
+      "menuId": "nunununun300",
+      "url": "states.learningArchive"
+    },
+    {
+      "name": "公告中心",
+      "bgColor": "#de566e",
+      "icon": "announcementCenter.png",
+      "tip": "公告中心",
+      "size": "middle",
+      "width": "300",
+      "height": "300",
+      "menuId": "nunununun300",
+      "url": "states.messageCenter"
+    },
+    {
+      "name": "意见反馈",
+      "bgColor": "#de566e",
+      "icon": "feedback.png",
+      "tip": "意见反馈",
+      "size": "middle",
+      "width": "300",
+      "height": "300",
+      "menuId": "nunununun300",
+      "url": "states.feedback"
+    }
+  ]
+}

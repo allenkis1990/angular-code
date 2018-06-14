@@ -1,0 +1,18 @@
+<div class="eggle-100-percent">
+    <div style="height: 99%;"
+         kendo-splitter k-panes="[{collapsible: true, size: '200px'}]"
+         k-orientation="'horizontal'">
+        <div>
+            <div kendo-tree-view="node.tree"
+                 k-options="ui.tree.options">
+            </div>
+        </div>
+        <div>
+            <div kendo-grid="node.gridInstance"
+                 k-options="ui.grid.options">
+            </div>
+            <input type="text" class="k-textbox" placeholder="请输入跳转的页码" ng-model="model.toPage"/>
+            <button ng-click="events.toPageIndex()" kendo-button="node.buttons.setGridPageIndex">跳转</button>
+        </div>
+    </div>
+</div>

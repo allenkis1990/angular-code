@@ -1,0 +1,127 @@
+<div class="m-course-detail">
+    <div class="course-test" style="width: auto">
+        <div class="after-test-tit bor-t clear mb10">
+            <div class="fl">剩测验次数：<span class="bt"
+                                        ng-bind="lwhTest.testInfo.remainTimes===null?'-':lwhTest.testInfo.remainTimes"></span>
+                次 <span class="ml-1"> | </span><span class="ml-1">测验结果：</span
+                ><span class="bt"
+                       ng-if="lwhTest.testInfo.haveTest"
+                       ng-bind="lwhTest.testInfo.pass===true?'合格':'-'"></span
+                ><!--<span class="bt" ng-if="!lwhTest.testInfo.haveTest">-</span>--></div>
+        </div>
+        <!--<div class="course-test-bd">
+            &lt;!&ndash;- 未达课后测验 &#45;&#45;&ndash;&gt;
+            <a href="javascript:void(0)"
+               ng-click="enterTest()"
+               class="course-text-btn"
+               style="color:#666;">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h40"
+                      ng-if="showErrorTip"
+                      ng-bind="errorMessage"></span>
+            </a>
+            &lt;!&ndash;- 课程进度达到可测验 &#45;&#45;&ndash;&gt;
+            &lt;!&ndash;<a href="#" class="course-text-btn mt10">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h30">请进入测验！</span>
+            </a>&ndash;&gt;
+            &lt;!&ndash;- 课程进度达到可测验的前提条件，同时已有测验过，但结果未达标 &#45;&#45;&ndash;&gt;
+            &lt;!&ndash;<a href="#" class="course-text-btn mt10">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h40">课后测验未达标，请继续测验！</span>
+            </a>&ndash;&gt;
+            &lt;!&ndash;- 测验结果合格 &#45;&#45;&ndash;&gt;
+            &lt;!&ndash;<a href="#" class="course-text-btn mt10">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h30">课后测验已合格</span>
+            </a>&ndash;&gt;
+        </div>-->
+
+
+        <div class="course-test-bd test-new">
+            <!--- 未达课后测验 ---->
+            <a href="javascript:void(0)"
+               ng-click="enterTest(lwhTest.testInfo.status)"
+               ng-if="lwhTest.testInfo.status===2"
+               class="course-text-btn">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h40">未达到课程进度，无法进行课后测验</span>
+            </a>
+
+            <!--- 测验次数已用完 ---->
+            <a href="javascript:void(0)"
+               ng-click="enterTest(lwhTest.testInfo.status)"
+               ng-if="lwhTest.testInfo.status===6"
+               class="course-text-btn mt10">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h30">课后测验次数已用完，无法进行课后测验</span>
+            </a>
+
+            <!--- 测验结果合格 ---->
+            <a href="javascript:void(0)"
+               ng-click="enterTest(lwhTest.testInfo.status)"
+               ng-if="lwhTest.testInfo.status===5"
+               class="course-text-btn mt10">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h30">课后测验已合格，无需再测验</span>
+            </a>
+
+
+            <!--- 课程进度达到可测验 ---->
+            <a href="javascript:void(0)"
+               ng-click="enterTest(lwhTest.testInfo.status)"
+               ng-if="lwhTest.testInfo.status===3"
+               class="course-text-btn mt10">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h30">请进入测验！</span>
+            </a>
+            <!--- 课程进度达到可测验的前提条件，同时已有测验过，但结果未达标 ---->
+            <a href="javascript:void(0)"
+               ng-click="enterTest(lwhTest.testInfo.status)"
+               ng-if="lwhTest.testInfo.status===4"
+               class="course-text-btn mt10">
+                <span class="p-ico ico-1"></span>进入课后测验
+                <span class="result h40">课后测验未达标，请继续测验！</span>
+            </a>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="after-test-tit bor-t clear mb10" ng-if="lwhTest.testInfo.historyBestScore!==null">
+    <div class="fl">测验记录</div>
+    <div class="fr">最高分 <span class="bt"
+                              ng-bind="lwhTest.testInfo.historyBestScore===null?'-':lwhTest.testInfo.historyBestScore"></span>
+        分
+    </div>
+</div>
+
+
+<div class="p10" ng-if="lwhTest.testInfo.historyBestScore!==null">
+
+
+    <div style="text-align:center;color:#666;margin-top:15px;font-size:20px;"
+         ng-if="lwhTest.testInfo.historyPracticePaperList.length<=0">暂无测验记录
+    </div>
+
+    <table class="ui-table table-line"
+           ng-if="lwhTest.testInfo.historyPracticePaperList.length>0"
+           style="border:1px solid #ddd;">
+        <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th>交卷时间</th>
+            <th>得分(分)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in lwhTest.testInfo.historyPracticePaperList">
+            <td ng-bind="item.completeTime"></td>
+            <td ng-bind="item.score"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

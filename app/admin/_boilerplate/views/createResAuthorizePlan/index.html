@@ -1,0 +1,162 @@
+<div ng-if="!model.saved" class="main-wrap-body">
+    <div class="rel udf-16">
+        <form name="resAuthorizePlanValidate" novalidate>
+            <ul class="ul-d-form mt20">
+                <li>
+                    <span class="left-txt"><i>*</i>授权方案名称：</span>
+                    <input type="text" class="ipt w-4"
+                           ng-model="model.resourceBag.name"
+                           name="name"
+                           ajax-data="validateParams"
+                           ng-maxlength="50"
+                           required ng-required="true"
+                           ajax-validate
+                           ajax-url="/web/admin/resourceBag/validateNameUnique"/>
+                    <span class="li-prompt" style="left:625px;"
+                          ng-show="resAuthorizePlanValidate.name.$dirty&&resAuthorizePlanValidate.name.$error.required"><span
+                            class="ico ico-prompt"></span>授权方案名称不能为空。</span>
+                    <span class="li-prompt" style="left:625px;"
+                          ng-show="resAuthorizePlanValidate.name.$dirty && resAuthorizePlanValidate.name.$error.ajaxValidate&& !resAuthorizePlanValidate.name.$error.maxlength"><span
+                            class="ico ico-prompt"></span>授权方案名称不能重复。</span>
+                    <span ng-show="resAuthorizePlanValidate.name.$dirty && resAuthorizePlanValidate.name.$error.maxlength"
+                          class="li-prompt" style="left:625px;"><span
+                            class="ico ico-prompt"></span>授权方案名称长度不能超过50</span>
+                </li>
+            </ul>
+            <div class="column mt20">
+                <div class="col-tit clear">资源清单（<i class="txt-r">*</i>）
+                </div>
+                <div class="dash-line-1"></div>
+            </div>
+            <div class="column mt20">
+                <div class="tab-tit">
+                    <a href="javascript:void(0);" ng-click="model.currentType=value.code"
+                       ng-class="{'current':value.code===model.currentType}"
+                       ng-repeat="(key,value) in model.tabs">
+                        <span ng-bind="value.name"></span>
+                    </a>
+                </div>
+                <div ng-show="model.currentType===model.tabs.course.code">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <!--<li>-->
+                            <!--<select class="slt slt-medium">-->
+                            <!--<option>请选择课程分类</option>-->
+                            <!--</select>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<input type="text" class="ipt ipt-medium" placeholder="请输入课程名称">-->
+                            <!--</li>-->
+                            <li>
+                                <!--<a href="javascript:void(0);"  ng-click="kendoPlus.courseGridInstance.pager.page(1)" class="btn btn-b">查询</a>-->
+                                <a href="javascript:void(0);" ng-click="events.removeAll($event)" class="btn btn-b ">批量移除</a>
+                                <a choose-res-create res-type="course"
+                                   res-list="model.courseList"
+                                   confirm-select-callback="events.confirmSelectCallback(newList)"
+                                   default-txt="选择资源"
+                                   href="javascript:void(0);"
+                                   class="btn btn-r ml10"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div kendo-grid="kendoPlus.courseGridInstance"
+                         k-options="courseGird.options">
+                    </div>
+                </div>
+                <div ng-show="model.currentType===model.tabs.coursePool.code">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <!--<li>-->
+                            <!--<input type="text" class="ipt ipt-medium" placeholder="请输入课程包名称">-->
+                            <!--</li>-->
+                            <li>
+                                <!--<a href="#" class="btn btn-b">查询</a>-->
+                                <a href="javascript:void(0);" ng-click="events.removeAll($event)" class="btn btn-b ">批量移除</a>
+                                <a choose-res-create res-type="coursePool"
+                                   res-list="model.coursePoolList"
+                                   confirm-select-callback="events.confirmSelectCallback(newList)"
+                                   default-txt="选择资源"
+                                   href="javascript:void(0);"
+                                   class="btn btn-r ml10"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div kendo-grid="kendoPlus.coursePoolGridInstance"
+                         k-options="coursePoolGird.options">
+                    </div>
+                </div>
+                <div ng-show="model.currentType===model.tabs.examLibrary.code">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <!--<li>-->
+                            <!--<input type="text" class="ipt ipt-medium" placeholder="请选择题库">-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<input type="text" class="ipt ipt-medium" placeholder="请选择试题类型">-->
+                            <!--</li>-->
+                            <li>
+                                <!--<a href="#" class="btn btn-b">查询</a>-->
+                                <a href="javascript:void(0);" ng-click="events.removeAll($event)" class="btn btn-b ">批量移除</a>
+                                <a choose-res-create res-type="examLibrary"
+                                   res-list="model.examLibraryList"
+                                   confirm-select-callback="events.confirmSelectCallback(newList)"
+                                   default-txt="新增资源"
+                                   href="javascript:void(0);"
+                                   class="btn btn-r ml10"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div kendo-grid="kendoPlus.examLibraryGridInstance"
+                         k-options="examLibraryGird.options">
+                    </div>
+                </div>
+                <div ng-show="model.currentType===model.tabs.examPaper.code">
+                    <div class="search-bar mt10">
+                        <ul class="ul-form li-fl clear">
+                            <!--<li>-->
+                            <!--<input type="text" class="ipt ipt-medium" placeholder="请输入试卷名称">-->
+                            <!--</li>-->
+                            <li>
+                                <!--<a href="#" class="btn btn-b">查询</a>-->
+                                <a href="javascript:void(0);" ng-click="events.removeAll($event)" class="btn btn-b ">批量移除</a>
+                                <a choose-res-create res-type="examPaper"
+                                   res-list="model.examPaperList"
+                                   confirm-select-callback="events.confirmSelectCallback(newList)"
+                                   default-txt="新增资源"
+                                   href="javascript:void(0);"
+                                   class="btn btn-r ml10"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div kendo-grid="kendoPlus.examPaperGridInstance"
+                         k-options="examPaperGird.options">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="tc mt10">
+            <div loading-biu is-loading="model.saving" class="btn btn-r"
+                 is-disable="!resAuthorizePlanValidate.$valid"
+                 loading="events.save($event)" text="保存方案"></div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="model.saved" class="main-wrap-cont abs">
+    <div class="m-box-1">
+        <div class="m-box-2">
+            <div class="m-box-3">
+                <div class="main-wrap-body">
+                    <div class="prompt-box clear">
+                        <div class="p-img fl"><img src="@systemUrl@/images/img-complete.png"></div>
+                        <div class="p-txt fr">
+                            <p class="p1">资源授权方案创建成功!</p>
+                            <p class="p2"><a href="javascript:void(0);" ng-click="model.saved=false">继续创建？</a></p>
+                            <p class="p2"><a href="javascript:void(0);" ng-click="events.goAuthorize($event)">将此方案，授权？</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="answer-card" ng-style="{bottom: showCard?0:-200}">
+    <!--------------  点击打开后变成ico-close  ------------------>
+    <a href="" ng-click="showCard=!showCard" class="ac-tit">答题卡（剩下b{{restCount}} 道题）<span
+            class="ico ico-b{{showCard?'open':'close'}}"></span></a>
+    <div class="ac-cont">
+        <div class="ac-qus-num" style="height: 150px;" ng-click="toWhere($event)">
+            <span ng-class="{mr20: ($index+1)%5===0}" ng-repeat="question in practicePaper">
+                <a href="" class="click-like" data-id="b{{question.id}}" ng-bind="$index+1"
+                   ng-class="{'ac-answered': question.answered}">11</a>
+            </span>
+        </div>
+    </div>
+</div>

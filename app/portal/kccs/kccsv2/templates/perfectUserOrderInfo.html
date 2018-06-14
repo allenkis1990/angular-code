@@ -1,0 +1,50 @@
+<div class="mask-bg" style="z-index:99;"></div>
+
+
+<div class="m-dialog" style="top:50%;left:50%;position:fixed;z-index:100;margin-left:-350px;margin-top:-150px;">
+    <div class="dialog-box  w7">
+        <div class="dialog-hd"><span class="title">待完善订单配送信息</span><!--<a href="javascript:void(0)"
+                                                                      ng-click="events.removePerfectOrderDialog()"
+                                                                      class="p-ico close"></a>--> </div>
+        <div class="dialog-bd">
+            <div class="tips-box">您目前共有<span ng-bind="model.PerfectOrderList.length"></span>笔订单需要完善收取发票和证明的信息</div>
+            <table class="ui-table mt20">
+                <thead>
+                <tr>
+                    <th width="100">订单号</th>
+                    <th>培训内容</th>
+                    <th width="120">创建时间</th>
+                    <th width="80">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.PerfectOrderList">
+                    <td ng-bind="item.orderNo"></td>
+                    <td class="tl">
+                        <div ng-repeat="subItem in item.subOrderList" ng-bind="subItem.name"></div>
+                    </td>
+                    <td ng-bind="item.createTime"></td>
+                    <td class="op"><a href="javascript:void(0)" ng-click="events.openPerfectDetail(item)">前往完善</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div pagination
+                 ng-change="events.findPerfectOrderList()"
+                 ng-model="model.currentPage"
+                 total-items="model.total"
+                 items-per-page="model.itemsPerPage"
+                 max-size="model.maxSize"
+                 previous-text="上一页"
+                 next-text="下一页"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="lwhLoading" ng-if="lwhLoading===true">
+    <img src="kccs/kccsv2/images/loading1.gif"/>
+</div>
+
+

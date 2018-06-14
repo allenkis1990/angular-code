@@ -1,0 +1,37 @@
+<div class="main-wrap-body"  ng-show="$state.current.name === 'states.resAuthorizeManage'">
+    <a href="javascript:void(0)" class="btn btn-r" ng-click="events.goAuthorize($event)">授权资源方案</a>
+    <div class="search-bar mt10">
+        <ul class="ul-form li-fl clear">
+            <li>
+                <input ng-model="model.resourceParam.name" type="text" class="ipt ipt-medium" placeholder="授权方案名称">
+            </li>
+            <li>
+                <div unit-id="model.resourceParam.useUnitId" hb-unit-select
+                     default-txt="选择方案授权使用单位"   ></div>
+            </li>
+            <li>
+                <div hb-date-arrange
+                     template-url="@systemUrl@/templates/tpls/tpl-date-arrange2.html"
+                     start-date="model.createDateStart"
+                     end-date="model.createDateEnd"
+                     config="timeConfig"
+                     start-placeholder="选择方案创建日期" end-placeholder="选择方案创建日期"></div>
+            </li>
+            <li><a href="javascript:void(0);" ng-click="events.search($evnet)" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="dash-line-3"></div>
+    <div kendo-grid="kendoPlus.resourceGridInstance"
+         k-options="resourceGrid.options">
+    </div>
+</div>
+<div class="pos-nav-box" ng-show="$state.current.name !== 'states.resAuthorizeManage'">
+    <div class="pos-nav">
+        <a href="javascript:void(0);"  ng-click="$state.go('states.resAuthorizeManage')" class="ico return"></a>
+        <a class="aw" href="javascript:void(0);" ng-click="$state.go('states.resAuthorizeManage')">资源授权方案管理</a>  &gt;
+        <span ng-if="$state.current.name === 'states.resAuthorizeManage.detail'">方案详情</span>
+        <span ng-if="$state.current.name === 'states.resAuthorizeManage.edit'">编辑方案</span>
+        <span ng-if="$state.current.name === 'states.resAuthorizeManage.authorize'">授权资源方案</span>
+    </div>
+</div>
+<div ui-view="resAuthorizeManageItem"></div>

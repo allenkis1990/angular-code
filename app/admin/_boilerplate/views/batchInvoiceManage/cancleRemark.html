@@ -1,0 +1,15 @@
+<div class="dialog-cont" >
+    <div class="search-bar mt10">
+        <ul class="ul-form lh-1 ml10 clear">
+            <li style="left: 30px"><span>作废后需要重新打印发票，请确认发票是否作废？</span></li>
+            <li><span style="float: left">作废说明：</span>
+                <textarea cols="35" style="height: 60px" placeholder="请输入作废说明，选填项，未填写默认无" ng-model="model.remark"></textarea></li>
+            <li style="left: 80px">
+                <a href="javascript:void (0);"
+                   ng-click="events.detailWithRemark($index)"
+                   class="btn btn-b">确定</a>
+                <a href="javascript:void (0);" ng-click="dialog.cancel($index)" class="btn btn-g ml5">取消</a>
+            </li>
+        </ul>
+    </div>
+</div>

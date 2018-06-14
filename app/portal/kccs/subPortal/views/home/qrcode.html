@@ -1,0 +1,38 @@
+<div class="sidebar-panel">
+    <div id="returnTop2" class="sidebar-items">
+        <div class="items-bd">
+            <span class="ico ico-top"></span>
+        </div>
+    </div>
+    <div class="sidebar-items">
+        <a href="https://kccs.59iedu.com/app/download.html" target="_black" class="items-bd">
+            <span class="ico ico-khd"></span>
+            <p>客户端</p>
+        </a>
+        <div class="items-hover">
+            <img class="qr-code-img" src="kccs/kccsv2/images/ewm.png" alt=" ">
+            <p class="tc mt5">扫我，下载客户端</p>
+        </div>
+    </div>
+    <div class="sidebar-items">
+        <div class="items-bd">
+            <span class="ico ico-xcx"></span>
+            <p>小程序</p>
+        </div>
+        <div class="items-hover">
+            <img class="qr-code-img" src="kccs/kccsv2/images/xcx.jpg" alt=" ">
+            <p class="tc mt5">扫小程序，<br>微信上学习！</p>
+        </div>
+    </div>
+    <div class="sidebar-items">
+        <div ng-click="$state.go('states.accountant.helpCenter');" class="items-bd">
+            <span class="ico ico-bzzx"></span>
+            <p>帮助中心</p>
+        </div>
+    </div>
+</div>
+<script>
+    $('#returnTop2').click(function () {
+        $('body,html').stop(true, true).animate({scrollTop: 0}, 500);
+    });
+</script>

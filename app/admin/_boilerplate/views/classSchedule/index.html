@@ -1,0 +1,31 @@
+<div class="main-wrap-body">
+    <div class="search-bar mt10">
+        <ul class="ul-form li-fl clear">
+            <li>
+                <input type="text" class="ipt ipt-medium"
+                       placeholder="请输入培训课表名称"
+                       ng-model="model.queryParams.name"
+                       ng-keyup="events.pressEnterKey($event)"
+                       hb-clear-input/>
+            </li>
+            <li>
+                <select class="select-small" ng-model="model.queryParams.isReference">
+                    <option value="-1" selected>是否被班级引用</option>
+                    <option value="0">未被班级引用</option>
+                    <option value="1">被班级引用</option>
+                </select>
+            </li>
+            <li>
+                <a class="btn btn-b" ng-click="events.loadGrid($event)" has-permission="/classSchedule/UrlGetPlanTemplatePage">查询</a>
+            </li>
+        </ul>
+    </div>
+    <div class="column mt10">
+        <button class="btn-r btn" ng-click="events.add($event)" has-permission="/classSchedule/UrlAddPlanTemplate">新建培训课表
+        </button>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.indexGrid" k-options="indexGrid.options">
+        </div>
+    </div>
+</div>

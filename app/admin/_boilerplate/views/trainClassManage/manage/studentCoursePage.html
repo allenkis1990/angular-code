@@ -1,0 +1,37 @@
+<div class="dialog w-8">
+    <div class="dialog-body">
+        <div class="dialog-tit">b{{model.statistic.student.studentName}}学员的课程学习详情 <a href="javascript:void(0);"
+                                                                                     class="ico ico-close"
+                                                                                     ng-click="node.statistic.student.detailWindow.close();"></a>
+        </div>
+        <div class="dialog-cont">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text"
+                               class="ipt ipt-small"
+                               placeholder="请输入课程名称"
+                               hb-clear-input
+                               ng-model="model.statistic.student.courseQueryParam.courseName"
+                               ng-keyup="events.statistic.studentDimension.coursePagePressEnterKey($event)"
+                    /></li>
+                    <li>
+                        <a href="javascript:void(0)" class="btn btn-b"
+                           ng-click="events.statistic.studentDimension.coursePageQuery($event)">查询</a>
+                        <!-- <a href="#" class="btn btn-r">导出</a>-->
+                    </li>
+                </ul>
+            </div>
+            <p>
+                全部课程：b{{model.statistic.student.courseCountObject.total}}门，学完课程：b{{model.statistic.student.courseCountObject.finish}}门，在学课程：b{{model.statistic.student.courseCountObject.studying}}门，未学课程：b{{model.statistic.student.courseCountObject.neverStart}}门</p>
+            <div class="column">
+                <div class="col-body mt10">
+                    <div kendo-grid="node.statistic.student.courseGrid"
+                         k-options="ui.statistic.studentDimension.courseGrid.options">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

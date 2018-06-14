@@ -1,0 +1,58 @@
+<div class="pos-nav-box">
+    <div class="pos-nav" ng-show="!model.showSuccess">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goCoursePackageManager($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goCoursePackageManager($event)">课程包管理</a>
+        &gt; 查看课程包
+    </div>
+</div>
+<div class="main-wrap-body ng-scope">
+    <ul class="ul-d-form lh-1">
+        <li><span>课程包名称：<span ng-bind="model.coursePackage.poolName"></span></span>
+        </li>
+        <li><span>展示名称：<span ng-bind="model.coursePackage.showName"></span></span>
+        </li>
+        <li><span>创建人：<span ng-bind="model.coursePackage.creator"></span></span>
+        </li>
+        <li><span>创建时间：<span ng-bind="model.coursePackage.createTime"></span></span>
+        </li>
+    </ul>
+
+    <div class="dash-line-1"></div>
+    <div class="wp-full">
+        <div class="tab-tit clear">
+            <div class="column mb20">
+                <div class="col-tit">已选课程(<span ng-bind="model.coursePackage.courseCount"></span>门)</div>
+            </div>
+        </div>
+        <div class="col-body bt0">
+            <div class="search-bar mt10">
+                <ul class="ul-form  li-fl clear">
+                    <li><input type="text" class="ipt ipt-large" style="width:310px;" ng-model="model.courseParams.name"
+                               placeholder="课程名称"/></li>
+                    <li>
+                        <input type="text" name="type" readonly="true" class="ipt ipt-medium"
+                               ng-click="events.openLessonTypeTree($event)"
+                               placeholder="请选择课程分类"
+                               ng-model="model.typeName">
+                        <div class="hide-block hb-2 mh-1" ng-show="lessonTypeShow" ng-click="events.openTree($event)">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getTypeInfo(dataItem,$event)">
+                      <label style="width: 100px;"> <span ng-bind="dataItem.name"></span></label>
+                    </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="javascript:void(0);" class="btn btn-b" has-permission="coursePackageManager/find"
+                           ng-click="events.queryCourseInPool($event)">查询</a></li>
+                </ul>
+            </div>
+            <div class="col-body table-box mt20">
+                <div kendo-grid="node.courseInsideGrid" k-options="ui.courseInsideGrid.options">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

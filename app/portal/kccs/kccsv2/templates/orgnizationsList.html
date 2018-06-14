@@ -1,0 +1,23 @@
+
+
+<div class="mask-bg" style="z-index:9998"></div>
+<div class="m-dialog" style="position:fixed;left:50%;top:50%;z-index:9999;margin-left:-350px;margin-top:-170px;">
+    <div class="dialog-box w7">
+        <div class="dialog-hd"><span class="title">选择培训机构</span><a href="javascript:void(0)"
+                                                                   ng-click="removePerfectDetailDialog()"
+                                                                   class="p-ico close"></a> </div>
+        <div class="dialog-bd" style="height:310px;overflow:auto;">
+            <div class="training-institutions training-institutions-1">
+                <div class="institutions-items">
+                    <a href="javascript:void(0)"
+                       ng-click="events.goChildren(item)"
+                       ng-repeat="item in model.orgnizationsList"
+                       class="items"
+                       title="b{{item.unitName}}"><span class="p-ico"></span><span ng-bind="item.unitName"></span></a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

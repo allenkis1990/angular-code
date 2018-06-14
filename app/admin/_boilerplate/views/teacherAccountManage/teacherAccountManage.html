@@ -1,0 +1,52 @@
+<style>
+    .unit-tree {
+        position: absolute;
+        z-index: 10;
+        left: 128px;
+        width: 195px;
+        max-height: 220px;
+        overflow: auto;
+    }
+</style>
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text" id="aaa"
+                           ng-model="model.queryParam.account"
+                           class="ipt ipt-medium"
+                           placeholder="请输入账号"
+                           clear-operator
+                           ng-keyup="events.pressEnterKey($event)"
+                /></li>
+                <li><input type="text"
+                           ng-model="model.queryParam.name"
+                           ng-keyup="events.pressEnterKey($event)"
+                           class="ipt ipt-medium"
+                           clear-operator
+                           placeholder="请输入持有人姓名"/></li>
+                <li>
+                    <select class="select-small" ng-model="model.queryParam.status"
+                    ><!--ng-change="events.selectPage()"-->
+                        <option selected="selected" value="0">全部状态</option>
+                        <option value="1">启用</option>
+                        <option value="2">停用</option>
+                    </select>
+                </li>
+                <li><a href="javascript:void(0);" ng-click="events.selectPage()" class="btn btn-b">查询</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="dash-line-1"></div>
+    <div class="column">
+        <a href="javascript:void(0);" class="btn-r btn" ng-click="events.openAdd()"
+           has-permission="teacherAccountManage/add">新增账号</a>
+    </div>
+    <div class="column mt20">
+        <div id="dataGrid" kendo-grid="node.gridInstance" k-options="ui.grid.options">
+        </div>
+    </div>
+</div>
+<div kendo-window="node.windows.addWindow" k-options="ui.windows.addWindow"></div>
+<div kendo-window="node.windows.editWindow" k-options="ui.windows.editWindow"></div>
+

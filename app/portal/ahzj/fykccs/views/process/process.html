@@ -1,0 +1,102 @@
+<!-- 位置导航 -->
+<div class="pos-nav mb30"><a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span>培训流程</div>
+<!-- /位置导航 -->
+<div class="p-wrap-full">
+    <div class="p20 help-box clear">
+        <div class="side fl mr30 mb30">
+            <ul class="sidebar">
+                <li><a href="javascript:void (0);"
+                       style="text-decoration: none"
+                       ng-class="{'current':model.currentShow === '1'}"
+                       ng-click="model.currentShow = '1'">用户注册</a></li>
+                <li><a href="javascript:void (0);"
+                       style="text-decoration: none"
+                       ng-class="{'current':model.currentShow === '2'}"
+                       ng-click="model.currentShow = '2'">选择班级</a></li>
+                <li><a href="javascript:void (0);"
+                       style="text-decoration: none"
+                       ng-class="{'current':model.currentShow === '3'}"
+                       ng-click="model.currentShow = '3'">缴纳学费</a></li>
+                <li><a href="javascript:void (0);"
+                       style="text-decoration: none"
+                       ng-class="{'current':model.currentShow === '4'}"
+                       ng-click="model.currentShow = '4'">在线学习</a></li>
+                <li><a href="javascript:void (0);"
+                       style="text-decoration: none"
+                       ng-class="{'current':model.currentShow === '5'}"
+                       ng-click="model.currentShow = '5'">在线考试</a></li>
+                <li><a href="javascript:void (0);"
+                       style="text-decoration: none"
+                       ng-class="{'current':model.currentShow === '6'}"
+                       ng-click="model.currentShow = '6'">培训证明</a></li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="text-box" ng-if="model.currentShow === '1'">
+                <h2>用户注册</h2>
+                <p>第一次使用平台的学员需要进行新用户注册。</p>
+                <p>新用户注册请在网站首页用户登陆框中点击“<span class="t-r">新用户注册</span>”链接，根据注册向导完成注册。注册成功后系统会提示
+                    学员登录信息：登录帐号证书档案号、初始密码为身份证后六位，密码可进入学习中心后修改。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-01.png" alt=" "></p>
+            </div>
+            <div class="text-box" ng-if="model.currentShow === '2'">
+                <h2>选择班级</h2>
+                <p>学员登录平台后点击“<span class="t-r">报名导航</span>”链接，根据向导选择培训班后，点击“<span class="t-r">立即购买</span>”。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-02.png" alt=" "><img src="ahzj/fykccs/images/lc-03.png" alt=" "></p>
+            </div>
+            <div class="text-box" ng-if="model.currentShow === '3'">
+                <h2>缴纳学费</h2>
+                <p>本系统提供网银支付。</p>
+                <p>1）网银支付，通过网银支付成功后系统会自动开通学习权限。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-04.png" alt=" "></p>
+                <p>学员点击立即支付，系统会跳转到缴费信息确认页面，选择缴费银行。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-05.png" alt=" "></p>
+                <p>点击“去网上银行缴费”即可跳转到银行选择页面。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-06.png" alt=" "></p>
+                <p>点击“到银行支付页面”系统即可跳转到所选银行页面。学员根据提示完成缴费后系统会提示缴费成功，培训班也同时开通。</p>
+                <p>学员如果在缴费完成后忘记索要发票的学员可在学习中心我的订单页面编辑补要发票，学员只能补要当前年度继续教育发票。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-07.png" alt=" "></p>
+            </div>
+            <div class="text-box" ng-if="model.currentShow === '4'">
+                <h2>在线学习</h2>
+                <p class="b">1）用户登录</p>
+                <p>在用户登陆框中输入用户名、密码（初始密码是身份证的后六位数）、验证码（随机生成）点击“登录”，登陆后点击“进入学习”即可进入学习中心。</p>
+                <p class="b">2）增加学习课程</p>
+                <p>学员进入学习中心，第一步查看考核要求。</p>
+                <p>第二步增加学习课程，学员点击右侧页面的“去选课”按钮，系统会跳转到课程列表页面供学员选择课程。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-08.png" alt=" "><img src="ahzj/fykccs/images/lc-09.png" alt=" "></p>
+                <p>选中课程后点击“确认选中的课程”后，系统会弹出选课成功的提示框，点击“确认”即可。</p>
+                <p class="t-r">请学员谨慎选择所学课程，一旦选完课后就不可删除， 而且所选的每门课程必须要学到100%后才可以参加最终的考试，课程学习过程有弹出练习题，
+                    回答三次错误后，系统会显示正确答案，请您认真做答，所有课程练习题答完才可以参加考试，所以视频播放过程请不要拉动视频。</p>
+                <p class="b">3）在线学习</p>
+                <p>选择好课程后，学员即可在学习中心左侧导航选择继续教育年度，然后在学习课程列表里点击“进入学习”即可跳转到课件列表页面。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-10.png" alt=" "></p>
+                <p>再点击课件列表的【进入学习】即可进入到视频页面。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-11.png" alt=" "></p>
+                <p>在看视频的过程中，系统会根据讲课的知识点，不间断的弹出课堂练习，要求学员回答(学员有三次作答机会，如果第三次仍回答错误则该题不计分)，
+                    该课堂练习成绩是计入到总成绩中的，具体如何计算练习成绩请查阅“考核要求”。</p>
+                <p class="b">重学课程</p>
+                <p>重学课程分为两种：重学某个课程、重学全部课程，这两个重学课程条件是不一样的。
+                    重学单个课程：学员在还未参加考试的时候（已参加考试的不能重学单个课程，只能重学全部课程），觉得自己某个课程不理想的情况下可以点击学习中心左侧导
+                    航【学习状态】下的年度，然后在右侧页面选中要重学的课程点击记录后面的重学按钮即可。重学单个课程，系统会自动清除该课程的学时跟课堂练习记录。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-12.png" alt=" "></p>
+                <p>重学全部课程：学员在参加考试后（考试有2次补考机会）并且总成绩不合格的可在培训结果处点击“重学”。重新学习课程并考试。</p>
+            </div>
+            <div class="text-box" ng-if="model.currentShow === '5'">
+                <h2>在线考试</h2>
+                <p>考试有次数限制，共3次考试机会。</p>
+                <p>在学习中心点击“考试”即可跳转到我的考试列表页面。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-13.png" alt=" "></p>
+                <p>学员可以在试卷头部，查看总体答题情况，也可以在做试卷的过程中标记不确定答案的题目，待做完其他试题的时候，回头再思考。学员完成题目后，在左下角点击“提交试卷”，系统会提示考试成绩。</p>
+                <p>考试完成后学员即可在学习中心“学习状态”页面考试成绩栏查看考试成绩、练习成绩和总成绩。练习成绩+考试成绩≥60分为合格。</p>
+            </div>
+            <div class="text-box" ng-if="model.currentShow === '6'">
+                <h2>培训证明</h2>
+                <p>学员的学习记录可以在学习中心“培训证明”查询、打印继续教育证书（已完成学习并考试通过的学员可以点击证书打印，打印证书）。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-14.png" alt=" "></p>
+                <p>学员也可以在网站首页“学时验证”页面，查询学习记录。</p>
+                <p>如下图所示：<img src="ahzj/fykccs/images/lc-15.png" alt=" "></p>
+            </div>
+        </div>
+    </div>
+</div>

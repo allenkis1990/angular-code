@@ -1,0 +1,156 @@
+<div class="p-wrap-full m-return-block">
+    <a href="javascript:void(0)" ng-if="model.fromWhere==='signUpTraining'"
+       ng-click="$state.go('states.signUpTraining')"><span class="p-ico"></span>返回选课中心</a>
+    <a href="javascript:void(0)" ng-if="model.fromWhere!=='signUpTraining'&&model.fromWhere!=='shoppingCart'"
+       ng-click="events.goOrderDetail()"><span class="p-ico"></span>返回订单详情</a>
+    <a href="javascript:void(0)" ng-if="model.fromWhere==='shoppingCart'"
+       ng-click="$state.go('states.shoppingCart')"><span class="p-ico"></span>返回我的购物车</a>
+</div>
+
+
+<div class="p-wrap-full clear">
+    <div class="w880 fl">
+        <div class="m-course-detail white-bg p10 mb10">
+            <div class="course-detail-hd rel clear">
+                <div class="course-img fl"><img ng-src="/mfsb{{model.detailInfoTwo.iconPath}}" alt=" "></div>
+                <div class="course-info-block fr">
+                    <div class="course-name">b{{model.detailInfoTwo.name}}
+                        <!--<a href="#" class="p-ico ico-share"></a>--></div>
+                    <div class="course-info">
+                        <p><span class="w"> 学时： b{{model.detailInfo.coursePeriod}}学时</span><span class="w"> 教师： <span
+                                title="b{{model.detailInfoTwo.teacherInfo}}"
+                                ng-bind="model.detailInfoTwo.teacherInfo.length>6?model.detailInfoTwo.teacherInfo.substr(0,5)+'...':model.detailInfoTwo.teacherInfo"></span></span>
+                        </p>
+                        <p><span class="w"> 科目： b{{model.detailInfo.subjectName}}</span><span class="w"
+                                                                                              ng-if="model.detailInfo.subjectId!==model.subjectId"> 专业： b{{model.detailInfo.coursePoolName}}</span>
+                        </p>
+                        <p ng-if="model.detailInfo.subjectId===model.subjectId">
+                            继续教育年度：b{{model.detailInfo.trainingYear}}</p>
+                        <p>价格：<b class="txt-r fs18">¥b{{model.detailInfo.periodPrice}}</b></p>
+                    </div>
+                    <div class="course-op clear"
+                    >
+                        <button class="btn-dis"
+                                ng-click="events.putIntoShoppingCart()"
+                                ng-disabled="shoppingSubmitAble"
+                                ng-class="{'lwh-disabled':shoppingSubmitAble}"><span class="p-ico addshop-ico"></span>加入购物车
+                        </button
+                        >
+                        <button class="btn-gr"
+                                ng-click="events.buyNow()"
+                                ng-disabled="submitBuy"
+                                ng-class="{'lwh-disabled':submitBuy}"><span class="p-ico bug-ico"></span>立即购买
+                        </button>
+                    </div>
+                </div>
+                <div class="btn-block" ng-if="model.isListen">
+                    <a href="javascript:void(0)"
+                       ng-click="events.openFirstListenWindow()"
+                       class="ui-btn"><span class="p-ico play-ico"></span>点击播放试听</a>
+                </div>
+            </div>
+        </div>
+        <div class="m-course-detail white-bg clear">
+            <div class="course-detail-bd">
+                <div class="block-tit rel">
+                    <div class="tab-tit">
+                        <a href="javascript:void(0)"
+                           style="border-top:none;"
+                           ng-click="events.tabTab('ml')"
+                           ng-class="{'current':model.tabShow==='ml'}">课程目录</a>
+                        <a href="javascript:void(0)"
+                           style="border-top:none;"
+                           ng-class="{'current':model.tabShow==='jj'}"
+                           ng-click="events.tabTab('jj')">课程简介</a>
+                    </div>
+                </div>
+                <div class="clear" ng-if="model.tabShow==='ml'">
+                    <ul class="m-course-ml">
+                        <li ng-init="index=$index" ng-repeat="item in model.detailInfoTwo.courseOutlineDtos">
+                            <div class="course-ml-tit to"><span class="p-ico ico-ml"></span><span class="mr10">第b{{$index+1}}章</span>b{{item.name}}
+                                <span ng-bind="item.timeLength" class="fr"></span></div>
+                            <div class="sub-course-ml-block">
+                                <ul class="sub-course-ml">
+                                    <li ng-repeat="subItem in item.subCourseOutlines"
+                                        ng-init="subIndex=$index"
+                                        ng-class="{'learn-ing':subItem.customeStatus===1,'learn-lock':subItem.customeStatus===0}">
+                                        <a href="javascript:void(0)"
+                                           ng-click="events.openListenWindow(item.id,subItem.cweId,subItem.customeStatus)"><span
+                                                class="p-ico ico-play"></span><span class="ml10 w to">b{{index+1}}-b{{subIndex+1}} b{{subItem.name}}</span><span
+                                                class="p-ico openeye-ico"></span>
+                                            <span ng-bind="subItem.timeLength" class="fr"></span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear" ng-if="model.tabShow==='jj'">
+                    <div class="course-intro" ng-bind="model.detailInfoTwo.abouts">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="w310 fr">
+        <div class="m-course-detail white-bg mb10">
+            <div class="block-tit"><span class="bor-l">课程考核条件</span></div>
+            <div class="course-test-bd plr20 pt10 pb20 clear rel">
+                <span class="p-ico condition-ico"></span>
+                <span class="lh36 display-i">
+                            课程进度：<b class="fs18">≥ <span
+                        ng-bind="model.detailInfo.assessCourseSchedule===null?'-':model.detailInfo.assessCourseSchedule+'%'"></span></b><br/>
+                            <span>
+                            <span ng-if="model.detailInfo.assessCoursePracticeScore!==null">课程测验：<b class="fs18">≥<span
+                                    ng-bind="model.detailInfo.assessCoursePracticeScore===null?'-':model.detailInfo.assessCoursePracticeScore+'分'"></span></b></span></span>
+                 </span>
+            </div>
+        </div>
+        <!--<div class="m-course-detail white-bg mb10">
+            <div class="block-tit">
+                <span class="bor-l">猜你还喜欢</span>
+                <a href="#" class="change fr ag"><span class="p-ico"></span>换一组</a></div>
+            <div class="p10 clear">
+                <ul class="classlist_1">
+                    <li><a href="#" class="img"><img src="@systemUrl@/images/course-img.jpg"></a>
+                        <p class="class_name"><a href="###" class="more">AI零基础入门课程 / 适合菜鸟小白零基础入门UI【设计必学教程】</a></p>
+                    </li>
+                    <li><a href="#" class="img"><img src="@systemUrl@/images/course-img.jpg"></a>
+                        <p class="class_name"><a href="###" class="more">课程名称课程名称课程名称2</a></p>
+                    </li>
+                    <li><a href="#" class="img"><img src="@systemUrl@/images/course-img.jpg"></a>
+                        <p class="class_name"><a href="###" class="more">课程名称课程名称课程名称1课程名称课程名称课程名称</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+    </div>
+</div>
+
+
+<div class="lwh-modal" ng-if="model.detailInfo.showTwo===true">
+</div>
+<div class="dialog"
+     ng-if="model.detailInfo.showTwo===true"
+     style="width: 300px;position:fixed;left:40%;top:40%;z-index:1000">
+    <div class="dialog-body">
+        <div class="dialog-tit dt-1" style="border-left:none;">请选择继续教育年度<a href="javascript:void(0)"
+                                                                           ng-click="model.detailInfo.showTwo=false"
+                                                                           class="p-ico"></a></div>
+        <div class="dialog-cont pt20 pb20 tc">
+            <select class="slt" style="width:230px;"
+                    ng-model="model.detailInfo.trainingYearId"
+                    ng-options="item.optionId as item.name for item in model.yearListTwo">
+            </select>
+        </div>
+        <div class="btn-bar">
+            <a href="javascript:void(0)"
+               ng-click="events.buyNowTwo()"
+               class="ui-btn btn-o">立即购买</a>
+            <a href="javascript:void(0)"
+               ng-click="model.detailInfo.showTwo=false"
+               class="ui-btn btn-g ml10">取 消</a>
+        </div>
+    </div>
+</div>

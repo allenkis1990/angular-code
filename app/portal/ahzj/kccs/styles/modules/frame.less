@@ -1,0 +1,77 @@
+@import "../public/variables";
+@import "header";
+@import "nav";
+@import "pos-nav";
+@import "login";
+@import "main";
+@import "dialog";
+@import "page";
+
+/**
+  * 页面主要框架
+  * 内容比较少时，footer会停留在底部，内容比较多时，footer在最下面
+  * footer要固定高度
+  */
+
+@footer-height: 110px; /* 底部高度 */
+.g-mn {
+  position: relative;
+  min-height: 100%;
+  z-index: 1;
+}
+
+.g-mn-bd {
+  padding: 0 0 @footer-height;
+  zoom: 1;
+  background: url("../../../ahzj/kccs/images/main-bottom-bg.jpg") no-repeat center bottom;
+}
+
+.g-mn-bd-2 {
+  background: url("../../../ahzj/kccs/images/main-bottom-bg-2.jpg") no-repeat center bottom;
+}
+
+.footer {
+  height: @footer-height;
+  margin: -@footer-height 0 0;
+  position: relative;
+  z-index: 9;
+  text-align: center;
+  background-color: #212121;
+
+  &:after {
+    width: 0;
+    height: 100%;
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+
+  .footer-bd {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.8;
+    color: #fff;
+
+    a {
+      color: #fff;
+      padding: 0 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.city-fy {
+  .m-header {
+    background: url("../../../ahzj/kccs/images/header-bg-fy.jpg") no-repeat center;
+  }
+  .main-wrap {
+    background: url("../../../ahzj/kccs/images/mainwrap-bg-fy.jpg") no-repeat center 0;
+  }
+  .main-wrap-2 {
+    background: url("../../../ahzj/kccs/images/mainwrap-bg-fy-2.jpg") no-repeat center 0;
+  }
+}

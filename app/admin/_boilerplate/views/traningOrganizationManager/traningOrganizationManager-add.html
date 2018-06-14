@@ -1,0 +1,159 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goTraningOrganizationManager($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goTraningOrganizationManager($event)">管理员管理</a>
+        &gt; 新增用户
+    </div>
+    <div class="main-wrap-body">
+        <form name="traningOrganizationValidate" novalidate>
+        <div class="column mb20">
+            <div class="col-tit clear">培训机构基础信息</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <div class="rel udf-2">
+            <ul class="ul-d-form udf-2 lh-1">
+                <li>
+                    <span class="left-txt"><i>*</i>培训机构名称：</span>
+                    <input name="name" type="text" class="ipt ipt-large1"  ng-maxlength="50"
+                           ng-model="model.createParam.name" placeholder="请输入培训机构名称" required ng-required="true"/>
+                         <span class="li-prompt"  style="margin-left: 130px;"
+                               ng-show="traningOrganizationValidate.name.$dirty&&traningOrganizationValidate.name.$error.required">
+                        <span class="ico ico-prompt"></span>培训机构名称不能为空。</span>
+                </li>
+                <li>
+                    <span class="left-txt"><i>*</i>组织机构代码/统一社会信用代码：</span>
+                    <input type="text" class="ipt ipt-large1" ng-model="model.createParam.code" name="code"
+                           ajax-data="validateParams" ng-maxlength="50" required ng-required="true"
+
+                           ajax-validate ajax-url="/web/admin/trainingOrganizationManager/validateCode" placeholder="请输入组织机构代码/统一社会信用代码">
+                        <span class="li-prompt" style="margin-left: 130px;"
+                              ng-show="traningOrganizationValidate.code.$dirty&&traningOrganizationValidate.code.$error.required">
+                        <span class="ico ico-prompt"></span>组织机构代码不能为空。</span>
+                        <span class="li-prompt"style="margin-left: 130px;"
+                              ng-show="traningOrganizationValidate.code.$dirty && traningOrganizationValidate.code.$error.ajaxValidate&& !traningOrganizationValidate.code.$error.maxlength">
+                        <span class="ico ico-prompt"></span>组织机构代码已存在，请调整！</span>
+                        <!--<span ng-show="courseWareValidate.name.$dirty && courseWareValidate.name.$error.maxlength"
+                              class="li-prompt">
+                        <span class="ico ico-prompt"></span>课件名称长度不能超过50</span>-->
+                </li>
+                <li><span class="left-txt"><i>*</i>所在地区：</span>
+                    <input type="text" name="region" class="ipt ipt-large1" ng-click="events.openRegionTree()"
+                           placeholder="请选择所在地区" ng-model="model.showRegionName" required ng-required="true"
+                           readonly="true">
+                        <span class="li-prompt"
+                              ng-show="traningOrganizationValidate.region.$dirty&&traningOrganizationValidate.region.$error.required">
+                <span class="ico ico-prompt"></span>请选择所在地区</span>
+                    <div class="hide-block hb-1 mh-1" ng-show="model.regionShow">
+                        <div kendo-tree-view="node.tree"
+                             k-options="ui.tree.options"
+                             k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getRegionInfo(dataItem)">
+                      <label style="width: 100px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <span class="left-txt"><i>*</i>门户名称：</span>
+                    <input name="platformName" type="text" class="ipt ipt-large1"  ng-maxlength="50"
+                           ng-model="model.createParam.platformName" placeholder="请输入门户名称" required ng-required="true"/>
+                         <span class="li-prompt" style="margin-left: 130px;"
+                               ng-show="traningOrganizationValidate.platformName.$dirty&&traningOrganizationValidate.platformName.$error.required">
+                        <span class="ico ico-prompt"></span>培训门户名称不能为空。</span>
+                </li>
+
+                <li>
+                    <span class="left-txt"><i>*</i>平台域名：</span><span>https://b{{model.currentDomain}}/</span>
+                    <input type="text" class="ipt ipt-mini" ng-model="model.domain" name="domain"
+                           ajax-data="validateParams" ng-maxlength="50" required ng-required="true"
+                           ajax-validate ajax-url="/web/admin/trainingOrganizationManager/validateDomain" placeholder="请输入域名">
+                        <span class="li-prompt" style="margin-left: 130px;"
+                              ng-show="traningOrganizationValidate.domain.$dirty&&traningOrganizationValidate.domain.$error.required">
+                        <span class="ico ico-prompt"></span>域名不能为空。</span>
+                        <span class="li-prompt" style="margin-left: 130px;"
+                              ng-show="traningOrganizationValidate.domain.$dirty && traningOrganizationValidate.domain.$error.ajaxValidate&& !traningOrganizationValidate.domain.$error.maxlength">
+                        <span class="ico ico-prompt"></span>域名已存在，请调整！</span>
+                </li>
+            </ul>
+        </div>
+            <div class="column mb20">
+                <div class="col-tit clear">培训机构管理员信息</div>
+                <div class="dash-line-1"></div>
+            </div>
+            <div class="rel udf-2">
+                <ul class="ul-d-form udf-2 lh-1">
+                    <li>
+                        <span class="left-txt"><i>*</i>账号：</span>
+                        <input type="text" class="ipt ipt-large1" ng-model="model.createParam.loginInput" name="loginInput"
+                               ajax-data="validateParams" ng-maxlength="50" required ng-required="true"
+                               ajax-validate ajax-url="/web/admin/trainingOrganizationManager/validateLoginInput" placeholder="6~20个字符，可使用字母、数字、下划线、需以字母开头">
+                      <span style="margin-left: 130px;"
+                            ng-show="traningOrganizationValidate.loginInput.$dirty && traningOrganizationValidate.loginInput.$error.required"
+                            class="li-prompt">
+                              <span class="ico ico-prompt"></span>密码不能为空。
+                          </span>
+                        <span style="margin-left: 130px;" class="li-prompt"
+                              ng-show="traningOrganizationValidate.loginInput.$dirty && traningOrganizationValidate.loginInput.$error.ajaxValidate&& !traningOrganizationValidate.loginInput.$error.maxlength">
+                        <span class="ico ico-prompt"></span>账号已存在，请调整！</span>
+
+                    </li>
+                    <li><span class="left-txt"><i>*</i>密码：</span><input type="password" class="ipt ipt-large1"
+                                                                        ng-model="model.createParam.password"
+                                                                        required ng-required="true"
+                                                                        name="password"
+                                                                        autocomplete="off"
+                                                                        ng-minlength="6"
+                                                                        ng-maxlength="20"
+                                                                        ng-pattern=/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{6,20}$/
+ placeholder="建议至少使用字母、数字和符号两种及以上组合，6-20个"
+                                                                        style="width: 355px">
+
+                    <span style="margin-left: 130px;"
+                          ng-show="traningOrganizationValidate.password.$dirty && traningOrganizationValidate.password.$error.required"
+                          class="li-prompt">
+                              <span class="ico ico-prompt"></span>密码不能为空。
+                          </span>
+
+                    <span style="margin-left: 170px;"
+                          ng-show="traningOrganizationValidate.password.$dirty && !traningOrganizationValidate.password.$error.required && traningOrganizationValidate.password.$error.pattern"
+                          class="li-prompt lip-2 lip-2"><span class="ico ico-prompt"></span>密码只能由字母、数字,特殊符号中的2种组成,长度在6~20之间！
+                        </span>
+
+                    </li>
+
+
+                    <li><span class="left-txt"><i>*</i>确认密码：</span>
+                        <input type="password"
+                               hb-compare="model.createParam.password"
+                               name="repeatPass"
+                               ng-model="model.createParam.repeatPass"
+                               required ng-required="true"
+                               ng-minlength="6"
+                               autocomplete="off"
+                               ng-maxlength="20"
+                               placeholder="请再次输入密码"
+                               class="ipt ipt-large1"
+                               style="width: 355px">
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="traningOrganizationValidate.repeatPass.$dirty&&traningOrganizationValidate.repeatPass.$error.required">请输入确认密码！</span>
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="traningOrganizationValidate.repeatPass.$error.maxlength||traningOrganizationValidate.repeatPass.$error.minlength"> 请输入6-20位字符！</span>
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="!traningOrganizationValidate.repeatPass.$error.required&&!traningOrganizationValidate.repeatPass.$error.maxlength&&!traningOrganizationValidate.repeatPass.$error.minlength&&traningOrganizationValidate.repeatPass.$error.compare">输入的密码不一致！</span>
+                    </li>
+                    </ul>
+                </div>
+        </form>
+        <div class="rel udf-2">
+            <div class="btn-center">
+                <a href="javascript:void(0)"  class="btn btn-r ml10" has-permission="trainingOrgnization/save"
+                   ng-class="{'btn-disable':!traningOrganizationValidate.$valid}"
+                   ng-click="events.saveTraningOrganization($event)">保存</a>
+
+                <a href="javascript:void(0)" ng-click="events.cancel($event)"
+                   class="btn btn-g ml10">取消</a>
+            </div>
+        </div>
+        </div>
+</div>
+

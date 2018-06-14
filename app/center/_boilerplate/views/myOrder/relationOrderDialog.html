@@ -1,0 +1,149 @@
+<div style="padding:20px;">
+    <div class="dialog-bd">
+        <table class="ui-table table-line table-s">
+            <thead>
+            <tr>
+                <th width="430">商品名称</th>
+                <th width="100">单价</th>
+                <th width="80">数量</th>
+                <th width="80">商品状态</th>
+                <th width="80">合计</th>
+                <th width="80">订单状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody ng-class="{'blue':model.initialOrder.status!==6&&model.initialOrder.status!==7}">
+            <tr class="full-row">
+                <td colspan="7" class="tl b">初始订单</td>
+            </tr>
+            <tr class="order-row">
+                <td colspan="7" class="tl rel">
+                    <span class="b" ng-bind="model.initialOrder.createTime"></span> <span class="ml50">订单号：<span
+                        ng-bind="model.initialOrder.orderNo"></span></span
+                ><span class="ml50">订单生成方式：<span ng-if="model.initialOrder.payType==1">网上报名</span
+                ><span ng-if="model.initialOrder.payType==2">线下报名</span></span>
+                </td>
+            </tr>
+            <tr ng-repeat="item in model.initialOrder.subOrderList">
+                <td class="tl">
+                    <div class="course-cont">
+                        <a href="javascript:void(0)"
+                           ng-click="events.lookIntroduction(item)"
+                           class="img" ng-class="{'img-hb':item.swapOut}"
+                        ><img ng-src="b{{item.photoPath}}" alt="">
+                            <span ng-if="item.swapOut" class="mask"><i>已换班</i></span>
+                        </a>
+                        <div class="course-cont-bd">
+                            <a href="javascript:void(0)"
+                               ng-click="events.lookIntroduction(item)"
+                               ng-bind="item.productName"
+                               class="course-name tb-a to">
+                            </a>
+                            <div class="course-info mt5">
+                                年度：<span ng-bind="item.trainingYear"></span><span class="ml15">职称等级：<span
+                                    ng-bind="item.professionalGrade"></span></span
+                            ><span class="ml15">学习类别：<span ng-bind="item.studyType"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td ng-bind="'¥'+item.dealPrice"><!--<span class="old-price">¥65.00</span><br>--></td>
+                <td>1</td>
+                <td class="op-1"><span ng-if="item.status===1">待付款</span
+                ><span ng-if="item.status===2||item.status===3||item.status===10">开通中</span
+                ><span ng-if="item.status===4||item.status===5">交易成功</span
+                ><span ng-if="item.status===9">交易关闭</span
+                ><span ng-if="item.status===14||item.status===15||item.status===16">换班中</span
+                ><span ng-if="item.status===6">已换班</span>
+
+                    <span class="label-hb" ng-if="item.swapOut">换班</span>
+                </td>
+                <td>¥<span ng-bind="model.initialOrder.totalAmount"></span></td>
+                <td><span ng-if="model.initialOrder.status===1">等待付款</span
+                ><span ng-if="model.initialOrder.status===2">等待卖家确认款项</span
+                ><span ng-if="model.initialOrder.status===3">支付成功</span
+                ><span ng-if="model.initialOrder.status===4">部分发货</span
+                ><span ng-if="model.initialOrder.status===5">卖家已发货</span
+                ><span ng-if="model.initialOrder.status===6">交易成功</span
+                ><span ng-if="model.initialOrder.status===7">交易关闭</span
+                ><span ng-if="model.initialOrder.status===8">支付中</span>
+                </td>
+                <td class="op-1"><a href="javascript:void(0)"
+                                    ng-click="events.lookDetail(model.initialOrder.orderNo)"
+                >查看订单</a><!--<a href="#" class="ag">删除</a>--></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="bor-dt mt10 b pt10">关联订单</p>
+        <div class="mh-1 mt10">
+            <table class="ui-table table-line table-s">
+                <tbody ng-class="{'blue':item.status!==6&&item.status!==7}"
+                       ng-repeat="item in model.derivativeOrderList">
+                <tr class="order-row">
+                    <td colspan="7" class="tl rel">
+                        <span class="b" ng-bind="item.createTime"></span>
+                        <span class="ml50">订单号：<span ng-bind="item.orderNo"></span></span
+                        ><span class="ml50">订单生成方式：<span ng-if="item.payType==1">网上报名</span
+                    ><span ng-if="item.payType==2">线下报名</span></span>
+                    </td>
+                </tr>
+                <tr ng-repeat="subItem in item.subOrderList">
+                    <td width="430" class="tl">
+                        <div class="course-cont">
+                            <a href="javascript:void(0)"
+                               ng-click="events.lookIntroduction(subItem)"
+                               class="img" ng-class="{'img-hb':subItem.swapOut}">
+                                <img ng-src="b{{subItem.photoPath}}"
+                                     alt=" ">
+                                <span ng-if="subItem.swapOut" class="mask"><i>已换班</i></span>
+                            </a>
+                            <div class="course-cont-bd">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.lookIntroduction(subItem)"
+                                   ng-bind="subItem.productName"
+                                   class="course-name tb-a to">
+                                </a>
+                                <div class="course-info mt5">
+                                    年度：<span ng-bind="subItem.trainingYear"></span><span class="ml15">职称等级：<span
+                                        ng-bind="subItem.professionalGrade"></span></span
+                                ><span class="ml15">学习类别：<span ng-bind="subItem.studyType"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td width="100" ng-bind="'¥'+subItem.dealPrice">
+                        <!--<span class="old-price">¥65.00</span><br>--></td>
+                    <td width="80">1</td>
+                    <td width="80" class="op-1"><span ng-if="subItem.status===1">待付款</span
+                    ><span ng-if="subItem.status===2||subItem.status===3||subItem.status===10">开通中</span
+                    ><span ng-if="subItem.status===4||subItem.status===5">交易成功</span
+                    ><span ng-if="subItem.status===9">交易关闭</span
+                    ><span ng-if="subItem.status===14||subItem.status===15||subItem.status===16">换班中</span
+                    ><span ng-if="subItem.status===6">已换班</span>
+
+                        <span class="label-hb" ng-if="subItem.swapOut">换班</span>
+                    </td>
+                    <td width="80">¥<span ng-bind="item.totalAmount"></span></td>
+                    <td width="80"><span ng-if="item.status===1">等待付款</span
+                    ><span ng-if="item.status===2">等待卖家确认款项</span
+                    ><span ng-if="item.status===3">支付成功</span
+                    ><span ng-if="item.status===4">部分发货</span
+                    ><span ng-if="item.status===5">卖家已发货</span
+                    ><span ng-if="item.status===6">交易成功</span
+                    ><span ng-if="item.status===7">交易关闭</span
+                    ><span ng-if="item.status===8">支付中</span>
+                    </td>
+                    <td class="op-1"><a href="javascript:void(0)"
+                                        ng-click="events.lookDetail(item.orderNo)"
+                    >查看订单</a><!--<a href="#" class="ag">删除</a>-->
+                    </td>
+                </tr>
+                <tr class="full-row">
+                    <td colspan="7"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

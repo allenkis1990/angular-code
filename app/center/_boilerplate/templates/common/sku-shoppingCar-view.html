@@ -1,0 +1,11 @@
+<td ng-bind="item.subjectName"></td>
+<td>
+                        <span ng-bind="item.year===null?'-':item.year"
+                              ng-if="item.subjectOptionsId!=='5628812b569c57e001569c5a77f6a012'"></span>
+    <select class="ui-slt"
+            ng-if="item.subjectOptionsId==='5628812b569c57e001569c5a77f6a012'"
+            ng-model="item.yearOptionsId"
+            ng-options="item.optionId as item.name for item in model.yearList"
+            style="width:120px">
+    </select>
+</td>

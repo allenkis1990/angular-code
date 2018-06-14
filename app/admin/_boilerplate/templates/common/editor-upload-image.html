@@ -1,0 +1,67 @@
+<div class="dialog rebuild-upload-button" ng-if="!editFileImage">
+    <div class="dialog-body">
+        <div class="dialog-tit"> 插入图片<a href="javascript: void(0);" ng-click="globle.editor.cancel()"
+                                        class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <ul class="ul-d-form ml30">
+                <li><span class="left-txt"><i>*</i>选择图片：</span>
+                    <a hb-file-uploader="aaa"
+                       auto="true"
+                       accepts="jpg,png"
+                       href="javascript:void(0)"
+                       queue-container-id="insert_images___"
+                       ng-model="globle.editor.insertImage">
+                    </a>
+                    <!--<input type="button" class="btn btn-b" value="选择图片">-->
+                </li>
+                <li><span class="left-txt"><i>*</i>宽：</span>
+                    <input type="number"
+                           class="ipt ipt-medium" ng-model="globle.editor.imgWidth"/></li>
+
+                <li><span class="left-txt"><i>*</i>高：</span>
+                    <input type="number"
+                           class="ipt ipt-medium" ng-model="globle.editor.imgHeight"/>
+                </li>
+
+                <li class="clear"><span class="left-txt fl">图片预览：</span>
+
+                    <div style="text-align: center;">
+                        <img id="insert_images___"
+                             src="b{{globle.editor.insertImage.newPath ? '/mfs'+globle.editor.insertImage.newPath : '@systemUrl@/images/image_container.png'}}"
+                             width="80" height="80" alt=""/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-center">
+            <input type="button" class="btn btn-r" ng-click="globle.editor.insertInto()" value="确定插入"/>
+            <input type="button" class="btn btn-g ml10" ng-click="globle.editor.cancel()" value="取消"/>
+        </div>
+    </div>
+</div>
+<div class="dialog rebuild-upload-button" ng-if="editFileImage">
+    <div class="dialog-body">
+        <div class="dialog-tit"> 插入文件<a href="javascript: void(0);" ng-click="globle.editor.cancel()"
+                                        class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <ul class="ul-d-form ml30">
+                <li><span class="left-txt"><i>*</i>选择文件：</span>
+                    <a hb-file-uploader="aaa"
+                       auto="true"
+                       href="javascript:void(0)"
+                       queue-container-id="insert_images___"
+                       ng-model="globle.editor.insertFile">
+                    </a>
+                    <!--<input type="button" class="btn btn-b" value="选择图片">-->
+                </li>
+                <li><span class="left-txt"><i>*</i>文件名：</span>
+                    b{{globle.editor.insertFile.fileName}}
+                </li>
+            </ul>
+        </div>
+        <div class="btn-center">
+            <input type="button" class="btn btn-r" ng-click="globle.editor.insertInto()" value="确定插入"/>
+            <input type="button" class="btn btn-g ml10" ng-click="globle.editor.cancel()" value="取消"/>
+        </div>
+    </div>
+</div>

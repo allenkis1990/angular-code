@@ -1,0 +1,301 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goTrainClassManage($event)"></a>
+        <a class="aw" href="javascript:void(0);" ng-click="events.goTrainClassManage($event)">培训班管理</a>
+        &gt; 新建培训班
+    </div>
+</div>
+<div class="m-box-2">
+    <div class="m-box-3">
+        <div class="main-wrap-body">
+            <div class="column">
+                <div class="col-tit">培训班基础信息</div>
+                <div class="dash-line-1"></div>
+            </div>
+            <div class="rel">
+                <ul class="ul-d-form">
+                    <li><span class="left-txt">培训班名称：</span><span ng-bind="model.trainClass.name"></span></li>
+                    <li><span class="left-txt">培训类别：</span><span ng-bind="model.trainClass.trainingTypeName"></span>
+                    </li>
+                    <!--<li><span class="left-txt">班主任：</span>NICK，LAO</li>-->
+                    <!--<li><span class="left-txt">培训班类型：</span><span ng-bind=""></span></li>-->
+                    <li><span class="left-txt">是否主动报名：</span><span ng-bind="model.trainClass.register?'是':'否'"></span>
+                    </li>
+                    <!--<li><span class="left-txt">提醒：</span>一旦学员课程完成占比与计划进度相差10%，系统将每2天进行邮件间隔提醒。</li>-->
+                    <li class="clear"><span class="left-txt fl">培训班简介：</span>
+
+                        <div class=" w-textarea fl"><span
+                                ng-bind="model.trainClass.comment?model.trainClass.comment:'暂无简介'"></span></div>
+                    </li>
+                    <li><span class="left-txt">创建时间：</span><span
+                            ng-bind="model.trainClass.createTime"></span></li>
+                    <li><span class="left-txt">培训班发起人：</span><span ng-bind="model.trainClass.creator"></span></li>
+                    <li><span class="left-txt">培训班状态：</span><span ng-bind="model.trainClass.state==2?'已发布':'草稿'"></span>
+                    </li>
+                    <li><span class="left-txt">培训起止时间：</span><span
+                            ng-bind="model.trainClass.beginDate"></span> 至 <span
+                            ng-bind="model.trainClass.endDate"></span></li>
+                    <li ng-if="model.trainClass.register&&model.trainClass.registerMode==0"><span class="left-txt">报名起止时间：</span><span
+                            ng-bind="model.trainClass.registerBeginDate"></span>
+                        至 <span ng-bind="model.trainClass.registerEndDate"></span></li>
+                    <li><span class="left-txt">允许报名人数：</span> <span
+                            ng-bind="model.trainClass.registrationNumber==0?'不限':model.trainClass.registrationNumber+'人'"></span>
+                    </li>
+                    <li><span class="left-txt">设置报名范围：</span>全部</li>
+                    <!--<li class="clear">-->
+                    <!--<span class="left-txt">报名范围：</span>-->
+                    <!--<div class="mt20 ml30">-->
+                    <!--<div class="wp-5 fl">-->
+                    <!--<div class="tab-tit">-->
+                    <!--<a href="#" class="current">XX个单位</a>-->
+                    <!--</div>-->
+                    <!--<div class="mh-2">-->
+                    <!--<table class="table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                    <!--<th width="30">No.</th>-->
+                    <!--<th>单位名称</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>4</td>-->
+                    <!--<td>单位名称单位名称单位名称</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>4</td>-->
+                    <!--<td>单位名称单位名称单位名称</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="wp-5 fl ml10">-->
+                    <!--<div class="tab-tit">-->
+                    <!--<a href="#" class="current">XX个部门</a>-->
+                    <!--</div>-->
+                    <!--<div class="mh-2">-->
+                    <!--<table class="table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                    <!--<th width="30">No.</th>-->
+                    <!--<th width="80">部门名称</th>-->
+                    <!--<th>所属单位</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>1</td>-->
+                    <!--<td>部门名称</td>-->
+                    <!--<td>所属单位</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>1</td>-->
+                    <!--<td>部门名称</td>-->
+                    <!--<td>所属单位</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="wp-5 fl ml10">-->
+                    <!--<div class="tab-tit">-->
+                    <!--<a href="#" class="current">XX个岗位</a>-->
+                    <!--</div>-->
+                    <!--<div class="mh-2">-->
+                    <!--<table class="table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                    <!--<th width="30">No.</th>-->
+                    <!--<th width="80">岗位名称</th>-->
+                    <!--<th>所属单位</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>1</td>-->
+                    <!--<td>岗位名称</td>-->
+                    <!--<td>所属单位</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>1</td>-->
+                    <!--<td>岗位名称</td>-->
+                    <!--<td>所属单位</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--</li>-->
+                </ul>
+            </div>
+
+            <!-------------  班级考核  --------------->
+            <div class="column mt20">
+                <div class="col-tit">班级考核</div>
+                <div class="dash-line-1"></div>
+                <ul class="ul-form ml30">
+                    <div ng-if="model.showTrainClassAssess">
+                        <li ng-if="model.trainClassAssess.completeCourseQuantity">
+                            1、学员学完的课程数，需达b{{model.trainClassAssess.completeCourseQuantity}}到门，才算考核通过。
+                        </li>
+                        <li ng-if="model.trainClassAssess.passExamQuantity">
+                            2、学员考试成绩需合格b{{model.trainClassAssess.passExamQuantity}}场 ，才算考核通过。
+                        </li>
+                        <li ng-if="model.trainClassAssess.passExamQuantity&&model.trainClassAssess.completeCourseQuantity">
+                            <h3>以上两条件是“b{{model.trainClassAssess.assessType==1?'或':'且'}}”的关系</h3></li>
+                    </div>
+                    <li ng-if="!model.showTrainClassAssess">暂无考核</li>
+                </ul>
+            </div>
+
+            <!-------------  考试  --------------->
+            <div class="column mt20">
+                <div class="col-tit">考试</div>
+                <div class="dash-line-1"></div>
+                <table class="table mt10">
+                    <thead>
+                    <tr>
+                        <th width="40">No.</th>
+                        <th>考试名称</th>
+                        <th width="80">试卷类型</th>
+                        <th width="100">考试总分</th>
+                        <th width="100">考试及格分数</th>
+                        <th width="100">考试时长(分钟)</th>
+                        <th width="100">考试前置条件</th>
+                        <th width="100">考试状态</th>
+                        <th width="100">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="exam in model.exams">
+                        <td><span ng-bind="$index+1"></span></td>
+                        <td><span ng-bind="exam.name"></span></td>
+                        <td><span ng-bind="exam.examRange==1?'考试':(exam.examRange == 2?'练习':'模拟')"></span></td>
+                        <td><span ng-bind="exam.totalScore"></span></td>
+                        <td><span ng-bind="exam.passScore"></span></td>
+                        <td><span ng-bind="exam.examTimeLength"></span></td>
+                        <td><span ng-bind="exam.completeQuantity?'学完'+exam.completeQuantity+'门':'暂无条件'"></span></td>
+                        <td><span ng-bind="exam.released?'正常':'已停用'"></span></td>
+                        <td class="op">
+                            <a href="#" ng-click="events.preview($event,exam)">预览试卷</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-------------  培训班课程  --------------->
+            <div class="column mt20">
+                <div class="col-tit">培训班课程（b{{model.allLesson}}门）</div>
+                <div class="dash-line-1"></div>
+                <div class="mt10 clear">
+                    <div class="wp-4 fl">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>课程名称</th>
+                                <th width="30">学分</th>
+                                <th width="60">课程类型</th>
+                                <th width="70">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="lesson in model.trainClassLessonOne">
+                                <td>b{{lesson.name}}</td>
+                                <td>b{{lesson.credit}}</td>
+                                <td>b{{lesson.lessonTypeName}}</td>
+                                <td class="op">
+                                    <a href="javascript:void(0)" ng-click="events.openListenWindow(lesson.id)">试听</a>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="wp-4 fr">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>课程名称</th>
+                                <th width="30">学分</th>
+                                <th width="60">课程类型</th>
+                                <th width="70">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="lesson in model.trainClassLessonTwo">
+                                <td>b{{lesson.name}}</td>
+                                <td>b{{lesson.credit}}</td>
+                                <td>b{{lesson.lessonTypeName}}</td>
+                                <td class="op">
+                                    <a href="javascript:void(0)" ng-click="events.openListenWindow(lesson.id)">试听</a>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-body mt10 clear">
+                    <div class="pages fr" style="width: 500px; margin-right: 3px;">
+                        <div kendo-pager k-options="ui.trainClassLessonGrid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-------------  培训班学员  --------------->
+            <div class="column mt20">
+                <div class="col-tit">培训班学员（b{{model.allUser}}人）</div>
+                <div class="dash-line-1"></div>
+                <div class="mt10 clear">
+                    <div class="wp-4 fl">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th width="70">学员</th>
+                                <th>所属单位</th>
+                                <th width="100">岗位</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in model.userGroupOne">
+                                <td>b{{user.name}}</td>
+                                <td>b{{user.unit}}</td>
+                                <td>b{{user.job}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="wp-4 fr">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th width="70">学员</th>
+                                <th>所属单位</th>
+                                <th width="100">岗位</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in model.userGroupTwo">
+                                <td>b{{user.name}}</td>
+                                <td>b{{user.unit}}</td>
+                                <td>b{{user.job}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-body mt10 clear">
+                    <div class="pages fr" style="width: 500px; margin-right: 3px;">
+                        <div kendo-pager k-options="ui.trainClassUserGrid"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,40 @@
+<div class="main-wrap-body">
+    <div class="search-bar mt10">
+        <ul class="ul-form li-fl lh-1 clear">
+            <li has-permission="permission.selectClass" exp="true">
+                <input type="text" class="ipt ipt-medium" ng-model="model.query.courseName"
+                       placeholder="请输入课程名称" hb-clear-input/>
+            </li>
+            <li has-permission="permission.selectClass" exp="true">
+                <select k-ng-model="model.query.lessonProvider"
+                        kendo-combo-box
+                        class="slt slt-small"
+                        style="width: 200px;"
+                        hb-clear-input k-options="lessonProvidersComboOptions"></select>
+            </li>
+            <li has-permission="permission.selectClass" exp="true">
+                <div hb-date-arrange
+                     template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                     config="timeConfig"
+                     sb-mode="true"
+                     start-date="model.query.startTime"
+                     end-date="model.query.endTime"
+                     start-placeholder="选课时间" end-placeholder="选课时间"></div>
+            </li>
+            <li>
+                <div command-tool
+                     permission="permission"
+                     report-query="events.genReportQuery()"
+                     grid="model.node.grid" model="model.query"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="column mt10">
+        <div class="tips-box-1 clear">
+            <span class="fr">单位：人次</span>
+            <span summary-desc view-name="OWN_VIEW_NAME"></span>
+        </div>
+
+        <div class="mt10" kendo-grid="model.node.grid" k-options="mainGridOptions"></div>
+    </div>
+</div>

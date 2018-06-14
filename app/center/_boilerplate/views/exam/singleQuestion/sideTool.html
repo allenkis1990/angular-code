@@ -1,0 +1,26 @@
+<div class="exam-right">
+    <div class="er-body text-center">
+        <div class="exam-q-num" ng-show="showAnswer">
+            <button type="button" style="background-color: #26c51b" ng-click="toggle(false, $event)"
+                    class="submit-a click-like">
+                <span class="ico ico-submit"></span>
+                隐藏答案
+            </button>
+        </div>
+        <div ng-show="!showAnswer">
+            <p class="er-info">共：<span ng-bind="questionPaper.length"></span> 题</p>
+            <p class="er-info">剩：<span ng-bind="restCount"></span> 题</p>
+            <div class="exam-q-num">
+                <button type="button"
+                        ng-click="toggle(true, $event)" style="background-color: #26c51b"
+                        class="submit-a click-like"><span
+                        class="ico ico-submit"></span> 显示答案
+                </button>
+                <button type="button" ng-click="submit($event)" class="submit-a click-like"><span
+                        class="ico ico-submit"></span> 提交
+                </button>
+            </div>
+        </div>
+        <a href="" ng-click="top($event)" class="ico ico-top"></a>
+    </div>
+</div>

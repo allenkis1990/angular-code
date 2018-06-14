@@ -1,0 +1,9 @@
+{
+  "name": "courseSupermarket",
+  "themes": {
+    "default": "ahzj/kccs/styles/default/webstyle.css",
+    "red": "ahzj/kccs/styles/red/webstyle.css"
+  },
+  "main": "ahzj/kccs/portal.app.js",
+  "version": "0.0.1"
+}

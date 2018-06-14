@@ -1,0 +1,76 @@
+<div class="tab-tit">
+    <a href="javascript:void(0)" ng-class="model.resType==0?'current':''" ng-click="events.selectResType($event,0)">在线播放材料</a>
+    <a href="javascript:void(0)" ng-class="model.resType==1?'current':''"
+       ng-click="events.selectResType($event,1)">附件材料</a>
+</div>
+<div class="tab-bd pt10">
+    <div class="mb10" ng-if="model.resType==0">
+        <a href="javascript:void(0)" class="btn btn-b" ng-click="events.addCourseWindow($event)">选择课程</a>
+        <span class="ml10">注：支持在线播放学习</span>
+    </div>
+    <dl class="ftf-list" ng-if="model.resType==0">
+        <dt>
+            <span class="tit2">机构名称</span>
+            <span class="gs2">课程分类</span>
+            <span class="op2">操作</span>
+        </dt>
+        <dd ng-repeat="course in model.courseSelectedList">
+            <span class="tit2" ng-bind="course.name"></span>
+            <span class="gs2" ng-bind="course.resourceData.categoryName"></span>
+            <span class="op2">
+                <a href="javascript:void(0)" ng-click="events.previewCourse($event,course.resourceData.courseId)">试听</a>
+                <a href="javascript:void(0)" ng-click="events.deleteSelectedCourse($event,$index)">删除</a>
+            </span>
+        </dd>
+    </dl>
+    <div class="mb10" ng-if="model.resType==1">
+        <div>
+            <span class="t-r"
+                  ng-show="uploader.resource.selectFile.liveStatus>=0&&uploader.resource.selectFile.liveStatus<3">上传进度：b{{uploader.resource.selectFile.progress}}%</span>
+            <span ng-show="uploader.resource.selectFile.liveStatus==3">处理中，请稍后...</span>
+            <span ng-show="!(uploader.resource.selectFile.liveStatus>=0&&uploader.resource.selectFile.liveStatus<4)">
+        <a href="javascript:void(0)" class="upload" style="width: 110px;"
+           hb-file-uploader="uploader.resource"
+           is-comfortable="true"
+           auto="true"
+           accepts="doc,docx,xls,xlsx,ppt,pptx,pdf,zip,rar"
+           button-text="添加参考资料"
+           size-limit="10485760"
+           queue-container-id="insert_images___"
+           ng-model="model.resourceUploader">
+        </a><span class="txt-g ml10">(注：附件资料格式支持：doc、docx、xls、xlsx、ppt、pptx、pdf、zip、rar等格式)</span>
+            </span>
+        </div>
+    </div>
+    <dl class="ftf-list" ng-if="model.resType==1">
+        <dt>
+            <span class="tit2">机构名称</span>
+            <span class="gs2">格式</span>
+            <span class="jd2"></span>
+            <span class="op2">操作</span>
+        </dt>
+        <dd ng-repeat="resource in model.attachmentList">
+            <span class="tit2" ng-bind="resource.name" ng-if="!resource.modifyMode"></span>
+            <input type="text" class="tit2 ipt" maxlength="30"
+                   placeholder="请输入材料名称"
+                   ng-model="resource.name"
+                   ng-if="resource.modifyMode"/>
+            <span class="gs2" ng-bind="resource.resourceData.extension"></span>
+            <span class="jd2"></span>
+            <span class="op2">
+                <a href="javascript:void(0)" ng-click="events.reNameConfirm($event,$index)"
+                   ng-if="resource.modifyMode">确定</a>
+                <a href="javascript:void(0)" ng-click="events.reNameCancel($event,$index)"
+                   ng-if="resource.modifyMode">取消</a>
+                <a href="javascript:void(0)" ng-click="events.reNameAttachment($event,$index)"
+                   ng-if="!resource.modifyMode">修改名称</a>
+                <a href="javascript:void(0)" ng-click="events.deleteAttachment($event,$index)"
+                   ng-if="!resource.modifyMode">删除</a>
+            </span>
+        </dd>
+    </dl>
+</div>
+<div class="btn-center">
+    <a href="javascript:void(0)" class="btn btn-r" ng-click="events.saveResource($event)">保存</a>
+    <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="events.closeWindow('addResourceWindow')">取消</a>
+</div>

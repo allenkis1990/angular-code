@@ -1,0 +1,262 @@
+<div class="main-wrap-body">
+    <div class="rel">
+        <div class="column">
+            <div class="col-tit">待拆分物品</div>
+            <div class="dash-line-1"></div>
+            <table class="table mt20">
+                <thead>
+                <tr>
+                    <th width="60" class="no-bor-r"></th>
+                    <th class="no-bor-r no-bor-l">包裹物品</th>
+                    <th width="120" class="no-bor-r no-bor-l">是否已备货</th>
+                    <th width="90" class="no-bor-r no-bor-l">是否冻结</th>
+                    <th width="80" class="no-bor-l">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="td-line no-bor">
+                    <td colspan="5"></td>
+                </tr>
+                </tbody>
+
+                <tbody ng-repeat="item in model.packageContentList">
+                <tr>
+                    <th colspan="5" class="tl">
+                        <span>订单号：<i ng-bind="item.orderNo"></i></span>
+                        <span class="ml30">交易成功时间：<i ng-bind="item.traceSuccessTime"></i></span>
+                    </th>
+
+                </tr>
+                <tr ng-repeat=" orderbill  in item.invoiceGoodDtoList">
+                    <td class="no-bor-r" ng-if="orderbill.invoiceGoodType!=1"></td>
+                    <td class="tl no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==2">
+                        <span>【<i ng-bind="orderbill.billName"></i>】<b>发票抬头：</b><i
+                                ng-bind="orderbill.billTitle"></i></span>
+                        <span class="ml30"><b>数量：</b><i ng-bind="orderbill.billCount"></i></span>
+                        <span class="ml30"><b>发票号：</b><i ng-bind="orderbill.billNumber||'-'"></i></span>
+                    </td>
+                    <td class="tl no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==3">
+                        <span>【证书】<b>持证人姓名：</b><i ng-bind="orderbill.certificateHolderName"></i></span>
+                        <span class="ml30"><b>证书编号：</b><i ng-bind="orderbill.certificateSubOrderNo"></i></span>
+                    </td>
+                    <td class="no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==2">
+                        <span ng-if="orderbill.billNumber!==null">已打印</span>
+                        <span ng-if="orderbill.billNumber===null">未打印</span>
+                    </td>
+                    <td class="no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==3">
+                        <span ng-if="orderbill.state==2">已打印</span>
+                        <span ng-if="orderbill.state===1">未打印</span>
+                    </td>
+                    <td class="txt-r" ng-if="orderbill.invoiceGoodType!=1 ">
+                        <span ng-if="model.getPackageInfo.frozen===true">是</span>
+                        <span ng-if="model.getPackageInfo.frozen===false">否</span>
+                    </td>
+
+                    <td class="op"
+                        ng-if="orderbill.invoiceGoodType!=1&&(!model.utils.isSelected(orderbill.invoiceGoodRelIds))"><a
+                            ng-click="events.choosePackage(item,orderbill)">选择</a></td>
+                    <td class="op"
+                        ng-if="model.utils.isSelected(orderbill.invoiceGoodRelIds)&&orderbill.invoiceGoodType!=1"><a
+                            ng-click="events.unchoosePackage(item,orderbill)">取消选择</a></td>
+                </tr>
+
+                </tbody>
+                <tr>
+                    <td><p>收货信息</p></td>
+                    <td class="tl no-bor-r">
+                        <span class="w-3"><b>购买人：</b><i
+                                ng-bind="model.getPackageInfo.receiveContent.recipients"></i></span>
+                        <span class="ml30"><b>身份证号：</b><i
+                                ng-bind="model.getPackageInfo.receiveContent.identificationNo"></i></span><br/>
+                        <span class="w-3"><b>手机号：</b><i
+                                ng-bind="model.getPackageInfo.receiveContent.recipientsPhone"></i></span><span
+                            class="ml30">
+                        <b>收货地址：</b><i ng-bind="model.getPackageInfo.receiveContent.recipientsAddress"></i></span></td>
+                    <td class="no-bor-r no-bor-l" ng-if="model.getPackageInfo.deliveryWayType==2">自取包裹</td>
+                    <td class="no-bor-r no-bor-l" ng-if="model.getPackageInfo.deliveryWayType==1">快递包裹</td>
+                    <td colspan="2" class="no-bor-l op tr"></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="column mt30">
+            <div class="col-tit">被拆分的物品<a class="btn btn-b fr" ng-click="events.addPackage()">添加新包裹</a></div>
+            <div class="dash-line-1"></div>
+            <div ng-repeat="(index,item1) in model.splitSubPackageDtoList">
+                <div class="clear">
+                    <span class="fl b mt10">新包裹<i ng-bind="index+1"></i></span>
+                    <div class="fr">
+                        <a class="btn btn-r" ng-click="events.delPackage(index+1)">删除该包裹</a>
+                    </div>
+                </div>
+                <table class="table mt10 mb30">
+                    <thead>
+                    <tr>
+                        <th width="60" class="no-bor-r"></th>
+                        <th class="no-bor-r no-bor-l">包裹物品</th>
+                        <th width="120" class="no-bor-r no-bor-l">是否已备货</th>
+                        <th width="90" class="no-bor-r no-bor-l">是否冻结</th>
+                        <th width="80" class="no-bor-l">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="td-line no-bor">
+                        <td colspan="5"></td>
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="item1.packageContentList.length===0">
+                    <td colspan="5">请选择物品！</td>
+                    </tbody>
+                    <tbody ng-repeat="item in item1.packageContentList">
+                    <tr ng-if="item1.packageContentList.length!==0">
+                        <th colspan="5" class="tl">
+                            <span>订单号：<i ng-bind="item.orderNo"></i></span>
+                            <span class="ml30">交易成功时间：<i ng-bind="item.traceSuccessTime"></i></span>
+                        </th>
+                    </tr>
+                    <tr ng-repeat="orderbill in item.invoiceGoodDtoList">
+                        <td class="no-bor-r"></td>
+                        <td class="tl no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==2">
+                            <span>【<i ng-bind="orderbill.billName"></i>】<b>发票抬头：</b><i
+                                    ng-bind="orderbill.billTitle"></i></span>
+                            <span class="ml30"><b>数量：</b><i ng-bind="orderbill.billCount"></i></span>
+                            <span class="ml30"><b>发票号：</b><i ng-bind="orderbill.billNumber||'-'"></i></span>
+                        </td>
+                        <td class="tl no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==3">
+                            <span>【证书】<b>持证人姓名：</b><i ng-bind="orderbill.certificateHolderName"></i></span>
+                            <span class="ml30"><b>证书编号：</b><i ng-bind="orderbill.certificateSubOrderNo"></i></span>
+                        </td>
+                        <td class="no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==2">
+                            <span ng-if="orderbill.billNumber!==null">已打印</span>
+                            <span ng-if="orderbill.billNumber===null">未打印</span>
+                        </td>
+
+                        <td class="no-bor-r no-bor-l" ng-if="orderbill.invoiceGoodType==3">
+                            <span ng-if="orderbill.state===2">已打印</span>
+                            <span ng-if="orderbill.state===1">未打印</span>
+                        </td>
+                        <td class="txt-r" ng-if="orderbill.invoiceGoodType!=1 ">
+                            <span ng-if="model.getPackageInfo.frozen===true">是</span>
+                            <span ng-if="model.getPackageInfo.frozen===false">否</span>
+                        </td>
+                        <td class="op"><a ng-click="events.unchoosePackage(item,orderbill)">取消选择</a></td>
+                    </tr>
+
+
+                    </tbody>
+                    <tr ng-if="model.splitSubPackageDtoList[index].receiveContent">
+                        <td><p>收货信息</p></td>
+                        <td class="tl no-bor-r">
+                            <span class="w-3"><b>购买人：</b><i
+                                    ng-bind="model.splitSubPackageDtoList[index].receiveContent.recipients"></i></span>
+                            <span class="ml30"><b>身份证号：</b><i
+                                    ng-bind="model.splitSubPackageDtoList[index] .receiveContent.identificationNo"></i></span><br/>
+                            <span class="w-3"><b>手机号：</b><i
+                                    ng-bind="model.splitSubPackageDtoList[index].receiveContent.recipientsPhone"></i></span><span
+                                class="ml30">
+                        <b>收货地址：</b><i
+                                ng-bind="model.splitSubPackageDtoList[index].receiveContent.recipientsAddress"></i></span>
+                        </td>
+                        <td class="no-bor-r no-bor-l" ng-if="model.splitSubPackageDtoList[index].deliveryWayType==2">
+                            自取包裹
+                        </td>
+                        <td class="no-bor-r no-bor-l" ng-if="model.splitSubPackageDtoList[index].deliveryWayType==1">
+                            快递包裹
+                        </td>
+                        <td colspan="2" class="no-bor-l op tr"><a ng-click="events.updateAddress(index)">修改收货地址</a></td>
+                        <!--配送方式或-->
+                    </tr>
+
+
+                </table>
+
+            </div>
+        </div>
+
+
+        <div class="btn-center">
+            <a class="btn btn-r" ng-click="events.departPackage()">确定拆分包裹</a>
+            <a class="btn btn-g ml10" ng-click="$state.go('states.packageDispatch')">取消</a>
+        </div>
+    </div>
+</div>
+
+<!--修改地址弹窗-->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="addressWindow">
+    <div class="dialog-body ">
+        <div class="dialog-tit">修改配送方式或收货地址<a href="javascript:void(0)"
+                                              class="ico ico-close"
+                                              ng-click="events.closeUpdate('addressWindow')"></a></div>
+        <div class="dialog-cont">
+            <ng-form name="invoiceForm">
+                <ul class="ul-d-form pl20">
+                    <!-- <li>
+                         <span class="left-txt">配送方式：</span>
+                         <label><input class="rad" type="radio">自取</label>
+                         <label class="ml20"><input class="rad" type="radio" checked="checked">邮寄</label>
+                     </li>-->
+                    <li class="mt20">
+                        <span class="left-txt"><i>*</i>收件人：</span>
+                        <input type="text"
+                               ng-required="true"
+                               ng-model="model.takeGoodsInfo.receiverName"
+                               name="receiverName"
+                               class="ipt w-4" placeholder="请填写收件人姓名">
+                    </li>
+                    <li>
+                        <span class="left-txt"><i>*</i>手机号：</span><input type="text"
+                                                                         ng-model="model.takeGoodsInfo.mobileNo"
+                                                                         ng-required="true"
+                                                                         name="mobileNo"
+                                                                         ng-pattern="/^[\d]{11}$/"
+                                                                         class="ipt w-4" placeholder="请填写收件人常用手机号">
+                    </li>
+                    <li>
+                        <span class="left-txt"><i class="rs">*</i>收件地区</span>
+                        <select class="slt slt-small mr10"
+                                style="width:150px;"
+                                ng-model="model.takeGoodsInfo.cityId"
+                                ng-change="events.changeCity()"
+                                ng-options="item.id as item.name for item in model.cityArr">
+                            <option value="">市</option>
+                        </select>
+                        <select class="slt slt-small"
+                                style="width:150px;"
+                                ng-model="model.takeGoodsInfo.districtId"
+                                ng-options="item.id as item.name for item in model.areaArr">
+                            <option value="">区</option>
+                        </select>
+                    </li>
+                    <li class="clear">
+                        <span class="left-txt fl"><i>*</i>收件详细地址：</span>
+                        <div class="w-4 fl">
+                        <textarea class="textarea-2 wp-m-full"
+                                  name="addressDetails"
+                                  ng-required="true"
+                                  ng-model="model.takeGoodsInfo.addressDetails"
+                                  placeholder="请填写真实可收取到发票地址"></textarea>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="left-txt"><i>*</i>邮政编码：</span><input type="text"
+                                                                          ng-model="model.takeGoodsInfo.postCode"
+                                                                          name="postCode"
+                                                                          ng-required="true"
+                                                                          ng-pattern="/^[\d]{6}$/"
+                                                                          class="ipt w-4" placeholder="请填写收件地区的邮政编码">
+                    </li>
+                </ul>
+            </ng-form>
+        </div>
+        <div class="btn-center">
+            <button ng-disabled="invoiceForm.$invalid"
+                    ng-click="events.updateCurrentAddress(invoiceForm)"
+                    class="btn btn-r">保存信息
+            </button>
+            <!--  <a class="btn btn-r" ng-click="events.updateCurrentAddress()">保存信息</a>-->
+            <a class="btn btn-g ml10" ng-click="events.closeUpdate('addressWindow')">取消</a>
+        </div>
+
+    </div>
+</div>

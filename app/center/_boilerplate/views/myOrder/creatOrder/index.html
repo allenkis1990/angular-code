@@ -1,0 +1,462 @@
+<div class="p-wrap-full m-content clear">
+
+    <div class="m-right-block w-full">
+        <div class="right-block-bd">
+
+            <div class="m-order-process-1">
+                <div class="process-line"><span class="current" style="width: 33%;"></span></div>
+                <ul class="process-bd clear" style="z-index:998">
+                    <li class="li-ed">
+                        <span class="p-ico">1</span>
+                        <p>我的购物车</p>
+                    </li>
+                    <li class="li-ed">
+                        <span class="p-ico">2</span>
+                        <p>核对订单信息</p>
+                    </li>
+                    <li>
+                        <span class="p-ico">3</span>
+                        <p>付款</p>
+                    </li>
+                    <li>
+                        <span class="p-ico">4</span>
+                        <p>支付成功</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-order-info plr20 rel">
+
+                <div>
+                    <div class="tit-block-1 mt30">支付方式</div>
+                    <div class="m-no-data m-no-data-2 tc" ng-if="model.paymentAccount.length<=0">
+                        <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                        <p class="txt">无支付账号可选择，请联系平台客服反馈此情况。</p>
+                    </div>
+                    <ul class="pay-style clear mb20" ng-if="model.paymentAccount.length>0">
+                        <li ng-class="{'current':model.currentAccountId===item.id}"
+                            ng-click="events.tabAccountId(item)"
+                            ng-repeat="item in model.paymentAccount">
+                            <img ng-src="b{{item.logoPath}}" alt="">
+                            <span class="p-ico"></span>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+                <div ng-if="model.isProvide===2&&model.total!==0">
+
+
+                    <div class="tit-block-1 mt30">发票信息 <a href="javascript:void(0)"
+                                                          ng-click="events.editIncoice()"
+                                                          class="ao ml30"
+                                                          ng-if="!model.editInvoice">[修改]</a></div>
+                    <!--需要发票非增值税发票的详情-->
+                    <div class="order-info-bd block-gray p10"
+                         ng-if="!model.editInvoice&&model.invoiceType!=='VAT_ONLY'&&model.needInvoice==='true'">
+                        <p class="info-txt">
+                            <span class="wp-3">是否需要发票：<span
+                                    ng-bind="model.needInvoice==='true'?'需要':'不需要'"></span></span>
+                        </p>
+                        <p class="info-txt" ng-if="model.needInvoice==='true'">
+                            <span class="mr40">发票类型：
+                                <span ng-if="model.invoiceType==='COMMON_VAT'">普通发票</span>
+                                <span ng-if="model.invoiceType==='COMMON_ELECTRON'">普通电子发票</span>
+                                <span ng-if="model.invoiceType==='NON_TAX'">非税务票(纸制)</span>
+                            </span>
+
+                            <span class="mr40">发票抬头：【<span
+                                    ng-bind="model.invoiceTitleType==='PERSONAL'?'个人':'单位'"></span>】<span
+                                    ng-bind="model.invoiceTitle"></span></span>
+                            <span class="mr20"
+                                  ng-if="model.invoiceTitleType!=='PERSONAL'&&model.invoiceType!=='NON_TAX'">纳税人识别码：<span
+                                    ng-bind="model.taxpayerNo"></span></span>
+                        </p>
+                    </div>
+
+                    <!--需要发票是增值税发票的详情-->
+                    <div class="order-info-bd block-gray p10"
+                         ng-if="!model.editInvoice&&model.invoiceType==='VAT_ONLY'&&model.needInvoice==='true'">
+                        <p class="info-txt">
+                            <span class="wp-3">是否需要发票：<span
+                                    ng-bind="model.needInvoice==='true'?'需要':'不需要'"></span></span>
+                        </p>
+                        <p class="info-txt">
+                            <span class="mr40 w3">发票类型：增值税专用发票</span>
+                            <span class="mr40 w4 to">发票抬头：【单位】<span ng-bind="model.invoiceTitle"></span></span>
+                            <span class="mr20">纳税人识别码：<span ng-bind="model.taxpayerNo"></span></span>
+                        </p>
+                        <p class="info-txt">
+                            <span class="mr40 w3">开户银行：<span ng-bind="model.bankName"></span></span>
+                            <span class="mr40">开户账号：<span ng-bind="model.account"></span></span>
+                        </p>
+                        <p class="info-txt">
+                            <span class="mr40 w3">注册电话：<span ng-bind="model.unitPhone"></span></span>
+                            <span class="mr40">注册地址：<span ng-bind="model.unitAddress"></span></span>
+                        </p>
+                    </div>
+
+
+                    <!--不需要发票的详情-->
+                    <div class="order-info-bd block-gray p10"
+                         ng-if="!model.editInvoice&&model.needInvoice==='false'">
+                        <p class="info-txt">
+                            <span class="wp-3">是否需要发票：<span
+                                    ng-bind="model.needInvoice==='true'?'需要':'不需要'"></span></span>
+                        </p>
+                    </div>
+
+
+                    <!--编辑发票信息-->
+                    <div class="order-info-bd" ng-if="model.editInvoice">
+                        <ul class="ul-form mt20">
+                            <li>
+                                <span class="l-t l-t1"><i>*</i>是否需要发票：</span>
+                                <label class="ui-label"
+                                       ng-class="{'checked':model.needInvoice==='true'}">
+                                    <input type="radio"
+                                           ng-model="model.needInvoice"
+                                           value="true"
+                                           name="needInvoice"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">需要</span>
+                                </label>
+                                <label class="ui-label ml30"
+                                       ng-class="{'checked':model.needInvoice==='false'}"
+                                       ng-if="model.provideType!==2">
+                                    <input type="radio"
+                                           ng-model="model.needInvoice"
+                                           value="false"
+                                           name="needInvoice"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">不需要</span>
+                                </label>
+                            </li>
+                            <li ng-if="model.needInvoice==='true'"><span class="l-t l-t1"><i>*</i>发票类型：</span>
+                                <label class="ui-label mr30"
+                                       ng-if="model.selectCommonVAT"
+                                       ng-class="{'checked':model.invoiceType==='COMMON_VAT'}">
+                                    <input type="radio"
+                                           value="COMMON_VAT"
+                                           ng-model="model.invoiceType"
+                                           name="invoiceType"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">普通发票</span>
+                                </label>
+                                <label class="ui-label mr30"
+                                       ng-class="{'checked':model.invoiceType==='COMMON_ELECTRON'}"
+                                       ng-if="model.selectCommonElectron">
+                                    <input type="radio"
+                                           ng-model="model.invoiceType"
+                                           value="COMMON_ELECTRON"
+                                           name="invoiceType"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">普通电子发票</span>
+                                </label>
+
+
+                                <label ng-if="model.selectVATOnly" class="ui-label mr30"
+                                       ng-class="{'checked':model.invoiceType==='VAT_ONLY'}">
+                                    <input type="radio"
+                                           value="VAT_ONLY"
+                                           ng-model="model.invoiceType"
+                                           name="invoiceType"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">增值税专用发票</span>
+                                </label>
+
+                                <label class="ui-label ml30"
+                                       ng-class="{'checked':model.invoiceType==='NON_TAX'}"
+                                       ng-if="model.selectNonTax">
+                                    <input type="radio"
+                                           value="NON_TAX"
+                                           ng-model="model.invoiceType"
+                                           name="invoiceType"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">非税务票(纸制)</span>
+                                </label>
+
+
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceType!=='VAT_ONLY'"><span
+                                    class="l-t l-t1"><i>*</i>发票抬头：</span>
+                                <label class="ui-label mr30"
+                                       ng-class="{'checked':model.invoiceTitleType==='PERSONAL'}"
+                                       ng-if="model.selectPersonal">
+                                    <input type="radio"
+                                           ng-checked="model.invoiceTitleType==='PERSONAL'"
+                                           ng-click="events.changeTitleType('PERSONAL')"
+                                           name="invoiceTitleType"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">个人</span>
+                                </label>
+                                <label class="ui-label mr30"
+                                       ng-class="{'checked':model.invoiceTitleType==='UNIT'}"
+                                       ng-if="model.selectUnit">
+                                    <input type="radio"
+                                           name="invoiceTitleType"
+                                           ng-checked="model.invoiceTitleType==='UNIT'"
+                                           ng-click="events.changeTitleType('UNIT')"
+                                           class="radio">
+                                    <a href="javascript:void(0)" class="radio-a"></a>
+                                    <span class="ipt-txt">单位</span>
+                                </label>
+                                <input type="text"
+                                       ng-model="model.invoiceTitle"
+                                       placeholder="b{{model.invoiceTitleType==='UNIT'?'请填写单位名称':'请填写真实姓名'}}"
+                                       class="ipt ml10">
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceTitleType!=='PERSONAL'&&model.invoiceType!=='VAT_ONLY'&&model.invoiceType!=='NON_TAX'">
+                                <span class="l-t l-t1"><i>*</i>纳税人识别码：</span>
+                                <input type="text"
+                                       ng-model="model.taxpayerNo"
+                                       class="ipt">
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceTitleType!=='PERSONAL'&&model.invoiceType!=='VAT_ONLY'">
+                                <span class="l-t l-t1"></span>
+                                <span class="txt-r" ng-if="model.invoiceType!=='NON_TAX'">注：开企业抬头发票须填写纳税人识别号/社会信用统一代码，以免影响报销。</span>
+                                <span class="txt-r" ng-if="model.invoiceType==='NON_TAX'">注：非税务票是财政投放的票据，行政事业单位收取行政事业性收费开具的票据，可以作为报销凭证。</span>
+                            </li>
+
+
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceType==='VAT_ONLY'"><span
+                                    class="l-t l-t1"><i>*</i>单位名称：</span>
+                                <input type="text"
+                                       ng-model="model.invoiceTitle"
+                                       class="ipt w4">
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceType==='VAT_ONLY'"><span
+                                    class="l-t l-t1"><i>*</i>纳税人识别码：</span>
+                                <input type="text"
+                                       ng-model="model.taxpayerNo"
+                                       class="ipt">
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceType==='VAT_ONLY'"><span
+                                    class="l-t l-t1"><i>*</i>开户银行：</span>
+                                <input type="text"
+                                       ng-model="model.bankName"
+                                       class="ipt">
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceType==='VAT_ONLY'"><span
+                                    class="l-t l-t1"><i>*</i>开户帐号：</span>
+                                <input type="text"
+                                       ng-model="model.account"
+                                       class="ipt">
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceType==='VAT_ONLY'"><span
+                                    class="l-t l-t1"><i>*</i>注册电话：</span>
+                                <input type="text"
+                                       ng-model="model.unitPhone"
+                                       class="ipt">
+                            </li>
+                            <li ng-if="model.needInvoice==='true'&&model.invoiceType==='VAT_ONLY'"><span
+                                    class="l-t l-t1"><i>*</i>注册地址：</span>
+                                <input type="text"
+                                       ng-model="model.unitAddress"
+                                       class="ipt w4">
+                            </li>
+
+
+                            <li><span class="l-t l-t1"></span>
+                                <a href="javascript:void(0)"
+                                   ng-click="events.saveIncoice()"
+                                   class="ui-btn ui-btn-1 btn-o mr20">保 存</a>
+                                <a href="javascript:void(0)"
+                                   ng-if="hasEditInvoice"
+                                   ng-click="events.cacelSaveIncoice()"
+                                   class="ui-btn ui-btn-1 btn-g">取 消</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+
+                <!--电子发票不用选择配送方式-->
+                <div ng-if="model.invoiceType!=='COMMON_ELECTRON'&&model.needInvoice!=='false'&&model.total!==0"
+                     class="tit-block-1 mt30">配送方式
+                </div>
+
+
+                <div ng-if="model.invoiceType!=='COMMON_ELECTRON'&&model.needInvoice!=='false'&&model.total!==0"
+                     class="order-info-bd">
+                    <p class="mt10">选择方式：
+                        <label class="ui-label"
+                               ng-if="model.post"
+                               ng-class="{'checked':model.userTake==='1'}">
+                            <input type="radio"
+                                   name="userTake"
+                                   ng-model="model.userTake"
+                                   value="1"
+                                   class="radio">
+                            <a href="javascript:void(0)" class="radio-a"></a>
+                            <span class="ipt-txt">邮寄</span>
+                        </label>
+                        <label class="ui-label"
+                               ng-if="model.pickUp"
+                               ng-class="{'checked':model.userTake==='2','ml30':model.post}">
+                            <input type="radio"
+                                   name="userTake"
+                                   ng-model="model.userTake"
+                                   value="2"
+                                   class="radio">
+                            <a href="javascript:void(0)" class="radio-a"></a>
+                            <span class="ipt-txt">自取</span>
+                        </label>
+                    </p>
+
+                    <!--邮寄收货信息-->
+                    <div class="bd" ng-if="model.userTake==='1'&&model.post">
+                        <div class="block-gray p10 mt10">
+                            <div class="tit-block cb">收货信息<a href="javascript:void(0)"
+                                                             ng-click="model.editTakeAddress=true"
+                                                             ng-if="!model.editTakeAddress"
+                                                             class="ao ml30">[修改]</a></div>
+                            <p class="mt10" ng-if="!model.editTakeAddress">
+                                <span class="mr20" ng-bind="model.receiverName"></span><span class="mr20"
+                                                                                             ng-bind="model.mobileNo"></span>
+                                <span class="mr20"><span ng-bind="model.province"></span> <span
+                                        ng-bind="model.city"></span> <span ng-bind="model.district"></span> <span
+                                        ng-bind="model.addressDetails"></span></span>
+                            </p>
+                            <ul class="ul-form mt20" ng-if="model.editTakeAddress">
+                                <li>
+                                    <span class="l-t"><i>*</i>收货人：</span><input type="text"
+                                                                                ng-model="model.receiverName"
+                                                                                class="ipt">
+                                    <!--<span class="tips"><span class="p-ico"></span>提示语</span>-->
+                                </li>
+                                <li><span class="l-t"><i>*</i>手机：</span><input type="text"
+                                                                               ng-model="model.mobileNo"
+                                                                               class="ipt"></li>
+                                <li><span class="l-t"><i>*</i>所在地区：</span>
+                                    安徽省 - <select class="ui-slt ml5"
+                                                  ng-required="true"
+                                                  ng-change="events.changeCity(model.cityId)"
+                                                  ng-options="item.id as item.name for item in model.shiList"
+                                                  ng-model="model.cityId" style="width:127px">
+                                        <option value="" class="">请选择市</option>
+                                    </select>
+                                    <select class="ui-slt ml5 " style="width:127px"
+                                            ng-options="item.id as item.name for item in model.quList"
+                                            required
+                                            ng-model="model.districtId">
+                                        <option value="" class="">请选择区县</option>
+                                    </select>
+                                </li>
+
+
+                                <li>
+                                    <span class="l-t"><i>*</i>邮政编码：</span><input type="text"
+                                                                                 ng-model="model.postCode"
+                                                                                 class="ipt">
+                                </li>
+
+                                <li><span class="l-t"><i>*</i>详细地址：</span><input type="text"
+                                                                                 ng-model="model.addressDetails"
+                                                                                 class="ipt w-1"></li>
+                                <li><span class="l-t"></span>
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.saveReceive()"
+                                       class="ui-btn ui-btn-1 btn-o mr20">保 存</a>
+                                    <a href="javascript:void(0)"
+                                       ng-if="model.id"
+                                       ng-click="events.cancelEditReceive()"
+                                       class="ui-btn ui-btn-1 btn-g">取 消</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--自取 自取点-->
+                    <div class="bd" ng-if="model.userTake==='2'&&model.pickUp">
+                        <div class="block-gray p10 mt10"
+                             style="position:relative"
+                             ng-repeat="item in model.selfTakeAddress">
+                            <label class="ui-label ui-label-1"
+                                   ng-class="{'checked':model.selfStorageId===item.id}"
+                                   style="top:20px;">
+                                <input type="radio"
+                                       ng-checked="model.selfStorageId===item.id"
+                                       ng-click="events.choseTakeAddress(item)"
+                                       name="selfTake"
+                                       class="radio">
+                                <a href="javascript:void(0)" class="radio-a"></a>
+                            </label>
+                            <p class="ml20">
+                                领取地点：<span ng-bind="item.address"></span><br>
+                                领取时间：<span ng-bind="item.drawTime"></span><br>
+                                备注：<span ng-bind="item.remark"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="tit-block-1 mt30">培训内容</div>
+                <div class="order-info-bd">
+                    <table class="ui-table table-line mt10 lwh-th">
+                        <thead>
+                        <tr>
+                            <th class="tl">培训内容名称</th>
+                            <th width="150">学习形式</th>
+                            <th width="150">学时</th>
+                            <th width="300">属性</th>
+                            <th width="150">价格(元)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in model.courseList">
+                            <td class="tl" ng-bind="item.saleTitle"></td>
+                            <td ng-bind="item.schemeType==='TRAINING_CLASS'?'培训班':'课程'"></td>
+                            <td ng-bind="item.credit"></td>
+                            <td>
+                                <div ng-repeat="subItem in item.skuPropertyNameList">
+                                    <span ng-bind="subItem.skuPropertyName"></span>:
+                                    <span ng-bind="subItem.skuPropertyValueName"></span>
+                                </div>
+                            </td>
+                            <td class="txt-r" ng-bind="item.dealPrice"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tit-block-1 mt30">结算信息</div>
+                <div class="order-info-bd">
+                    <table class="ui-table table-line mt10">
+
+                        <tbody>
+                        <tr class="full-row-1">
+                            <td></td>
+                        </tr>
+                        <tr ng-repeat="item in model.priceList">
+                            <td class="tl">b{{item.year}}年度，b{{item.number}}个培训内容，共b{{item.period}}学时，共 <span
+                                    ng-bind="item.allPrice" class="txt-r"></span> 元
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="m-sum-bar-1 m-screen mt10 clear">
+                    <div class="fr">
+                        <button class="ui-btn btn-o ml10"
+                                ng-disabled="submitAble || !model.currentAccountId"
+                                style="height:40px;line-height:40px;"
+                                ng-click="events.createOrder()">提交订单
+                        </button>
+                        <!--<input type="button" class="ui-btn btn-o ml10" value="提交订单">-->
+                    </div>
+                    <p class="fr ml30 txt-g fs18 b">应付金额：<span class="txt-r">￥b{{model.total}}</span></p>
+                </div>
+                <div class="tr mt10 txt-g">请您在<span class="txt-r">24小时</span>内完成支付，否则订单会被自动取消。</div>
+            </div>
+        </div>
+    </div>
+</div>

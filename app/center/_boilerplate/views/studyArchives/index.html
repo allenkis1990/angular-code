@@ -1,0 +1,22 @@
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+
+
+    <div class="m-right-block fr">
+        <div class="right-block-bd">
+            <div class="m-account">
+                <div class="account-tit">
+                    <a href="javascript:void(0)"
+                       ng-click="$state.go('states.studyArchives.trainClass')"
+                       ng-class="{'current':$state.current.name==='states.studyArchives.trainClass'}">培训班</a>
+                    <a href="javascript:void(0)"
+                       ng-click="$state.go('states.studyArchives.goods')"
+                       ng-class="{'current':$state.current.name==='states.studyArchives.goods'}">自主选课</a>
+                </div>
+            </div>
+
+            <div ui-view="archivesContent"></div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="dialog-bd" style="width:500PX;">
+    <p>
+        用户存在已报班级。
+    </p>
+    <div class="gray-box mt10">
+        <p class="b">已报班级</p>
+        <ul class="ul-class">
+            <li ng-repeat="item in hasBaoList">b{{item.name}}</li>
+        </ul>
+    </div>
+</div>
+
+<div class="dialog-ft" style="margin-top:10px;"><a href="javascript:void(0)"
+                                                   ng-click="hasBaoDialog.remove()"
+                                                   class="btn-normal btn">放弃提交</a>
+</div>

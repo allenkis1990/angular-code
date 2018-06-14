@@ -1,0 +1,28 @@
+<div class="dialog w-10">
+    <div class="dialog-body">
+        <div class="dialog-tit">会计课程包详情<a href="javascript:void(0);" class="ico ico-close"
+                                          ng-click="events.toCloseListPage($event)"></a></div>
+        <div class="dialog-cont">
+            <ul class="ul-detail clear">
+                <li ng-repeat="course in model.courseList"><label ng-bind="course.courseName"></label><span><label
+                        ng-bind="course.period"></label>学时</span></li>
+            </ul>
+            <div ng-show="model.courseList.length==0" class="no-data clear">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂时没有数据!</div>
+            </div>
+            <div ng-show="model.courseList.length!=0" class="clear">
+                <div class="pages mt20 fr">
+                    <span class="page-info">第<span ng-bind="model.pageNo"></span>/<span
+                            ng-bind="model.pageCount"></span>页 总共<span ng-bind="model.totalSize"></span>条</span>
+                    <a href="javascript:void(0);" class="a-1" ng-click="events.page(1)">首页</a>
+                    <a href="javascript:void(0);" class="a-1" ng-click="events.page(model.pageNo-1)">上一页</a>
+                    <a ng-repeat="a in model.pageList" ng-class="{'current':a==model.pageNo}" href="javascript:void(0);"
+                       ng-click="events.page(a)"><span ng-bind="a"></span></a>
+                    <a href="javascript:void(0);" class="a-1" ng-click="events.page(model.pageNo+1)">下一页</a>
+                    <a href="javascript:void(0);" class="a-1" ng-click="events.page(model.pageCount)">尾页</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

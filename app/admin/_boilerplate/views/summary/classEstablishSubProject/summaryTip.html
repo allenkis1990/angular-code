@@ -1,0 +1,185 @@
+<div class="tips-box-1 clear">
+    <span class="t-r">班级开通统计报表查询的是日快照数据，日期可选范围为截止到前一天的时间！</span>
+</div>
+<p class="mt10">
+    <span class="fs16 b">1.搜索条件的字段及详细说明</span>（以下各搜索条件若都填写相关数据，则查询的是满足这几项搜索条件的数据才会查出来）
+</p>
+<table class="table table-3 table-nf mt10">
+    <thead>
+    <tr>
+        <th width="150">搜索字段</th>
+        <th>具体字段说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>查看单位</td>
+        <td class="tl">
+            选择查阅具体哪个施教机构的班级开通数据。
+        </td>
+    </tr>
+    <tr>
+        <td>商品所有权：全部、自建的、代销的、我授权出的</td>
+        <td class="tl">
+            自建的为商品是本单位自己创建的。代销的为商品由其他施教机构授权给本单位销售的。我授权出的为商品是本单位自己创建的，但授权给其他单位协助销售的。
+        </td>
+    </tr>
+    <tr>
+        <td>授权代销的单位</td>
+        <td class="tl">
+            明确代销的商品由哪一个单位授权给本单位销售的。
+        </td>
+    </tr>
+    <tr>
+        <td>授权出的单位</td>
+        <td class="tl">
+            明确自建的商品授权给哪个单位代销的。
+        </td>
+    </tr>
+    <tr>
+        <td>选择具体商品</td>
+        <td class="tl">
+            基于商品所有权，选择对应的哪一个商品。
+        </td>
+    </tr>
+    <tr>
+        <td>科目</td>
+        <td class="tl">
+            支持按课程的所属科目进行查询。查询属性值：全部、公需课、专业课。
+        </td>
+    </tr>
+    <tr>
+        <td>继续教育年度</td>
+        <td class="tl">
+            培训班所属的继续教育年度。
+        </td>
+    </tr>
+    <tr>
+        <td>培训班</td>
+        <td class="tl">
+            平台所创建的培训班培训方案。
+        </td>
+    </tr>
+    <tr>
+        <td>学时数区间</td>
+        <td class="tl">
+            培训班所设定的学时数。
+        </td>
+    </tr>
+    <tr>
+        <td>开通日期</td>
+        <td class="tl">
+            学员报名培训班成功且开通完成的时间(即支付成功订单且订单状态为交易成功的时间)
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p class="mt10">
+    <span class="fs16 b">2.列表字段及详细说明</span>（列表下的数据显示受搜索条件的约束）
+</p>
+<table class="table table-3 table-nf mt10">
+    <thead>
+    <tr>
+        <th width="150">列表字段</th>
+        <th>具体字段说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>合计</td>
+        <td class="tl">
+            各项数据的合计数值
+        </td>
+    </tr>
+    <tr>
+        <td>培训班名称</td>
+        <td class="tl">
+            显示被查询的培训班名称
+        </td>
+    </tr>
+    <tr>
+        <td>继续教育年度</td>
+        <td class="tl">
+            显示培训班归属的继续教育年度
+        </td>
+    </tr>
+    <tr>
+        <td>科目</td>
+        <td class="tl">
+            显示培训班归属的科目
+        </td>
+    </tr>
+    <tr>
+        <td>创建单位</td>
+        <td class="tl">
+            表示该培训方案由哪个单位创建的
+        </td>
+    </tr>
+    <tr>
+        <td>自己收款</td>
+        <td class="tl">
+            表示该培训方案在自己创建的收款账号缴费并开通的
+        </td>
+    </tr>
+    <tr>
+        <td>他人收款</td>
+        <td class="tl">
+            表示该培训方案在他人创建的收款账号缴费并开通的
+        </td>
+    </tr>
+    <tr>
+        <td>个人缴费</td>
+        <td class="tl">
+            指培训人员自主缴费的方式
+        </td>
+    </tr>
+    <tr>
+        <td>线上缴费</td>
+        <td class="tl">
+            通过网络在线的形式进行缴费
+        </td>
+    </tr>
+    <tr>
+        <td>线下缴费</td>
+        <td class="tl">
+            学员通过线下的形式进行缴费
+        </td>
+    </tr>
+    <tr>
+        <td>导入开通</td>
+        <td class="tl">
+            学员报班参加培训的方式是通过后台教务人员直接导入到具体班级
+        </td>
+    </tr>
+    <tr>
+        <td>净开通</td>
+        <td class="tl">
+            净开通=开通+换入-退班-换出；
+        </td>
+    </tr>
+    <tr>
+        <td>开通</td>
+        <td class="tl">
+            在开通日期段内，为用户成功开通培训班的人次。缴费成功订单状态为交易成功的培训班则开通数+1；
+        </td>
+    </tr>
+    <tr>
+        <td>退班</td>
+        <td class="tl">
+            在开通日期段内，发起退班且退班成功则对应的培训班退班人次+1；
+        </td>
+    </tr>
+    <tr>
+        <td>换入</td>
+        <td class="tl">
+            在开通日期段内，发起换入班级且换入成功的人次+1；
+        </td>
+    </tr>
+    <tr>
+        <td>换出</td>
+        <td class="tl">
+            在开通日期段内，发起换出班级且换出成功的人次+1；
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,83 @@
+.btn {
+  min-width: 50px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  color: #fff;
+  padding: 0 15px;
+  border: 0;
+  cursor: pointer;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+
+  &:active {
+    outline: none;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  }
+
+  &:disabled {
+    background-color: #bbb;
+    color: #666;
+    cursor: default;
+
+    &:hover {
+      background-color: #bbb;
+    }
+  }
+}
+
+input[type=button] {
+  min-width: 80px;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn-b {
+  background-color: #3ca2e2;
+  &:hover {
+    background-color: #54b1ec;
+  }
+}
+
+.btn-g {
+  background-color: #bbb;
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.btn-r {
+  background-color: #f47d95;
+  &:hover {
+    background-color: #fa95a9;
+  }
+}
+
+.btn-disable {
+  background-color: #aaa;
+  cursor: no-drop;
+  color: #ccc;
+  &:hover {
+    background-color: #aaa;
+  }
+}
+
+.btn-mini, .btn-xs {
+  height: 30px;
+  line-height: 30px;
+}
+
+.btn-xs {
+  width: 60px;
+  padding: 0;
+}

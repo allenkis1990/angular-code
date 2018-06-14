@@ -1,0 +1,11 @@
+<div class="screen-style"
+     style="padding-left:40px;height:auto"
+     ng-if="item.lwhIf"
+     ng-repeat="item in skuviewList"><span style="width:auto" class="style-name" ng-bind="item.cName"></span>
+    <button ng-disabled="lwhLoading===true"
+            style="min-width: 60px;"
+            ng-click="events.tabSearch(subItem.optionId,item,subItem)"
+            ng-repeat="subItem in model['skuItem'+item.skuPropertyId]"
+            ng-class="{'current':subItem.optionId===item.model}">b{{subItem.name}}
+    </button>
+</div>

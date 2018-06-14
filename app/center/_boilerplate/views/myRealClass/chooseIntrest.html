@@ -1,0 +1,147 @@
+<!--<div class="content-tit tab-tit clear">
+    <a   ng-click="events.tabCourse(1)"
+         ng-class="{'current':model.type===1}"
+          ng-bind="model.getUserClassLearningInfo.interestCoursePoolName"></a>
+    <a   ng-click="events.tabCourse(2)"
+         ng-class="{'current':model.type===2}"
+         >已选课程</a>
+</div>-->
+
+
+<div class="tips-box tips-box-1 course-bag-box mt10">
+    <a href="javascript:void(0)"
+       ng-bind="item.packageName"
+       ng-class="{'current':item.packageId===model.currentPackageId}"
+       ng-repeat="item in model.InterestBagList"
+       ng-click="events.choseInterBag(item)"
+       class="bag-items"></a>
+</div>
+
+<div class="mt10 clear">
+    <a href="javascript:void(0)"
+       ng-click="events.confirmChose()"
+       class="ui-btn btn-o btn-m fl">确认选中的课程</a>
+    <div class="txt-r mt5 fr">兴趣课程不纳入本培训班考核，请根据实际需求选课，选课成功后无法删除！</div>
+</div>
+
+
+<!-- 选修课1 -->
+<div class="tab-bd tab-bd-1 pb20" style="min-height:200px;">
+    <!--<div class="gray-bar clear"   >
+        <a  class="btn-auto"
+            ng-click="events.confirmChose()"
+            ng-disabled="confirmAble===true"
+            ng-class="{'lwh-disabled': confirmAble===true }">确认选中的课程</a>
+        &lt;!&ndash;<span class="ml10">当前勾选</span>
+        <span ng-if="model.hasChoseCreit<=0">0</span>
+        <span ng-if="model.hasChoseCreit>0">b{{model.hasChoseCreit}}</span>
+        <span class="t-b">   学时</span>&ndash;&gt;
+
+        <div class="tip fr"><span class="p-ico"></span> 兴趣课程不纳入本班考核，请根据实际需要选课，选课成功后无法删除</div>
+    </div>-->
+
+
+    <div class="ml20 mr20 mt10" ng-if="model.courseTabArr.length>0">
+        <table class="ui-table table-class">
+            <thead>
+            <tr>
+                <th width="50">选择</th>
+                <th class="tl">课程名称</th>
+                <th width="120">教师</th>
+                <th width="100">课程时长</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="subItem in model.courseTabArr">
+                <!--    <td>
+                        <label class="ui-label">
+                            <input type="checkbox" class="checkbox">
+                            <a href="#"></a>
+                            <span class="ipt-txt"></span>
+                        </label>
+                    </td>-->
+                <td>
+                    <label class="ui-label" ng-class="{'checked':subItem.ischecked}">
+                        <input type="checkbox"
+                               ng-checked="subItem.ischecked"
+                               ng-click="events.choseCourse($event,subItem)"
+                               class="checkbox">
+                        <a href="javascript:void(0)"
+                           class="checkbox-a"
+                           ng-class="{'lwh-select-chx':subItem.ischecked}">
+                        </a>
+                        <span class="ipt-txt"></span>
+                    </label>
+
+
+                </td>
+                <td class="tl" title="b{{subItem.name}}" ng-bind="subItem.shortName"></td>
+                <td ng-bind="subItem.teacherName"></td>
+                <td ng-bind="subItem.timeLength"></td>
+                <td class="op"><a href="javascript:void(0)" ng-click="events.tryListen($event,subItem)">试听</a></td>
+
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="m-no-data tc h-1" ng-if="model.courseTabArr.length<=0">
+        <img src="@systemUrl@/images/no-data.png" alt="空数据">
+        <p class="txt">当前分类下还没有课程</p>
+    </div>
+</div>
+<!-- /选修课1 -->
+
+
+<!-- 已选课程 -->
+<!--<div class="tab-bd tab-bd-1 pb20 "  ng-if="model.type===2">
+    <div class="gray-bar clear">
+        兴趣课累计已选 <span class="t-b"> b{{model.hasChoseIntrestList.length}}门</span>
+    </div>
+    <div class="ml20 mr20 mt10" ng-if="model.hasChoseIntrestList.length>0">
+        <table class="ui-table table-class">
+            <thead>
+            <tr>
+                <th width="50">选择</th>
+                <th class="tl">课程</th>
+&lt;!&ndash;
+
+                <th width="80">来源</th>
+                <th width="80">讲师</th>
+&ndash;&gt;
+
+                <th width="80">课程时长</th>
+                <th width="80">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in model.hasChoseIntrestList">
+        &lt;!&ndash;        <td>
+                    <label class="ui-label">
+                        <input type="checkbox" class="checkbox">
+                        <a href="#"></a>
+                        <span class="ipt-txt"></span>
+                    </label>
+                </td>&ndash;&gt;
+                <td ng-bind="($index+1)"> </td>
+                <td class="tl" title="b{{item.courseName}}" ng-bind="item.shortName">  </td>
+&lt;!&ndash;
+
+                <td>必修包</td>
+                <td>张莉</td>
+&ndash;&gt;
+                <td ng-bind="item.timeLength"></td>
+                <td class="op"><a href="javascript:void(0)" ng-click="events.tryListen($event,item)">试听</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="m-no-data tc h-1" ng-if="model.hasChoseIntrestList.length<=0">
+        <img src="@systemUrl@/images/no-data.png" alt="空数据">
+        <p class="txt">当前分类下还没有课程</p>
+    </div>
+</div>-->
+<!-- /已选课程 -->

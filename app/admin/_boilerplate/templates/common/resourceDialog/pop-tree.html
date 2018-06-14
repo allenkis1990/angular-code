@@ -1,0 +1,13 @@
+<span ng-if="utils.validateIsNull(model.name)===false"
+      style="position:absolute;color:#666;font-size:16px;z-index:99;right:10px;top:3px;cursor:pointer"
+      ng-click="events.clearModel($event)">x</span>
+<input id="b{{model.rootIdName}}"  readonly="true"
+       ng-click="events.showCategory($event,'popUp')"
+       ng-keyup="events.keyUpIndexUnit($event)" ng-model="model.name"
+       ng-change="events.refreshIndexUnit($event)" placeholder="b{{model.defaultTxt}}" type="text"
+       class="ipt ipt-medium" name="courseResourseCategoryType"/>
+<div kendo-popup="node.popUp" k-options="popup.options" class="ipt ipt-medium">
+    <div kendo-tree-view="node.trees" k-options="treeView.options" id="selectTree">
+
+    </div>
+</div>

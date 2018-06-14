@@ -1,0 +1,111 @@
+@import "../public/variables";
+
+.m-screen {
+  position: relative;
+  .screen-style {
+    border-bottom: 1px dashed #ddd;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    padding-left: 98px;
+
+    a {
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      display: inline-block;
+      min-width: 60px;
+      padding: 0 10px;
+      color: #666;
+      margin-right: 15px;
+
+      &:hover {
+        color: #d0041f;
+      }
+    }
+    .current {
+      background-color: #d0041f;
+      color: #fff;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .ui-btn {
+      box-sizing: content-box;
+      color: #fff;
+      padding: 0 10px;
+      margin-right: 0;
+      height: 30px;
+      line-height: 30px;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  .style-name {
+    width: 91px;
+    text-align: right;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: bold;
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      color: #d0041f;
+      background-position: -190px -230px;
+      margin-right: 5px;
+    }
+  }
+  .screen-style-1 {
+    padding-left: 115px;
+    .style-name {
+      width: 100px;
+    }
+  }
+  .screen-style-2 {
+    padding-left: 115px;
+    border-bottom: 0;
+    .style-name {
+      width: auto;
+    }
+    .checkbox-a {
+      width: 16px;
+      height: 16px;
+      min-width: auto;
+    }
+  }
+
+  .abs {
+    width: 768px;
+    bottom: 11px;
+    right: 0;
+  }
+}
+
+.m-screen-1 {
+  .screen-style {
+    padding-left: 105px;
+  }
+  .style-name {
+    width: 95px;
+  }
+}
+
+.m-screen-2 {
+  .screen-style {
+    height: auto;
+    line-height: inherit;
+    padding: 10px 15px;
+  }
+}

@@ -1,0 +1,36 @@
+<div class="main-wrap-body">
+    <div class="rel udf-2">
+        <div payment-rules sku-id="model.skuId" scheme-id="model.schemeId" just-import-open="schemeDetail.justImportOpen"
+             edit-rule="model.editRule"
+             save-rule-callback="events.init()"
+             payment-rule="model.paymentRule"></div>
+        <div class="column mt50">
+            <div class="col-tit clear">
+                配置授权单位名单
+                <div class="fr">
+                    <!--<a href="" ng-click="events.openAuthorizedDialog($event)" class="btn btn-b">授权日志</a>-->
+                </div>
+            </div>
+            <div class="dash-line-1"></div>
+        </div>
+        <ul class="ul-d-form pt20">
+            <li class="clear">
+                <span class="left-txt fl">选择授权单位：</span>
+                <div class="w-textarea fl">
+                    <a href="javascript:void(0);" ng-click="events.openUnAuthorizeUnitDialog($event)"
+                       class="btn-b btn mr20">选择授权单位</a>
+                </div>
+            </li>
+            <li class="clear">
+                <span class="left-txt fl">已授权单位：</span>
+                <div class="w-textarea fl" kendo-grid="authorizedUnitGridInstance"
+                     k-options="grid.authorizedUnitGrid">
+                </div>
+            </li>
+        </ul>
+        <!--<div class="tc mt10">-->
+            <!--&lt;!&ndash;<a href="#" class="btn btn-r">保存并授权</a>&ndash;&gt;-->
+            <!--<a href="javascript:void(0);" ng-click="$state.go('states.goodsManager')" class="btn btn-g ml10">返回</a>-->
+        <!--</div>-->
+    </div>
+</div>

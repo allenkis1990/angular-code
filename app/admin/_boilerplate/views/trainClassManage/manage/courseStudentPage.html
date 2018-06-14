@@ -1,0 +1,38 @@
+<div class="dialog w-8">
+    <div class="dialog-body">
+        <div class="dialog-tit">&lt;&lt;b{{model.statistic.course.courseName}}&gt;&gt;的学员学习情况 <a
+                href="javascript:void(0);" class="ico ico-close"
+                ng-click="node.statistic.course.detailWindow.close();"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text"
+                               class="ipt ipt-small"
+                               placeholder="请输入学员名称"
+                               hb-clear-input
+                               ng-model="model.statistic.course.studentQueryParam.studentName"
+                               ng-keyup="events.statistic.courseDimension.studentPagePressEnterKey($event)"
+                    /></li>
+                    <li>
+                        <a href="javascript:void(0)"
+                           class="btn btn-b"
+                           ng-click="events.statistic.courseDimension.studentPageQuery($event)"
+                        >查询</a>
+                        <!-- <a href="#" class="btn btn-r">导出</a>-->
+                    </li>
+                </ul>
+            </div>
+            <p>
+                应学人数：b{{model.statistic.course.studentCountObject.total}}人，学完：b{{model.statistic.course.studentCountObject.finish}}人，在学：b{{model.statistic.course.studentCountObject.studying}}人，未学：b{{model.statistic.course.studentCountObject.neverStart}}人</p>
+            <div class="column">
+                <div class="col-body mt10">
+                    <div kendo-grid="node.statistic.course.studentGrid"
+                         k-options="ui.statistic.courseDimension.studentGrid.options">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

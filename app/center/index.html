@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title></title>
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+    <script src="/bower_components/es5-shim/es5-shim.min.js"></script>
+    <script src="/bower_components/jquery-knob/excanvas.js"></script>
+    <script type="text/javascript">
+        var protocol = window.location.href.match(/http:\/\/|https:\/\//),
+            head = document.getElementsByTagName('head')[0],
+            base = document.createElement('base'),
+            replaceReg = 'seocenterseo'.split('seo')[1],
+            suffix = replaceReg ? '/' : '';
+        base.href = protocol + window.location.host + '/' + replaceReg + suffix;
+        head.appendChild(base);
+    </script>
+</head>
+<body>
+
+<div class="main-frame">
+    <div class="main-frame-bd">
+        <!-- 头部 -->
+        <div ui-view="topView"></div>
+        <!-- /头部 -->
+        <div ui-view="contentView"></div>
+    </div>
+</div>
+
+<div ui-view="footerView"></div>
+
+<div ui-view="qrcode"></div>
+
+<script src="/bower_components/requirejs/require.js" data-main="./main.config.js"></script>
+<script id="app_config_info">define("_app_config_infos_", function () {"use strict"; return [{"main":"ahzj\\kccs\\main.app.js","name":"ahzj\\kccs","theme":"ahzj/kccs/styles/webstyle.css"},{"main":"kccs\\kccsv2\\main.app.js","name":"kccs\\kccsv2","theme":"kccs/kccsv2/styles/webstyle.css"}] }) </script>
+</body>
+</html>

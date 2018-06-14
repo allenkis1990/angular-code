@@ -1,0 +1,67 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="" ui-sref="^" class="ico return"></a>
+        <a class="aw" ui-sref="^">包裹配送</a> &gt; 发货
+    </div>
+</div>
+
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit"><span class="b mr20 txt-b">第一步</span>确认收货信息及班级信息</div>
+        <div class="dash-line-1"></div>
+        <div class="clear add-address">
+            <div class="wp-9 fl bor-r pr20">
+                <p class="b fs16">包裹物品</p>
+                <div class="mt10">
+                    <div class="goods-info">
+                        订单号：<span ng-bind="model.dispatchInfo.packageContent.orderNo"></span><br>
+                        交易成功时间：<span ng-bind="model.dispatchInfo.packageContent.traceSuccessTime"></span><br>
+                        培训班：<span style="display: inline;"
+                                  ng-bind="model.dispatchInfo.packageContent.goodNameList.join(',')"></span>
+                        <div class="tips-box mt5 mb5" ng-repeat="bill in model.dispatchInfo.packageContent.orderBills">
+                            【培训发票】发票抬头：<span ng-bind="bill.title"></span>
+                            <span class="ml20" ng-bind="'数量：' + bill.count"></span>
+                            <span ng-bind="'发票号: ' + (bill.orderBillNo||'未打印')" class="ml20"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wp-9 fl ml20">
+                <p class="b fs16">收货信息</p>
+                <div class="mt10">
+                    收货地址：<span ng-bind="model.dispatchInfo.receiveContent.recipientsAddress"></span><br>
+                    收货人：<span ng-bind="model.dispatchInfo.receiveContent.recipients"></span><br>
+                    手机号码：<span ng-bind="model.dispatchInfo.receiveContent.recipientsPhone"></span>
+                    <div class="tips-box-2 mt5 mb5">
+                        备注：<span ng-bind="model.dispatchInfo.remark||'无'"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column mt30">
+        <div class="col-tit"><span class="b mr20 txt-b">第二步</span>选择物流服务</div>
+        <div class="dash-line-1"></div>
+        <form name="certainForm" novalidate autocomplete="off">
+            <select kendo-combo-box
+                    ng-model="model.waybillway"
+                    name="waybillway" ng-required="true"
+                    k-options="logisticsCombo"
+                    class="slt slt-small">
+            </select>
+            <input type="text" ng-required="true" name="waybillNo" class="ipt ipt-medium ml10"
+                   ng-model="model.dispatchInfo.waybillNo"
+                   placeholder="请填写运单号">
+            <div validate-message
+                 ashe="certainForm.waybillNo"></div>
+            <br>
+            <span class="t-r ml20 mt20">注：填写运单号确认后，交易状态就会更改为“已发货”。</span>
+        </form>
+    </div>
+    <div class="mt30">
+        <div loading="events.dispatch(certainForm)" text="确定发货" is-disable="certainForm.$invalid" loading-biu
+             has-permission="packageDispatchGroup/certainDispatch"
+             is-loading="dispatching"></div>
+        <a href="" ui-sref="^" class="btn btn-g ml10">取消</a>
+    </div>
+</div>

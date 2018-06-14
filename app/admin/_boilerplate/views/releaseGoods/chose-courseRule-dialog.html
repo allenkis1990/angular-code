@@ -1,0 +1,35 @@
+<div class="dialog-body">
+    <div class="dialog-tit">选择选课规则模板<a href="javascript:void(0)"
+                                       ng-click="events.closeKendoWindow('choseCourseRuleWindow')"
+                                       class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text"
+                           placeholder="请填写选课规则名称"
+                           ng-keyup="events.pressEnterKey($event,'modGridInstance','courseRulePage')"
+                           ng-model="courseRule.name"
+                           class="ipt ipt-medium"></li>
+                <li><select class="slt"
+                            ng-model="courseRule.ruleType">
+                    <option value="0">请选择选课规则类型</option>
+                    <option value="1">仅选修包</option>
+                    <option value="2">仅必修包</option>
+                    <option value="3">必修包+选修包</option>
+                </select></li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.MainPageQueryList($event,'modGridInstance','courseRulePage')"
+                       class="btn btn-b">搜索</a></li>
+            </ul>
+        </div>
+
+        <div kendo-grid="kendoPlus.modGridInstance"
+             k-options="modGrid.options">
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('choseCourseRuleWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

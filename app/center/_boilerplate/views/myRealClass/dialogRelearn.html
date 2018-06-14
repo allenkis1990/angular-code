@@ -1,0 +1,17 @@
+<div ng-if="model.reLearnType !== 1">
+    重学本课程会<br>
+    1 清空本课程学习记录；<br>
+    2 清空本课程练习记录（课程练习）；<br>
+    确认重学当前课程？
+</div>
+<div ng-if="model.reLearnType === 1">
+    重学培训班会<br>
+    1 清空本培训班所有课程学习记录（课程无需重选）；<br>
+    2 清空所有练习记录（课程练习）；<br>
+    2 清空所有试卷答卷记录；<br>
+    确认重学当前培训班？
+</div>
+<div class="dialog-ft">
+    <a i="close" href="javascript:void (0);" ng-click="events.sureReLearn($event)" class="btn-normal btn">重学</a>
+    <a i="close" class="btn-gray btn ml10">暂不</a>
+</div>

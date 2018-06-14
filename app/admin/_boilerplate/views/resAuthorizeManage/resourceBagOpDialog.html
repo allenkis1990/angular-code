@@ -1,0 +1,33 @@
+<div class="dialog-body">
+    <div class="dialog-tit">操作日志<a href="" ng-click="events.closeKendoWindow('resourceBagOpWindow')" class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+        <div class="op-list" style="min-height:200px;">
+            <div ng-show="model.resourceBagOpSize.length==0" class="no-data clear">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂时没有数据!</div>
+            </div>
+            <div class="list-items" ng-repeat="item in model.resourceBagOpList">
+                <p>在【<span ng-bind="item.operateTime"></span>】【<span ng-bind="item.operator"></span>】
+                    <span ng-if="item.type==='CREATE'">创建了</span>
+                    <span ng-if="item.type==='UPDATE'">调整了</span>
+                    <span ng-if="item.type==='REMOVE'">调整了</span>
+                    资源授权方案<span ng-bind="item.name"></span>,
+                    <span ng-if="item.type==='CREATE'">涵盖资源有【
+                        <span ng-repeat="(key,value) in item.newData.resourceGroupCount">b{{value}}
+                            b{{util.getResType(key).countTxt}}b{{util.getResType(key).name}};</span>
+                        】
+                    </span>
+                    <span ng-if="item.type!=='CREATE'">将资源从【
+                        <span ng-repeat="(key,value) in item.oldData.resourceGroupCount">b{{value}}
+                            b{{util.getResType(key).countTxt}}b{{util.getResType(key).name}};</span>
+                        】调整为【<span ng-repeat="(key,value) in item.newData.resourceGroupCount">b{{value}}
+                            b{{util.getResType(key).countTxt}}b{{util.getResType(key).name}};</span>】</span>
+
+                </p>
+            </div>
+        </div>
+        <div class="col-body mt20 clear">
+            <div kendo-pager="node.resourceBagOpPager" k-options="resourceBagOpPager.options"></div>
+        </div>
+    </div>
+</div>

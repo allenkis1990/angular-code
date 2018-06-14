@@ -1,0 +1,155 @@
+<!--<style>
+
+  .li-prompt lip-2 {
+    width: 180px;
+    top: 0;
+    left: 330px;
+    padding: 7px 5px;
+  }
+</style>-->
+
+<div class="dialog w-textarea3" style="width:550px;" kendo-window="node.windows.updateWindow"
+     ng-click="events.closeTree($event)" k-options="windowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">管理员账号基础信息<a href="#" class="ico ico-close"
+                                            ng-click="events.cancelUpdate($event);updateAdminAccountForm.$setPristine()"></a>
+        </div>
+        <div class="dialog-cont">
+            <form novalidate name="updateAdminAccountForm">
+                <ul class="ul-form uf-1 clear">
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 账号：</span>
+                        b{{model.adminAccount.loginAccount}}
+                        <!--<input
+                        type="text" class="ipt ipt-medium" placeholder="请输入账号" name="loginInput" ng-model="model.adminAccount.loginAccount"  ng-disabled="true"
+                        />-->
+                    </li>
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 登录密码：</span>
+                        <input type="password"
+                               class="ipt ipt-medium"
+                               placeholder="请输入密码"
+                               ng-model="model.adminAccount.password"
+                               name="password"
+                        />
+                        <!--<input type="password"
+                                 class="ipt ipt-medium"
+                                 placeholder="请输入密码"
+                                 ng-model="model.adminAccount.password"
+                                 name="password"
+                                 required
+                            /><span ng-show="updateAdminAccountForm.password.$dirty &&
+                        updateAdminAccountForm.password.$error.required"
+                              class="li-prompt lip-2">
+                          <span class="ico ico-prompt">
+                          </span>
+                          请输入密码！
+                        </span>--></li>
+                    <li>
+                        <span class="s-txt width124"><i class="text-red">*</i> 确认登录密码：</span>
+                        <input type="password"
+                               class="ipt ipt-medium"
+                               placeholder="请再次输入密码"
+                               ng-model="model.adminAccount.confirmPassword"
+                               name="confirmPassword"
+                               hb-compare="model.adminAccount.password"
+                        />
+                        <span
+                                ng-show="updateAdminAccountForm.confirmPassword.$dirty && updateAdminAccountForm.confirmPassword.$error.compare"
+                                class="li-prompt lip-2">
+                <span class="ico ico-prompt"></span>
+                两次输入的密码不一致！
+              </span>
+                    </li>
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 持有者姓名：</span>
+                        <input
+                                type="text" class="ipt ipt-medium" ng-model="model.adminAccount.name"
+                                placeholder="请输入姓名"
+                                name="yourname"
+                                required ng-required="true"
+                        />
+                        <span
+                                ng-show="updateAdminAccountForm.yourname.$dirty && updateAdminAccountForm.yourname.$error.required"
+                                class="li-prompt lip-2"><span class="ico ico-prompt"></span>请输入姓名</span>
+                    </li>
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 邮箱号：</span>
+                        <input
+                                type="email" class="ipt ipt-medium" name="email" ng-model="model.adminAccount.email"
+                                placeholder="请输入邮箱号"
+                                required ng-required="true"
+                                ng-pattern="regexps.email"
+                                ajax-validate ajax-data="emailValidate"
+                                ajax-url="/web/admin/adminAccountAction/editValidate"
+                        />
+                        <span ng-show="updateAdminAccountForm.email.$dirty && updateAdminAccountForm.email.$error.required"
+                              class="li-prompt lip-2"><span class="ico ico-prompt"></span>请输入邮箱</span>
+                        <span
+                                ng-show="updateAdminAccountForm.email.$dirty && !updateAdminAccountForm.email.$error.required && updateAdminAccountForm.email.$error.pattern"
+                                class="li-prompt lip-2"><span class="ico ico-prompt"></span>邮箱格式不正确</span>
+                        <span
+                                ng-show="updateAdminAccountForm.email.$dirty && !updateAdminAccountForm.email.$error.required && !updateAdminAccountForm.email.$error.pattern && updateAdminAccountForm.email.$error.ajaxValidate"
+                                class="li-prompt lip-2"><span class="ico ico-prompt"></span>该邮箱已被注册</span>
+                        <!--<span ng-show="updateAdminAccountForm.email.$dirty && updateAdminAccountForm.email.$error.required" class="li-prompt lip-2"><span class="ico ico-prompt"></span>请输入邮箱</span>
+                        <span ng-show="updateAdminAccountForm.email.$dirty && updateAdminAccountForm.email.$error.pattern" class="li-prompt lip-2"><span class="ico ico-prompt"></span>邮箱格式不正确</span>
+                        <span ng-show="updateAdminAccountForm.email.$dirty && updateAdminAccountForm.email.$error.ajaxValidate" class="li-prompt lip-2"><span class="ico ico-prompt"></span>该邮箱已被注册</span>-->
+                    </li>
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 所在单位或部门：</span>
+                        b{{model.adminAccount.parentName}}
+                    </li>
+                    <!-- <li><span class="s-txt width124"></span>
+                       &lt;!&ndash;<input ng-model="model.adminAccount.parentName" class="ipt ipt-medium" ng-click="events.openTree($event)" required>&ndash;&gt;
+                       <input class="ipt ipt-medium" ng-model="model.adminAccount.parentName" ng-click="events.openTree($event)">
+                       <div ng-click="events.openTree($event)" class="column-block w-tree fl" ng-show="libraryTreeShow"  style="  position: absolute;z-index: 10;  left: 129px; max-width: 193px; width: 193px; overflow: hidden;">
+                           <div  kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                             <span k-template ng-click="events.getOrgInfo($event, dataItem)">
+                               <label style="width: 100px;">b{{dataItem.name}}</label>
+                             </span>
+                           </div>
+                       </div></li>-->
+                    <!--<select class="slt slt-medium">
+                    <option>请选择单位或部门</option>
+                  </select>-->
+                    <li><span class="s-txt width118"></span><span class="txt-r"> 注：</span>1、帐号所属的单位或部门，即是该帐号的管理范围；<br/>
+                    <li>
+                        <span class="s-txt width118"></span>
+                        <!--
+                        本button可用，但是判断两个密码不一样是在 点击保存触发时 才去校验两次密码是否一样。。
+                        <input type="button" ng-click="events.update($event)"
+                               ng-class="{'btn-g':(!updateAdminAccountForm.email.$valid && !updateAdminAccountForm.yourname.$valid),
+                           'btn-r': updateAdminAccountForm.$pristine  ||
+                           (updateAdminAccountForm.email.$valid && updateAdminAccountForm.yourname.$valid)
+                           }"
+                               class="btn" value="保存">
+
+
+                          第二种
+                          <input type="button" ng-click="events.update($event)"
+                               ng-class="{'btn-g':(!updateAdminAccountForm.email.$valid && !updateAdminAccountForm.yourname.$valid),
+                           'btn-r': updateAdminAccountForm.$pristine  || (updateAdminAccountForm.confirmPassword.$dirty && !updateAdminAccountForm.confirmPassword.$error.compare) &&
+                           (updateAdminAccountForm.email.$valid && updateAdminAccountForm.yourname.$valid)
+                           }"
+                               class="btn" value="保存">
+                               -->
+                        <input type="button" ng-click="events.update($event);updateAdminAccountForm.$setPristine()"
+                               ng-class="{'btn-g':(!updateAdminAccountForm.email.$valid && !updateAdminAccountForm.yourname.$valid),
+               'btn-r': updateAdminAccountForm.$pristine  ||
+               (updateAdminAccountForm.email.$valid && updateAdminAccountForm.yourname.$valid)
+               }"
+                               class="btn" value="保存">
+                        <!--<input type="button" ng-click="events.update($event)"
+                               ng-class="{'btn-g': !(updateAdminAccountForm.email.$valid && updateAdminAccountForm.yourname.$valid),
+                               'btn-r': (updateAdminAccountForm.password.$pristine && updateAdminAccountForm.confirmPassword.$pristine)?updateAdminAccountForm.$valid ||
+                               updateAdminAccountForm.$valid
+                               }"
+                               class="btn" value="保存">-->
+                        <input type="button"
+                               ng-click="events.cancelUpdate($event);updateAdminAccountForm.$setPristine()"
+                               class="btn btn-g ml10" value="取消">
+                    </li>
+                </ul>
+
+            </form>
+        </div>
+    </div>
+
+</div>

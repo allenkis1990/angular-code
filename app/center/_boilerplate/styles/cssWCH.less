@@ -1,0 +1,562 @@
+div[content-dialog], div[service-error-dialog] {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  position: fixed;
+  .pf-dialog-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    .mask {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: black;
+      opacity: .6;
+    }
+
+    .pf-dialog-error-container {
+      position: fixed;
+      left: 50%;
+      -webkit-transition: all .5s;
+      -moz-transition: all .5s;
+      -ms-transition: all .5s;
+      -o-transition: all .5s;
+      transition: all .5s;
+      top: 50%;
+      margin: 50px 0 0 -200px;
+      width: 400px;
+      margin-top: -100px;
+      .anchor {
+        font-weight: bold;
+        font-size: 15px;
+      }
+      .sweet-alert {
+        display: block;
+        width: 150px;
+        top: 0;
+        margin-top: 0;
+        position: relative;
+        left: 50%;
+        margin-left: -92px;
+        overflow: inherit;
+        .error-num {
+          position: absolute;
+          top: -15px;
+          width: 25px;
+          height: 25px;
+          background: red;
+          border-radius: 50%;
+          line-height: 25px;
+          color: white;
+          box-shadow: 0 0 6px black;
+          right: -15px;
+        }
+      }
+      .error-close {
+        position: absolute;
+        right: 8px;
+        top: 7px;
+        height: 20px;
+        -webkit-transition: all .5s;
+        -moz-transition: all .5s;
+        -ms-transition: all .5s;
+        -o-transition: all .5s;
+        transition: all .5s;
+        width: 21px;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+          box-shadow: 0 0 5px;
+        }
+      }
+    }
+
+    .error-messages {
+      margin-top: 20px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      background: white;
+      .error-arrow {
+        border-width: 0 10px 10px 10px;
+        border-color: transparent transparent #fff transparent;
+        position: absolute;
+        border-style: solid;
+        left: 50%;
+        margin-left: -5px;
+        margin-top: -10px;
+      }
+      .pf-error-content {
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        padding: 5px;
+        max-height: 350px;
+        overflow: auto;
+      }
+      .pf-error-msg {
+        font-size: 12px;
+        padding: 5px 10px;
+        margin: 4px;
+        cursor: pointer;
+        -webkit-transition: all .5s;
+        -moz-transition: all .5s;
+        -ms-transition: all .5s;
+        -o-transition: all .5s;
+        transition: all .5s;
+        &:hover {
+          box-shadow: 0 0 10px;
+        }
+        .real-content {
+          display: inline-block;
+          width: 84%;
+          font-weight: bold;
+        }
+        .error-info {
+          padding: 10px 0px;
+          text-indent: 23px;
+          border-top: 1px #BFBFBF dashed;
+          margin-top: 10px;
+        }
+      }
+    }
+
+  }
+
+  .pf-dialog-container.ng-enter {
+    opacity: 0;
+    -webkit-transform: scale3d(1.1, 1.1, 1);
+    transform: scale3d(1.1, 1.1, 1);
+  }
+  .pf-dialog-container.ng-enter-active {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  .pf-dialog-container.ng-leave {
+    opacity: 1;
+    .mask {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+  }
+  .pf-dialog-container.ng-leave-active {
+    opacity: 0;
+    -webkit-transform: scale3d(0.9, 0.9, 1);
+  }
+}
+
+.webuploader-element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  opacity:0;
+}
+
+.m-screen .screen-style button {
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  display: inline-block;
+  padding: 0 10px;
+  color: #444;
+  margin-right: 15px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.p-wrap-full .m-screen .screen-style button.disabled {
+  background: #C1C1C1;
+  color: #fff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  cursor: not-allowed;
+}
+
+.lwh-shoppingCart {
+  width: auto;
+  height: 30px;
+  line-height: 28px;
+  font-size: 14px;
+  text-align: center;
+  color: #1971b6;
+  background-color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 6px;
+
+  background: #fff;
+  border: 1px solid #1971b6;
+  color: #1971b6
+}
+
+.class-detail .info .lwhDetailShoppingBtn {
+  background: #fff;
+  border: 1px solid #1971b6;
+  color: #1971b6;
+  height: 40px;
+}
+
+.class-detail .info .btn-bar .lwhDetailShoppingBtn.btn-dis {
+  color: #999;
+  border-color: #bbb;
+  background-color: #eee;
+  cursor: default;
+}
+
+.lwh-shoppingCart.btn-dis {
+  color: #999;
+  border-color: #bbb;
+  background-color: #eee;
+  cursor: default;
+}
+
+.ui-table .lwh-tr td.padding4 {
+  padding: 4px 0px;
+}
+
+.lwhLoading {
+  width: 80px;
+  height: 80px;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  z-index: 9999;
+}
+
+.posrel {
+  position: relative;
+}
+
+.btn-cacel {
+  width: 145px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  background-color: #9e9e9e;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.btn-cacel:hover {
+  background: #C1C1C1;
+}
+
+.lwh-table-line .label-hb {
+  width: 45px;
+  padding: 0 5px;
+  margin: 3px 0;
+  color: #fff;
+  background-color: #b2b2b2;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.wch-grey-text {
+  color: grey;
+}
+
+.content-sub-tit .applyForBillDisable {
+  color: #888;
+}
+
+.lwh-mb-10 {
+  margin-bottom: 6px;
+  color: red;
+}
+
+.lwh-modal {
+  background: #000;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  position: fixed;
+  left: 0px;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.lwh-cacel {
+  background: url('../../../@systemUrl@/images/lwh-cacel2.png') no-repeat center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.m-exam-dialog .lwhDisBtn:disabled {
+  background-color: #bbb;
+  color: #666;
+  border: 0;
+  cursor: no-drop;
+}
+
+.m-exam-dialog .lwhDisBtn:disabled:hover {
+  background-color: #bbb;
+  color: #666;
+  border: 0;
+  cursor: no-drop;
+}
+
+.d-slt.slt-ed .ui-label a.lwh-exam-link {
+  background-position: -20px -20px;
+}
+
+.d-slt.slt-ed .ui-label a.lwh-examchx-link {
+  background-position: -20px 0;
+}
+
+.d-slt .ui-label a.lwh-exam-link {
+  background-position: 0 -20px;
+}
+
+.ui-label a.lwh-select-chx {
+  background-position: -20px 0;
+}
+
+.classlist li .op .btn-dis.lwh-disabled:hover {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.classlist li .op .btn-dis.lwh-disabled {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.classlist li .op .btn-gr.lwh-disabled:hover {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.classlist li .op .btn-gr.lwh-disabled {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.m-course-detail .course-detail-hd .course-info-block .course-op button.btn-dis.lwh-disabled:hover {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.m-course-detail .course-detail-hd .course-info-block .course-op button.btn-dis.lwh-disabled {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.m-course-detail .course-detail-hd .course-info-block .course-op button.btn-gr.lwh-disabled:hover {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.m-course-detail .course-detail-hd .course-info-block .course-op button.btn-gr.lwh-disabled {
+  background: #9d9d9d;
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.lwh-modal {
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.lwh-dialog .btn-bar .ui-btn {
+  height: 32px;
+  line-height: 32px;
+  padding: 0 20px;
+  color: #fff;
+}
+
+.lwh-dialog .btn-bar {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.lwh-th th {
+  text-align: inherit;
+}
+
+.lwh-table .lwh-td {
+  border-bottom: none;
+}
+
+.ml20 {
+  margin-left: 20px;
+}
+
+.header .logo a:hover {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.mask-bg-lwh {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.m-dialog .dialog-box .m-login .login-bd .login-form .btn-login.lwh-disabled {
+  background: #9d9d9d;
+  cursor: not-allowed;
+}
+
+.m-dialog .dialog-box .m-login .login-bd .login-form .btn-login.lwh-disabled:hover {
+  background: #9d9d9d;
+}
+
+.lwh-shoppingBar {
+  position: fixed;
+  left: 50%;
+  margin-left: -396px;
+  bottom: 0;
+  z-index: 999;
+}
+
+.mh391 .classlist li .buy-pop.ng-enter {
+  margin-top: -280px;
+  transition: all 0.8s;
+}
+
+.mh391 .classlist li .buy-pop.ng-enter.ng-enter-active {
+  margin-top: 0px;
+}
+
+.m-left-block .m-left-list li.current a span.ico-class {
+  background-position: 4px -355px;
+}
+
+.m-account .lwh-takeAddress .ul-form li {
+  line-height: inherit;
+  height: inherit;
+}
+
+.lwhlwhorder .lwh-order-info .order-info-bd span {
+  vertical-align: inherit;
+  display: inline;
+}
+
+.m-pages .pages-num a.current {
+  background: #08af9c;
+  color: #fff;
+}
+
+.ui-table .op a.disabled, .ui-table .op button.disabled {
+  color: #888;
+  cursor: not-allowed;
+}
+
+.lwhHasPop.training-date .date-bd li {
+  margin: 0 30px;
+}
+
+.btn-o.lwh-disabled {
+  color: #fff;
+  cursor: not-allowed;
+  background-color: #9d9d9d;
+}
+
+.btn-o.lwh-disabled:hover {
+  color: #fff;
+  cursor: not-allowed;
+  background-color: #9d9d9d;
+}
+
+.lwh-choseLesson .full-label {
+  border: 1px solid #08af9c;
+  width: 30px;
+  height: 15px;
+  background-color: #ddf1ef;
+  display: inline-block;
+  border-radius: 5px;
+  margin-right: 5px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.mr30 {
+  margin-right: 30px;
+}
+
+.op-btn-green {
+  color: #08af9c;
+}
+
+.relearnBtn {
+  width: 85px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  background-color: #08af9c;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.mt68 {
+  margin-top: 68px;
+}
+
+.ui-label .checkbox-a.current{
+  background-position:-20px 0px;
+}
+
+
+
+
+
+
+

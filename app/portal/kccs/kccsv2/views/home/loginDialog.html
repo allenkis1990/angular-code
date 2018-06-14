@@ -1,0 +1,99 @@
+<div class="mask-bg" style="z-index:99;"></div>
+<div class="m-dialog" style="top:30%;left:40%;position:fixed;z-index:100">
+    <div class="dialog-box">
+        <div class="dialog-hd"><span class="title">福建华博继续教育培训平台</span><a href="javascript:void(0)"
+                                                                         ng-click="events.closeLoginDialog()"
+                                                                         class="p-ico close"></a></div>
+        <div class="dialog-bd" style="overflow: inherit">
+            <div class="m-login">
+                <div class="login-bd">
+                    <h2>登录</h2>
+                    <form name="loginForm" autocomplete="off">
+                        <ul class="login-form">
+                            <li>
+                                <span class="p-ico user-ico"></span>
+                                <input type="text"
+                                       name="useName"
+                                       ng-keyup="$event.keyCode==13?events.MainPageQueryList($event,loginForm.$invalid):''"
+                                       ng-model="model.use.useName"
+                                       class="ui-ipt"
+                                       placeholder="身份证号">
+                                <div class="wrong-tips" ng-show="model.loginError === 'two'">输入的用户名或者密码不正确，请确认</div>
+                                <div class="wrong-tips" ng-show="model.loginErrorEnter">请输入正确的用户名密码以及验证码！</div>
+                                <div class="wrong-tips" ng-show="model.loginError === 'one'">用户名已经被停用</div>
+                            </li>
+                            <!--<li>
+                                <span class="p-ico code-ico"></span>
+                                <a href="#" class="p-ico openeye-ico"></a>
+                                <input type="text" class="ui-ipt" placeholder="密码">
+                                <div class="wrong-tips hide">密码不可为空！</div>
+                            </li>-->
+                            <li>
+                                <span class="p-ico code-ico"></span>
+                                <span href="javascript:void(0)"
+                                      style="cursor:pointer"
+                                      ng-if="!model.isIe8"
+                                      ng-class="{'closeye-ico':model.textType==='password','openeye-ico':model.textType==='text'}"
+                                      ng-mouseover="events.showTextType('text')"
+                                      ng-mouseleave="events.showTextType('password')"
+                                      class="p-ico"></span>
+                                <input type="{{model.textType}}"
+                                       ng-if="!model.isIe8"
+                                       name="passWord"
+                                       ng-keyup="$event.keyCode==13?events.MainPageQueryList($event,loginForm.$invalid):''"
+                                       ng-model="model.use.password"
+                                       class="ui-ipt"
+                                       placeholder="密码">
+                                <input type="password"
+                                       ng-if="model.isIe8"
+                                       name="passWord"
+                                       ng-keyup="$event.keyCode==13?events.MainPageQueryList($event,loginForm.$invalid):''"
+                                       ng-model="model.use.password"
+                                       class="ui-ipt"
+                                       placeholder="密码">
+                            </li>
+                            <li>
+                                <span class="p-ico picode-ico"></span>
+                                <input type="text"
+                                       ng-keyup="$event.keyCode==13?events.MainPageQueryList($event,loginForm.$invalid):''"
+                                       ng-focus="model.codeShow = true"
+                                       name="picValidateCode"
+                                       ng-required="true"
+                                       ng-minlength="4"
+                                       ng-maxlength="4"
+                                       ng-model="model.code"
+                                       ajax-validate ajax-url="/web/login/validateCode/validation/1/"
+                                       class="ui-ipt ipt-s"
+                                       placeholder="图形验证码">
+                                <span class="qr-code"
+                                      ng-click="events.changeCode()"
+                                      ng-if="model.codeShow"><img src="kccs/kccsv2/images/code.jpg"
+                                                                  alt="验证码"
+                                                                  ng-src="{{model.validateCode}}"
+                                                                  title="看不清？点击刷新"></span>
+                                <div class="wrong-tips"
+                                     ng-show="model.code !== undefined && loginForm.picValidateCode.$error.ajaxValidate">
+                                    请输入正确的验证码，看不清？点击验证码刷新
+                                </div>
+                            </li>
+                            <li class="last">
+                                <button ng-click="events.submitUse($event,loginForm.picValidateCode.$error.ajaxValidate)"
+                                        ng-class="{'lwh-disabled':loginForm.$invalid || loginSubAble || loginForm.picValidateCode.$error.ajaxValidate===undefined}"
+                                        ng-disabled="loginForm.$invalid || loginSubAble || loginForm.picValidateCode.$error.ajaxValidate===undefined"
+                                        ng-bind="Ing"
+                                        class="btn-normal btn-login"></button>
+
+                                <!--<button ng-click="fn()">6666</button>-->
+                            </li>
+                        </ul>
+                    </form>
+
+                    <div class="clear">
+                        <a href="javascript:void(0)" ng-click="events.forget()" class="ag fl">忘记密码</a>
+                        <a href="javascript:void(0)" ng-click="events.goRegist()" class="ab fr">免费注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+{
+  "initialOrder": {
+    "associatedOrderCount": 0,
+    "businessType": "NORMAL",
+    "createTime": "2016-11-05",
+    "invalidTimeMills": 1478595968000,
+    "needInvoice": true,
+    "operateLogList": null,
+    "orderInvoice": null,
+    "orderNo": "161105170608747733060015",
+    "payType": 1,
+    "status": 6,
+    "statusLogList": null,
+    "subOrderList": [
+      {
+        "swapOut": false,
+        "dealPrice": 0.01,
+        "labelPrice": 0.01,
+        "photoPath": "http://accountant.com:3001/mfs/resource/file/1c9180e657f4af0c2158096e85a218f9.jpg",
+        "productId": "2c91804e582d6665015833bbc1890027",
+        "productName": "刘伟恒11-05测试3",
+        "professionalGrade": "新会计人员",
+        "purchaseQuantity": 1,
+        "status": 5,
+        "studyType": "企业类",
+        "subOrderNo": "S16110517060874773306001500",
+        "totalAmount": 0.01,
+        "trainingYear": "2009"
+      }
+    ],
+    "totalAmount": 0.01
+  }
+}

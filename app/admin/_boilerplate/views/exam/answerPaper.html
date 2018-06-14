@@ -1,0 +1,112 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.exam')" class="ico return"></a>
+        <a href="javascript: void(0);" ng-click="$state.go('states.exam')" class="aw">考试管理</a> >
+        答卷管理
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="sta-pic sp-1 clear">
+
+        <div class="sp-cont fl">
+            <div class="pic-show rel">
+                <span class="circle-current" ng-style="{top:100-roundStatisticsInfo.examRate+'%'}"></span>
+                <span class="circle-mask"></span>
+
+                <p><span>b{{roundStatisticsInfo.endCount}}</span>/b{{roundStatisticsInfo.totalCount}}</p>
+            </div>
+            <span class="sp-info">已考人数</span>
+        </div>
+
+        <div class="sp-cont fl">
+            <div class="pic-show rel">
+                <span class="circle-current" ng-style="{top:100-roundStatisticsInfo.examRate+'%'}"></span>
+                <span class="circle-mask"></span>
+
+                <p><span>b{{roundStatisticsInfo.examRate}}</span>%</p>
+            </div>
+            <span class="sp-info">参考率</span>
+        </div>
+
+        <div class="sp-cont fl">
+            <div class="pic-show rel">
+                <span class="circle-current" ng-style="{top:100-roundStatisticsInfo.passRate+'%'}"></span>
+                <span class="circle-mask"></span>
+
+                <p><span>b{{roundStatisticsInfo.passCount}}</span>/b{{roundStatisticsInfo.totalCount}}</p>
+            </div>
+            <span class="sp-info">及格人数</span>
+        </div>
+
+        <div class="sp-cont fl">
+            <div class="pic-show rel">
+                <span class="circle-current" ng-style="{top:100-roundStatisticsInfo.passRate+'%'}"></span>
+                <span class="circle-mask"></span>
+
+                <p><span>b{{roundStatisticsInfo.passRate}}</span>%</p>
+            </div>
+            <span class="sp-info">及格率</span>
+        </div>
+
+        <!--<div class="sp-cont fl">
+            <div class="pic-show rel">
+                <span class="circle-current" ng-style="{top:100-roundStatisticsInfo.wrongQuestionRatio+'%'}"></span>
+                <span class="circle-mask"></span>
+
+                <p><span>b{{roundStatisticsInfo.wrongQuestionRatio}}</span>%</p>
+            </div>
+            <span class="sp-info">错题率</span>
+        </div>-->
+    </div>
+    <div class="dash-line-2"></div>
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li><input style="width: 150px" type="text" class="ipt ipt-medium" placeholder="请输入学员名称"
+                       ng-model="model.examSearch.studentName" ng-keydown="events.queryByEnter($event)"/></li>
+            <li><input style="width: 150px" type="text" class="ipt ipt-medium" placeholder="请输入岗位名称"
+                       ng-model="model.examSearch.jobName" ng-keydown="events.queryByEnter($event)"/></li>
+            <li><input type="text" class="ipt ipt-medium" placeholder="请输入组织机构名称"
+                       ng-model="model.examSearch.organizationName" ng-keydown="events.queryByEnter($event)"/></li>
+            <li>
+                <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                       ng-model="model.examSearch.enterTimeBegin" type="text" class="ipt ipt-s"
+                       placeholder="进入考试时间" ng-keydown="events.queryByEnter($event)"/> -
+                <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                       ng-model="model.examSearch.enterTimeEnd" type="text" class="ipt ipt-s"
+                       placeholder="进入考试时间" ng-keydown="events.queryByEnter($event)"/>
+            </li>
+            <li><a href="" ng-click="events.searchAnswerPaper()" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="zt-a mt10">是否交卷：
+        <a href="" ng-click="events.choiceAnswerPaper(0)"
+           ng-class="{'ml10':model.examSearch.end!='-1','ml10 current':model.examSearch.end=='-1'}">不限(b{{roundStatisticsInfo.totalCount}})</a>
+        <a href="" ng-click="events.choiceAnswerPaper(1)"
+           ng-class="{'ml10':model.examSearch.end!='0','ml10 current':model.examSearch.end=='0'}">已交卷(b{{roundStatisticsInfo.endCount}})</a>
+        <a href="" ng-click="events.choiceAnswerPaper(2)"
+           ng-class="{'ml10':model.examSearch.end!='1','ml10 current':model.examSearch.end=='1'}">正在考(b{{roundStatisticsInfo.goingCount}})</a>
+        <a href="" ng-click="events.choiceAnswerPaper(3)"
+           ng-class="{'ml10':model.examSearch.end!='2','ml10 current':model.examSearch.end=='2'}">未考(b{{roundStatisticsInfo.notCount}})</a>
+    </div>
+    <div class="zt-a mt10">是否阅卷：
+        <a href="" ng-click="events.choiceAnswerPaper(4)"
+           ng-class="{'ml10':model.examSearch.correctEnd!='-1','ml10 current':model.examSearch.correctEnd=='-1'}">不限(b{{roundStatisticsInfo.totalCount}})</a>
+        <a href="" ng-click="events.choiceAnswerPaper(5)"
+           ng-class="{'ml10':model.examSearch.correctEnd!='0','ml10 current':model.examSearch.correctEnd=='0'}">已阅卷(b{{roundStatisticsInfo.correctEndCount}})</a>
+        <a href="" ng-click="events.choiceAnswerPaper(6)"
+           ng-class="{'ml10':model.examSearch.correctEnd!='1','ml10 current':model.examSearch.correctEnd=='1'}">未阅卷(b{{roundStatisticsInfo.totalCount-roundStatisticsInfo.correctEndCount}})</a>
+    </div>
+    <div class="zt-a mt10">是否及格：
+        <a href="" ng-click="events.choiceAnswerPaper(7)"
+           ng-class="{'ml10':model.examSearch.pass!='-1','ml10 current':model.examSearch.pass=='-1'}">不限(b{{roundStatisticsInfo.totalCount}})</a>
+        <a href="" ng-click="events.choiceAnswerPaper(8)"
+           ng-class="{'ml10':model.examSearch.pass!='0','ml10 current':model.examSearch.pass=='0'}">及格及以上(b{{roundStatisticsInfo.passCount}})</a>
+        <a href="" ng-click="events.choiceAnswerPaper(9)"
+           ng-class="{'ml10':model.examSearch.pass!='1','ml10 current':model.examSearch.pass=='1'}">不及格(b{{roundStatisticsInfo.correctEndCount-roundStatisticsInfo.passCount}})</a>
+    </div>
+    <div class="column mt20">
+        <div kendo-grid="node.gridInstance"
+             k-options="ui.grid.options">
+        </div>
+    </div>
+</div>

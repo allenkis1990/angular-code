@@ -1,0 +1,229 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.questionManage" class="ico return"></a>
+        <a href="javascript: void(0);" ui-sref="states.questionManage" class="aw">试题管理</a> &gt; 修改试题
+    </div>
+</div>
+<div class="main-wrap-body" ng-click="events.treeHide($event)">
+    <form name="addQuestionFrom" novalidate ng-switch="model.question.questionType">
+
+        <!--共用-->
+        <ul class="ul-d-form udf-2 lh-1 ml30">
+            <li><span class="left-txt"><i>*</i>试题所属题库：</span><input type="text" class="ipt ipt-medium"
+                                                                    ng-click="events.openAddQuestionTree($event)"
+                                                                    placeholder="请选择题库"
+                                                                    ng-model="model.addQustionParentName"
+                                                                    name="library"
+                                                                    required ng-required="true">
+
+
+                <div class="hide-block" ng-show="addQuestionlibraryTreeShow" ng-click="$event.stopPropagation()">
+                    <div kendo-tree-view="node.tree"
+                         k-options="ui.tree.options"
+                         k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.addQuestionGetOrgInfo(dataItem)">
+                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                    </span>
+                    </div>
+                </div>
+                <span
+                        ng-show="addQuestionFrom.library.$dirty && (addQuestionFrom.library.$error.required || model.question.librarys.length<1)"
+                        class="li-prompt"><span class="ico ico-prompt"></span>请选择题库</span>
+                <a href="" class="btn btn-r ml10" has-permission="questionManage/toAddQueLibForUpdateQue"
+                   ng-click="events.toCreateQuestionLib()">新建题库</a>
+            </li>
+            <li><span class="left-txt"><i>*</i>试题所属课程：</span><input type="text" class="ipt ipt-medium"
+                                                                    placeholder="请选择课程"
+                                                                    ng-model="model.courseName"
+                                                                    ng-focus="events.selectCourse()"
+            />
+            </li>
+            <li class="clear"><span class="left-txt fl"><i>*</i>试题题目：</span>
+
+                <div class="fl width-600">
+                     <textarea kendo-editor ng-model="model.question.topic"
+                               k-options="ui.editor"
+                               required
+                               name="topic"></textarea>
+                    <span ng-show="addQuestionFrom.topic.$dirty && addQuestionFrom.topic.$error.required"
+                          class="li-prompt left-730"><span class="ico ico-prompt"></span>请输入试题题目</span>
+                </div>
+            <li><span class="left-txt"><i>*</i>试题难易度：</span>
+                <input type="radio" value="1" ng-model="model.question.mode"/>简单
+                <input type="radio" value="2" ng-model="model.question.mode"/>中等
+                <input type="radio" value="3" ng-model="model.question.mode"/>难
+            </li>
+        </ul>
+
+
+        <!--单选题-->
+        <ul class="ul-d-form udf-2 lh-1 ml30" ng-switch-when="2">
+            <li><span class="left-txt"><i>*</i>试题选项个数：</span>
+                <select class="slt slt-large" ng-change="events.setQuestionCount()" ng-model="model.questionCount">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </li>
+            <li class="clear"><span class="left-txt fl"><i>*</i>试题选项：</span>
+
+                <div class="w-textarea2 fl">
+                    <div class="clear" ng-repeat="item in model.question.configurationItems" style="padding-top:12px">
+                        <span class="fl mr10 b"><span ng-bind="events.digitalToLetter.($index)"></span></span>
+
+                        <div class="fl width-600">
+                            <textarea kendo-editor
+                                      ng-model="item.content" k-options="ui.editor"
+                                      class="textarea w-textarea1 fl"
+                                      required
+                                      prefix-name="textarea_"
+                                      dynamic-name="$index"
+                            ></textarea>
+                            <span
+                                    ng-show="addQuestionFrom['textarea_' + $index].$dirty && addQuestionFrom['textarea_' + $index].$error.required"
+                                    class="li-prompt left-730" ng-style="{top: ($index) * 250}">
+                                 <span class="ico ico-prompt"></span>请输入答案选项
+                             </span>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+            <li><span class="left-txt"><i>*</i>正确选项：</span>
+                <span ng-repeat="item in model.question.configurationItems">
+                        <input type="radio" value="b{{$index+1}}" ng-model="radio.radioSelected"/><span
+                        ng-bind="events.digitalToLetter.($index)"></span>
+                        </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>是否启用：</span>
+                <input type="radio" value="true" ng-model="model.question.enabled"/>启用
+                <input type="radio" value="false" ng-model="model.question.enabled"/>停用
+            </li>
+        </ul>
+
+        <!--多选-->
+        <ul class="ul-d-form udf-2 lh-1 ml30" ng-switch-when="3">
+            <li><span class="left-txt"><i>*</i>试题选项个数：</span>
+                <select class="slt slt-large" ng-change="events.setQuestionCount()" ng-model="model.questionCount">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </li>
+            <li class="clear"><span class="left-txt fl"><i>*</i>试题选项：</span>
+
+                <div class="w-textarea2 fl">
+                    <div class="clear" ng-repeat="item in model.question.configurationItems" style="padding-top:12px">
+                        <span class="fl mr10 b"><span ng-bind="events.digitalToLetter.($index)"></span></span>
+
+                        <div class="fl width-600">
+                            <textarea kendo-editor
+                                      ng-model="item.content" k-options="ui.editor"
+                                      class="textarea w-textarea1 fl"
+                                      required
+                                      prefix-name="textarea_"
+                                      dynamic-name="$index">
+                                ></textarea>
+                            <span
+                                    ng-show="addQuestionFrom['textarea_' + $index].$dirty && addQuestionFrom['textarea_' + $index].$error.required"
+                                    class="li-prompt left-730" ng-style="{top: ($index) * 250}">
+                                 <span class="ico ico-prompt"></span>请输入答案选项
+                             </span>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+            <li><span class="left-txt"><i>*</i>正确选项：</span>
+                <span ng-repeat="item in model.question.configurationItems">
+                  <input type="checkbox" value="true" ng-checked="events.checkboxChecked(item.id)"
+                         ng-click="events.setMultipleQuestionAnswers(item.id,$index)"/><span
+                        ng-bind="events.digitalToLetter.($index)"></span>
+                </span>
+            </li>
+            <li><span class="left-txt"><i>*</i>是否启用：</span>
+                <input type="radio" value="true" ng-model="model.question.enabled"/>启用
+                <input type="radio" value="false" ng-model="model.question.enabled"/>停用
+            </li>
+        </ul>
+
+        <!--判断-->
+        <ul class="ul-d-form udf-2 lh-1 ml30" ng-switch-when="1">
+
+            <li><span class="left-txt"><i>*</i>正确选项：</span>
+                <input type="radio" value="true" ng-model="model.question.correct"/>正确
+                <input type="radio" value="false" ng-model="model.question.correct"/>错误
+            </li>
+
+            <li><span class="left-txt"><i>*</i>是否启用：</span>
+                <input type="radio" value="true" ng-model="model.question.enabled"/>启用
+                <input type="radio" value="false" ng-model="model.question.enabled"/>停用
+            </li>
+        </ul>
+
+        <ul class="ul-d-form udf-2 lh-1 ml30">
+            <li class="clear"><span class="left-txt fl">试题解析：</span>
+
+                <div class="fl width-600">
+                    <textarea kendo-editor ng-model="model.question.description" k-options="ui.editor"></textarea>
+                </div>
+            </li>
+        </ul>
+
+        <div class="btn-center">
+            <a href="" class="btn btn-r" ng-click="events.save()"
+               has-permission="questionManage/saveUpdateQue"
+               ng-class="{'btn-g': !addQuestionFrom.$valid, 'btn-r': addQuestionFrom.$valid}"
+               class="btn">保存</a>
+            <a href="" class="btn btn-g ml10" has-permission="questionManage/cancelUpdateQue"
+               ng-click="$state.go('states.questionManage')">取消</a>
+        </div>
+    </form>
+</div>
+
+<!--选择课程-->
+<div class="dialog" kendo-window="node.windows.addWindow" k-options="ui.windowOptions" style="width:900px;">
+    <div class="dialog-body mt30" style="margin-top: 0px;">
+        <div class="dialog-tit">添加课程<a href="javascript:void(0)" ng-click="events.cancelCourseList($event);"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+
+
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input ng-model="model.selectedCourseCateName" class="ipt ipt-medium"
+                               ng-click="events.openCourseCategoryTree($event)" name="parentId"
+                               placeholder="请选择课程所属分类">
+                        <div class="hide-block" style="left: 0px">
+                            <div kendo-tree-view="node.tree"
+                                 id="courseCategoryTree"
+                                 k-options="ui.courseCatagoryTree.options"
+                                 k-on-change="model.selectedItem = dataItem" ng-show="CourseCategoryTree">
+                                <span k-template ng-click="events.getCourseCategoryInfo(dataItem)">
+                                  <label ng-bind="dataItem.name"></label>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><input type="text" ng-model="model.searchCourseName" class="ipt ipt-medium" placeholder="课程名称"/>
+                    </li>
+                    <li><a href="#" class="btn btn-b" has-permission="questionManage/searchCourseForUpdateQue"
+                           ng-click="events.searchQuestionLibraryList($event);">查询</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.courseGridInstance" k-options="ui.courseGrid.options"></div>
+        </div>
+    </div>
+</div>

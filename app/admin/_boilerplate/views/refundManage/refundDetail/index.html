@@ -1,0 +1,387 @@
+<div class="dialog" k-options="kendoPlus.windowOptions" kendo-window="approveWindow">
+    <div class="dialog-body">
+        <div class="dialog-tit">同意退款申请<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('approveWindow')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <!--  是否确认<span class="txt-b">将<span ng-bind="temporaryEdCourse"></span>更换到<span ng-bind="temporaryCourseName"></span></span>，更换后原班级的学习进度及相关考核全部清零，新班级重新开始学习和考核！
+  -->
+
+            <span ng-if="model.refundDetail.enforce===false">确认同意该订单的退款申请？同意后该培训班将失效！</span>
+            <div ng-if="model.refundDetail.enforce===true">
+                <span ng-if="model.refundDetail.refundType==='COMPLETE_LESSON_STUDY'">该学员班级课程学习进度已达100%，请确认是否需要强制退款？</span>
+                <span ng-if="model.refundDetail.refundType==='READY_FOR_DISPATCHING'">该学员对应的发票已经寄出，请确认发票是否已寄回，是否确认强制退款？</span>
+
+            </div>
+
+        </div>
+        <div class="btn-center">
+            <button
+                    ng-disabled="submitAble"
+                    ng-click="events.approve()"
+                    class="btn btn-r">确定
+            </button>
+            <a href="javascript:void(0)"
+               ng-click="events.closeKendoWindow('approveWindow')"
+               class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="dialog" k-options="kendoPlus.windowOptions" kendo-window="resumeWindow">
+    <div class="dialog-body">
+        <div class="dialog-tit">继续退款申请<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('resumeWindow')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+
+            <span>是否确认继续发起退货处理！</span>
+
+        </div>
+        <div class="btn-center">
+            <button
+                    ng-disabled="submitAble"
+                    ng-click="events.resume()"
+                    class="btn btn-r">确定
+            </button>
+            <a href="javascript:void(0)"
+               ng-click="events.closeKendoWindow('resumeWindow')"
+               class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>
+
+<div class="dialog" k-options="kendoPlus.windowOptions" kendo-window="approveWindow">
+    <div class="dialog-body">
+        <div class="dialog-tit">同意退款申请<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('approveWindow')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <!--  是否确认<span class="txt-b">将<span ng-bind="temporaryEdCourse"></span>更换到<span ng-bind="temporaryCourseName"></span></span>，更换后原班级的学习进度及相关考核全部清零，新班级重新开始学习和考核！
+  -->
+
+            <span ng-if="model.refundDetail.enforce===false">确认同意该订单的退款申请？同意后该培训班将失效！</span>
+            <div ng-if="model.refundDetail.enforce===true">
+                <span ng-if="model.refundDetail.refundType==='COMPLETE_LESSON_STUDY'">该学员班级课程学习进度已达100%，请确认是否需要强制退款？</span>
+                <span ng-if="model.refundDetail.refundType==='READY_FOR_DISPATCHING'">该学员对应的发票已经寄出，请确认发票是否已寄回，是否确认强制退款？</span>
+
+            </div>
+
+        </div>
+        <div class="btn-center">
+            <button
+                    ng-disabled="submitAble"
+                    ng-click="events.approve()"
+                    class="btn btn-r">确定
+            </button>
+            <a href="javascript:void(0)"
+               ng-click="events.closeKendoWindow('approveWindow')"
+               class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="dialog" k-options="kendoPlus.rejectwindowOptions" kendo-window="rejectWindow">
+    <div class="dialog-body">
+        <div class="dialog-tit">拒绝退款申请<a href="javascript:void(0)"
+                                         ng-click="events.closeKendoWindow('rejectWindow')"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <span class="fl">拒绝退款：</span>
+            <div class=" fl" style="width: 280px;">
+
+            <textarea class="textarea wp-m-full"
+                      placeholder="请输入拒绝退款理由"
+                      ng-model="model.rejectRefundDesc">
+            </textarea>
+            </div>
+
+        </div>
+        <div class="btn-center">
+            <button
+                    ng-disabled="submitAble"
+                    ng-click="events.reject()"
+                    class="btn btn-r">确定
+            </button>
+            <a href="javascript:void(0)"
+               ng-click="events.closeKendoWindow('rejectWindow')"
+               class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="steps pb10 lwh-steps">
+    <div class="bg-line rd3">
+        <span class="bg-l-current rd3" ng-style="model.linePreStyle"></span>
+    </div>
+
+    <ul class="ul-step ul-step-3 li-fl clear ">
+        <li ng-class="{'current':item.processed===true}"
+            ng-style="model.lineWidthStyle"
+            ng-repeat="item in model.refundDetail.statusLogs">
+            <span class="ico"
+                  ng-class="{'s-1':$index===0,'s-2':$index===1,'s-3':$index===2}">
+
+            </span>
+            <p class="step-name">
+                <span ng-if="item.status===1">退款审批中</span>
+                <span ng-if="item.status===2">审核通过</span>
+                <span ng-if="item.status===3">拒绝申请</span>
+                <span ng-if="item.status===4">处理中</span>
+                <span ng-if="item.status===5">资源已回收</span>
+                <span ng-if="item.status===6">退款成功</span>
+                <span ng-if="item.status===7">拒绝退款</span>
+                <span ng-if="item.status===8">资源回收失败</span>
+                <span ng-if="item.status===9">卖家取消退款申请</span>
+                <span ng-if="item.status===10">退款失败</span>
+                <span ng-if="item.status===11">退货不退款成功</span>
+                <span ng-if="item.status===12">退款不退货成功</span>
+                <span ng-if="item.status===13">卖家取消退款申请</span>
+                <!--      <span  ng-if="item.status===1">退款审批中</span>
+                      <span  ng-if="item.status===2">审核通过</span>
+                      <span  ng-if="item.status===3">审核失败</span>
+                      <span  ng-if="item.status===4">处理中</span>
+                      <span  ng-if="item.status===5">退款成功</span>
+                      <span  ng-if="item.status===6">退款成功</span>
+                      <span  ng-if="item.status===7">退款失败</span>
+                      <span  ng-if="item.status===8">回收失败</span>
+                      <span  ng-if="item.status===9">取消退款</span>
+                      <span  ng-if="item.status===10">退款失败</span>
+                      <span  ng-if="item.status===11">退款成功</span>
+                      <span  ng-if="item.status===12">退款成功</span>
+                      <span  ng-if="item.status===13">审核失败</span>-->
+                <br><span ng-bind="item.operateTime"></span></p>
+        </li>
+    </ul>
+</div>
+
+<div class="column mt20 ml20 clear">
+    <div class="column  ">
+        <div class="col-tit">退款信息</div>
+        <span class="ml30 "
+              style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+             退款状态</span>：
+        <span style="font-family:微软雅黑;font-size:15px;font-weight:normal;font-style:normal;text-decoration:none;color:#FF0000;">
+
+
+     <!--       <span style="color:red" ng-if="model.refundDetail.refundStatus===1">退款审批中</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===2">审核通过</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===3">审核失败</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===4">处理中</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===5">退款成功</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===6">退款成功</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===7">退款失败</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===8">回收失败</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===9">已取消</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===10">退款失败</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===11">退款成功</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===12">退款成功</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===13">审核失败</span>-->
+
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===1">退款审批中</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===2">处理中</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===3">拒绝申请</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===4">处理中</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===5">资源已回收</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===6">退款成功</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===7">拒绝退款</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===8">资源回收失败</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===9">卖家取消退款申请</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===10">退款失败</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===11">退货不退款成功</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===12">退款不退货成功</span>
+            <span style="color:red" ng-if="model.refundDetail.refundStatus===13">卖家取消退款申请</span>
+            <span ng-if="model.refundDetail.refundStatus===1">
+               <a href="javascript:void(0)"
+                  class="btn btn-b ml5 " has-permission="refundManage/cancelrefund"  ng-click="events.cancelrefund()">取消退款</a>
+                <!--has-permission="refundManage/cancelrefund"-->
+               <a href="javascript:void(0)"
+                  class="btn btn-b ml5 " has-permission="refundManage/rejectrefund" ng-show="model.refundDetail.refund==true" ng-click="events.rejectrefund()">审批驳回</a>
+                <!--has-permission="refundManage/rejectrefund"-->
+               <a href="javascript:void(0)"
+                  class="btn btn-b ml5 " has-permission="refundManage/approverefund" ng-show="model.refundDetail.refund==true" ng-click="events.approverefund()">审批通过</a>
+                <!--has-permission="refundManage/approverefund"-->
+            </span>
+            <a href="javascript:void(0)"
+               class="btn btn-b ml5 " ng-if="model.refundDetail.refundStatus===10||model.refundDetail.refundStatus===8"
+               ng-click="events.resumerefund()">继续退款</a>
+             </span>
+
+
+        <br>
+        <span class="ml30 "
+              style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+             创建类型</span>：
+
+        <span ng-if=" model.refundDetail.createType===1">用户发起
+                 <a title="用户主动发起的退款申请"><img style="display:inline-block;position: relative;left:7px;top: 0px;"
+                                             src="@systemUrl@/images/prompt.png"></a>
+             </span>
+        <span ng-if=" model.refundDetail.createType===2">管理员发起
+                 <a title="管理员代用户发起的退款申请"><img style="display:inline-block;position: relative;left:7px;top: 0px;"
+                                               src="@systemUrl@/images/prompt.png"></a>
+             </span>
+        <span ng-if=" model.refundDetail.createType===3">系统发起
+                 <a title="由于特殊原因，系统自动发起的退款申请"><img style="display:inline-block;position: relative;left:7px;top: 0px;"
+                                                    src="@systemUrl@/images/prompt.png"></a>
+             </span>
+        <span ng-if=" model.refundDetail.createType===4">历史迁移
+                 <a title="历史迁移"><img style="display:inline-block;position: relative;left:7px;top: 0px;"
+                                      src="@systemUrl@/images/prompt.png"></a>
+             </span>
+        <span ng-if=" model.refundDetail.createType===5">外部接口
+                 <a title="外部接口"><img style="display:inline-block;position: relative;left:7px;top: 0px;"
+                                      src="@systemUrl@/images/prompt.png"></a>
+             </span>
+        <br>
+        <span class="ml30 "
+              style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+             退款单号</span>：
+        <span ng-bind="model.refundDetail.refundNo"></span>
+        <br>
+        <span class="ml30 "
+              style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+             退款金额</span>：
+        <span ng-bind="model.refundDetail.refundAmount| currency : '￥'"></span>
+        <br>
+        <span class="ml30 "
+              style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+                     退款方式</span>：
+        <span ng-if="model.refundDetail.mode===1">线上退款</span>
+        <span ng-if="model.refundDetail.mode===2">线下退款</span>
+        <br>
+        <span class="ml30 "
+              style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+             退款原因</span>：
+        <span ng-if="model.refundDetail.reason===null">无</span>
+        <span ng-if="model.refundDetail.reason!==null" ng-bind="model.refundDetail.reason"></span>
+        <br>
+        <span class="ml30 "
+              style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+                         退款说明</span>：
+        <span ng-if="model.refundDetail.desc===null">无</span>
+        <span ng-if="model.refundDetail.desc!==null" ng-bind="model.refundDetail.desc"></span>
+    </div>
+    <div class="column mt20">
+
+        <!--普通订单退款-->
+        <div ng-if="model.refundDetail.applyType === 1">
+            <div class="col-tit">商品信息</div>
+            <span class="ml30 ">购买人：b{{model.refundDetail.buyer.name}}</span><br>
+            <span class="ml30 ">身份证号：b{{model.refundDetail.buyer.loginInput}}</span><br>
+            <span class="ml30 ">订单号：
+                <a ng-click="events.goorderDetail(model.refundDetail.refundMasterOrderNo)"
+                   style="font-family:微软雅黑;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#3366FF;">
+                    b{{model.refundDetail.refundMasterOrderNo}}
+                </a>
+            </span><br>
+            <span class="ml30 ">手机号：b{{model.refundDetail.buyer.phoneNumber}}</span><br>
+            <span class="ml30 ">
+                    <label>交易流水号：</label>
+                    <label ng-bind="model.refundDetail.orderFlowNo"></label>
+                </span><br>
+            <span class="ml30">
+                <!--图片：<img width="260" height="146" ng-src="b{{model.refundDetail.iconPath}}" alt=" "><br>-->
+                名称：<span ng-bind="model.refundDetail.productName"></span>
+            </span>
+                <br>
+            <span class="ml30 ">单价：
+                <span ng-bind="model.refundDetail.dealPrice"></span>元
+                * <span ng-bind="model.refundDetail.purchaseQuantity"></span>（数量）
+            </span>
+        </div>
+        <!--换货订单退款-->
+        <div ng-if="model.refundDetail.applyType === 2">
+
+            <div>
+                <div class="col-tit">商品信息</div>
+                <div>
+                    <span class="ml30 ">购买人：b{{model.refundDetail.buyer.name}}</span><br>
+                    <span class="ml30 ">身份证号：b{{model.refundDetail.buyer.loginInput}}</span><br>
+                <span class="ml30 ">订单号：
+                    <a ng-click="events.goorderDetail(model.refundDetail.refundMasterOrderNo)"
+                       style="font-family:微软雅黑;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#3366FF;">
+                        b{{model.refundDetail.refundMasterOrderNo}}
+                    </a>
+                </span><br>
+                <span class="ml30 ">
+                    <label>订单商品：</label>
+                    <label ng-bind="model.refundDetail.productName"></label>
+                </span><br>
+                <span class="ml30 ">手机号：b{{model.refundDetail.buyer.phoneNumber}}</span><br>
+                <span class="ml30 ">
+                    <label>交易流水号：-</label>
+                </span><br>
+                <span class="ml30 ">
+                    <label>退款金额：</label>
+                    <label ng-bind="model.refundDetail.refundAmount"></label>
+                </span><br>
+                </div>
+            </div>
+
+            <div style="float: left">
+                <div class="col-tit">初始订单</div>
+                <div >
+                <span class="ml30 ">订单号：
+                    <a ng-click="events.goorderDetail(model.refundDetail.originalMasterOrderNo)"
+                       style="font-family:微软雅黑;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#3366FF;">
+                        b{{model.refundDetail.originalMasterOrderNo}}
+                    </a>
+                </span><br>
+
+                 <span class="ml30 ">
+                    <label>订单商品：</label>
+                    <label ng-bind="model.refundDetail.originalProductName"></label>
+                </span><br>
+
+                <span class="ml30 ">
+                    <label>交易流水号：</label>
+                    <label ng-bind="model.refundDetail.orderFlowNo"></label>
+                </span><br>
+
+                <span class="ml30 ">
+                    <label>退款金额：</label>
+                    <label ng-bind="model.refundDetail.refundAmount"></label>
+                </span><br>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="column mt20 mb20 ml20">
+    <div class="col-tit">退款操作记录</div>
+
+    <span class="ml30 "
+          style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;">
+             退款单号</span>：
+    <span ng-bind="model.refundDetail.refundNo"> </span>
+
+    <p class="ml30 " ng-repeat="item in model.refundDetail.operateLogs">
+        <!--       b{{item}}-->
+        <!-- <span ng-if="item.type===1||item.type===13">【b{{model.refundDetail.buyer.name}}】在</span>-->
+        <span>【b{{item.operator}}】在</span>
+        <span>【b{{item.operateTime}}】</span>
+        <span ng-if="item.type===1">发起退款申请，退款金额为b{{model.refundDetail.refundAmount}}元， 退款状态【退款审批中】，退款说明：b{{item.desc}}</span>
+        <span ng-if="item.type===2">同意退款申请</span>
+        <span ng-if="item.type===6">退款成功</span>
+        <span ng-if="item.type===3">拒绝退款申请，拒绝原因：b{{item.desc}}</span>
+        <span ng-if="item.type===7">拒绝退款申请，拒绝原因：b{{item.desc}}</span>
+        <span ng-if="item.type===11">退货不退款成功</span>
+        <span ng-if="item.type===8">退货不退款成功</span>
+        <span ng-if="item.type===9">发起“取消退款”操作，取消原因：b{{item.desc}}</span>
+        <span ng-if="item.type===12">退款不退货成功</span>
+        <span ng-if="item.type===13">发起“取消退款”操作，取消原因：b{{item.desc}}</span>
+        <span ng-if="item.type===10">退款失败</span>
+
+    </p>
+
+
+</div>
+
+

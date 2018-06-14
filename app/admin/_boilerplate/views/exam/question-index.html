@@ -1,0 +1,376 @@
+<!--tab按钮-->
+<div class="main-wrap-body" ng-show="$state.is('states.questionManage')">
+    <div class="tab-tit mt10">
+        <a class="current" ng-class="{current: flagModel.tabType === 'OWN'}" ng-click="events.tabClick($event,'OWN')">本单位</a>
+        <a class="" ng-class="{current: flagModel.tabType === 'PROJECT'}" ng-click="events.tabClick($event, 'PROJECT')"
+           ng-if="events.isSubProjectManager()">项目级</a>
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.questionManage'" ng-click="events.treeHide($event)">
+    <!--本单位-->
+    <div ng-if="flagModel.tabType === 'OWN'">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+<!--                <li>
+                    <input type="text" class="ipt ipt-medium" ng-click="events.openTree($event)" placeholder="请选择题库"
+                           ng-model="model.parentName">
+
+                    <div class="column-block w-tree fl" ng-show="libraryTreeShow" ng-click="$event.stopPropagation()"
+                         style="  position: absolute;z-index: 10; width:193px;">
+                        <div class="col-body">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                        <span k-template ng-click="events.getOrgInfo(dataItem)">
+                          <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>-->
+                <li><input type="text" class="ipt ipt-medium" placeholder="请选择题库"
+                           ng-model="model.searchQuestionLibraryName"
+                           ng-focus="events.selectQuestionLibrary()"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请选择课程"
+                           ng-model="model.questionSearch.courseName"
+                           ng-focus="events.selectCourse()"
+                /></li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请输入试题名称"
+                           ng-model="model.questionSearch.topic"
+                           ng-keydown="events.queryByEnter($event)"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.questionSearch.questionType">
+                        <option value="-1">请选择试题类型</option>
+                        <option value="1">判断题</option>
+                        <option value="2">单选题</option>
+                        <option value="3">多选题</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.questionSearch.mode">
+                        <option value="-1">请选择试题难易度</option>
+                        <option value="1">简单</option>
+                        <option value="2">中等</option>
+                        <option value="3">难</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.questionSearch.enable">
+                        <option value="-1">请选择试题状态</option>
+                        <option value="0">启用</option>
+                        <option value="1">停用</option>
+                    </select>
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.questionSearch.beginCreateTime" type="text" class="ipt ipt-s"
+                           placeholder="试题创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.questionSearch.endCreateTime" type="text" class="ipt ipt-s"
+                           placeholder="试题创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    />
+                    <!--<input type="text" class="ipt ipt-medium" placeholder="试题创建时间"/> - <input type="text"-->
+                    <!--class="ipt ipt-s"-->
+                    <!--placeholder="试题创建时间"/>-->
+                </li>
+                <li><a href="" class="btn btn-b" has-permission="questionManage/findQuestionPage"
+                       ng-click="events.searchQuestion($event)">搜索</a></li>
+            </ul>
+        </div>
+        <div class="dash-line-3"></div>
+        <div class="column">
+            <!--<a href="" ng-click="events.toAddQuestion()" class="btn-r btn">新增试题</a>-->
+            <a href="javascript: void(0);" has-permission="questionManage/toAddQuestion" ui-sref="states.questionManage.add"
+               class="btn-r btn">新增试题</a>
+            <a href="javascript: void(0);" has-permission="questionManage/batchDeleteQuestions"
+               ng-click="events.batchDelete()" class="btn-b btn ml10">删除试题</a>
+            <a href="javascript: void(0);" has-permission="questionManage/importQuestion" class="btn-b btn ml10"
+               ng-click="events.toImportQuestion()">批量导入试题</a>
+            <a href="javascript: void(0);" has-permission="questionManage/downQuestionMode" class="btn-b btn ml10"
+               ng-click="events.toDownQuestionMode()">下载试题导入模板</a>
+        </div>
+        <br>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.gridInstance" k-options="ui.grid.options"></div>
+        </div>
+    </div>
+
+    <!--项目级-->
+    <div ng-if="flagModel.tabType === 'PROJECT'">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <div hb-unit-select unit-id="model.questionSearch.unitId"
+                         default-choose="true" default-txt="请选要查看的单位" ng-if="events.isSubProjectManager()"></div>
+                </li>
+<!--                <li>
+                    <input type="text" class="ipt ipt-medium" ng-click="events.openTree($event)" placeholder="请选择题库"
+                           ng-model="model.parentName">
+
+                    <div class="column-block w-tree fl" ng-show="libraryTreeShow" ng-click="$event.stopPropagation()"
+                         style="  position: absolute;z-index: 10; width:193px;">
+                        <div class="col-body">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                        <span k-template ng-click="events.getOrgInfo(dataItem)">
+                          <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>-->
+                <li><input type="text" class="ipt ipt-medium" placeholder="请选择题库"
+                           ng-model="model.searchQuestionLibraryName"
+                           ng-focus="events.selectQuestionLibrary()"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请选择课程"
+                           ng-model="model.questionSearch.courseName"
+                           ng-focus="events.selectCourse()"/>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请输入试题名称"
+                           ng-model="model.questionSearch.topic"
+                           ng-keydown="events.queryByEnter($event)"/>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.questionSearch.questionType">
+                        <option value="-1">请选择试题类型</option>
+                        <option value="1">判断题</option>
+                        <option value="2">单选题</option>
+                        <option value="3">多选题</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.questionSearch.mode">
+                        <option value="-1">请选择试题难易度</option>
+                        <option value="1">简单</option>
+                        <option value="2">中等</option>
+                        <option value="3">难</option>
+                    </select>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.questionSearch.enable">
+                        <option value="-1">请选择试题状态</option>
+                        <option value="0">启用</option>
+                        <option value="1">停用</option>
+                    </select>
+                </li>
+                <li>
+                    <input kendo-date-picker="node.workBeginTime" k-options="ui.datePicker.begin.options"
+                           ng-model="model.questionSearch.beginCreateTime" type="text" class="ipt ipt-s"
+                           placeholder="试题创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    /> -
+                    <input kendo-date-picker="node.workEndTime" k-options="ui.datePicker.end.options"
+                           ng-model="model.questionSearch.endCreateTime" type="text" class="ipt ipt-s"
+                           placeholder="试题创建时间"
+                           ng-keydown="events.queryByEnter($event)"
+                    />
+                    <!--<input type="text" class="ipt ipt-medium" placeholder="试题创建时间"/> - <input type="text"-->
+                    <!--class="ipt ipt-s"-->
+                    <!--placeholder="试题创建时间"/>-->
+                </li>
+                <li><a href="" class="btn btn-b" has-permission="questionManage/findQuestionPage"
+                       ng-click="events.searchQuestion($event)">搜索</a></li>
+            </ul>
+        </div>
+        <div class="dash-line-3"></div>
+        <br>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.gridInstance" k-options="ui.grid.options"></div>
+        </div>
+    </div>
+
+</div>
+<div ui-view></div>
+
+
+<!--查看试题-->
+<div kendo-window="node.windows.questionView" k-options="ui.windowOptions">
+    <!-- 综合题-->
+    <div class="dialog udf-8">
+        <!--单选题，多选题,判断题-->
+        <div class="dialog-body" ng-if="model.questionView.questionType!=6">
+            <div class="dialog-tit">查看试题<a href="" class="ico ico-close"
+                                           ng-click="node.windows.questionView.close()"></a>
+            </div>
+            <div class="dialog-cont">
+                <ul class="ul-d-form udf-2 ml30">
+                    <li><span class="left-txt">试题所属题库：</span><label ng-bind="model.questionView.libraryName"></label>
+                    </li>
+                    <li><span class="left-txt">试题类型：</span><label ng-bind="model.questionView.questionTypeName"></label>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">试题题目：</span>
+
+                        <div class="w-textarea2 fl">
+                            <span ng-bind-html="model.questionView.topic"></span>
+                        </div>
+                    </li>
+                    <!--单选题、多选题 -->
+                    <li class="clear"><span class="left-txt fl"
+                                            ng-if="model.questionView.questionType==2||model.questionView.questionType==3">试题选项：</span>
+
+                        <div class="w-textarea2 fl">
+                            <div class="clear" ng-repeat="item in model.questionView.configurationItems"><span
+                                    class="fl mr10" ng-bind="events.digitalToLetter($index)">.</span>
+                                <span ng-bind-html="item.content"></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-if="model.questionView.questionType==2"><span class="left-txt">试题正确答案：</span><label
+                            ng-bind="events.getRadioRightAnswer()"></label>
+                    </li>
+                    <li ng-if="model.questionView.questionType==3">
+                        <span class="left-txt">试题正确答案：</span>
+                        <span ng-repeat="item in events.getMultiselectAnswer()" ng-bind="item">
+                        &nbsp&nbsp
+                    </span>
+                    </li>
+                    <!--判断题-->
+                    <li ng-if="model.questionView.questionType==1">
+                        <span class="left-txt">正确项：</span>
+                        <span ng-if="model.questionView.correct==='true'">正确</span>
+                        <span ng-if="model.questionView.correct==='false'">错误</span>
+                    </li>
+
+                    <li><span class="left-txt">试题难易度：</span>
+                        <span ng-if="model.questionView.mode==1">简单</span>
+                        <span ng-if="model.questionView.mode==2">中等</span>
+                        <span ng-if="model.questionView.mode==3">难</span>
+                    </li>
+                    <li><span class="left-txt">试题是否启用：</span>
+                        <span ng-if="model.questionView.enabled==='true'">启用</span>
+                        <span ng-if="model.questionView.enabled==='false'">停用</span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">试题解析：</span>
+                        <div class="w-textarea2 fl"><span ng-bind-html="model.questionView.description"></span></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--试题导入-->
+<div class="dialog" kendo-window="node.windows.importQuestionShow" k-options="ui.windowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">导入试题<a href="" ng-click="events.closeQuestionDialog()" class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <p>导入的题型：</p>
+
+            <div class="mt10">
+                <label><input type="radio" name="questionExcelModeType" value="1"
+                              ng-model="model.upload.questionExcelModeType"/>单选题、多选题</label>
+                <label class="ml30"><input type="radio" name="questionExcelModeType" value="2"
+                                           ng-model="model.upload.questionExcelModeType"/>判断题</label>
+            </div>
+            <p class="mt20">选择导入的材料：</p>
+            <input type="text" ng-model="model.upload.result.fileName" readonly class="ipt ipt-large ml20"
+                   placeholder="批量导入试题" style="float:left;margin-top:10px;"/>
+
+            <!--<div hb-file-uploader="test" auto="true" ng-model="model.upload.result"-->
+            <!--class="upload" style="float:left;margin-left:10px">选择-->
+            <!--</div>-->
+            <a class="upload" hb-file-uploader="test"
+               style="float:left;margin-left:10px"
+               auto="true"
+               accepts="xls"
+               href="javascript:void(0)"
+               ng-if="showImportQuestionWindow"
+               ng-model="model.upload.result">
+            </a>
+        </div>
+        <div class="btn-center">
+            <input type="button" has-permission="questionManage/ensureImportQuestions" ng-disabled="!model.isClick"
+                   class="btn btn-r" ng-click="events.importQuestion()"
+                   value="导入试题"/>
+            <input type="button" has-permission="questionManage/cancelImportQuestions" class="btn btn-g ml10"
+                   ng-click="events.closeQuestionDialog()" value="取消"/>
+        </div>
+    </div>
+</div>
+
+<!------------- 导入试题模板下载  ---------------->
+<div class="dialog w-textarea3" kendo-window="node.windows.downQuestionMode" k-options="ui.windowOptions">
+    <div class="dialog-body">
+        <div class="dialog-tit">导出试题模板<a href="" ng-click="node.windows.downQuestionMode.close()"
+                                         class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <a target="_blank" class="modules-download"
+               href="b{{model.downloadModelUrl}}/mfs/resource/file/SuperMarket_selection.xls"><span class="ico"></span>单选题、多选题模板</a>
+            <a target="_blank" class="modules-download"
+               href="b{{model.downloadModelUrl}}/mfs/resource/file/SuperMarket_judge.xls"><span class="ico"></span>判断题模板</a>
+        </div>
+    </div>
+</div>
+
+<!--选择题库-->
+<div class="dialog" kendo-window="node.windows.questionLibrary" k-options="ui.windows.questionLibrary" style="width:900px;">
+    <div class="dialog-body mt30" style="margin-top: 0px;">
+        <div class="dialog-tit">选择题库<a href="javascript:void(0)" ng-click="events.cancelQuestionLibrary($event);"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <div hb-authorized-option
+                             lock-range-for-res="examLibraries"
+                             query-params="model.authorizeQuery"></div>
+                    </li>
+                    <li><input type="text" ng-model="model.searchQuestionLibraryName" class="ipt ipt-medium" placeholder="题库名称"/>
+                    </li>
+                    <li><a href="#" class="btn btn-b" ng-click="events.searchQuestionLibraryForDialog($event);">查询</a></li>
+                </ul>
+            </div>
+            <div ng-show="!noData" kendo-treelist="node.libraryTree" k-options="treelistOptions"></div>
+        </div>
+    </div>
+</div>
+
+<!--选择课程-->
+<div class="dialog" kendo-window="node.windows.addWindow" k-options="ui.windows.addWindow" style="width:900px;">
+    <div class="dialog-body mt30" style="margin-top: 0px;">
+        <div class="dialog-tit">添加课程<a href="javascript:void(0)" ng-click="events.cancel($event);"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+
+
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+
+                    <li>
+                        <div hb-authorized-option
+                             lock-range-for-res="course"
+                             query-params="model.authorizedQuery"></div>
+                    </li>
+                    <li>
+                        <input ng-model="model.selectedCourseCateName" class="ipt ipt-medium"
+                               ng-click="events.openCourseCategoryTree($event)" name="parentId"
+                               placeholder="请选择课程所属分类">
+                        <div class="hide-block" style="left: 0px">
+                            <div kendo-tree-view="node.tree"
+                                 id="courseCategoryTree"
+                                 k-options="ui.courseCatagoryTree.options"
+                                 k-on-change="model.selectedItem = dataItem" ng-show="CourseCategoryTree">
+                                <span k-template ng-click="events.getCourseCategoryInfo(dataItem, $event)">
+                                  <label ng-bind="dataItem.name"></label>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><input type="text" ng-model="model.searchCourseName" class="ipt ipt-medium" placeholder="课程名称"/>
+                    </li>
+                    <li><a href="#" class="btn btn-b" ng-click="events.searchQuestionLibraryList($event);">查询</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.courseGridInstance" k-options="ui.courseGrid.options"></div>
+
+        </div>
+    </div>
+</div>

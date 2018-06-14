@@ -1,0 +1,190 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="" ui-sref="^" class="ico return"></a>
+        <a class="aw" ui-sref="^" href="">防假学规则管理</a> &gt; 新建防假学规则
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="rel udf-2 pt20">
+        <form name="defenceFakeForm" novalidate autocomplete="off">
+            <ul class="ul-d-form lh-1">
+                <li>
+                    <span class="left-txt"><i>*</i>防假学范围：</span>
+                    <label class="label-box btn-like" ng-class="{'label-checked': defenceFake.arrange==0}">
+                        <input type="radio"
+                               name="dflArrange" ng-model="defenceFake.arrange" value="0">适用全系统
+                    </label>
+                    <label class="label-box btn-like" ng-class="{'label-checked': defenceFake.arrange==1}">
+                        <input type="radio" name="dflArrange"
+                               ng-model="defenceFake.arrange" value="1" checked>适用培训方案
+                    </label>
+                    <div class="qus-ico">
+                        <span class="ico"></span>
+                        <span class="qus-txt qus-txt-1">
+                            防假学范围：<br>
+                            1. 适用全系统：适用范围剔除已配置的培训方案防假学规则的班级，系统下所有班级都适用<br>
+                            2. 适用培训方案：适用于具体配置的培训方案，若系统也有配置规则，则以培训方案的配置为准
+                        </span>
+                    </div>
+                </li>
+                <li class="clear" ng-if="defenceFake.arrange == 1">
+                    <span class="left-txt fl"><i>*</i>选择培训方案：</span>
+                    <div class="w-textarea1 ml5 fl">
+                        <a href="" ng-click="events.selectClass()"
+                           has-permission="defenceFakeLearning/addTrainClass"
+                           class="btn btn-b">添加培训方案</a>
+                        <table class="table mt10 mb10" ng-show="tempClassList.length>0">
+                            <thead>
+                            <tr>
+                                <th width="30">No.</th>
+                                <th class="tl">培训方案名称</th>
+                                <th width="120" ng-repeat="item in tempClassList[0].skuPropertyNameList"
+                                    ng-bind="item.skuPropertyName">
+                                </th>
+                                <th width="70">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="cl in tempClassList">
+                                <td class="tl" ng-bind="$index+1"></td>
+                                <td class="tl" ng-bind="cl.schemeName" title="b{{cl.schemeName}}"></td>
+                                <td ng-bind="item.skuPropertyValueName" ng-repeat="item in cl.skuPropertyNameList"></td>
+                                <td class="op"><a href="" ng-click="events.removeClass($index)">删除</a></td>
+                            </tr>
+                            <tr ng-show="tempClassList.length<=0">
+                                <td colspan="6">
+                                    <h4 style="padding: 10px;">
+                                        请选择培训方案
+                                    </h4>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <span class="left-txt"><i>*</i>防假学模式：</span>
+                    <!--选中状态-->
+                    <label class="label-box  btn-like" ng-class="{'label-checked': defenceFake.mode==0}">
+                        <input type="radio" name="dflMode"
+                               ng-model="defenceFake.mode" value="0" checked>课件知识点弹题</label>
+                    <label class="label-box btn-like" ng-class="{'label-checked': defenceFake.mode==1}">
+                        <input type="radio" name="dflMode"
+                               ng-model="defenceFake.mode" value="1">系统随机弹题</label>
+                    <div class="qus-ico">
+                        <span class="ico"></span>
+                        <span class="qus-txt qus-txt-1">
+                            防假学模式：<br>
+                            1. 课件知识点弹题：在学习过程中会根据课件已添加好的题目及弹窗时间进行弹题<br>
+                            2. 系统随机弹题：在学习过程中由系统随机出弹窗数学计算题，如50-3=？
+                        </span>
+                    </div>
+                </li>
+                <li ng-if="defenceFake.mode==0">
+                    <span class="left-txt txt-long-2"><i>*</i>无知识点启用随机弹题：</span>
+                    <!--关闭时添加switch-off-->
+                    <a href=""
+                       ng-click="defenceFake.enableRandomWithoutQuestion=!defenceFake.enableRandomWithoutQuestion"
+                       ng-class="{'switch-off': !defenceFake.enableRandomWithoutQuestion}"
+                       class="switch"></a>
+                </li>
+                <li ng-if="defenceFake.enableRandomWithoutQuestion || defenceFake.mode==1">
+                    <span class="left-txt"><i>*</i>随机弹题规则：</span>
+                    <!--选中状态-->
+                    <label class="label-box  btn-like"
+                           ng-class="{'label-checked': defenceFake.randomTriggerForm==2}">
+                        <input name="dflRandomRule"
+                               ng-model="defenceFake.randomTriggerForm" value="2"
+                               type="radio" checked>课件间隔时间弹题</label>
+                    <label class="label-box btn-like" ng-class="{'label-checked': defenceFake.randomTriggerForm==1}">
+                        <input name="dflRandomRuleValue"
+                               ng-model="defenceFake.randomTriggerForm" value="1"
+                               type="radio">课件间隔百分比弹题</label>
+                    <div class="qus-ico">
+                        <span class="ico"></span>
+                        <span class="qus-txt qus-txt-1">
+                            随机弹题规则：<br>
+                            1. 间隔时间弹题：课件播放至已设置好的间隔时间就会弹题<br>
+                            2. 课件进度间隔百分比：按课件进度设置每隔多少百分比就弹题，如进度间隔20%，在进度达20%就会弹题
+                        </span>
+                    </div>
+                </li>
+                <li ng-if="defenceFake.mode==1||defenceFake.enableRandomWithoutQuestion">
+
+                    <div ng-if="defenceFake.randomTriggerForm==2">
+                        <span class="left-txt"><i>*</i>课件间隔时间：</span>
+                        课件播放间隔 <input type="number"
+                                      ng-required="true"
+                                      ng-model="defenceFake.randomTriggerValue"
+                                      min="1" class="ipt ipt-c-xm"> 秒弹一次
+
+                    </div>
+
+                    <div ng-if="defenceFake.randomTriggerForm==1">
+                        <span class="left-txt"><i>*</i>进度百分比：</span>
+                        课件进度间隔 <input type="number"
+                                      ng-required="true"
+                                      ng-model="defenceFake.randomTriggerValue"
+                                      min="1" class="ipt ipt-c-xm"> % 弹一次
+                    </div>
+                </li>
+
+                <li ng-if="defenceFake.mode==0">
+                    <span class="left-txt"><i>*</i>弹窗形式：</span>
+                    <!--选中状态-->
+                    <label class="label-box  btn-like" ng-class="{'label-checked': defenceFake.popForm==0}">
+                        <input name="dflPopRule"
+                               ng-model="defenceFake.popForm" value="0"
+                               type="radio" checked>每次都弹</label>
+                    <label class="label-box btn-like" ng-class="{'label-checked': defenceFake.popForm==1}">
+                        <input name="dflPopRule"
+                               ng-model="defenceFake.popForm" value="1"
+                               type="radio">首次弹题</label>
+                    <div class="qus-ico">
+                        <span class="ico"></span>
+                        <span class="qus-txt qus-txt-1">
+                            弹窗形式：<br>
+                            1. 每次都弹：每次打开课件进行学习时，都会在设置好的弹窗时间内弹出题目<br>
+                            2. 首次弹题：只要该课件已弹过一次弹窗题目，下次进入不再弹窗
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <span class="left-txt"><i>*</i>答题形式：</span>
+                    <!--选中状态-->
+                    <label class="label-box  btn-like" ng-class="{'label-checked': defenceFake.verificationForm==0}">
+                        <input name="verificationForm"
+                               ng-model="defenceFake.verificationForm" value="0"
+                               type="radio" checked>答对为止</label>
+                    <label class="label-box btn-like" ng-class="{'label-checked': defenceFake.verificationForm==1}">
+                        <input name="verificationForm"
+                               ng-model="defenceFake.verificationForm" value="1" type="radio">可答次数
+                        <input type="number"
+                               min="1"
+                               name="verificationFormValue"
+                               ng-required="defenceFake.verificationForm==1"
+                               ng-readonly="defenceFake.verificationForm==0"
+                               ng-model="defenceFake.verificationFormValue"
+                               class="ipt ipt-c-xm">次
+                    </label>
+
+                    <div class="qus-ico">
+                        <span class="ico"></span>
+                        <span class="qus-txt qus-txt-1">
+                            答题方式：<br>
+                            1. 答对为止：弹窗答题时必须答对才能继续学习<br>
+                            2. 可答次数：设置弹窗题的作答次数，答题时最多可答几次
+                        </span>
+                    </div>
+                </li>
+                <li class="mt20">
+                    <span class="left-txt"></span>
+                    <div loading-biu is-disable="defenceFakeForm.$invalid" is-loading="saving"
+                         has-permission="defenceFakeLearning/certainAdd"
+                         loading="events.save(defenceFakeForm)" text="保存配置"></div>
+                    <a href="" ng-hide="saving" class="btn btn-g ml10" ui-sref="^">取消</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,578 @@
+<style type="text/css">
+    .k-grid-header th.k-header {
+        height: 25px;
+        vertical-align: middle;
+    }
+
+    .k-grid-header th.k-header, .k-filter-row th {
+        text-align: center;
+    }
+
+    .k-checkbox-label {
+        top: 0px;
+        left: 3px;
+    }
+
+    .k-grid-content td {
+        height: 20px;
+    }
+
+    .k-popup .k-item > .k-group {
+        background-color: rgba(0, 0, 0, 0);
+        position: relative;
+    }
+
+    .k-treeview .k-plus {
+        background-position: 0 -16px;
+    }
+
+    .k-treeview .k-minus {
+        background-position: 0 -32px;
+    }
+
+    .k-grid tbody button.k-button {
+        min-width: 40px;
+    }
+
+    .k-grid td {
+        white-space: nowrap;
+    }
+</style>
+
+<!-- Begin 员工的分页-->
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-body">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input ng-model="model.employeePageParams.nickname" type="text" class="ipt ipt-medium"
+                               ng-keydown="events.queryByEnter($event)" hb-clear-input placeholder="请输入学员姓名"/></li>
+                    <li><input ng-model="model.employeePageParams.phoneNumber" type="text" class="ipt ipt-medium"
+                               ng-keydown="events.queryByEnter($event)" hb-clear-input placeholder="请输入学员手机号"/></li>
+                    <li><input ng-model="model.employeePageParams.email" type="text" class="ipt ipt-medium"
+                               ng-keydown="events.queryByEnter($event)" hb-clear-input placeholder="请输入学员邮箱号"/></li>
+                    <li><input ng-model="model.employeePageParams.identifyCode" type="text" class="ipt ipt-medium"
+                               ng-keydown="events.queryByEnter($event)" hb-clear-input placeholder="请输入学员身份证号"/></li>
+                    <li>
+                        <input id="index_job_input" ng-model="model.indexJobParams.viewName"
+                               ng-click="events.showIndexJob($event)" ng-keyup="events.keyUpIndexJob($event)"
+                               ng-change="events.refreshIndexJob($event)" placeholder="请选择岗位" type="text"
+                               class="ipt ipt-medium">
+                        <div kendo-popup="node.indexJobPopup" k-options="ui.popup.indexJob"
+                             style="min-width: 196px; max-height: 360px; overflow: auto;">
+                            <div kendo-tree-view="node.indexJobTree" k-options="ui.treeView.indexJob">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <input id="index_unit_input" hb-clear-input ng-model="model.indexUnitParams.viewName"
+                               ng-click="events.showIndexUnit()" ng-keyup="events.keyUpIndexUnit($event)"
+                               ng-change="events.refreshIndexUnit($event)" placeholder="请选择单位" type="text"
+                               class="ipt ipt-medium">
+                        <div kendo-popup="node.indexUnitPopup" k-options="ui.popup.indexUnit"
+                             style="min-width: 196px; max-height: 360px; overflow: auto;">
+                            <div kendo-tree-view="node.indexUnitTree" k-options="ui.treeView.indexUnit">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <input id="index_org_input" hb-clear-input ng-model="model.indexOrgParams.viewName"
+                               ng-click="events.showIndexOrg($event)" ng-keyup="events.keyUpIndexOrg($event)"
+                               ng-change="events.refreshIndexOrg($event)" placeholder="请选择部门" type="text"
+                               class="ipt ipt-medium">
+                        <div kendo-popup="node.indexOrgPopup" k-options="ui.popup.indexOrg"
+                             style="min-width: 196px; max-height: 360px; overflow: auto;">
+                            <div kendo-tree-view="node.indexOrgTree" k-options="ui.treeView.indexOrg">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <input hb-readonly hb-clear-input kendo-date-picker="node.workBeginTime"
+                               k-options="ui.datePicker.begin.options" ng-keydown="events.queryByEnter($event)"
+                               ng-model="model.employeePageParams.workBeginDate" type="text" class="ipt ipt-s"
+                               placeholder="学员入职时间"/> -
+                        <input hb-readonly hb-clear-input kendo-date-picker="node.workEndTime"
+                               k-options="ui.datePicker.end.options" ng-keydown="events.queryByEnter($event)"
+                               ng-model="model.employeePageParams.workEndDate" type="text" class="ipt ipt-s"
+                               placeholder="学员入职时间"/>
+                    </li>
+                    <li><a href="#" ng-click="events.getEmployeePage($event, 0)" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="zt-a mt10">账号状态：
+        <a href="#" class="ml10" ng-class="{'current': model.employeePageParams.status == 0}"
+           ng-click="events.getEmployeePage($event, 0)">不限(<span ng-bind="model.unlimitCount"></span>)</a>
+        <a href="#" class="ml10" ng-class="{'current': model.employeePageParams.status == 1}"
+           ng-click="events.getEmployeePage($event, 1)">正常(<span ng-bind="model.enableCount"></span>)</a>
+        <a href="#" class="ml10" ng-class="{'current': model.employeePageParams.status == 2}"
+           ng-click="events.getEmployeePage($event, 2)">停用(<span ng-bind="model.suspendCount"></span>)</a>
+        <!--<a href="#" class="ml10" ng-class="{'current': model.employeePageParams.status == 3}" ng-click="events.getEmployeePage($event, 3)">注销(b{{model.fireCount}})</a>-->
+    </div>
+    <div class="dash-line"></div>
+    <div class="column">
+        <div class="col-body">
+            <a href="#" has-permission="employee.editNew" class="btn-r btn" ng-click="events.editNew($event)">新建账号</a>
+            <!--<a href="#" class="btn-b btn">批量导入</a>-->
+            <!--<a href="#" class="btn-b btn">导入模板下载</a>-->
+            <a href="#" has-permission="employee.batchResetPassword" class="btn-b btn"
+               ng-click="events.batchResetPassword($event)">重置密码</a>
+        </div>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.employeeGrid" k-options="ui.employeeGrid.options"></div>
+        </div>
+    </div>
+    <!-- End 员工的分页 -->
+
+    <!--<style>-->
+    <!--form input.ng-dirty.ng-invalid {-->
+    <!--border: 1px solid red;-->
+    <!--}-->
+    <!--form input.ng-valid {-->
+    <!--border: 1px solid #3BC638;-->
+    <!---webkit-transition: border-color 1s ease-in .5s;-->
+    <!--}-->
+    <!--.li-prompt {-->
+    <!--width: 180px;-->
+    <!--top: 0;-->
+    <!--left: 380px;-->
+    <!--padding: 7px 5px;-->
+    <!--}-->
+    <!--</style>-->
+    <!-- Begin 员工的新增 -->
+    <div class="dialog w-2" kendo-window="node.windows.addEmployeeWindow"
+         k-options="ui.window.addEmployeeWindow.options">
+        <div class="dialog-body">
+            <div class="dialog-tit">
+                新建学员账号
+                <a href="#" class="ico ico-close" ng-click="events.closeAddEmployeeWindow($event)"></a>
+            </div>
+            <div class="dialog-cont">
+                <form name="addEmployeeForm" novalidate>
+                    <ul class="ul-d-form udf-3 clear">
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 学员姓名：</span>
+                            <input name="name" type="text" class="ipt ipt-large" placeholder="请输入学员姓名"
+                                   ng-model="model.editNew.name"
+                                   ng-maxlength="10"
+                                   required ng-required="true"
+                            >
+                            <span ng-show="addEmployeeForm.name.$dirty && addEmployeeForm.name.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的姓名</span>
+                            <span ng-show="addEmployeeForm.name.$dirty && (!addEmployeeForm.name.$error.required) && addEmployeeForm.name.$error.maxlength"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>姓名最多支持10个字</span>
+                        </li>
+
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 手机号：</span>
+                            <input name="phoneNumber" type="text" class="ipt ipt-large" placeholder="请输入学员的手机号"
+                                   ng-model="model.editNew.phoneNumber"
+                                   required ng-required="true"
+                                   ng-pattern="regexps.phoneNumber"
+                                   ajax-validate ajax-url="/web/admin/employee/newValidate?type=3"
+                            >
+                            <span ng-show="addEmployeeForm.phoneNumber.$dirty && addEmployeeForm.phoneNumber.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的手机号</span>
+                            <span ng-show="addEmployeeForm.phoneNumber.$dirty && (!addEmployeeForm.phoneNumber.$error.required) && addEmployeeForm.phoneNumber.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>手机号格式不正确</span>
+                            <span ng-show="addEmployeeForm.phoneNumber.$dirty && (!addEmployeeForm.phoneNumber.$error.required) && (!addEmployeeForm.phoneNumber.$error.pattern) && addEmployeeForm.phoneNumber.$error.ajaxValidate"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>该手机号已被注册</span>
+                        </li>
+
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 身份证号：</span>
+                            <input name="identifyCode" type="text" class="ipt ipt-large" placeholder="请输入学员的身份证号"
+                                   ng-model="model.editNew.identifyCode"
+                                   required ng-required="true"
+                                   ng-pattern="regexps.identifyCode"
+                                   ajax-validate ajax-url="/web/admin/employee/newValidate?type=1"
+                            >
+
+                            <span ng-show="addEmployeeForm.identifyCode.$dirty && addEmployeeForm.identifyCode.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的身份证号</span>
+                            <span ng-show="addEmployeeForm.identifyCode.$dirty && (!addEmployeeForm.identifyCode.$error.required) && addEmployeeForm.identifyCode.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>身份证号格式不正确</span>
+                            <span ng-show="addEmployeeForm.identifyCode.$dirty && (!addEmployeeForm.identifyCode.$error.required) && (!addEmployeeForm.identifyCode.$error.pattern) && addEmployeeForm.identifyCode.$error.ajaxValidate"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>该身份证已被注册</span>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 邮箱：</span>
+                            <input name="email" type="text" class="ipt ipt-large" placeholder="请输入邮箱"
+                                   ng-model="model.editNew.email"
+                                   required ng-required="true"
+                                   ng-pattern="regexps.email"
+                                   ajax-validate ajax-url="/web/admin/employee/newValidate?type=2"
+                            >
+                            <span ng-show="addEmployeeForm.email.$dirty && addEmployeeForm.email.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的邮箱</span>
+                            <span ng-show="addEmployeeForm.email.$dirty && (!addEmployeeForm.email.$error.required) && addEmployeeForm.email.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>邮箱格式不正确</span>
+                            <span ng-show="addEmployeeForm.email.$dirty && (!addEmployeeForm.email.$error.required) && (!addEmployeeForm.email.$error.pattern) && addEmployeeForm.email.$error.ajaxValidate"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>该邮箱已被注册</span>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 所属单位：</span>
+                            <input id="new_unit_input" name="unitId" ng-model="model.newUnitParams.viewName"
+                                   ng-click="events.showNewUnit($event)" ng-keyup="events.keyUpNewUnit($event)"
+                                   ng-change="events.refreshNewUnit($event)" placeholder="请选择所属单位" type="text"
+                                   class="ipt ipt-large"
+                                   required ng-required="true"
+                            >
+                            <span ng-show="addEmployeeForm.unitId.$dirty && (addEmployeeForm.unitId.$error.required || !model.editNew.unitId)"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请选择所属单位</span>
+                            <div kendo-popup="node.newUnitPopup" k-options="ui.popup.newUnit"
+                                 k-ng-delay="ui.popup.newUnit"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.newUnitTree" k-options="ui.treeView.newUnit"
+                                     k-ng-delay="ui.treeView.newUnit">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 所属部门：</span>
+                            <input id="new_org_input" name="organizationId" ng-model="model.newOrgParams.viewName"
+                                   ng-click="events.showNewOrg($event)" ng-keyup="events.keyUpNewOrg($event)"
+                                   ng-change="events.refreshNewOrg($event)" placeholder="请选择所属部门" type="text"
+                                   class="ipt ipt-large"
+                                   required ng-required="true"
+                            >
+                            <span ng-show="addEmployeeForm.organizationId.$dirty && (addEmployeeForm.organizationId.$error.required || !model.editNew.organizationId)"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请选择所属部门</span>
+                            <div kendo-popup="node.newOrgPopup" k-options="ui.popup.newOrg" k-ng-delay="ui.popup.newOrg"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.newOrgTree" k-options="ui.treeView.newOrg"
+                                     k-ng-delay="ui.treeView.newOrg">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-txt">岗位：</span>
+                            <input id="new_job_input" ng-model="model.newJobParams.viewName"
+                                   ng-click="events.showNewJob($event)" ng-keyup="events.keyUpNewJob($event)"
+                                   ng-change="events.refreshNewJob($event)" placeholder="请选择所属岗位" type="text"
+                                   class="ipt ipt-large">
+                            <div kendo-popup="node.newJobPopup" k-options="ui.popup.newJob" k-ng-delay="ui.popup.newJob"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.newJobTree" k-options="ui.treeView.newJob"
+                                     k-ng-delay="ui.treeView.newJob">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-txt txt-long">岗位等级：</span>
+                            <input id="new_job_grade_input" ng-model="model.newJobGradeParams.viewName"
+                                   ng-click="events.showNewJobGrade($event)" ng-keyup="events.keyUpNewJobGrade($event)"
+                                   ng-change="events.refreshNewJobGrade($event)" placeholder="请选择所属岗位等级" type="text"
+                                   class="ipt ipt-large">
+                            <div kendo-popup="node.newJobGradePopup" k-options="ui.popup.newJobGrade"
+                                 k-ng-delay="ui.popup.newJobGrade"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.newJobGradeTree" k-options="ui.treeView.newJobGrade"
+                                     k-ng-delay="ui.treeView.newJobGrade">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="left-txt">入职时间：</span>
+                            <input name="workDate" type="text" class="ipt ipt-large" placeholder="员工的入职时间"
+                                   kendo-date-picker="node.workDate" k-options="ui.datePicker.workDate.options"
+                                   ng-model="model.editNew.workDate"
+                                   ng-pattern="regexps.dateFormat"
+                            >
+                            <span ng-show="addEmployeeForm.workDate.$dirty && addEmployeeForm.workDate.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>时间格式不正确</span>
+                        </li>
+                        <li>
+                            <span class="left-txt">性别：</span>
+                            <input ng-model="model.editNew.sex" value="1" type="radio" checked="checked">男
+                            <input ng-model="model.editNew.sex" value="2" type="radio">女
+                        </li>
+                        <li>
+                            <span class="left-txt">学历：</span>
+                            <select ng-model="model.editNew.education" class="slt slt-large">
+                                <option value="1">大专及以下</option>
+                                <option value="2">本科</option>
+                                <option value="3">硕士</option>
+                                <option value="4">博士</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span class="left-txt"></span>
+                            <span class="txt-r"> 注：</span>
+                            初始密码统一为“000000”
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div class="btn-center bc-m0">
+                <input type="button" ng-click="events.create($event)"
+                       ng-class="{'btn-g': !model.noSubmitIncrease || !addEmployeeForm.$valid, 'btn-r': model.noSubmitIncrease && addEmployeeForm.$valid}"
+                       class="btn" value="保存">
+                <input type="button" ng-click="events.closeAddEmployeeWindow($event);" class="btn btn-g ml10"
+                       value="取消">
+            </div>
+        </div>
+    </div>
+    <!-- End 员工的新增 -->
+
+
+    <!-- Begin 员工的编辑 -->
+    <div class="dialog w-2" kendo-window="node.windows.editEmployeeWindow"
+         k-options="ui.window.editEmployeeWindow.options">
+        <div class="dialog-body">
+            <div class="dialog-tit">
+                编辑学员账号
+                <a href="#" class="ico ico-close" ng-click="events.closeEditEmployeeWindow($event)"></a>
+            </div>
+            <div class="dialog-cont">
+                <form name="editEmployeeForm" novalidate>
+                    <ul class="ul-d-form udf-3 clear">
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 学员姓名：</span>
+                            <input name="name" type="text" class="ipt ipt-large" placeholder="请输入学员姓名"
+                                   ng-model="model.edit.name"
+                                   ng-maxlength="10"
+                                   required ng-required="true"
+                            >
+                            <span ng-show="editEmployeeForm.name.$dirty && editEmployeeForm.name.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的姓名</span>
+                            <span ng-show="editEmployeeForm.name.$dirty && (!editEmployeeForm.name.$error.required) && editEmployeeForm.name.$error.maxlength"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>姓名最多支持10个字</span>
+                        </li>
+
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 手机号：</span>
+                            <input name="phoneNumber" type="text" class="ipt ipt-large" placeholder="请输入学员的手机号"
+                                   ng-model="model.edit.phoneNumber"
+                                   required ng-required="true"
+                                   ng-pattern="regexps.phoneNumber"
+                                   ajax-validate ajax-data="editPhone" ajax-url="/web/admin/employee/editValidate"
+                            >
+                            <span ng-show="editEmployeeForm.phoneNumber.$dirty && editEmployeeForm.phoneNumber.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的手机号</span>
+                            <span ng-show="editEmployeeForm.phoneNumber.$dirty && (!editEmployeeForm.phoneNumber.$error.required) && editEmployeeForm.phoneNumber.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>手机号格式不正确</span>
+                            <span ng-show="editEmployeeForm.phoneNumber.$dirty && (!editEmployeeForm.phoneNumber.$error.required) && (!editEmployeeForm.phoneNumber.$error.pattern) && editEmployeeForm.phoneNumber.$error.ajaxValidate"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>该手机号已被注册</span>
+                        </li>
+
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 身份证号：</span>
+                            <input name="identifyCode" type="text" class="ipt ipt-large" placeholder="请输入学员的身份证号"
+                                   ng-model="model.edit.identifyCode"
+                                   required ng-required="true"
+                                   ng-pattern="regexps.identifyCode"
+                                   ajax-validate ajax-data="editIdentifyCode"
+                                   ajax-url="/web/admin/employee/editValidate"
+                            >
+
+                            <span ng-show="editEmployeeForm.identifyCode.$dirty && editEmployeeForm.identifyCode.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的身份证号</span>
+                            <span ng-show="editEmployeeForm.identifyCode.$dirty && (!editEmployeeForm.identifyCode.$error.required) && editEmployeeForm.identifyCode.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>身份证号格式不正确</span>
+                            <span ng-show="editEmployeeForm.identifyCode.$dirty && (!editEmployeeForm.identifyCode.$error.required) && (!editEmployeeForm.identifyCode.$error.pattern) && editEmployeeForm.identifyCode.$error.ajaxValidate"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>该身份证已被注册</span>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 邮箱：</span>
+                            <input name="email" type="text" class="ipt ipt-large" placeholder="请输入邮箱"
+                                   ng-model="model.edit.email"
+                                   required ng-required="true"
+                                   ng-pattern="regexps.email"
+                                   ajax-validate ajax-data="editEmail" ajax-url="/web/admin/employee/editValidate"
+                            >
+
+                            <span ng-show="editEmployeeForm.email.$dirty && editEmployeeForm.email.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入学员的邮箱</span>
+                            <span ng-show="editEmployeeForm.email.$dirty && (!editEmployeeForm.email.$error.required) && editEmployeeForm.email.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>邮箱格式不正确</span>
+                            <span ng-show="editEmployeeForm.email.$dirty && (!editEmployeeForm.email.$error.required) && (!editEmployeeForm.email.$error.pattern) && editEmployeeForm.email.$error.ajaxValidate"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>该邮箱已被注册</span>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 所属单位：</span>
+                            <input id="edit_unit_input" name="unitId" ng-model="model.editUnitParams.viewName"
+                                   ng-click="events.showEditUnit($event)" ng-keyup="events.keyUpEditUnit($event)"
+                                   ng-change="events.refreshEditUnit($event)" placeholder="请选择所属单位" type="text"
+                                   class="ipt ipt-large"
+                                   required ng-required="true"
+                            >
+                            <span ng-show="editEmployeeForm.unitId.$dirty && (editEmployeeForm.unitId.$error.required || !model.edit.unitId)"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请选择所属单位</span>
+                            <div kendo-popup="node.editUnitPopup" k-options="ui.popup.editUnit"
+                                 k-ng-delay="ui.popup.editUnit"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.editUnitTree" k-options="ui.treeView.editUnit"
+                                     k-ng-delay="ui.treeView.editUnit">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i class="text-red">*</i> 所属部门：</span>
+                            <input id="edit_org_input" name="organizationId" ng-model="model.editOrgParams.viewName"
+                                   ng-click="events.showEditOrg($event)" ng-keyup="events.keyUpEditOrg($event)"
+                                   ng-change="events.refreshEditOrg($event)" placeholder="请选择所属部门" type="text"
+                                   class="ipt ipt-large"
+                                   required ng-required="true"
+                            >
+                            <span ng-show="editEmployeeForm.organizationId.$dirty && (editEmployeeForm.organizationId.$error.required || !model.edit.organizationId)"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请选择所属部门</span>
+                            <div kendo-popup="node.editOrgPopup" k-options="ui.popup.editOrg"
+                                 k-ng-delay="ui.popup.editOrg"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.editOrgTree" k-options="ui.treeView.editOrg"
+                                     k-ng-delay="ui.treeView.editOrg">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-txt">岗位：</span>
+                            <input id="edit_job_input" ng-model="model.editJobParams.viewName"
+                                   ng-click="events.showEditJob($event)" ng-keyup="events.keyUpEditJob($event)"
+                                   ng-change="events.refreshEditJob($event)" placeholder="请选择所属岗位" type="text"
+                                   class="ipt ipt-large">
+                            <div kendo-popup="node.editJobPopup" k-options="ui.popup.editJob"
+                                 k-ng-delay="ui.popup.editJob"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.editJobTree" k-options="ui.treeView.editJob"
+                                     k-ng-delay="ui.treeView.editJob">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-txt txt-long">岗位等级：</span>
+                            <input id="edit_job_grade_input" ng-model="model.editJobGradeParams.viewName"
+                                   ng-click="events.showEditJobGrade($event)"
+                                   ng-keyup="events.keyUpEditJobGrade($event)"
+                                   ng-change="events.refreshEditJobGrade($event)" placeholder="请选择所属岗位等级" type="text"
+                                   class="ipt ipt-large">
+                            <div kendo-popup="node.editJobGradePopup" k-options="ui.popup.editJobGrade"
+                                 k-ng-delay="ui.popup.editJobGrade"
+                                 style="min-width: 246px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.editJobGradeTree" k-options="ui.treeView.editJobGrade"
+                                     k-ng-delay="ui.treeView.editJobGrade">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="left-txt">入职时间：</span>
+                            <input name="workDate" type="text" class="ipt ipt-large" placeholder="员工的入职时间"
+                                   kendo-date-picker="node.workDate" k-options="ui.datePicker.workDate.options"
+                                   ng-model="model.edit.workDate"
+                                   ng-pattern="regexps.dateFormat"
+                            >
+                            <span ng-show="editEmployeeForm.workDate.$dirty && editEmployeeForm.workDate.$error.pattern"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>时间格式不正确</span>
+                        </li>
+                        <li>
+                            <span class="left-txt">性别：</span>
+                            <input ng-model="model.edit.sex" value="1" type="radio" checked="checked">男
+                            <input ng-model="model.edit.sex" value="2" type="radio">女
+                        </li>
+                        <li>
+                            <span class="left-txt">学历：</span>
+                            <select ng-model="model.edit.education" class="slt slt-large">
+                                <option value="1">大专及以下</option>
+                                <option value="2">本科</option>
+                                <option value="3">硕士</option>
+                                <option value="4">博士</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span class="left-txt"></span>
+                            <span class="txt-r"> 注：</span>
+                            初始密码统一为“000000”
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div class="btn-center  bc-m0">
+                <input type="button" ng-click="events.update($event)"
+                       ng-class="{'btn-g': !model.noSubmitModification || !editEmployeeForm.$valid, 'btn-r': model.noSubmitModification && editEmployeeForm.$valid}"
+                       class="btn" value="保存">
+                <input type="button" ng-click="events.closeEditEmployeeWindow($event)" class="btn btn-g ml10"
+                       value="取消">
+            </div>
+        </div>
+    </div>
+    <!-- End 员工的编辑 -->
+
+    <!-- Begin 员工的查看 -->
+    <div class="dialog w-2" kendo-window="node.viewEmployeeWindow" k-options="ui.window.editEmployeeWindow.options">
+        <div class="dialog-body">
+            <div class="dialog-tit">
+                查看学员账号
+                <a href="#" class="ico ico-close" ng-click="events.closeViewEmployeeWindow($event)"></a>
+            </div>
+            <div class="dialog-cont">
+                <ul class="ul-d-form udf-3 clear">
+                    <li>
+                        <span class="left-txt"><i class="text-red">*</i> 学员姓名：</span>
+                        <input name="name" type="text" class="ipt ipt-large" ng-model="model.view.name" readonly>
+                    </li>
+
+                    <li>
+                        <span class="left-txt"><i class="text-red">*</i> 手机号：</span>
+                        <input name="phoneNumber" type="text" class="ipt ipt-large" ng-model="model.view.phoneNumber"
+                               readonly>
+                    </li>
+
+                    <li>
+                        <span class="left-txt"><i class="text-red">*</i> 身份证号：</span>
+                        <input name="identifyCode" type="text" class="ipt ipt-large" ng-model="model.view.identifyCode"
+                               readonly>
+                    </li>
+                    <li>
+                        <span class="left-txt"><i class="text-red">*</i> 邮箱：</span>
+                        <input name="email" type="text" class="ipt ipt-large" ng-model="model.view.email" readonly>
+                    </li>
+                    <li>
+                        <span class="left-txt"><i class="text-red">*</i> 所属单位：</span>
+                        <input name="unitId" ng-model="model.view.unit" type="text" class="ipt ipt-large" readonly>
+                    </li>
+                    <li>
+                        <span class="left-txt"><i class="text-red">*</i> 所属部门：</span>
+                        <input ng-model="model.view.organization" type="text" class="ipt ipt-large" readonly>
+                    </li>
+                    <li>
+                        <span class="left-txt">岗位：</span>
+                        <input ng-model="model.view.job" type="text" class="ipt ipt-large" readonly>
+                    </li>
+                    <li>
+                        <span class="left-txt txt-long">岗位等级：</span>
+                        <input ng-model="model.view.jobGrade" type="text" class="ipt ipt-large" readonly>
+                    </li>
+
+                    <li>
+                        <span class="left-txt">入职时间：</span>
+                        <input name="workDate" type="text" class="ipt ipt-large" ng-model="model.view.workDate"
+                               readonly>
+                    </li>
+                    <li>
+                        <span class="left-txt">性别：</span>
+                        <input ng-model="model.view.sex" value="1" type="radio" checked="checked">男
+                        <input ng-model="model.view.sex" value="2" type="radio">女
+                    </li>
+                    <li>
+                        <span class="left-txt">学历：</span>
+                        <select ng-model="model.view.education" class="slt slt-large">
+                            <option value="1">大专及以下</option>
+                            <option value="2">本科</option>
+                            <option value="3">硕士</option>
+                            <option value="4">博士</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-center  bc-m0">
+                <input type="button" ng-click="events.closeViewEmployeeWindow($event)" class="btn btn-g ml10"
+                       value="取消">
+            </div>
+        </div>
+    </div>
+    <!-- End 员工的查看 -->
+</div>

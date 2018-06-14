@@ -1,0 +1,10 @@
+<li ng-if="item.lwhIf" ng-repeat="item in skuList"><span class="left-txt"><i ng-hide="hideRequireSign">*</i>b{{item.cName}}：</span>
+    <select class="slt slt-large lwh-ipt"
+            ng-disabled="selectDis=='1'"
+            ng-change="events.changeSelect(item)"
+            ng-options="sbItem.optionId as sbItem.name for sbItem in model[item.listName]"
+            ng-model="item[lwhModel]">
+        <option ng-hide="hidePlaceHolder" value="" ng-bind="item.placeholder"></option>
+    </select>
+</li>
+<li></li>

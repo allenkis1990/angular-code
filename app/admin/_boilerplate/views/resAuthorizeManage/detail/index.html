@@ -1,0 +1,88 @@
+<div class="main-wrap-body">
+    <div class="rel udf-16">
+        <div class="column">
+            <div class="col-tit clear">基础信息</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <ul class="ul-d-form mt20">
+            <li><span class="left-txt">方案名称：</span><span ng-bind="model.formData.name"></span></li>
+            <li><span class="left-txt">创建时间：</span><span ng-bind="model.formData.createTime"></span></li>
+            <li><span class="left-txt">创建人：</span><span ng-bind="model.formData.creatorName"></span></li>
+        </ul>
+        <div class="column mt50">
+            <div class="col-tit">资源清单</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <div class="tab-tit mt20">
+            <a href="javascript:void(0);" ng-click="model.currentType=value.code"
+               ng-class="{'current':value.code===model.currentType}"
+               ng-repeat="(key,value) in model.tabs">
+                <span ng-bind="value.name"></span>(
+                <span ng-bind="util.getCountFromResourceGroupCount(value.resCode)"></span>
+                <span ng-bind="value.countTxt"></span>)
+            </a>
+        </div>
+        <!--课程-->
+        <div class="column" ng-show="model.currentType===model.tabs.course.code">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <div course-category-pop-tree category-id="model.courseQueryParam.categoryId"
+                             url="/web/admin/courseCategoryAction/findByQuery?authorizedBelongsType=MYSELF"
+                             default-txt="请选择课程分类"></div>
+                    </li>
+                    <li>
+                        <input type="text" ng-model="model.courseQueryParam.name" class="ipt ipt-medium"
+                               placeholder="请输入课程名称">
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);"  ng-click="kendoPlus.courseGridInstance.pager.page(1)" class="btn btn-b">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div kendo-grid="kendoPlus.courseGridInstance"
+                 k-options="courseGird.options">
+            </div>
+        </div>
+        <!--课程包-->
+        <div class="column" ng-show="model.currentType===model.tabs.coursePool.code">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" ng-model="model.coursePoolQueryParam.name" class="ipt ipt-medium"
+                               placeholder="请输入课程包名称">
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);"  ng-click="kendoPlus.coursePoolGridInstance.pager.page(1)" class="btn btn-b">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div kendo-grid="kendoPlus.coursePoolGridInstance"
+                 k-options="coursePoolGird.options">
+            </div>
+        </div>
+        <!--题库-->
+        <div class="column" ng-show="model.currentType===model.tabs.examLibrary.code">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" ng-model="model.examLibraryQueryParam.name" class="ipt ipt-medium"
+                               placeholder="请输入题库名称">
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);"  ng-click="kendoPlus.examLibraryGridInstance.pager.page(1)" class="btn btn-b">查询</a>
+                    </li>
+                </ul>
+            </div>
+            <div kendo-grid="kendoPlus.examLibraryGridInstance"
+                 k-options="examLibraryGird.options">
+            </div>
+        </div>
+        <!--试卷-->
+        <div class="column" ng-show="model.currentType===model.tabs.examPaper.code">
+            <div class="mt20" kendo-grid="kendoPlus.examPaperGridInstance"
+                 k-options="examPaperGird.options">
+            </div>
+        </div>
+    </div>
+</div>

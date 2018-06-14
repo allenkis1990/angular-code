@@ -1,0 +1,34 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.creditStatistics')" class="ico return"></a>
+        <a href="javascript: void(0);" ng-click="$state.go('states.creditStatistics')" class="aw">学分统计</a> &gt;
+        b{{model.organizationName}}
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.creditStatistics.detail'">
+    <div class="column">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text" class="ipt ipt-small"
+                           placeholder="请输入学员名"
+                           hb-clear-input
+                           ng-keyup="events.pressEnterKey($event)"
+                           ng-model="model.queryParam.studentName"
+                /></li>
+                <li><a href="javascript:void(0);" class="btn btn-b" ng-click="events.MainPageQueryList($event)">查询</a>
+                    <!--<a href="javascript:void(0);" class="btn btn-b" ng-click="">导出数据</a>-->
+                </li>
+            </ul>
+        </div>
+
+        <p class="mb10"><span
+                ng-show="model.startTime!=''&& model.endTime!=''">b{{model.startTime}} 至 b{{model.endTime}}</span>&nbsp;b{{model.organizationName}}，现在累计获得学分&nbsp;b{{model.totalCredit}}
+        </p>
+
+        <div class="column mt20">
+            <div kendo-grid="node.gridInstance" k-options="ui.grid.options">
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div ui-view></div>-->

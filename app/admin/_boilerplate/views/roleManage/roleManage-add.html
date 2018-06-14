@@ -1,0 +1,97 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goRoleManage($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goRoleManage($event)">角色管理</a>
+        &gt; 新增角色
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit">角色信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2" style="margin-left: -20px;">
+        <form name="roleValidate" novalidate>
+            <ul class="ul-d-form udf-2 lh-1">
+
+                <li><span class="left-txt"><i>*</i>角色名称：</span><input type="text" class="ipt ipt-large"
+                                                                      name="name"
+                                                                      ng-model="model.roleMessage.name"
+                                                                      placeholder="请填写角色名称"
+                                                                      ajax-data="model.check"
+                                                                      required ng-required="true"
+                                                                      ajax-validate
+                                                                      ajax-url="/web/admin/roleManage/isRoleExist"
+                                                                      style="width: 200px">
+                    <span class="li-prompt"
+                          ng-show="roleValidate.name.$dirty&&roleValidate.name.$error.required">
+                      <span class="ico ico-prompt"></span>角色名称不能为空。
+                  </span>
+
+                    <span style="margin-left:35px;" ng-show="roleValidate.name.$dirty && !roleValidate.name.$error.required &&
+                          roleValidate.name.$error.ajaxValidate" class="li-prompt lip-2">
+                      <span class="ico ico-prompt"></span>该角色名已存在</span>
+                </li>
+
+
+                <li><span class="left-txt fl">角色说明：</span>
+                    <textarea ng-model="model.roleMessage.description" style="width: 200px;height: 100px"></textarea>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<div class="main-wrap-body-1 mt20 clear">
+    <div class="column mb20">
+        <div class="col-tit">配置权限</div>
+        <div class="dash-line-1"></div>
+        <div class="expand-content">
+            <div class="expand-mintit expand-mintit-1"><input class="chk crbig" type="checkbox"
+                                                              ng-click="events.clickAllCheckbox($event)">全选
+            </div>
+            <div class="expand-smbox" ng-repeat="root in model.permissionMessage">
+                <div class="expand-mintit" lwhslide slidestatus="down">
+                    <label style="position:relative">
+                        <input class="chk crbig" type="checkbox" ng-click="events.onRootClick($event,root)"
+                               ng-model="root.selected">
+                        <div ng-click="events.stopDefaultCheck($event)" ng-show="events.showCheckSomethingForAll(root)"
+                             style="position:absolute; margin-left:13px;margin-top:-26px; background:url('@systemUrl@/images/form-icon.png') 0px -32px;width:16px;height:16px;"></div>
+                    </label>b{{root.name}}<span class="ico open"></span>
+                </div>
+
+                <ul class="expand-list" style="padding-left: 35px;padding-bottom: 10px">
+                    <li ng-repeat="item in root.children">
+                             <span class="expand-list-txt">
+                              <i class="expand-icon abs"></i>
+                              <label style="position:relative"><input type="checkbox" class="chk crbig"
+                                                                      ng-click="events.onItemClick($event,item)"
+                                                                      ng-model="item.selected">
+                              <div ng-show="events.showCheckSomething(item)"
+                                   style="position:absolute; top:2px;left:0px; background:url('@systemUrl@/images/form-icon.png') 0px -32px;width:16px;height:16px;"></div>b{{item.name}}</label>
+                            </span>
+
+                        <div class="btn-date-box" ng-show="item.children.length>0">
+                                <span ng-repeat="node in item.children">
+                                   <label class="btn-date first">
+                                       <input type="checkbox" class="chk crbig"
+                                              ng-click="events.onNodeClick($event,node)" ng-model="node.selected">
+                                        b{{node.name}}
+                                   </label>
+                                </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="btn-center">
+    <a href="javascript:void(0)" class="btn btn-r ml10"
+       ng-class="{'btn-disable':!roleValidate.$valid||!model.save}"
+       ng-click="events.saveRole($event)" has-permission="roleManage/addToSave">保存</a>
+    <a href="javascript:void(0)" ng-click="events.goRoleManage($event)" class="btn btn-g ml10"
+       has-permission="roleManage/addToCancel">取消</a>
+</div>

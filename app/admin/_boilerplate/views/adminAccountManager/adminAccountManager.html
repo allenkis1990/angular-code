@@ -1,0 +1,102 @@
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-body">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li><input type="text" ng-keyup="$event.keyCode==13?events.selectPage($event):''"
+                               ng-model="model.selectParam.loginInput" class="ipt ipt-medium" placeholder="请输入账号信息"/>
+                    </li>
+                    <li><input type="text" ng-keyup="$event.keyCode==13?events.selectPage($event):''"
+                               ng-model="model.selectParam.name" class="ipt ipt-medium" placeholder="账号持有人姓名"/></li>
+                    <li><input type="text" ng-keyup="$event.keyCode==13?events.selectPage($event):''"
+                               ng-model="model.selectParam.email" class="ipt ipt-medium" placeholder="请输入邮箱号"/></li>
+                    <li>
+                        <select class="select-small ng-pristine ng-valid" ng-model="model.selectParam.status">
+                            <option selected="selected" value="0">全部状态</option>
+                            <option value="1">启用</option>
+                            <option value="2">停用</option>
+                            <!--<option value="3">注销</option>-->
+                        </select>
+                    </li>
+                    <li><a href="javascript:;" ng-click="events.selectPage($event)" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dash-line-1"></div>
+    <div class="col-body">
+        <!--<a href="javascript:;" class="btn-b btn" ng-click="globle.stateGo('states.newAdminAccount', '新增账号')">新增账号</a>-->
+        <a href="javascript:void(0);" class="btn-r btn" ng-click="events.add()"
+           has-permission="adminAccountManager/add">新增账号</a>
+        <!--<a href="javascript:void(0);" id="stopAccount" class="btn-b btn ml10" ng-class="{'btn-g': !model.batchSuspend, 'btn-b': model.batchSuspend}" ng-click="events.openSuspends()">停用账号</a>
+        <a href="javascript:void(0);" id="enableAccount" class="btn-b btn ml10" ng-class="{'btn-g': !model.batchEnable, 'btn-b': model.batchEnable}" ng-click="events.openEnables()">启用账号</a>
+        <a href="javascript:void(0);" class="btn-b btn ml10" ng-class="{'btn-g': !model.batchFire, 'btn-b': model.batchFire}" ng-click="events.openFires()">注销账号</a>-->
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.gridInstance" k-options="ui.grid.options">
+        </div><!--
+    <input type="text" class="k-textbox" placeholder="请输入跳转的页码" ng-model="model.toPage"/>
+    <button ng-click="events.toPageIndex()" kendo-button="node.buttons.setGridPageIndex">跳转</button>-->
+    </div>
+
+
+    <!--<div class="column mt20">
+      <table class="table">
+        <thead>
+        <tr>
+          <th width="30"><input id="chkAll" type="checkbox" ng-model="chkall" ng-click="chkAll(chkall)"/></th>
+          <th width="70">序号</th>
+          <th width="120">账号</th>
+          <th width="170">持有人姓名</th>
+          <th width="150">邮箱号</th>
+          <th width="130">管理单位</th>
+          <th width="130">管理部门</th>
+          <th width="130">状态</th>
+          <th width="250">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in model.adminAccountList">
+          <td><input type="checkbox"></td>
+          <td>b{{user.id}}</td>
+          <td>b{{user.name}}</td>
+          <td>b{{user.email}}</td>
+          <td>b{{user.email}}</td>
+          <td>b{{user.email}}</td>
+          <td>b{{user.email}}</td>
+          <td>b{{user.email}}</td>
+          <td class="op">
+            <a href="#">修改</a>
+            <a href="#">启用</a>
+            <a href="#">离职</a>
+            <a href="#">重置密码</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="column mt30">
+      <div class="col-body">
+        <div class="pages fr">
+          <span class="page-info">第1/68页 总共149条</span>
+          <a href="#" class="a-1">首页</a>
+          <a href="#" class="a-1">上一页</a>
+          <a class="current" href="#">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+          <a href="#">6</a>
+          <a href="#" class="a-1">下一页</a>
+          <a href="#" class="a-1">尾页</a>
+        </div>
+      </div>
+    </div>-->
+
+
+</div>
+<div kendo-window="node.windows.addWindow" k-options="ui.windows.addWindow"></div>
+<div kendo-window="node.windows.updateWindow" k-options="ui.windows.updateWindow"></div>
+
+<div id="cccc"></div>

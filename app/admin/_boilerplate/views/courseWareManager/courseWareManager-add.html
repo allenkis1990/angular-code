@@ -1,0 +1,186 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goCourseWareManager($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goCourseWareManager($event)">课件管理</a>
+        &gt; 创建课件
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20" ng-if="model.showAddCourseWare">
+        <div class="col-tit">课件基础信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="mt50">
+        <form name="courseWareValidate" novalidate>
+            <div ng-class="{'rel udf-2 block-pos-1':model.showAddCourseWare,'rel udf-2 block-pos':!model.showAddCourseWare}">
+
+                <ul class="ul-d-form udf-2 lh-1">
+
+                    <li><span class="left-txt"><i>*</i>课件分类：</span>
+                        <input type="text" name="type" class="ipt ipt-large" ng-click="events.openTypeTree()"
+                               placeholder="请选择课件分类" ng-model="model.courseWare.typeName" required ng-required="true"
+                               readonly="true">
+                        <span class="li-prompt"
+                              ng-show="courseWareValidate.type.$dirty&&courseWareValidate.type.$error.required">
+                <span class="ico ico-prompt"></span>请选择课件分类</span>
+                        <div class="hide-block hb-1 mh-1" ng-show="TypeShow">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getTypeInfo(dataItem)">
+                      <label style="width: 100px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <span class="left-txt"><i>*</i>课件名称：</span>
+                        <input type="text" class="ipt ipt-large" ng-model="model.courseWare.name" name="name"
+                               ajax-data="validateParams" ng-maxlength="50" required ng-required="true"
+
+                               ajax-validate ajax-url="/web/admin/courseWareManager/validate">
+                        <span class="li-prompt"
+                              ng-show="courseWareValidate.name.$dirty&&courseWareValidate.name.$error.required">
+                        <span class="ico ico-prompt"></span>课件名称不能为空。</span>
+                        <span class="li-prompt"
+                              ng-show="courseWareValidate.name.$dirty && courseWareValidate.name.$error.ajaxValidate&& !courseWareValidate.name.$error.maxlength">
+                        <span class="ico ico-prompt"></span>课件名称不能重复。</span>
+                        <span ng-show="courseWareValidate.name.$dirty && courseWareValidate.name.$error.maxlength"
+                              class="li-prompt">
+                        <span class="ico ico-prompt"></span>课件名称长度不能超过50</span>
+                    </li>
+                    <li><span class="left-txt"><i>*</i>课件提供商：</span>
+                        <select ng-model="model.courseWare.supplierId" class="slt slt-large"
+                                ng-init="model.courseWare.supplierId='1'"
+                                ng-options="provider.id as provider.name for provider in model.providers"></select>
+                    </li>
+                    <li>
+                        <span class="left-txt">课件教师：</span>
+                        <input name="teacherName" type="text" class="ipt ipt-large" name="teacherInfo" ng-maxlength="50"
+                               ng-model="model.courseWare.teacherName"/>
+                        <span ng-show="courseWareValidate.teacherName.$dirty && courseWareValidate.teacherName.$error.maxlength"
+                              class="li-prompt"> <span class="ico ico-prompt"></span>教师名称长度不能超过50</span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">教师简介：</span>
+                        <textarea name="teacherAbouts" class="textarea w-textarea3 " ng-maxlength="250"
+                                  ng-model="model.courseWare.teacherAbouts"></textarea>
+                        <span style="margin-left:320px;"
+                              ng-show="courseWareValidate.teacherAbouts.$dirty && courseWareValidate.teacherAbouts.$error.maxlength"
+                              class="li-prompt"> <span class="ico ico-prompt"></span>教师简介长度不能超过250</span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">课件简介：</span>
+                        <textarea name="abouts" class="textarea w-textarea3 " ng-maxlength="250"
+                                  ng-model="model.courseWare.abouts"></textarea>
+                        <span style="margin-left:320px;"
+                              ng-show="courseWareValidate.abouts.$dirty && courseWareValidate.abouts.$error.maxlength"
+                              class="li-prompt"> <span class="ico ico-prompt"></span>课件简介长度不能超过250</span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl"><i>*</i>课件状态：</span>
+                        <input type="radio" value="true" ng-model="model.courseWare.isUsable">正常
+                        <input type="radio" value="false" ng-model="model.courseWare.isUsable"/>停用
+                    </li>
+                </ul>
+
+            </div>
+            <div class="column mb20" ng-if="model.showAddCourseWare">
+                <div class="col-tit">关联媒体（<span style="color: red">*</span>）</div>
+                <div class="dash-line-1"></div>
+            </div>
+            <div ng-class="{'rel udf-2 block-pos-1':model.showAddCourseWare,'rel udf-2 block-pos':!model.showAddCourseWare}">
+                <ul class="ul-d-form udf-2 lh-1">
+                    <li>
+                    <span class="upload" ng-show="model.coursewareList.length==0">
+                        <div upload-course-ware
+                             allow-rename="true"
+                             standard="big"
+                             file-accept-type="model.acceptType"
+                             ng-model="model.coursewareList"
+                             id="upload_lesson">
+                        </div>
+
+                    </span>
+                        <a href="javascript:void(0)"
+                           style="width: 80px; height: 30px;margin:0;padding:0;margin-top:10px;"
+                           ng-show="model.coursewareList.length>0"
+                           class="btn btn-g ml10">选择文件</a>
+                        <span>
+                        <ul class="ul-file-upload">
+                            <li ng-repeat="subCourseOutline in model.coursewareList">
+                                <span class="file-tit to fl" style="min-width: 215px;">
+                                    <span ng-class="{'ico ico-document':subCourseOutline.type==1,'ico ico-video':subCourseOutline.type==2,'ico ico-scorm':subCourseOutline.type==3}"></span>
+                                    <span ng-bind="subCourseOutline.fileName"></span>
+                                </span>
+                                <span class="upload-progress" ng-style="{opacity: subCourseOutline.record ? 0 : 1}">
+                                        <span class="current"
+                                              ng-style="{'width': subCourseOutline.progress+'%'}"></span>
+                                </span>
+
+                                <span ng-bind="subCourseOutline.progress + '%'"></span>
+                                <span class="txt-b" ng-if="!subCourseOutline.record">
+                                        <span ng-switch="subCourseOutline.liveStatus">
+                                            <span ng-switch-when="0">等待上传...</span>
+                                            <span ng-switch-when="1">正在上传...</span>
+                                            <span ng-switch-when="2">等待响应...</span>
+                                            <span ng-switch-when="4">上传成功...</span>
+                                       </span>
+                                    </span>
+                                <span class="txt-b" ng-if="subCourseOutline.record">历史记录</span>
+                                <span class="clear" style="margin-left:  50px;">
+                                    <span class="fr-ico" style="right: 0px;">
+                                        <!--<a href="javascript:void(0)" ng-show="subCourseOutline.liveStatus==4"-->
+                                        <!--ng-click="events.play(subCourseOutline)" class="ico-play"><span-->
+                                        <!--class="ico"></span></a>-->
+                                        <a href="javascript: void(0);" title="移除" class="ico-op ico-del"
+                                           ng-click="Hb_deleteFile(subCourseOutline)"></a>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </span>
+
+                    </li>
+                    <li ng-if="model.coursewareList[0].type==1"><span class="left-txt"><i>*</i>课件时长：</span>
+                        <input name="hour" ng-model="model.hour" type="text"
+                               class="ipt ipt-small" style="width: 50px;" ng-required="true" ng-pattern="/^[0-9]\d*$/"
+                               maxlength="3"/>&nbsp;时&nbsp;
+                        <input name="minute" ng-model="model.minute" type="text" ng-pattern="/^[0-9]\d*$/"
+                               maxlength="2" class="ipt ipt-small" style="width: 50px;" ng-required="true"/>&nbsp;分&nbsp;
+                        <input name="second" ng-model="model.second" type="text" ng-pattern="/^[0-9]\d*$/"
+                               maxlength="2" class="ipt ipt-small" style="width: 50px;" ng-required="true"/>&nbsp;秒
+                        <span ng-show="courseWareValidate.hour.$error.required || courseWareValidate.minute.$error.required || courseWareValidate.second.$error.required"
+                              class="li-prompt" style="left:400px"><span class="ico ico-prompt"></span>课件时长不能为空</span>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <div ng-class="{'rel udf-2 block-pos-1':model.showAddCourseWare,'rel udf-2 block-pos':!model.showAddCourseWare}">
+
+            <div class="btn-center">
+                <div class="btn-center">
+                    <a href="javascript:void(0)" ng-if="model.coursewareList[0].type==1" class="btn btn-r ml10"
+                       has-permission="courseWareManager/createCourseWare"
+                       ng-class="{'btn-disable':!courseWareValidate.$valid||!model.save||model.coursewareList.length==0||!model.coursewareList[0].courseWareResourcePath}"
+                       ng-click="events.saveCourseWare($event)">保存</a>
+                    <a href="javascript:void(0)" ng-if="model.coursewareList[0].type!=1" class="btn btn-r ml10"
+                       has-permission="courseWareManager/createCourseWare"
+                       ng-class="{'btn-disable':model.coursewareList[0].type!=1&&!courseWareValidate.$valid||!model.save||model.coursewareList.length==0||!model.coursewareList[0].courseWareResourcePath}"
+                       ng-click="events.saveCourseWare($event)">保存</a>
+                    <a href="javascript:void(0)" ng-click="events.cancel($event)"
+                       class="btn btn-g ml10">取消</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div ng-class="{'prompt-box block-pos-3':model.showAddSuccess,'prompt-box block-pos':!model.showAddSuccess}">
+            <div class="p-img fl"><img src="@systemUrl@/images/img-complete.png"></div>
+            <div class="p-txt fr">
+                <p>新建课件完成并保存成功!</p>
+                <span>是否关闭当前页面? <a href="javascript:void(0)" ng-click="events.back($event)">立即关闭</a></span>
+                <span>是否继续新建课件?<a href="javascript:void(0)" ng-click="events.carryOnAddCourseWare($event)">继续新建课件</a>
+        </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,242 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.popQuestionManager'">
+    <div class="tab-tit mt10" ng-if="events.isSubProjectManager()">
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.myself.code}"
+           ng-click="events.chooseTab($event,tabMap.myself.code)"
+           ng-bind="tabMap.myself.name"
+        ></a>
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.all.code}"
+           ng-click="events.chooseTab($event,tabMap.all.code)"
+           ng-bind="tabMap.all.name"
+        ></a>
+    </div>
+    <!-- 本单位 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.myself.code">
+        <br/>
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <select class="slt slt-medium" ng-model="model.myselfQuestionSearch.questionType">
+                        <option value="-1">请选择试题类型</option>
+                        <option value="1">判断题</option>
+                        <option value="2">单选题</option>
+                        <option value="3">多选题</option>
+                    </select>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请输入试题名称"
+                           ng-model="model.myselfQuestionSearch.topic"
+                           ng-keydown="events.queryByEnter($event)"/>
+                <span style="position: absolute; right: 5px; height: 15px; top: 50%; color: rgb(153, 153, 153); font-size: 15px; margin-top: -8px; font-weight: bold; text-align: center; cursor: pointer; display: block; line-height: 15px; width: 0px; padding-right: 20px;"
+                      ng-click="events.clearTopic()">x</span>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请选择课程"
+                           ng-model="model.myselfQuestionSearch.course"
+                           ng-focus="events.selectCourse()"
+                />
+            <span style="position: absolute; right: 5px; height: 15px; top: 50%; color: rgb(153, 153, 153); font-size: 15px; margin-top: -8px; font-weight: bold; text-align: center; cursor: pointer; display: block; line-height: 15px; width: 0px; padding-right: 20px;"
+                  ng-click="events.clearCourse()">x</span>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" placeholder="请选择课件"
+                           ng-model="model.myselfQuestionSearch.courseName"
+                           ng-focus="events.selectCourseWare()"/>
+                <span style="position: absolute; right: 5px; height: 15px; top: 50%; color: rgb(153, 153, 153); font-size: 15px; margin-top: -8px; font-weight: bold; text-align: center; cursor: pointer; display: block; line-height: 15px; width: 0px; padding-right: 20px;"
+                      ng-click="events.clearCourseName()">x</span>
+                </li>
+                <li><a href="" class="btn btn-b" ng-click="events.searchQuestion($event)">搜索</a></li>
+            </ul>
+        </div>
+        <div class="dash-line-3"></div>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.myselfGridInstance" k-options="ui.myselfGrid.options"></div>
+        </div>
+    </div>
+    <!-- /本单位 -->
+    <!-- 全部 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.all.code">
+        <br/>
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <div unit-id="model.allQuestionSearch.unitId" hb-unit-select default-choose="true"
+                         unit-set-callback="events.unitSetCallback(unitId)"
+                         default-txt="请选择查看单位"></div>
+                </li>
+                <li>
+                    <select class="slt slt-medium" ng-model="model.allQuestionSearch.questionType">
+                        <option value="-1">请选择试题类型</option>
+                        <option value="1">判断题</option>
+                        <option value="2">单选题</option>
+                        <option value="3">多选题</option>
+                    </select>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请输入试题名称"
+                           ng-model="model.allQuestionSearch.topic"
+                           ng-keydown="events.queryByEnter($event)"/>
+                <span style="position: absolute; right: 5px; height: 15px; top: 50%; color: rgb(153, 153, 153); font-size: 15px; margin-top: -8px; font-weight: bold; text-align: center; cursor: pointer; display: block; line-height: 15px; width: 0px; padding-right: 20px;"
+                      ng-click="events.clearTopic()">x</span>
+                </li>
+                <li><input type="text" class="ipt ipt-medium" placeholder="请选择课程"
+                           ng-model="model.allQuestionSearch.course"
+                           ng-focus="events.selectCourse()"
+                />
+            <span style="position: absolute; right: 5px; height: 15px; top: 50%; color: rgb(153, 153, 153); font-size: 15px; margin-top: -8px; font-weight: bold; text-align: center; cursor: pointer; display: block; line-height: 15px; width: 0px; padding-right: 20px;"
+                  ng-click="events.clearCourse()">x</span>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" placeholder="请选择课件"
+                           ng-model="model.allQuestionSearch.courseName"
+                           ng-focus="events.selectCourseWare()"/>
+                <span style="position: absolute; right: 5px; height: 15px; top: 50%; color: rgb(153, 153, 153); font-size: 15px; margin-top: -8px; font-weight: bold; text-align: center; cursor: pointer; display: block; line-height: 15px; width: 0px; padding-right: 20px;"
+                      ng-click="events.clearCourseName()">x</span>
+                </li>
+                <li><a href="" class="btn btn-b" ng-click="events.searchQuestion($event)">搜索</a></li>
+            </ul>
+        </div>
+        <div class="dash-line-3"></div>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.allGridInstance" k-options="ui.allGrid.options"></div>
+        </div>
+    </div>
+    <!-- /全部 -->
+</div>
+
+<!--选择课件-->
+<div class="dialog" kendo-window="node.windows.addWindow" k-options="ui.windows.addWindow" style="width:900px;">
+    <div class="dialog-body mt30" style="margin-top: 0px;">
+        <div class="dialog-tit">选择课件<a href="javascript:void(0)" ng-click="events.cancel($event);"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" readonly="true" name="type" class="ipt ipt-medium"
+                               ng-click="events.openTypeTree($event)"
+                               placeholder="课件分类"
+                               ng-model="model.typeName">
+                        <div class="hide-block hb-2 mh-1" ng-show="TypeShow" ng-click="events.openTree($event)">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                                <span k-template ng-click="events.getTypeInfo(dataItem,$event)">
+                                   <label style="width: 100px;"> <span ng-bind="dataItem.name"></span></label>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><input type="text" ng-model="model.courseWareQueryParams.name" class="ipt ipt-medium"
+                               placeholder="请输入课件名称" ng-click="TypeShow=false"/></li>
+                    <li>
+                        <select class="slt slt-small" ng-model="model.courseWareQueryParams.type"
+                                ng-click="TypeShow=false">
+                            <option value="-1">请选择课件类型</option>
+                            <!--<option value="1">文档</option>-->
+                            <option value="2">单视频</option>
+                            <option value="3">视频包</option>
+                        </select>
+                    </li>
+                    <li><a href="" class="btn btn-b" ng-click="events.searchCourseWare($event);">查询</a></li>
+                </ul>
+            </div>
+            <div kendo-grid="node.courseWareGrid" k-options="ui.courseWareGrid.options"></div>
+
+        </div>
+    </div>
+</div>
+
+<!--查看试题-->
+<div kendo-window="node.windows.questionView" k-options="ui.windows.addWindow" style="width:900px;">
+    <div class="dialog udf-8">
+        <!--单选题，多选题,判断题-->
+        <div class="dialog-body" ng-if="model.question.questionType!=6">
+            <div class="dialog-tit">查看弹窗题<a href="" class="ico ico-close"
+                                            ng-click="node.windows.questionView.close()"></a>
+            </div>
+            <div class="dialog-cont">
+                <ul class="ul-d-form udf-2 ml30">
+                    <li><span class="left-txt">课件名称：</span><label ng-bind="model.question.courseWareName"></label></li>
+                    <li><span class="left-txt">课件时常：</span><label ng-bind="model.question.timeLength"></label></li>
+                    <li><span class="left-txt">弹窗时间：</span><label ng-bind="model.question.timePoint"></label></li>
+                    <li><span class="left-txt">试题类型：</span><label ng-bind="model.question.questionType"></label></li>
+                    <li class="clear"><span class="left-txt fl">试题题目：</span>
+
+                        <div class="w-textarea2 fl">
+                            <span ng-bind-html="model.question.topic"></span>
+                        </div>
+                    </li>
+                    <!--单选题、多选题 -->
+                    <li class="clear"><span class="left-txt fl"
+                                            ng-if="model.question.questionType=='单选题'||model.question.questionType=='多选题'">试题选项：</span>
+
+                        <div class="w-textarea2 fl">
+                            <div class="clear" ng-repeat="item in model.question.configurationItems"><span
+                                    class="fl mr10" ng-bind="events.digitalToLetter($index)">.</span>
+                                <span ng-bind-html="item.content"></span>
+                            </div>
+                        </div>
+                    <li ng-if="model.question.questionType=='单选题'||model.question.questionType=='多选题'"><span
+                            class="left-txt">试题正确答案：</span><label ng-bind="model.question.answer"></label></li>
+                    </li>
+
+                    <!--判断题-->
+                    <li ng-if="model.question.questionType=='判断题'">
+                        <span class="left-txt">正确项：</span>
+                        <span ng-bind="model.question.answer"></span>
+                    </li>
+
+                    <li><span class="left-txt">试题是否启用：</span>
+                        <span>启用</span>
+                        <!--<span ng-if="model.questionView.enabled==='false'">停用</span>-->
+                    </li>
+                    <li class="clear"><span class="left-txt fl">试题解析：</span>
+                        <div class="w-textarea2 fl"><span ng-bind-html="model.question.description"></span></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div ui-view></div>
+
+<!--选择课程-->
+<div class="dialog" kendo-window="node.windows.addCourseWindow" k-options="ui.windows.addWindow" style="width:900px;">
+    <div class="dialog-body mt30" style="margin-top: 0px;">
+        <div class="dialog-tit">添加课程<a href="javascript:void(0)" ng-click="events.cancel($event);"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <div hb-authorized-option
+                             lock-range-for-res="course"
+                             query-params="model.mySelfAuthorizedQuery"></div>
+                    </li>
+                    <li>
+                        <input ng-model="model.selectedCourseCateName" class="ipt ipt-medium"
+                               ng-click="events.openCourseCategoryTree($event)" name="parentId"
+                               placeholder="请选择课程所属分类">
+                        <div class="hide-block" style="left: 0px">
+                            <div kendo-tree-view="node.tree"
+                                 id="courseCategoryTree"
+                                 k-options="ui.courseCatagoryTree.options"
+                                 k-on-change="model.selectedItem = dataItem" ng-show="CourseCategoryTree">
+                                <span k-template ng-click="events.getCourseCategoryInfo(dataItem, $event)">
+                                  <label ng-bind="dataItem.name"></label>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><input type="text" ng-model="model.searchCourseName" class="ipt ipt-medium" placeholder="课程名称"/>
+                    </li>
+                    <li><a href="#" class="btn btn-b" ng-click="events.searchQuestionLibraryList($event);">查询</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.courseGridInstance" k-options="ui.courseGrid.options"></div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="main-wrap-body">
+    <div class="column-block w-tree fl" style="width:500px;">
+        <div class="col-tit">问题类别列表 <!--<a href="#" class="ico tit-new"></a>--></div>
+        <div ng-show="!model.noData" kendo-treelist="node.libraryTree" k-options="treelistOptions"></div>
+        <div class="no-data clear" ng-show="model.noData">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">当前没有问题类别请创建</div>
+        </div>
+    </div>
+
+    <!--------  需要用js控制该块一直显示在页面上  -------->
+    <div class="right-pre right-pre-1">
+        <div class="column-block w-pre" style="margin-left:517px;">
+            <div class="col-tit">创建问题类别</div>
+            <div class="col-body">
+                <ul class="ul-d-form udf-3 ml30">
+                    <li><span class="left-txt">类别所属节点：</span>顶级类别</li>
+                    <li>
+                        <span class="left-txt"><i>*</i>类别名称：</span
+                        ><input type="text"
+                                ng-model="model.categoryName"
+                                class="ipt ipt-large"
+                                placeholder="请输入课程资源分类名称">
+                        <!--<span class="li-prompt"><span class="ico ico-prompt"></span>资源分类已存在，请重新输入。</span>-->
+                    </li>
+                </ul>
+                <div class="btn-center">
+                    <button class="btn btn-r"
+                            has-permission="problemCategory/save"
+                            ng-click="events.creatCategory()"
+                            style="width:80px;"
+                            ng-disabled="submitAble">保存
+                    </button>
+                    <!--<a href="#" class="btn btn-g ml10">取消</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

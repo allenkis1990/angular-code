@@ -1,0 +1,141 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')">必修包管理</a> &gt; 必修课包统计
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit clear">必修课包统计</span></div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="statistical rel">
+        <div class="sta-pic clear">
+            <div class="sp-cont fl">
+                <div class="pic-show rel">
+                    <span class="circle-current"
+                          style="top: b{{100 - (model.packageStudyStatistics.studyingCount/model.packageStudyStatistics.studyCount) * 100}}%"></span>
+                    <span class="circle-mask"></span>
+
+                    <p><span>b{{model.packageStudyStatistics.studyingCount}}</span>/b{{model.packageStudyStatistics.studyCount}}
+                    </p>
+                </div>
+                <span class="sp-info">在学人数</span>
+            </div>
+            <div class="sp-cont fl">
+                <div class="pic-show rel">
+                    <span class="circle-current"
+                          style="top: b{{100 - (model.packageStudyStatistics.studiedCount/model.packageStudyStatistics.studyCount) * 100}}%"></span>
+                    <span class="circle-mask"></span>
+
+                    <p><span>b{{model.packageStudyStatistics.studiedCount}}</span>/b{{model.packageStudyStatistics.studyCount}}
+                    </p>
+                </div>
+                <span class="sp-info">已学完人数</span>
+            </div>
+        </div>
+        <div class="hot-course">
+            <div class="column-block">
+                <div class="col-tit">热门课程</div>
+                <div class="col-body">
+                    <ul class="ul-hot-course">
+                        <li ng-repeat="lesson in model.hottestLesson">
+                            <span class="num num-b{{$index + 1}}"></span>
+                            <span class="hot-course-tit to">b{{lesson.courseName}}</span>
+                            <span class="num-student">b{{lesson.studyCompleteCount}}人已学</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-line"></div>
+    <div class="clear">
+        <div class="wp-4 fl">
+            <div class="tab-tit">
+                <a href="#" ng-class="{'current': model.cursor == 1}"
+                   ng-click="events.toggleDimension($event, 1)">课程维度</a>
+                <a href="#" ng-class="{'current': model.cursor == 2}"
+                   ng-click="events.toggleDimension($event, 2)">学员维度</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div class="col-body bt0 h-1">
+                    <!----------------课程维度------------------->
+                    <div class="tab-cont" ng-show="model.cursor === 1">
+                        <!--
+                        <div class="search-bar">
+                            <ul class="ul-form li-fl clear">
+                                <li><input ng-model="model.lessonGridParam.lessonName" type="text" class="ipt ipt-medium" placeholder="课程名称"/></li>
+                                <li><a href="#" ng-click="events.reloadLessonGrid($event)" class="btn btn-b">查询</a></li>
+                            </ul>
+                        </div>
+                        -->
+                        <div kendo-grid="node.packageLessonStudyGrid" k-options="ui.packageLessonStudyGrid"></div>
+                    </div>
+                    <!----------------学员维度------------------->
+                    <div class="tab-cont" ng-show="model.cursor === 2">
+                        <!--
+						<div class="search-bar">
+                            <ul class="ul-form li-fl clear">
+                                <li><input type="text" class="ipt ipt-medium" placeholder="学员名称"/></li>
+                                <li><a href="#" class="btn btn-b">查询</a></li>
+                            </ul>
+                        </div>
+						-->
+                        <div kendo-grid="node.packageUserStudyGrid" k-options="ui.packageUserStudyGrid"
+                             k-ng-delay="ui.packageUserStudyGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wp-4 fr">
+            <div class="column-block bt2 clear">
+                <div class="col-body bt0 h-1">
+                    <!----------------课程维度------------------->
+                    <div class="tab-cont" ng-show="model.cursor == 1">
+                        <div class="col-body-tit">课程名称</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li>b{{model.currentLesson.courseName}}</li>
+                        </ul>
+
+                        <div class="col-body-tit mt20">在学人数(b{{model.currentLesson.studyingCount}}人)</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li ng-repeat="user in model.lessonDetail.studyingUserList">b{{user.nickname}}</li>
+                        </ul>
+
+                        <div class="col-body-tit mt20">学完人数(b{{model.currentLesson.studiedCount}}人)</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li ng-repeat="user in model.lessonDetail.studiedUserList">b{{user.nickname}}</li>
+                        </ul>
+
+                        <div class="col-body-tit mt20">未学人数(b{{model.currentLesson.noStudyCount}}人)</div>
+                        <ul class="ul-course uc-1 li-fl clear">
+                            <li ng-repeat="user in model.lessonDetail.noStudyUserList">b{{user.nickname}}</li>
+                        </ul>
+                    </div>
+                    <!----------------学员维度------------------->
+                    <div class="tab-cont" ng-show="model.cursor == 2">
+                        <div class="col-body-tit">姓名</div>
+                        <ul class="ul-course uc-2 li-fl clear">
+                            <li>b{{model.currentUser.username}}</li>
+                        </ul>
+                        <div class="col-body-tit mt20">在学课程(b{{model.currentUser.studyingCount}}门)</div>
+                        <ul class="ul-course uc-2 li-fl clear">
+                            <li ng-repeat="lesson in model.userDetail.studyingLessonList">b{{lesson.name}}</li>
+                        </ul>
+
+                        <div class="col-body-tit mt20">学完课程(b{{model.currentUser.studiedCount}}门)</div>
+                        <ul class="ul-course uc-2 li-fl clear">
+                            <li ng-repeat="lesson in model.userDetail.studiedLessonList">b{{lesson.name}}</li>
+                        </ul>
+                        <div class="col-body-tit mt20">未学课程(b{{model.currentUser.noStudyCount}}门)</div>
+                        <ul class="ul-course uc-2 li-fl clear">
+                            <li ng-repeat="lesson in model.userDetail.noStudyLessonList">b{{lesson.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

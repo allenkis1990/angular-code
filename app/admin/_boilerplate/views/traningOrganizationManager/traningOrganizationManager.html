@@ -1,0 +1,48 @@
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-body">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text"  class="ipt ipt-medium" ng-click="events.openRegionTree()"
+                               placeholder="请选择机构所属地区" ng-model="model.regionName"  readonly="true">
+                        <div class="hide-block1 hb-11 mh-1 lwh-tree-height0"
+                             ng-show="model.regionShow">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getRegionInfo(dataItem)">
+                      <label style="width: 100px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><input type="text"
+                               ng-model="model.selectParam.name" class="ipt ipt-medium" placeholder="请输入培训机构的名称"/></li>
+                    <li>
+                        <select class="select-small ng-pristine ng-valid" ng-model="model.selectParam.status">
+                            <option selected="selected" value="0">请选择机构状态</option>
+                            <option value="1">启用</option>
+                            <option value="2">停用</option>
+                            <!--<option value="3">注销</option>-->
+                        </select>
+                    </li>
+                    <li><a href="javascript:;" has-permission="trainingOrgnization/find" ng-click="events.selectPage($event)" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dash-line-1"></div>
+    <div class="col-body">
+        <a href="javascript:void(0);" has-permission="trainingOrgnization/add" class="btn-r btn" ng-click="events.add($event)">新增培训机构</a>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid.options">
+    </div>
+
+
+</div>
+<div kendo-window="node.windows.addWindow" k-options="ui.windows.addWindow"></div>
+<!--<div kendo-window="node.windows.updateWindow" k-options="ui.windows.updateWindow"></div>-->
+
+<div id="cccc"></div></div>

@@ -1,0 +1,11 @@
+<ul class="ul-form li-fl ml10 clear">
+    <li>用户班级一键后弹窗题满分，考试分数为
+        <input type="text"
+               ng-model="classInfoModel.onekeyOkNum"
+               class="ipt ipt-c-xm">，是否确认一键合格？
+    </li>
+    <li>
+        <a href="javascript:void (0);" ng-click="events.sureOneKeyOk($index,classInfoModel.onekeyOkNum)" class="btn btn-b">确定</a>
+        <a href="javascript:void (0);" ng-click="events.cancleOneKeyOk($index)" class="btn btn-g ml5">取消</a>
+    </li>
+</ul>

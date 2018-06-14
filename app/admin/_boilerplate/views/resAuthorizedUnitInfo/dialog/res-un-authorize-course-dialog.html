@@ -1,0 +1,51 @@
+<!------  选择课程 -----><div class="mb10"><b>待选课程</b></div>
+<div class="search-bar mt10">
+    <ul class="ul-form li-fl clear">
+        <li>
+            <select class="slt slt-medium">
+                <option>请选择课程分类</option>
+            </select>
+        </li>
+        <li>
+            <input type="text" class="ipt ipt-medium" placeholder="请输入课程名称" ng-model="model.courseUnAuthorizeArg.name">
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadCourseUnAuthorizeGrid()">查询</a>
+        </li>
+    </ul>
+</div>
+<div class="column table-box mt20">
+
+    <div kendo-grid="node.courseUnAuthorizeGridInstance"
+         k-options="grid.courseUnAuthorizeGrid">
+    </div>
+</div>
+<div class="mt30"><b>待确认授权课程</b></div>
+<table class="table table-nf mt10">
+    <thead>
+    <tr>
+        <th width="110">课程名称</th>
+        <th width="60">课程供应商</th>
+        <th width="60">课程分类</th>
+        <th width="50">课程时长</th>
+        <th width="30">学时</th>
+        <th width="50">创建时间</th>
+        <th width="60">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in model.toBeAuthorizeCourseResList">
+        <td ng-bind="item.name"></td>
+        <td ng-bind="item.supplier"></td>
+        <td ng-bind="item.typeName"></td>
+        <td ng-bind="item.timeLength"></td>
+        <td ng-bind="item.period"></td>
+        <td ng-bind="item.createTime"></td>
+        <td class="op"><a href="">播放</a><a href="" ng-click="events.removeToBeAuthorizeRes(dataItem,'COURSE')">取消选择</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="btn-center">
+    <a href="" ng-click="events.authorizeResForSingleType('COURSE',$index)"  class="btn btn-r">确定授权</a>
+    <a href="" ng-click="dialog.close($index)" class="btn btn-g ml10">取消</a>
+</div>

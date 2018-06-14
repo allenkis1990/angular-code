@@ -1,0 +1,18 @@
+<!--
+    <ul class="ul-d-form pt10 lh-1" >
+        <li class="clear">
+            <div class="w-4 fl" >
+                b{{model.refundDetail.enforce}}
+
+                <span ng-if="model.refundDetail.enforce===false">确认同意该订单的退款申请？同意后该培训班将失效！</span>
+                <div  ng-if="model.refundDetail.enforce===true">
+                <span ng-if="model.refundDetail.refundType==='COMPLETE_LESSON_STUDY'">该学员班级课程学习进度已达100%，请确认是否需要强制退款？</span>
+                <span ng-if="model.refundDetail.refundType==='READY_FOR_DISPATCHING'">该学员对应的发票已经寄出，请确认发票是否已寄回，是否确认强制退款？</span></div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="btn-center">
+        <a href="javascript:void(0)" class="btn btn-r" ng-click="events.approve(); (model.datasuccess===true)?dialog.close($index) :1">确定</a>
+        <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="dialog.close($index)">取消</a>
+    </div>-->

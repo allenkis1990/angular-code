@@ -1,0 +1,336 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')">必修包管理</a> &gt; 修改必修包
+    </div>
+</div>
+<div class="main-wrap-body">
+    <form name="editRequiredPackageForm" novalidate>
+        <ul class="ul-d-form">
+            <li>
+                <span class="left-txt"><i>*</i>必修课包名称：</span>
+                <input name="name" type="text" class="ipt ipt-large"
+                       ng-model="model.packageName"
+                       ng-maxlength="15"
+                       required ng-required="true"
+                       ajax-validate ajax-data="editParams" ajax-url="/web/admin/requiredPackage/editValidate"
+                >
+                <span ng-show="editRequiredPackageForm.name.$dirty && editRequiredPackageForm.name.$error.required"
+                      class="li-prompt"><span class="ico ico-prompt"></span>请输入必修包名称</span>
+                <span ng-show="editRequiredPackageForm.name.$dirty && (!editRequiredPackageForm.name.$error.required) && editRequiredPackageForm.name.$error.maxlength"
+                      class="li-prompt"><span class="ico ico-prompt"></span>名称最多支持15个字</span>
+                <span ng-show="editRequiredPackageForm.name.$dirty && !(editRequiredPackageForm.name.$error.required) && !(editRequiredPackageForm.name.$error.maxlength) && editRequiredPackageForm.name.$error.ajaxValidate"
+                      class="li-prompt"><span class="ico ico-prompt"></span>必修包名称已存在</span>
+            </li>
+        </ul>
+    </form>
+    <!-- 1.2 添加课程步骤 -->
+    <div class="column mb20 mt20">
+        <div class="col-tit clear">添加课程</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="clear">
+        <div class="wp-2 fl">
+            <div class="tab-tit">
+                <!--<a href="#" ng-class="{'current': model.lessonDimension == 2}" ng-click="events.toggleLessonDimension($event, 2)">-->
+                <!--能力项<span ng-click="events.reloadAbility($event)" class="ico ico-refresh"></span>-->
+                <!--</a>-->
+                <a href="#" ng-class="{'current': model.lessonDimension == 1}"
+                   ng-click="events.toggleLessonDimension($event, 1)">
+                    课程分类<span ng-click="events.reloadLessonType($event)" class="ico ico-refresh"></span>
+                </a>
+            </div>
+            <div class="column-block clear">
+                <div class="cb-left">
+                    <!-----  能力项  ----->
+                    <!--<div class="column" ng-show="model.lessonDimension == 2">-->
+                    <!--<div id="ability" class="col-body p0">-->
+                    <!--<ul class="ul-tab-tit">-->
+                    <!--<li ng-repeat="ability in model.abilityList">-->
+                    <!--<a href="#" ng-click="events.refreshLessonGridByAbility($event, $index, ability.id)" ng-class="{'current': $index==model.abilityCursor}">b{{ability.name}}<span ng-class="{'ico': $index==model.abilityCursor}"></span></a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!-----  课程分类  ----->
+                    <div class="column" ng-show="model.lessonDimension == 1">
+                        <div id="lesson_type" kendo-tree-view="node.lessonTypeTree" k-options="ui.lessonType"
+                             k-ng-delay="ui.lessonType" class="col-body p0 ul-tab-tit">
+                        </div>
+                    </div>
+                </div>
+                <div class="cb-right-1">
+                    <div class="col-body bt0 h-1">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input type="text" class="ipt ipt-medium"
+                                           ng-keydown="events.queryLessonByEnter($event)"
+                                           ng-model="model.lessonGridParams.name" placeholder="课程名称"/></li>
+                                <li><a href="#" class="btn btn-b" ng-click="events.queryLessonGrid($event, 0)">查询</a>
+                                </li>
+                                <li><a href="#" class="btn btn-r" ng-click="events.batchSelect($event)">全选</a></li>
+                            </ul>
+                            <ul class="ul-form zt-a uf-3 li-fl clear">
+                                <li><a href="#" class="ml10"
+                                       ng-class="{'current': model.lessonGridParams.resourceType == 0}"
+                                       ng-click="events.queryLessonGrid($event, 0)">不限(b{{model.unlimitCount}})</a></li>
+                                <li><a href="#" class="ml10"
+                                       ng-class="{'current': model.lessonGridParams.resourceType == 4}"
+                                       ng-click="events.queryLessonGrid($event, 4)">运营推送(b{{model.operatorSendCount}})</a>
+                                </li>
+                                <li ng-if="model.userLevel == 531000 && model.userLevel == 532000"><a href="#"
+                                                                                                      class="ml10"
+                                                                                                      ng-class="{'current': model.lessonGridParams.resourceType == 1}"
+                                                                                                      ng-click="events.queryLessonGrid($event, 1)">上级(b{{model.blocCount}})</a>
+                                </li>
+                                <li><a href="#" class="ml10"
+                                       ng-class="{'current': model.lessonGridParams.resourceType == 2}"
+                                       ng-click="events.queryLessonGrid($event, 2)">自建(b{{model.selfCount}})</a></li>
+                                <!--<li><a href="#" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 3}" ng-click="events.queryLessonGrid($event, 3)">子单位(b{{model.subordinateCount}})</a></li>-->
+                            </ul>
+                        </div>
+                        <div class="dash-line-4" style="margin-bottom: 8px"></div>
+                        <!--<div class="zt-a mt10">-->
+                        <!--课程提供方：-->
+                        <!--<a href="#" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 0}" ng-click="events.queryLessonGrid($event, 0)">不限(b{{model.unlimitCount}})</a>-->
+                        <!--<a href="#" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 1}" ng-click="events.queryLessonGrid($event, 1)">集团(b{{model.blocCount}})</a>-->
+                        <!--<a href="#" class="ml10" ng-class="{'current': model.lessonGridParams.resourceType == 2}" ng-click="events.queryLessonGrid($event, 2)">自建(b{{model.selfCount}})</a>-->
+                        <!--</div>-->
+                        <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid" k-ng-delay="ui.lessonGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wp-3 fr">
+            <div class="tab-tit clear">
+                <a href="#" class="current">已选课程</a>
+                <span>已选b{{model.selectedLessonList.length}}门，共b{{model.creditCount}}学分</span>
+                <a href="#" ng-click="events.empty($event)" class="btn btn-b fr">清空</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div class="col-body bt0 h-1">
+                    <div class="search-bar">
+                        <ul class="ul-form uf-3 li-fl clear">
+                            <li><input ng-model="editLessonNameFilter" type="text" class="ipt ipt-medium"
+                                       placeholder="课程名称"/></li>
+                            <li><a href="#" ng-click="events.reloadResource($event)" class="btn btn-b">查询</a></li>
+                        </ul>
+                    </div>
+                    <div class="dash-line-4"></div>
+                    <table class="table mt10">
+                        <thead>
+                        <tr>
+                            <th width="20">No.</th>
+                            <th>课程名称</th>
+                            <th width="110">课程分类</th>
+                            <th width="60">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="lesson in model.selectedLessonList | filter: {name: editLessonNameFilter}">
+                            <td>b{{$index + 1}}</td>
+                            <td class="tl"><a href="javascript: void(0)" class="c-tit">b{{lesson.name}}</a></td>
+                            <td>b{{lesson.lessonTypeName}}</td>
+                            <td class="op">
+                                <a href="#" ng-click="events.remove($event, $index, lesson.id)">取消选择</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 1.3 添加学习对象 -->
+    <div class="column mb20 mt30">
+        <div class="col-tit clear">添加学习对象</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="clear">
+        <div class="wp-4 fl">
+            <div class="col-tit">待选区</div>
+            <div class="tab-tit">
+                <a href="#" ng-click="events.toggleStudyObject($event, 1)"
+                   ng-class="{'current': model.studyObjectCursor == 1}">学员</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 2)"
+                   ng-class="{'current': model.studyObjectCursor == 2}">岗位</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 3)"
+                   ng-class="{'current': model.studyObjectCursor == 3}">组织机构</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div class="col-body bt0 h-1">
+                    <!-------------  学员  ----------------->
+                    <div ng-show="model.studyObjectCursor == 1" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-keydown="events.queryElectedStudyObjectByEnter($event, 1)"
+                                           ng-model="model.electedEmployeeGridParams.nickname" type="text"
+                                           class="ipt ipt-medium" placeholder="请输入学员名称"/></li>
+                                <li><a href="#" ng-click="events.reloadElectedStudyObjectData($event, 1)"
+                                       class="btn btn-b">查询</a></li>
+                                <li><a href="#" ng-click="events.batchSelectStudyObject($event, 1)"
+                                       class="btn btn-r">全选</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <div kendo-grid="node.electedEmployeeGrid" k-options="ui.electedEmployeeGrid"
+                             k-ng-delay="ui.electedEmployeeGrid"></div>
+                    </div>
+                    <!-------------  岗位  ----------------->
+                    <div ng-show="model.studyObjectCursor == 2" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-keydown="events.queryElectedStudyObjectByEnter($event, 2)"
+                                           ng-model="model.electedJobGridParams.name" type="text" class="ipt ipt-medium"
+                                           placeholder="岗位名称"/></li>
+                                <li><a href="#" ng-click="events.reloadElectedStudyObjectData($event, 2)"
+                                       class="btn btn-b">查询</a></li>
+                                <li><a href="#" ng-click="events.batchSelectStudyObject($event, 2)"
+                                       class="btn btn-r">全选</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <div kendo-grid="node.electedJobGrid" k-options="ui.electedJobGrid"
+                             k-ng-delay="ui.electedJobGrid"></div>
+                    </div>
+
+                    <!-------------  组织机构  ----------------->
+                    <div ng-show="model.studyObjectCursor == 3" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <!--<li><input type="text" class="ipt ipt-medium" placeholder="单位/部门名称"/></li>-->
+                                <!--<li><a href="#" class="btn btn-b">查询</a></li>-->
+                                <li><span>单击选中</span></li>
+                            </ul>
+                        </div>
+                        <div kendo-tree-view="node.electedUnitOrgTree" k-options="ui.electedUnitOrgTree"
+                             k-ng-delay="ui.electedUnitOrgTree" class="p0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wp-4 fr">
+            <div class="col-tit">已选区</div>
+            <div class="tab-tit">
+                <a href="#" ng-click="events.toggleStudyObject($event, 1)"
+                   ng-class="{'current': model.studyObjectCursor == 1}">学员</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 2)"
+                   ng-class="{'current': model.studyObjectCursor == 2}">岗位</a>
+                <a href="#" ng-click="events.toggleStudyObject($event, 3)"
+                   ng-class="{'current': model.studyObjectCursor == 3}">组织机构</a>
+            </div>
+            <div class="column-block bt0 clear">
+                <div class="col-body bt0 h-1">
+                    <!-------------  学员  ----------------->
+                    <div ng-show="model.studyObjectCursor == 1" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-model="editEmployeeNameFilter" type="text" class="ipt ipt-medium"
+                                           placeholder="学员名称"/></li>
+                                <li><a href="#" ng-click="events.reloadResource($event)" class="btn btn-b">查询</a></li>
+                                <li class="fr"><a href="#" ng-click="events.emptyStudyObject($event, 1)"
+                                                  class="btn btn-g">清空</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <table class="table mt10">
+                            <thead>
+                            <tr>
+                                <th width="20">No.</th>
+                                <th width="60">姓名</th>
+                                <th>单位/部门</th>
+                                <th width="80">岗位</th>
+                                <th width="40">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="employee in model.selectedEmployeeList | filter: {name: editEmployeeNameFilter}">
+                                <td>b{{$index + 1}}</td>
+                                <td>b{{employee.name}}</td>
+                                <td>b{{employee.unit}}/b{{employee.organization}}</td>
+                                <td>b{{employee.job}}</td>
+                                <td class="op">
+                                    <a href="#" ng-click="events.removeStudyObject($event, 1, $index, employee.userId)">取消</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-------------  岗位  ----------------->
+                    <div ng-show="model.studyObjectCursor == 2" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-model="editJobNameFilter" type="text" class="ipt ipt-medium"
+                                           placeholder="岗位名称"/></li>
+                                <li><a href="#" ng-click="events.reloadResource($event)" class="btn btn-b">查询</a></li>
+                                <li class="fr"><a href="#" ng-click="events.emptyStudyObject($event, 2)"
+                                                  class="btn btn-g">清空</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <table class="table mt10">
+                            <thead>
+                            <tr>
+                                <th width="20">No.</th>
+                                <th>岗位</th>
+                                <th width="60">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="job in model.selectedJobList | filter: {name: editJobNameFilter}">
+                                <td>b{{$index + 1}}</td>
+                                <td>b{{job.name}}</td>
+                                <td class="op">
+                                    <a href="#" ng-click="events.removeStudyObject($event, 2, $index, job.id)">取消选择</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-------------  组织机构  ----------------->
+                    <div ng-show="model.studyObjectCursor == 3" class="tab-cont">
+                        <div class="search-bar">
+                            <ul class="ul-form uf-3 li-fl clear">
+                                <li><input ng-model="editUnitOrgNameFilter" type="text" class="ipt ipt-medium"
+                                           placeholder="组织机构名称"/></li>
+                                <li><a href="#" ng-click="events.reloadResource($event)" class="btn btn-b">查询</a></li>
+                                <li class="fr"><a href="#" ng-click="events.emptyStudyObject($event, 3)"
+                                                  class="btn btn-g">清空</a></li>
+                            </ul>
+                        </div>
+                        <div class="dash-line-4"></div>
+                        <table class="table mt10">
+                            <thead>
+                            <tr>
+                                <th width="20">No.</th>
+                                <th>组织机构名称</th>
+                                <th width="60">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="unitOrg in model.selectedUnitOrgList | filter: {name: editUnitOrgNameFilter}">
+                                <td>b{{$index + 1}}</td>
+                                <td>b{{unitOrg.name}}</td>
+                                <td class="op">
+                                    <a href="#"
+                                       ng-click="events.removeStudyObject($event, unitOrg.type, $index, unitOrg.name)">取消选择</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="btn-center">
+    <a href="#" ng-click="events.update($event)" class="btn"
+       ng-class="{'btn-g': !model.noSubmitModification || !editRequiredPackageForm.$valid, 'btn-r': model.noSubmitModification && editRequiredPackageForm.$valid}">保存</a>
+    <a href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')" class="btn btn-g ml10">取消</a>
+</div>

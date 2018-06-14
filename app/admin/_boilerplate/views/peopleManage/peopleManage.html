@@ -1,0 +1,210 @@
+<div class="main-wrap-body">
+    <div class="tips-box">
+        温馨提示:<br>
+        1. 本列表显示当前管理员已添加的人员信息，如需进行人员批量报名，请前往报名管理模块添加批次后再进行批量报名；<br>
+        2. 平台提供手动录入人员和批量导入人员方式，若是系统未存在用户则会创建用户帐号，若是系统中已存在用户，则可添加至本列表；<br>
+        3. 批量导入人员后，需待导入任务处理成功后人员信息才会出现在此列表，可通过导入任务查看具体导入详情。
+    </div>
+    <div class="search-bar mt20">
+        <ul class="ul-form li-fl clear">
+            <li><input type="text"
+                       hb-clear-input
+                       ng-model="model.userParams.IDNum"
+                       class="ipt ipt-medium" placeholder="请输入身份证号"></li>
+            <li>
+                <select class="select-small"  ng-model="model.userParams.loginInputType" has-permission="peopleManage/searchTest">
+                    <option selected="selected" value="-1">是否测试</option>
+                    <option value="0">非测试</option>
+                    <option value="1">测试</option>
+                </select>
+            </li>
+            <li><input type="text"
+                       hb-clear-input
+                       ng-model="model.userParams.name"
+                       class="ipt ipt-medium" placeholder="请输入姓名"></li>
+            <li><a   ng-click="events.search($event)" has-permission="peopleManage/search" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="column mt10">
+        <a   class="btn-b btn" has-permission="peopleManage/handImport" ng-click="events.openKendoWindow ( 'handWindowOptions' );">手动录入</a>
+        <a  has-permission="peopleManage/import" ng-click="events.openKendoWindow ( 'peopleWindowOptions' );" class="btn-r btn ml10">批量导入</a>
+    </div>
+    <div class="col-body table-box mt20">
+        <!--<div kendo-grid="node.unitUserGrid" k-options="ui.unitUserGrid.options">
+        </div>-->
+        <div kendo-grid="kendoPlus.unitUserGrid"
+             k-options="unitUserGrid.options">
+        </div>
+    </div>
+
+
+    <div class="dialog w-2" k-options="kendoPlus.handWindowOptions" kendo-window="handWindowOptions">
+        <div class="dialog-body">
+            <div class="dialog-tit">手动新增人员<a href="javascript:void(0)"
+                                             ng-click="events.closeaddFormWindow(addForm,'handWindowOptions')"
+                                             class="ico ico-close"></a></div>
+            <div class="dialog-cont">
+                <form name="addForm" novalidate>
+                    <ul class="ul-d-form pt20 pl20 lh-1">
+                        <li><span class="left-txt"><i>*</i>身份证号：</span><input type="text" required name="uniqueData" ng-model="model.add.uniqueData" ng-pattern="/(^\d{15}$)|(^\d{17}([0-9]|X|x)$)/" class="ipt ipt-medium"
+                                                                              ng-disabled="inputDisabled===true"
+                                                                              ng-keyup="events.isUserExist()"
+                                                                              placeholder="请输入18位有效身份证号">
+                            <span class="left-txt"><i>*</i>姓名：</span>
+                            <input type="text" class="ipt ipt-medium"
+                                   ng-model="model.add.name"
+                                   required
+                                   ng-disabled="inputDisabled===true"
+                                   placeholder="请输入真实姓名">
+                        </li>
+                        <li>
+                            <span class="left-txt"><i>*</i>登录帐号：</span><input type="text"
+                                                                              class="ipt ipt-medium" required
+                                                                              ng-disabled="inputDisabled===true"
+                                                                              ng-pattern="/(^\d{15}$)|(^\d{17}([0-9]|X|x)$)/"
+                                                                              ng-model="model.add.uniqueData"
+                                                                              placeholder="请输入18位有效身份证号">
+                            <span class="left-txt"><i>*</i>性别：</span>
+                            <label><input class="rad" type="radio" ng-disabled="inputDisabled===true" ng-checked="model.add.gender===1" ng-click="model.add.gender=1">男</label>
+                            <label class="ml20"><input class="rad" ng-disabled="inputDisabled===true" type="radio" ng-checked="model.add.gender===2" ng-click="model.add.gender=2">女</label>
+                        </li>
+                        <li ng-if="model.add.passwordType!==-1">
+                            <span class="left-txt"><i>*</i>默认密码：</span>
+                            <label><input class="rad" ng-disabled="inputDisabled===true" ng-checked="model.add.passwordType===1" ng-click=" model.add.passwordType=1" type="radio">000000</label>
+                            <label class="ml20"><input ng-disabled="inputDisabled===true" ng-checked="model.add.passwordType===2" ng-click=" model.add.passwordType=2" class="rad" type="radio">身份证后六位</label>
+                            <label class="ml20"><input ng-disabled="inputDisabled===true" ng-checked="model.add.passwordType===3" ng-click=" model.add.passwordType=3" class="rad" type="radio">自定义 <input type="text" ng-model="model.add.password " ng-if="model.add.passwordType===3" ng-pattern="/^[0-9A-Za-z]{6,12}$/" class="ipt ipt-small"></label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span has-permission="peopleManage/searchTest"><input type="checkbox" ng-model="model.add.test">新增人员仅作为测试数据</span>
+                        </li>
+                        <li>
+                            <span class="left-txt">手机号码：</span><input  ng-model="model.add.phoneNumber "
+                                                                       name="phoneNumber"
+                                                                       ng-disabled="inputDisabled===true"
+                                                                       ng-pattern="/^[\d]{11}$/"
+                                                                       type="text" class="ipt ipt-medium" placeholder="请输入有效手机号码">
+                            <!--<span class="left-txt">电子邮箱：</span><input type="text"  ng-model="model.add.email "-->
+                            <!--name="email"-->
+                            <!--ng-disabled="inputDisabled===true"-->
+                            <!--ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"-->
+                            <!--class="ipt ipt-medium" placeholder="请输入有效的电子邮箱">-->
+                            <span class="left-txt">工作单位：</span><input type="text"  ng-model="model.add.unitName "
+                                                                      name="unitName"
+                                                                      ng-disabled="inputDisabled===true"
+                                                                      class="ipt ipt-medium" placeholder="请输入工作单位名称">
+                        </li>
+
+
+                    </ul>
+                </form>
+            </div>
+            <div class="btn-center">
+                <button class="btn btn-r" ng-click="events.addUserToUnit(addForm)" ng-disabled="addForm.$invalid||regSubmitAble">保存</button>
+                <a href="javascript:void(0)"
+                   ng-click="events.closeaddFormWindow(addForm,'handWindowOptions')"
+                   class="btn btn-g ml10">取消</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog w-2" k-options="kendoPlus.peopleWindowOptions" kendo-window="peopleWindowOptions">
+        <div class="dialog-body">
+            <div class="dialog-tit">批量导入人员<a href="javascript:void(0)"
+                                             ng-click="events.closeKendoWindow('peopleWindowOptions')"
+                                             class="ico ico-close"></a></div>
+            <div class="dialog-cont">
+                <div class="tips-box">
+                    温馨提示:<br>
+                    1. 导入报名表前请先下载导入模版，根据表格内容填写后再导入；<br>
+                    2. 导入后需前往导入任务查看导入结果，导入成功后人员才会显示在列表中。
+                </div>
+                <a target="_blank"  href="b{{urlPrefix}}/mfs/resource/file/SM2_unit_user_import.xlsx" class="btn-b btn mt10">模版下载</a>
+                <ul class="ul-d-form mt20">
+                    <li>
+                        <span class="left-txt left-txt-4">选择导入文件：</span>
+                        <input type="text"
+                               ng-model="model.upload.result.fileName"
+                               readonly class="ipt w-4"
+                               placeholder="选择导入文件">
+
+                        <div hb-file-uploader="test"
+                             ng-if="windowLoaded" auto="true" style=" display: inline-block;margin: 0;padding: 0;"
+                             ng-model="model.upload.result"
+                             class="upload btn">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="left-txt left-txt-4" style="padding :8px 0 ">默认密码：</span>
+                        <!--           <label><input type="radio">000000</label>
+                                   <label class="ml20"><input type="radio">身份证后六位</label>
+                                   <label class="ml20"><input type="radio" checked="">自定义密码 <input type="text" class="ipt ipt-m"></label>-->
+                        <label><input name="default_password" type="radio" value="1" ng-model="model.importUser.passWordType">000000</label>
+                        <label class="ml20"><input name="default_password" type="radio" value="2" ng-model="model.importUser.passWordType">身份证后六位</label>
+                        <label class="ml20"><input name="default_password" type="radio" value="3" ng-model="model.importUser.passWordType">自定义密码 <input ng-show="model.importUser.passWordType==3" ng-model="model.importUser.password" type="text" class="ipt ipt-m"></label>
+
+                    </li>
+                    <li>
+                        <span class="left-txt left-txt-4"></span>
+                        <span has-permission="peopleManage/searchTest"><input type="checkbox" ng-model="model.importUser.test">导入人员仅作为测试数据</span>
+                        <br><span class="left-txt left-txt-4"></span>
+                        <a has-permission="peopleManage/import" ng-click="events.importMan()" class="btn btn-r mt10">导入</a>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="btn-center">
+                <button
+                        ng-disabled="submitAble"
+                        ng-click="events.reject()"
+                        class="btn btn-r">确定</button>
+                <a href="javascript:void(0)"
+                   ng-click="events.closeKendoWindow('batchWindowOptions')"
+                   class="btn btn-g ml10">取消</a>
+            </div>-->
+        </div>
+    </div>
+    <div class="dialog w-2" k-options="kendoPlus.detailWindowOptions" kendo-window="detailWindowOptions">
+        <div class="dialog-body">
+            <div class="dialog-tit">
+                人员详细<a href="javascript:void(0)"
+                       ng-click="events.closeKendoWindow('detailWindowOptions')"
+                       class="ico ico-close"></a></div>
+            <div class="dialog-cont">
+                <ul class="ul-d-form udf-5 pt20 pl20 li-fl lh-1 clear">
+                    <li>
+                        <span class="left-txt">姓名：</span>b{{model.detail.name}}
+                    </li>
+                    <li>
+                        <span class="left-txt">身份证号：</span>b{{model.detail.uniqueData}}
+                    </li>
+                    <li>
+                        <span class="left-txt">登录帐号：</span>b{{model.detail.uniqueData}}
+                    </li>
+                    <li>
+                        <span class="left-txt">手机号码：</span>b{{model.detail.phoneNumber}}
+                    </li>
+                    <li>
+                        <span class="left-txt">性别：</span>
+                        <span ng-if="model.detail.gender===1">男</span>
+                        <span ng-if="model.detail.gender===2">女</span>
+                    </li>
+                    <!--<li>-->
+                    <!--<span class="left-txt">电子邮箱：</span>b{{model.detail.email}}-->
+                    <!--</li>-->
+                    <li>
+                        <span class="left-txt">工作单位：</span>b{{model.detail.unitName}}
+                    </li>
+                    <!-- <li class="clear">
+                         <span class="left-txt">单位地区：</span>福建省  福州市  鼓楼区
+                     </li>
+                     <li class="clear">
+                         <span class="left-txt">单位名称：</span>福建华博教育科技股份有限公司
+                     </li>-->
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+

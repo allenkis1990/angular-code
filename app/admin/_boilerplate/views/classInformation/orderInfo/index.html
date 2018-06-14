@@ -1,0 +1,60 @@
+<!--订单信息-->
+
+<div class="no-data w-4 pt20 pb20 clear"
+     ng-show="model.noUserInformation">
+    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+    <div class="p-txt">请先输入相关信息进行搜索！</div>
+</div>
+
+<div class="tab-bd clear" ng-if="!model.noUserInformation">
+    <ul class="ul-form li-fl lh-1 mt20 clear">
+        <div hb-authorized-option use-type="order" query-params="authorizedParam"></div>
+        <li><input type="text"
+                   ng-model="orderQueryParam.orderNo"
+                   class="ipt ipt-middle"
+                   placeholder="订单号">
+        </li>
+        <li>
+            <select class="slt slt-middle"
+                    ng-model="orderQueryParam.orderStatus"
+                    ng-change="events.changeOrderTimeText()">
+                <option value="ALL">订单状态</option>
+                <option value="WAIT_FOR_PAYMENT">等待付款</option>
+                <option value="PAYING">支付中</option>
+                <option value="OPENING">开通中</option>
+                <option value="TRADE_SUCCESS">交易成功</option>
+                <option value="TRADE_CLOSE">交易关闭</option>
+            </select>
+        </li>
+        <li><input type="text"
+                   hb-clear-input
+                   class="ipt ipt-large"
+                   ng-model="orderQueryParam.tradeStartTimeMills"
+                   k-options="kendoPlus.timeOptions"
+                   kendo-date-picker="kendoPlus.timeModel"
+                   placeholder="b{{orderQueryParam.orderStatusText}}"> -
+            <input type="text"
+                   hb-clear-input
+                   ng-model="orderQueryParam.tradeEndTimeMills"
+                   k-options="kendoPlus.timeOptions"
+                   kendo-date-picker="kendoPlus.timeModel"
+                   class="ipt ipt-large"
+                   placeholder="b{{orderQueryParam.orderStatusText}}">
+        </li>
+        <!-- <li><label><input type="checkbox"
+                           ng-click="events.toggleOrderStatus($event)"
+                           class="chk">换班订单</label>
+         </li>-->
+        <li><a href="javascript:void(0)"
+               has-permission="orderInfo/searOrderPage"
+               ng-click="events.MainPageQueryList($event)"
+               class="btn btn-b">查询</a></li>
+    </ul>
+
+
+    <div style="margin-top:10px;" kendo-grid="kendoPlus.orderGridInstance"
+         k-ng-delay="kendoPlus.gridDelay"
+         k-options="orderGrid.options">
+    </div>
+
+</div>

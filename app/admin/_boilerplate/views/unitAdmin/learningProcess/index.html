@@ -1,0 +1,49 @@
+<div class="no-data w-4 pt20 pb20 clear"
+     ng-show="model.noUserInformation">
+    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+    <div class="p-txt">请先输入相关信息进行搜索！</div>
+</div>
+
+<!--学习历程-->
+<div class="tab-bd clear" ng-if="!learnProcessModel.noLearningProcess&&!model.noUserInformation">
+    <ul class="ul-form li-fl lh-1 mt20 clear">
+        <li>
+            <select class="slt slt-small"
+                    ng-options="item.optionId as item.name for item in learnProcessModel.yearList"
+                    ng-model="learnProcessModel.trainingYear">
+            </select>
+        </li>
+        <li>
+            <select class="slt slt-small"
+                    ng-options="item.optionId as item.name for item in learnProcessModel.getTrainingSubjectsList"
+                    ng-model="learnProcessModel.trainingSubject">
+            </select>
+        </li>
+        <li>
+            <input type="text"
+                   class="ipt ipt-small"
+                   ng-model="learnProcessModel.className"
+                   ng-keyup="$event.keyCode==13?events.MainPageQueryList():''"
+                   placeholder="班级名称"></li>
+        <li>
+            <select class="slt slt-small" ng-model="learnProcessModel.testResult">
+                <option value="-2">是否合格</option>
+                <option value="-1">未考核</option>
+                <option value="0">不合格</option>
+                <option value="1">合格</option>
+            </select>
+        </li>
+        <li><a href="javascript:void (0);"
+               has-permission="classInformation/searchStudyInfo"
+               ng-click="events.MainPageQueryList()"
+               class="btn btn-b">查询</a></li>
+    </ul>
+    <div kendo-grid="node.learningClass" k-options="ui.learningClass.options"
+         k-ng-delay="learnProcessModel.searchLearning"></div>
+</div>
+<div class="tab-bd clear" ng-if="learnProcessModel.noLearningProcess&&!model.noUserInformation">
+    <div class="no-data w-4 pt20 pb20 clear">
+        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+        <div class="p-txt">查询不到学习历程的相关信息！</div>
+    </div>
+</div>

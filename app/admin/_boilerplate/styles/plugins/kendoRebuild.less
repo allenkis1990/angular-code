@@ -1,0 +1,339 @@
+div.k-window {
+  border-width: 0;
+  background-color: transparent;
+}
+
+.k-window .k-window-content {
+  padding: 0;
+  border-radius: 8px;
+}
+
+/*
+  设置tip的宽高
+  */
+.k-notification-wrap {
+  padding: 10px 35px;
+}
+
+/*
+  设置tip的zIndex未更高
+*/
+.k-animation-container {
+  z-index: 1000000 !important;
+}
+
+/*
+  设置校验的颜色
+  dirty: ，填写过的样式
+  valid: 校验通过的样式
+  invalid: 校验未必通过的样式
+  pristine: 未填写过的文本的样式
+*/
+form {
+  .ng-dirty {
+    border-color: #3ca2e2 !important;
+  }
+
+  .ng-valid {
+    border-color: #3ccd47 !important;
+  }
+
+  .ng-invalid {
+    border-color: #f66985 !important;
+  }
+
+  .ng-pristine {
+    border-color: #ddd !important;
+  }
+}
+
+/*美工提供样式默认table的text-align的位置为center， kendo的默认行为被修改，修改回来*/
+.k-editor {
+  text-align: left;
+  /* material的样式选中设置选中背景*/
+  .k-state-selected {
+    background: rgba(63, 81, 181, 1) !important;
+  }
+}
+
+/*设置上传按钮在不同容器下面的样式*/
+.rebuild-upload-button {
+  .webuploader-container {
+    display: inline-block;
+    .webuploader-pick {
+      padding: 7px 17px;
+    }
+  }
+}
+
+/*适配在li下面webuploader的样式变形*/
+li {
+  .webuploader-pick {
+    padding: 0px 12px;
+  }
+}
+
+.k-datepicker {
+  padding: 0;
+}
+
+.k-grid-header-wrap {
+
+  .k-header {
+    height: 0;
+  }
+}
+
+.k-datepicker {
+  .k-picker-wrap {
+    border-color: #ddd;
+    .k-select {
+      line-height: 2.4em;
+    }
+
+    .k-input {
+      padding: 5px 0;
+    }
+    &.k-state-focused {
+      .k-state-border-down {
+        padding-bottom: 0 !important;
+      }
+    }
+  }
+  &.ipt {
+    border: 0 !important;
+  }
+}
+
+.k-combobox {
+  .k-dropdown-wrap {
+    border-color: #ddd;
+    .k-input {
+      padding: 5px 0;
+    }
+
+    .k-select {
+      line-height: 2.4em;
+    }
+  }
+}
+
+div.k-grid-header {
+  border-bottom: none;
+}
+
+div.k-grid-header {
+  border-bottom: none;
+}
+
+.k-grid-pager {
+  border-width: 0 0 0;
+
+}
+
+.k-picker-wrap.k-state-focused, .k-dropdown-wrap.k-state-focused {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.k-picker-wrap.k-state-default .k-input {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.k-grid {
+  table {
+    border-collapse: collapse;
+  }
+  .k-grid-header {
+    th {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      height: 23px;
+    }
+  }
+
+  .k-grid-content {
+    td {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      -icab-text-overflow: ellipsis;
+      -khtml-text-overflow: ellipsis;
+      -moz-text-overflow: ellipsis;
+      -webkit-text-overflow: ellipsis;
+      word-break: break-all;
+    }
+  }
+}
+
+.k-webkit {
+  .k-editor-toolbar {
+    li {
+      line-height: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.k-calendar-container {
+  table {
+    td {
+      border: none;
+      padding: 0;
+    }
+  }
+  .k-content {
+    text-align: center;
+    th {
+      height: 0;
+      padding: 0;
+      border: none;
+      text-align: center;
+    }
+    .k-link {
+      padding: 0;
+    }
+  }
+
+}
+
+.k-loading {
+  background-image: url('/bower_components/KendoUI/dist/styles/Bootstrap/loading.gif') !important;
+  background-position: 50% 50% !important;
+}
+
+.k-treeview .k-item {
+  .k-minus {
+    background: url("../../../@systemUrl@/images/web-icons.png") no-repeat;
+    background-position: -337px -94px;
+  }
+  .k-plus {
+    left: 1px;
+    top: -3px;
+
+    background: url("../../../@systemUrl@/images/web-icons.png") no-repeat;
+    background-position: -357px -97px;
+  }
+
+  li {
+    float: none;
+  }
+
+}
+
+.k-treeview {
+  overflow: hidden;
+  padding: 7px;
+  ul {
+    position: relative;
+  }
+}
+
+/*表格样式修改*/
+.k-grid tr td {
+  border-color: #ddd;
+}
+
+.k-grid-header th.k-header {
+  border-color: #ddd;
+  background-color: #f2f2f2;
+  vertical-align: middle;
+}
+
+.k-selectable .k-state-selected {
+  color: #000000 !important;
+  background-color: #acdfff !important;
+}
+
+/*树样式修改*/
+.k-state-focused {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.k-widget.k-treeview {
+  color: #666;
+}
+
+.k-treeview .k-in.k-state-hover {
+  color: #666;
+}
+
+.k-state-selected {
+  background-color: #3ca2e2;
+  color: #fff;
+}
+
+.resource-category-operators .k-icon {
+  margin: 0 auto;
+}
+
+.upload .webuploader-pick-hover {
+  background: #f47d95 none repeat scroll 0 0;
+}
+
+.k-treelist {
+  .k-i-collapse {
+    background: url("../../../@systemUrl@/images/web-icons.png") no-repeat;
+    background-position: -337px -94px;
+  }
+  .k-i-expand {
+    //left: 1px;
+    top: -2px;
+    position: relative;
+    background: url("../../../@systemUrl@/images/web-icons.png") no-repeat;
+    background-position: -357px -97px;
+  }
+}
+
+.k-popup .k-item > .k-group {
+  position: relative;
+  background: transparent;
+  color: #666;
+  .k-state-hover {
+    color: #3ca2e2;
+
+  }
+}
+
+/* checkbox在ie8下兼容 */
+input.k-checkbox, .k-radio {
+  position: relative;
+}
+
+.org-tree {
+  .k-top, .k-mid, .k-bot {
+    padding-right: 60px;
+    .k-in {
+      width: 100%;
+      .tree-item-name {
+        width: 100%;
+        .tree-item-text {
+          width: 85%;
+        }
+      }
+    }
+  }
+}
+
+.k-notification-success {
+  background-color: #349946 !important;
+  color: white !important;
+  border: none !important;
+  font-size: 12px !important;
+}
+
+.k-notification-error {
+  background-color: #ef470a !important;
+  color: white !important;
+  font-size: 12px !important;
+  border: none !important;
+}
+
+
+

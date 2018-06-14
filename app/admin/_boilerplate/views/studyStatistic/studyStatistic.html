@@ -1,0 +1,95 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.studyStatistic'">
+    <div class="column">
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+                <li>
+                    <input type="text" class="ipt ipt-small" placeholder="请输入课程名称"
+                           ng-model="model.lessonName"
+                           hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                    />
+                </li>
+                <li>
+                    <input id="lesson_create_unit_input" placeholder="请选择机构单位" type="text" class="ipt ipt-medium"
+                           ng-model="model.lessonCreateUnitName"
+                           ng-click="events.showUnitPopup(1)"
+                           ng-change="events.unitValueChange(1)"
+                           hb-clear-input
+                    >
+                    <div style="min-width: 196px; max-height: 360px; overflow: auto;"
+                         kendo-popup="node.lessonCreateUnitPopup" k-options="ui.popup.lessonCreateUnit"
+                    >
+                        <div kendo-tree-view="node.lessonCreateUnitTree" k-options="ui.treeView.lessonCreateUnit"></div>
+                    </div>
+                </li>
+                <li>
+                    <input type="text" class="ipt ipt-medium" placeholder="统计起始时间"
+                           ng-model="model.statisticBeginTime"
+                           kendo-date-picker="node.statisticBeginTime"
+                           k-options="ui.datePicker.begin"
+                           hb-readonly hb-clear-input
+                           ng-keydown="events.queryByEnter($event)"
+                    /> -
+                    <input type="text" class="ipt ipt-medium" placeholder="统计结束时间"
+                           ng-model="model.statisticEndTime"
+                           kendo-date-picker="node.statisticEndTime"
+                           k-options="ui.datePicker.end"
+                           hb-readonly hb-clear-input
+                    />
+                </li>
+                <li>
+                    <select ng-model="model.buildSelf" class="slt slt-small">
+                        <option value="2">全部课程</option>
+                        <option value="1">自建课程</option>
+                    </select>
+                </li>
+                <li>
+                    <a href="#" ng-click="events.reloadStudyStatisticGrid($event)" class="btn btn-b">查询</a>
+                    <!--<a href="#" class="btn btn-b">导出数据</a>-->
+                </li>
+            </ul>
+        </div>
+
+        <p ng-if="model.statisticBeginTime || model.statisticEndTime" class="mb10">
+            <span class="b">统计时间段：</span>b{{model.statisticBeginTime}}&nbsp;&nbsp;至&nbsp;&nbsp;b{{model.statisticEndTime}}
+        </p>
+
+        <div kendo-grid="node.studyStatisticGrid" k-options="ui.studyStatisticGrid"></div>
+    </div>
+
+    <div class="dialog w-8" kendo-window="node.detailUnitWindow" k-options="ui.window.detailUnitWindow.options">
+        <div class="dialog-body">
+            <div class="dialog-tit">
+                《b{{model.detailLessonName}}》课程学习数据查看详情
+                <a href="#" ng-click="events.closeDetailUnitWindow($event)" class="ico ico-close"></a>
+            </div>
+            <div class="dialog-cont">
+                <div class="search-bar mt10">
+                    <ul class="ul-form li-fl clear">
+                        <li>
+                            <input id="employee_unit_input" placeholder="请选择机构单位" type="text" class="ipt ipt-medium"
+                                   ng-model="model.employeeUnitName"
+                                   ng-click="events.showUnitPopup(2)"
+                                   ng-change="events.unitValueChange(2)"
+                                   hb-clear-input
+                            >
+                            <div kendo-popup="node.employeeUnitPopup" k-options="ui.popup.employeeUnit"
+                                 style="min-width: 196px; max-height: 360px; overflow: auto;">
+                                <div kendo-tree-view="node.employeeUnitTree" k-options="ui.treeView.employeeUnit"
+                                     k-ng-delay="ui.treeView.employeeUnit"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="events.reloadUnitStudyStatisticGrid($event)" class="btn btn-b">查询</a>
+                            <!--<a href="#" class="btn btn-r">导出</a>-->
+                        </li>
+                    </ul>
+                </div>
+                <div kendo-grid="node.unitStudyStatisticGrid" k-options="ui.unitStudyStatisticGrid"
+                     k-ng-delay="ui.unitStudyStatisticGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ui-view></div>

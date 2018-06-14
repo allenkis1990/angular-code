@@ -1,0 +1,141 @@
+<!--用户信息-->
+<div class="tab-bd clear" ng-if="model.classTab !== 0 && model.noUserInformation">
+    <div class="no-data w-4 pt20 pb20 clear">
+        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+        <div class="p-txt">请先输入相关信息进行搜索！</div>
+    </div>
+</div>
+<div class="tab-bd clear" ng-if="model.classTab === 1 && !model.noUserInformation">
+    <div class="col-tit">基本资料</div>
+    <div class="dash-line-1"></div>
+    <ul class="ul-d-form udf-15 li-fl pt10 clear">
+        <li><span class="left-txt">姓名：</span>b{{model.chooseInformation.name}}</li>
+        <li><span class="left-txt">性别：</span>b{{model.chooseInformation.gender}}</li>
+        <li><span class="left-txt">身份证号：</span>b{{model.chooseInformation.identify}}</li>
+        <li><span class="left-txt">登录帐号：</span>b{{model.chooseInformation.loginInput}}</li>
+        <!--手机号码-->
+        <li ng-if="model.editUser.phoneNumberEdit">
+            <span class="left-txt">手机号码：</span>
+            <input type="text"
+                   class="ipt"
+                   ng-model="model.editUser.phone">
+            <a href="javascript:void(0);"
+               ng-click="events.sureEdit($event,1,model.editUser.phone)"
+               class="ico-op ico-complete-hl"></a>
+            <a href="javascript:void(0);"
+               ng-click="model.editUser.phoneNumberEdit = false"
+               class="ico-op ico-del-hl"></a>
+        </li>
+        <li ng-if="!model.editUser.phoneNumberEdit">
+            <span class="left-txt">手机号码：</span>
+            <a href="javascript:void(0);"
+               has-permission="classInformation/changeUseInfo"
+               ng-click="events.editUser($event,1)"
+               class="ico-op ico-edit mr5"></a>
+            b{{model.chooseInformation.phoneNumber}}
+        </li>
+        <li><span class="left-txt">职称等级：</span>b{{model.chooseInformation.jobGrade}}</li>
+        <!--电子邮箱-->
+        <li ng-if="model.editUser.emailEdit">
+            <span class="left-txt">电子邮箱：</span>
+            <input type="email"
+                   ng-model="model.editUser.email"
+                   class="ipt">
+            <a href="javascript:void(0);"
+               ng-click="events.sureEdit($event,2,model.editUser.email)"
+               class="ico-op ico-complete-hl"></a>
+            <a href="javascript:void(0);"
+               ng-click="model.editUser.emailEdit = false"
+               class="ico-op ico-del-hl"></a>
+        </li>
+        <li ng-if="!model.editUser.emailEdit">
+            <span class="left-txt">电子邮箱：</span>
+            <a href="javascript:void(0);"
+               has-permission="classInformation/changeUseInfo"
+               ng-click="events.editUser($event,2)"
+               class="ico-op ico-edit mr5"></a>
+            b{{model.chooseInformation.email}}
+        </li>
+        <li><span class="left-txt">QQ：</span>b{{model.chooseInformation.qq}}</li>
+        <!--联系地址-->
+        <li ng-if="model.editUser.addressEdit">
+            <span class="left-txt">联系地址：</span>
+            <input type="text"
+                   ng-model="model.editUser.address"
+                   class="ipt">
+            <a href="javascript:void(0);"
+               ng-click="events.sureEdit($event,3,model.editUser.address)"
+               class="ico-op ico-complete-hl"></a>
+            <a href="javascript:void(0);"
+               ng-click="model.editUser.addressEdit = false"
+               class="ico-op ico-del-hl"></a>
+        </li>
+        <li ng-if="!model.editUser.addressEdit">
+            <span class="left-txt">联系地址：</span>
+            <a href="javascript:void(0);"
+               has-permission="classInformation/changeUseInfo"
+               ng-click="events.editUser($event,3)"
+               class="ico-op ico-edit mr5"></a>
+            b{{model.chooseInformation.address}}
+        </li>
+        <!--邮编-->
+        <li ng-if="model.editUser.codeEdit">
+            <span class="left-txt">邮编：</span>
+            <input type="text"
+                   ng-model="model.editUser.code"
+                   class="ipt">
+            <a href="javascript:void(0);"
+               ng-click="events.sureEdit($event,4,model.editUser.code)"
+               class="ico-op ico-complete-hl"></a>
+            <a href="javascript:void(0);"
+               ng-click="model.editUser.codeEdit = false"
+               class="ico-op ico-del-hl"></a>
+        </li>
+        <li ng-if="!model.editUser.codeEdit">
+            <span class="left-txt">邮编：</span>
+            <a href="javascript:void(0);"
+               has-permission="classInformation/changeUseInfo"
+               ng-click="events.editUser($event,4)"
+               class="ico-op ico-edit mr5"></a>
+            b{{model.chooseInformation.postCode}}
+        </li>
+    </ul>
+    <div class="col-tit">单位信息</div>
+    <div class="dash-line-1"></div>
+    <ul class="ul-d-form udf-15 li-fl pt10 clear">
+        <li><span class="left-txt">发证单位地区：</span>b{{model.chooseInformation.area}}</li>
+        <li><span class="left-txt">所属会计主管部门：</span>b{{model.chooseInformation.department}}</li>
+        <!--单位名称-->
+        <li ng-if="model.editUser.unitNameEdit">
+            <span class="left-txt">单位名称：</span>
+            <input type="text"
+                   ng-model="model.editUser.unit"
+                   class="ipt">
+            <a href="javascript:void(0);"
+               ng-click="events.sureEdit($event,5,model.editUser.unit)"
+               class="ico-op ico-complete-hl"></a>
+            <a href="javascript:void(0);"
+               ng-click="model.editUser.unitNameEdit = false"
+               class="ico-op ico-del-hl"></a>
+        </li>
+        <li ng-if="!model.editUser.unitNameEdit">
+            <span class="left-txt">单位名称：</span>
+            <a href="javascript:void(0);"
+               has-permission="classInformation/changeUseInfo"
+               ng-click="events.editUser($event,5)"
+               class="ico-op ico-edit mr5"></a>
+            b{{model.chooseInformation.unitName}}
+        </li>
+    </ul>
+    <div class="col-tit">其他</div>
+    <div class="dash-line-1"></div>
+    <ul class="ul-d-form udf-15 li-fl pt10 clear">
+        <li><span class="left-txt">从业证书获得时间：</span>b{{model.chooseInformation.professionalCertificatTime}}</li>
+        <li><span class="left-txt">是否激活：</span>b{{model.chooseInformation.activated}}</li>
+        <li><span class="left-txt">激活时间：</span>b{{model.chooseInformation.activatedTime}}</li>
+    </ul>
+    <a href="javascript:void (0);"
+       has-permission="classInformation/reloadPassword"
+       ng-click="events.reducePassword($event,$index)"
+       class="btn btn-b mt20 ml20">重置密码</a>
+</div>

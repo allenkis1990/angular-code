@@ -1,0 +1,66 @@
+<div>
+    <div class="w-5 pb20 clearfix">
+        <div class="original-img  pull-left">
+            <div class="img-upload">
+                <div class="upload pull-left">
+                    <div id="upload_btn"></div>
+                </div>
+                <span class="fl">只支持JPG、PNG</span>
+            </div>
+            <div class="or-img-box">
+                <div class="or-mask-loading" ng-if="thumbIng">
+                    <div class="or-mask-mask"></div>
+                    <div class="or-loading-con">
+                        <img src="@systemUrl@/images/loading_nice.gif" alt=""/>
+                    </div>
+                </div>
+                <img class="default" id="image_preview_container" src="@systemUrl@/images/image_container.png" alt=""/>
+
+                <div class="btn-op clear" ng-if="cropperInstalled">
+                    <button type="button" ng-click="baseSize()">
+                        <span class="ico original-size" title="初始化"></span>
+                    </button>
+                    <button type="button" ng-click="bigger()">
+                        <span class="ico bigger" title="放大"></span>
+                    </button>
+                    <button type="button" ng-click="smaller()">
+                        <span class="ico smaller" title="缩小"></span>
+                    </button>
+                    <button type="button" ng-click="leftScale()">
+                        <span class="ico turn-left" title="左转"></span>
+                    </button>
+                    <button type="button" ng-click="rightScale()">
+                        <span class="ico turn-right" title="右转"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-img  pull-right">
+            <p class="p-img-tit">预览</p>
+
+            <div class="p-img-1">
+                <div class="img-preview"></div>
+                <p>120px × 120px</p>
+            </div>
+            <div class="p-img-2">
+                <div class="img-user">
+                    <div class="img-preview"></div>
+                    <span class="img-mask"><img src="@systemUrl@/images/user-img-mask.png"></span>
+                </div>
+                <p>80px × 80px</p>
+            </div>
+            <div class="p-img-3">
+                <div class="img-user">
+                    <div class="img-preview"></div>
+                    <span class="img-mask"><img src="@systemUrl@/images/user-img-mask.png"></span>
+                </div>
+                <p>60px × 60px</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mb20">
+        <button class="btn btn-gr btn-w-sm" ng-click="getResult()" ng-if="selectedFile" type="button">确认</button>
+    </div>
+</div>

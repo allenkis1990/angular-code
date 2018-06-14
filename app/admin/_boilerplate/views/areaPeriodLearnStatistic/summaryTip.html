@@ -1,0 +1,92 @@
+<div class="tips-box-1 clear">
+    <span class="t-r">统计报表查询的是以日为单位的数据，因此查询日期的可选范围为当前日期的前一天</span>
+</div>
+<p class="mt10">
+    <span class="fs16 b">1.搜索条件的字段及详细说明</span>（以下各搜索条件若都填写相关数据，则查询的是满足这几项搜索条件的数据才会查出来，即是且的关系）
+</p>
+<table class="table table-3 table-nf mt10">
+    <thead>
+    <tr>
+        <th width="150">搜索字段</th>
+        <th>具体字段说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>查询日期</td>
+        <td class="tl">
+            学员选课成功的日期(支付成功订单且订单状态为交易成功的时间)
+        </td>
+    </tr>
+    <tr>
+        <td>地区</td>
+        <td class="tl">
+            选择需查询的地区。
+        </td>
+    </tr>
+    <tr>
+        <td>继续教育年度</td>
+        <td class="tl">
+            继续教育的年度，学员购买的课程所属的继续教育年度。
+        </td>
+    </tr>
+    <tr>
+        <td>科目</td>
+        <td class="tl">
+            支持按课程的所属科目进行查询。查询属性值：全部、公需课、专业课。
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p class="mt10">
+    <span class="fs16 b">2.列表字段及详细说明</span>（列表下的数据显示受搜索条件的约束，统计单位：人次）
+</p>
+<table class="table table-3 table-nf mt10">
+    <thead>
+    <tr>
+        <th width="150">列表字段</th>
+        <th>具体字段说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>合计</td>
+        <td class="tl">
+            各项数据的合计数值
+        </td>
+    </tr>
+    <tr>
+        <td>地区</td>
+        <td class="tl">
+            默认显示各地市的数据，如福建省、省直单位、福州市等；
+        </td>
+    </tr>
+    <tr>
+        <td>购课人数</td>
+        <td class="tl">
+            根据所选的科目条件，统计对应维度下的选课成功的人数。例如，一人买了10门课程，其只算1人。
+        </td>
+    </tr>
+    <tr>
+        <td>购课总学时数</td>
+        <td class="tl">
+            在对应科目下选课成功人数的总学时数。
+        </td>
+    </tr>
+    <tr>
+        <td>
+            公需课总学时
+        </td>
+        <td class="tl">
+            查询条件下地区购课成功的人数中累计购买公需课总学时。
+        </td>
+    </tr>
+    <tr>
+        <td>专业课总学时</td>
+        <td class="tl">
+            查询条件下地区购课成功的人数中累计购买专业课总学时。
+        </td>
+    </tr>
+
+    </tbody>
+</table>

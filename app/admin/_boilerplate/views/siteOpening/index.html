@@ -1,0 +1,154 @@
+<div style="position:fixed;left:50%;top:40%" ng-if="model.lwhLoading">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>
+<div class="main-wrap-body">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <!--<li><input type="text"
+                       ng-model="model.studentInfoParams.identify"
+                       class="ipt ipt-small"
+                       placeholder="请输入身份证号"></li>-->
+            <li><input type="text"
+                       ng-model="model.studentInfoParams.name"
+                       class="ipt ipt-small"
+                       ng-keyup="events.pressEnterKey($event)"
+                       placeholder="请输入姓名"></li>
+            <li><input type="text"
+                       ng-model="model.studentInfoParams.loginInput"
+                       class="ipt ipt-small"
+                       placeholder="请输入登录帐号"></li>
+            <li><a href="javascript:void(0)"
+                   has-permission="siteOpening/searchAll"
+                   ng-click="events.MainPageQueryList($event)"
+                   class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="column mt10" ng-if="model.hasStudentList==false">
+        <div class="no-data w-4 clear">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">如需为学员进行开通班级,请先输入学员相关信息进行搜索</div>
+        </div>
+    </div>
+
+    <div class="column mt10" ng-show="model.hasStudentList==true&&!model.stepTwo">
+        <div kendo-grid="kendoPlus.studentInstance"
+             k-options="studentInfoGrid.options">
+        </div>
+    </div>
+
+    <div ng-if="model.stepTwo">
+        <div class="column mt10">
+            <div class="column">
+                <div class="col-tit">基本信息</div>
+                <div class="dash-line-1"></div>
+                <ul class="ul-d-form udf-13 li-fl pt10 clear">
+                    <li><span class="left-txt">姓名：</span><span ng-bind="model.userInfo.name"></span></li>
+                    <li><span class="left-txt">性别：</span><span ng-bind="model.userInfo.gender"></span></li>
+                    <li><span class="left-txt">身份证号：</span><span ng-bind="model.userInfo.identify"></span></li>
+                    <li><span class="left-txt">登录帐号：</span><span ng-bind="model.userInfo.loginInput"></span></li>
+                    <li><span class="left-txt">手机号码：</span><span ng-bind="model.userInfo.phoneNumber"></span></li>
+                    <li><span class="left-txt">职称等级：</span><span ng-bind="model.userInfo.jobGrade"></span></li>
+                    <li><span class="left-txt">地区：</span><span ng-bind="model.userInfo.area"></span></li>
+                    <li><span class="left-txt">所属会计主管部门：</span><span ng-bind="model.userInfo.department"></span></li>
+                    <li><span class="left-txt">从业证书获得时间：</span><span
+                            ng-bind="model.userInfo.professionalCertificatTime"></span></li>
+                    <li><span class="left-txt">电子邮箱：</span><span ng-bind="model.userInfo.email"></span></li>
+                    <li><span class="left-txt">单位名称：</span><span ng-bind="model.userInfo.unitName"></span></li>
+                    <li><span class="left-txt">联系地址：</span><span ng-bind="model.userInfo.address"></span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="column mt30">
+            <div class="dash-line-1"></div>
+            <div class="clear mt30">
+                <div class="wp-4 fl">
+                    <div class="tab-tit">
+                        <a href="javascript:void(0)" class="current">可报班级（<span ng-bind="model.totalSize"></span>条）</a>
+                    </div>
+                    <div class="column-block bt0 clear">
+                        <div class="col-body bt0 h-1">
+                            <div class="search-bar">
+                                <ul class="ul-form uf-3 li-fl clear">
+                                    <li>
+                                        <select class="slt slt-middle"
+                                                ng-options="item.optionId as item.name for item in model.yearList"
+                                                ng-model="model.configedQueryParam.year">
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <select class="slt slt-middle"
+                                                ng-options="item.optionId as item.name for item in model.titleLevelList"
+                                                ng-model="model.configedQueryParam.titleLevel">
+                                        </select>
+                                    </li>
+                                    <li><input type="text"
+                                               ng-model="model.configedQueryParam.className"
+                                               class="ipt ipt-small"
+                                               placeholder="请输入培训班名称"></li>
+                                    <li><a href="javascript:void(0)"
+                                           has-permission="siteOpening/searchCanClass"
+                                           ng-click="events.queryEnableClass($event)"
+                                           class="btn btn-b">查询</a></li>
+                                    <li><a href="javascript:void(0)"
+                                           has-permission="siteOpening/choseAll"
+                                           ng-click="events.checkAll()"
+                                           class="btn btn-r">全选</a></li>
+                                </ul>
+                            </div>
+                            <div kendo-grid="kendoPlus.configedGridInstance"
+                                 k-options="enableClassGrid.options">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wp-4 fr">
+                    <div class="tab-tit clear">
+                        <a href="javascript:void(0)" class="current">已选班级（<span
+                                ng-bind="model.hasChoseArr.length"></span>条）</a
+                        ><a href="javascript:void(0)"
+                            has-permission="siteOpening/removeAll"
+                            ng-click="events.cleanAll()"
+                            class="btn btn-g fr">清空</a>
+                    </div>
+                    <div class="column-block bt0 clear">
+                        <div class="col-body bt0 h-1">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th width="100">职称等级</th>
+                                    <th>培训班名称</th>
+                                    <th width="60">价格(元)</th>
+                                    <th width="60">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in model.hasChoseArr">
+                                    <td ng-bind="item.titleLevel"></td>
+                                    <td ng-bind="item.commodityName"></td>
+                                    <td ng-bind="item.price"></td>
+                                    <td class="op">
+                                        <a href="javascript:void(0)"
+                                           ng-click="events.hasChoseArrCacel(item,$index)">取消选择
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-center">
+                <button ng-disabled="model.hasChoseArr.length<=0" ng-click="events.openZeroOrder()" class="btn btn-r"
+                        style="float: left;">开通0元订单
+                </button>
+                <button ng-disabled="model.hasChoseArr.length<=0" ng-click="events.openTheClass()" class="btn btn-r">
+                    开通实付订单
+                </button>
+                <!--<a href="#" class="btn btn-g ml10">取消</a>-->
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+<!------------- 查看纳税人的电子票可开票信息  ---------------->
+<div class="column mt10">
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="20">No.</th>
+            <th width="120">名称</th>
+            <th width="100">纳税人识别号</th>
+            <th width="40">库存数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="storageByTaxPayerInfo in model.storageByTaxPayerInfoList">
+            <td>b{{$index + 1}}</td>
+            <td title="b{{storageByTaxPayerInfo.name}}">b{{storageByTaxPayerInfo.name}}</td>
+            <td title="b{{storageByTaxPayerInfo.taxCode}}">b{{storageByTaxPayerInfo.taxCode}}</td>
+            <td title="b{{storageByTaxPayerInfo.stroageTotalNum}}">b{{storageByTaxPayerInfo.stroageTotalNum}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

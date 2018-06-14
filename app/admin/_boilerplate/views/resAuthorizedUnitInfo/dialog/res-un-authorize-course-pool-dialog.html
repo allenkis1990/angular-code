@@ -1,0 +1,42 @@
+<div class="mb10"><b>待选课程包</b></div>
+<div class="search-bar mt10">
+    <ul class="ul-form li-fl clear">
+        <li>
+            <input type="text" class="ipt ipt-medium" placeholder="请输入课程包名称" ng-model="model.coursePoolUnAuthorizeArg.name">
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadCoursePoolUnAuthorizeGrid()">查询</a>
+        </li>
+    </ul>
+</div>
+<div class="column table-box mt20">
+
+    <div kendo-grid="node.coursePoolUnAuthorizeGridInstance"
+         k-options="grid.coursePoolUnAuthorizeGrid">
+    </div>
+</div>
+<div class="mt30"><b>待确认授权课程包</b></div>
+<table class="table table-nf mt10">
+    <thead>
+    <tr>
+        <th width="200">课程包名称</th>
+        <th width="60">课程数</th>
+        <th width="60">课程总学时</th>
+        <th width="50">创建时间</th>
+        <th width="50">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in model.toBeAuthorizeCoursePoolResList">
+        <td ng-bind="item.name"></td>
+        <td ng-bind="item.courseCount">20</td>
+        <td ng-bind="item.totalPeriod">30</td>
+        <td ng-bind="item.createTime">2018-02-02 20:20</td>
+        <td class="op"><a href="">详情</a><a href="" ng-click="events.removeToBeAuthorizeRes(dataItem,'COURSE_POOL')">取消选择</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="btn-center">
+    <a href="" ng-click="events.authorizeResForSingleType('COURSE_POOL',$index)" class="btn btn-r">确定授权</a>
+    <a href="" ng-click="dialog.close($index)" class="btn btn-g ml10">取消</a>
+</div>

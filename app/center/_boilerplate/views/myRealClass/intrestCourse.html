@@ -1,0 +1,83 @@
+<!-- 位置导航 -->
+<!--<div class="p-wrap-full pos-nav m-content">
+    <a  ui-sref="states.myRealClass" class="btn-return"><span class="p-ico"></span>返回</a>
+    <span class="p-ico"></span>兴趣课程
+
+    <div  ng-if="model.haveInterest"  class="tipbox fr"><span class="txt">说明：兴趣课程不纳入本班考核，您可根据实际需要进行补充学习</span>
+        &lt;!&ndash;<a ng-click="events.chooseIntrest($event)" class="btn-normal">选择兴趣课</a>&ndash;&gt;
+        <a href="javascript:void(0)"
+           style="padding:5px;"
+           ng-click="events.chooseIntrest($event)"
+           class="ui-btn btn-o">+ 选择兴趣课程</a>
+    </div>
+</div>-->
+
+<div class="p-wrap-full m-return-block">
+    <a ui-sref="states.myRealClass"><span class="p-ico"></span>返回我的班级</a>
+
+    <span class="name to">兴趣课程</span>
+    <div ng-if="model.haveInterest" class="tipbox fr"><span class="txt" style="color:red;">说明：兴趣课程不纳入本班考核，您可根据实际需要进行补充学习,选课成功后无法删除</span>
+        <a href="javascript:void(0)"
+           style="padding:3px;"
+           ng-click="events.chooseIntrest($event)"
+           class="ui-btn btn-o">+ 选择兴趣课程</a>
+    </div>
+</div>
+
+<!-- /位置导航 -->
+<!-- 内容 -->
+
+<div class="p-wrap-full content-bd-1 p0 mt-1 tab-bd-1">
+    <div class="p10">
+        <div class="p10" ng-if="model.intrestPackList.length === 0">
+            <div class="m-no-data tc h-1">
+                <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                <p class="txt">尚未选择 兴趣课程哟，请先去选课吧~</p>
+                <a ng-if="model.getUserClassLearningInfo.haveInterest==='1'" ng-click="events.chooseIntrest($event)"
+                   class="btn-normal mt20">选择兴趣课</a>
+            </div>
+        </div>
+
+        <div class="m-screen">
+            <div class="screen-style" style="height:auto"><span class="style-name">筛选</span
+            ><a href="javascript:void(0)"
+                ng-click="events.getIntrestPackList(item)"
+                ng-class="{'current':item.packageId===model.coursePoolId}"
+                title="b{{item.packageName}}"
+                ng-repeat="item in model.coursePoolList"><span ng-bind="item.shortName"></span></a></div>
+        </div>
+
+        <table class="ui-table table-class" ng-if="model.intrestPackList.length !== 0">
+            <thead>
+            <tr>
+                <th width="30">NO.</th>
+                <th class="tl">课程名称</th>
+                <th width="120">课程分类</th>
+                <th width="120">教师</th>
+                <th width="200">学习进度</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="item in model.intrestPackList">
+
+            <tr>
+                <td ng-bind="($index+1)"></td>
+                <td class="tl" title="b{{item.courseName}}" ng-bind="item.shortName"></td>
+                <td ng-bind="item.typeName"></td>
+                <td ng-bind="item.teacherName"></td>
+                <td>
+                    <div class="process"><span class="current" ng-style="{width:item.schedule+'%'}"></span><span
+                            class="process-num" ng-bind="item.schedule+'%'"></span></div>
+                </td>
+                <td class="op"><a ng-click="events.intrestPlay($event,item)">播放</a></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /内容 -->
+
+<div class="lwhLoading" ng-if="model.imgLoding===true">
+    <img src="@systemUrl@/images/loading.gif"/>
+</div>

@@ -1,0 +1,26 @@
+<div class="dialog-bd">
+    <table class="ui-table table-line mt10">
+        <thead>
+        <tr>
+            <th>NO.</th>
+            <th>交卷时间</th>
+            <th width="120">考试用时</th>
+            <th width="80">本次得分</th>
+            <th width="120">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in model.historyExamArr">
+            <td ng-bind="$index+1"></td>
+            <td ng-bind="item.completeTime"></td>
+            <td ng-bind="item.examTimeLength+'分钟'"></td>
+            <td ng-bind="item.score"></td>
+            <td class="op"><a href="javascript:void(0)"
+                              ng-class="{'disabled':!item.showQuestionAnalysis}"
+                              ng-click="events.lookHistoryView(item)">题析</a>
+                <!--ng-if="item.showQuestionAnalysis"-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

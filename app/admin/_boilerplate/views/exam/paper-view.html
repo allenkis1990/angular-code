@@ -1,0 +1,73 @@
+<div class="dialog-body">
+    <div class="dialog-tit">查看试卷<a href="#" ng-click="events.closePaperViewWindow($event)" class="ico ico-close"></a>
+    </div>
+    <div class="dialog-cont">
+        <div class="column">
+            <div class="dialog-sub-tit">试卷基本信息</div>
+            <div class="col-body mb20">
+                <ul class="ul-d-form udf-5 li-fl clear">
+                    <li class="clear"><span class="left-txt fl">试卷名称：</span><span
+                            class="to fl" ng-bind="model.viewPaper.name"></span></li>
+                    <li><span class="left-txt">试卷总分：</span><label ng-bind="model.viewPaper.totalScore"></label></li>
+                    <li><span class="left-txt">试卷分类：</span><label ng-bind="model.viewPaper.paperTypeName"></label></li>
+                    <li><span class="left-txt">建议及格分：</span><label ng-bind="model.viewPaper.passScore"></label></li>
+                    <li><span class="left-txt">组卷方式：</span><label
+                            ng-bind="model.viewPaper.configType === 1 ? '手动组卷':'智能组卷'"></label></li>
+                    <li><span class="left-txt">建议考试时长：</span><label ng-bind="model.viewPaper.timeLength"></label>分钟</li>
+                    <li><span class="left-txt">试卷状态：</span><label
+                            ng-bind="model.viewPaper.enabled | getPaperStatus"></label></li>
+                    <li><span class="left-txt">创建时间：</span><label ng-bind="viewPaperCreateTime"></label></li>
+                    <li><span class="left-txt">创建者：</span><label ng-bind="model.viewPaper.createUserName"></label></li>
+                </ul>
+            </div>
+            <div class="dialog-sub-tit">试卷考题信息</div>
+            <div class="column">
+                <div class="search-bar">
+                    <ul class="ul-form li-fl clear">
+                        <li ng-if="model.viewPaper.configType==1"><b>大题总数：</b><label
+                                ng-bind="model.viewPaper.items.length"></label></li>
+                        <li ng-if="model.viewPaper.configType==3"><b>大题总数：</b><label
+                                ng-bind="model.viewPaper.items2.length"></label></li>
+                        <li class="ml-b"><b>总题数：</b><label ng-bind="model.questionCount"></label></li>
+                    </ul>
+                </div>
+                <b>涉及到哪些题型：</b><label ng-bind="model.questionTypeDesc"></label>
+            </div>
+        </div>
+        <table class="table table-gray mt20">
+            <thead>
+            <tr>
+                <th width="60">题序</th>
+                <th>大题名称</th>
+                <th width="60">题型</th>
+                <th width="60">试题数</th>
+                <th width="60">大题总分</th>
+            </tr>
+            </thead>
+            <tbody ng-if="model.viewPaper.configType==1">
+            <tr ng-repeat="item in model.viewPaper.items">
+                <td ng-bind="($index + 1) | getPaperItemSort"></td>
+                <td class="tl"><span ng-bind="item.type | getQuestionType"></span>（共<label ng-bind="item.count"></label>小题，每题<span
+                        ng-bind="item.totalScore /
+                    item.count"></span>分，共<span ng-bind="item.totalScore"></span>分）
+                </td>
+                <td ng-bind="item.type | getQuestionType"></td>
+                <td ng-bind="item.count"></td>
+                <td ng-bind="item.totalScore"></td>
+            </tr>
+            </tbody>
+            <tbody ng-if="model.viewPaper.configType==3">
+            <tr ng-repeat="item in model.viewPaper.items2">
+                <td ng-bind="($index + 1) | getPaperItemSort"></td>
+                <td class="tl"><span ng-bind="item.type | getQuestionType"></span>（共<span ng-bind="item.count"></span>小题，每题<span
+                        ng-bind="item.totalScore /
+                    item.count"></span>分，共<span ng-bind="item.totalScore"></span>分）
+                </td>
+                <td ng-bind="item.type | getQuestionType"></td>
+                <td ng-bind="item.count"></td>
+                <td ng-bind="item.totalScore"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

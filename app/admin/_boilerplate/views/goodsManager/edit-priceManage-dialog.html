@@ -1,0 +1,43 @@
+<div class="dialog-body">
+    <div class="dialog-tit">价格管理<a href="javascript:void(0)"
+                                   ng-click="events.closeKendoWindow('priceManageWindow')"
+                                   class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+        <div ng-if="model.priceManageList.length>0">
+            <div class="mb10"
+                 ng-repeat="item in model.priceManageList"
+                 ng-if="model.currentCommodityType==='TRAINING_CLASS'">【<span ng-bind="item.updateTime"></span>】【<span
+                    ng-bind="item.creatorName"></span>】调整了定价策略：
+                <p class="ml5 mt10">整班定价从【<span ng-bind="item.oldPrice"></span>元】调整为【<span
+                        ng-bind="item.newPrice"></span>元】</p>
+            </div>
+            <div class="mb10"
+                 ng-repeat="item in model.priceManageList"
+                 ng-if="model.currentCommodityType==='PERIOD'">【<span ng-bind="item.updateTime"></span>】【<span
+                    ng-bind="item.creatorName"></span>】调整了定价策略：
+                <p class="ml5 mt10">学时定价从【<span ng-bind="item.oldPrice"></span>元】调整为【<span
+                        ng-bind="item.newPrice"></span>元】</p>
+            </div>
+            <div class="mb10"
+                 ng-repeat="item in model.priceManageList"
+                 ng-if="model.currentCommodityType==='COURSE'">【<span ng-bind="item.updateTime"></span>】【<span
+                    ng-bind="item.creatorName"></span>】调整了定价策略：
+                <p class="ml5 mt10">课程定价从【<span ng-bind="item.oldPrice"></span>元】调整为【<span
+                        ng-bind="item.newPrice"></span>元】</p>
+            </div>
+
+        </div>
+
+
+        <div class="no-data w-4 pt50 clear" ng-if="model.priceManageList.length<=0">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">当前还没有数据！</div>
+        </div>
+
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('priceManageWindow')"
+           class="btn btn-r">确定</a>
+    </div>
+</div>

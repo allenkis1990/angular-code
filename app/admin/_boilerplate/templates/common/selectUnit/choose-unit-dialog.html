@@ -1,0 +1,37 @@
+<div class="dialog-body">
+    <div class="dialog-tit">选择单位<a href="javascript:void(0)"
+                                     ng-click="events.closeKendoWindow('selectUnitWindow')"
+                                     class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+
+
+        <div class="search-bar mt10">
+            <ul class="ul-form li-fl clear">
+
+                <li>
+                    <input type="text"
+                           class="ipt ipt-medium"
+                           ng-keyup="events.pressEnterKey($event)"
+                           ng-model="model.queryParam.unitName"
+                           placeholder="请输入单位名称"/>
+                </li>
+
+
+                <li><a href="javascript:void(0)"
+                       ng-click="events.MainPageQueryList($event,'unitGridInstance')"
+                       class="btn btn-b">查询</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div kendo-grid="kendoPlus.unitGridInstance"
+             k-options="unitGird.options">
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('selectUnitWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

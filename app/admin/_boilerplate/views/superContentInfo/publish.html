@@ -1,0 +1,112 @@
+<div class="pos-nav-box" ng-show="$state.current.name === 'states.superContentInfo.publish'">
+    <div class="pos-nav"><a href="javascript:void(0)" class="ico return" ng-click="$state.go('states.superContentInfo')"></a> <a class="aw" href="javascript:void(0)" ng-click="$state.go('states.superContentInfo')">资讯管理</a> &gt; 发布资讯</div>
+</div>
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.superContentInfo.publish'">
+    <div class="rel udf-2 pt10 ">
+        <form name="infoContentForm" novalidate>
+            <ul class="ul-d-form lh-1">
+                <li><span class="left-txt"><i>*</i>资讯标题：</span><input type="text"
+                                                                      class="ipt w-textarea"
+                                                                      ng-model="model.newsDto.title"
+                                                                      ng-maxLength="150"
+                                                                      name="title"
+                                                                      required
+																	  ng-required="true"
+                                                                      placeholder="请输入资讯标题"
+                                                                      maxlength="151"
+                ></li>
+            <span ng-show="infoContentForm.title.$dirty && infoContentForm.title.$error.required"
+                  class="li-prompt" style="top: 12px;left: 810px;"><span class="ico ico-prompt"></span>请输入资讯标题</span>
+            <span ng-show="infoContentForm.title.$dirty && infoContentForm.title.$error.maxlength"
+                  class="li-prompt" style="top: 12px;left: 810px;"><span class="ico ico-prompt"></span>长度不能超过150</span>
+            <li class="clear"><span class="left-txt fl">封面图片：</span>
+                <div class="w-1 col-box fl">
+                    <div hb-file-uploader="test" auto="true" ng-model="model.uploader"
+                         class="upload" style="">上传图片
+                    </div>
+                    <span style="display:block;position: relative; margin: 20px 0px 0px -10px;">
+                        <img class="img-s1" style="margin-left: 10px; width: 200px;height: 200px;" ng-src="b{{model.imgSrc}}" alt="资讯封面图片"/>
+                        <a href="javascript:void(0)" class="ico info-pic-up" ng-click="events.deletePhotoUrl($event)"></a>
+                    </span>
+                </div>
+            </li>
+            <li class="clear"><span class="left-txt fl"><i>*</i>资讯内容：</span>
+                <div class="fl width-600">
+                     <textarea kendo-editor ng-model="model.newsDto.content"
+                               k-options="ui.editor"
+                               required ng-required="true" class="textarea w-textarea fl"
+                               name="content"></textarea>
+                </div>
+                <span ng-show="infoContentForm.title.$dirty && infoContentForm.content.$error.required"
+                      class="li-prompt" style="top: 12px;left: 810px;"><span class="ico ico-prompt"></span>请输入资讯内容</span>
+            </li>
+            <li class="clear"><span class="left-txt fl">资讯来源：</span>
+                <input ng-model="model.newsDto.origin"  type="text"
+                       class="ipt ipt-small" style="width: 485px;"/>
+            </li>
+            <li class="clear"><span class="left-txt fl">资讯作者：</span>
+                <input ng-model="model.newsDto.author"  type="text"
+                       class="ipt ipt-small" style="width: 485px;"/>
+            </li>
+            <li class="clear">
+                <span class="left-txt fl"><i>*</i>资讯分类：</span>
+                <div class="fl">
+                    <input ng-model="model.categoryName"
+                           name="parentName"
+                           class="ipt ipt-medium"
+                           ng-click="model.showTree = !model.showTree"
+                           placeholder="请选择所属分类"
+                           hb-readonly
+                           ng-required="true"
+                            />
+                    <div class="column-block w-tree fl"
+                         ng-click="model.showTree = true"
+                         ng-show="model.showTree"
+                         style="position: absolute;
+                                   z-index: 10;
+                                   left: 120px;
+                                   width:195px;
+                                   max-height: 166px;
+                                   overflow: auto;"
+                            >
+                        <div kendo-tree-view="node.selectTree"
+                             k-options="ui.selectTree.options"
+                             k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.selectParentCategory($event, dataItem)">
+                      <label style="width: 130px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li><span class="left-txt">发布时间：</span><input type="text"
+                                                          class="ipt ipt-large"
+                                                          placeholder="请选择发布时间"
+                                                          kendo-datetimepicker="node.publishTime"
+                                                          hb-readonly
+                                                          ng-model="model.newsDto.publishTime"
+                                                          k-options="ui.publishTime.options">
+            </li>
+            <li>
+                <span class="left-txt">作为弹窗公告</span>
+                <input  type="radio" value='2' id="popYes" ng-model="model.newsDto.type"><label for="popYes">是</label>
+                <input  type="radio" value='1' id="popNo" ng-model="model.newsDto.type"><label for="popNo">否</label>
+            </li>
+            <li>
+                <span class="left-txt">弹窗时间：</span><input ng-disabled="model.newsDto.type === 1 || model.newsDto.type === '1'" kendo-datetimepicker="node.popBeginTime" k-options="ui.popTime.begin.options"
+                       ng-model="model.newsDto.popStart" type="text" class="ipt ipt-large" hb-readonly
+                       placeholder="弹窗起始时间" />
+                <input ng-disabled="model.newsDto.type === 1 || model.newsDto.type === '1'" kendo-datetimepicker="node.popEndTime" k-options="ui.popTime.end.options"
+                       ng-model="model.newsDto.popOver" type="text" class="ipt ipt-large" hb-readonly
+                       placeholder="弹窗结束时间" />
+            </li>
+        </ul>
+        </form>
+        <div class="btn-center mt20">
+            <input type="button" ng-click="events.publish($event,'1')" ng-disabled="!events.passPop() || !model.submitAble || !infoContentForm.$valid || model.newsDto.content === null"
+                   class="btn btn-r" value="发布"/>
+            <input type="button" ng-click="$state.go('states.superContentInfo')"  class="btn btn-g" value="取消"/>
+        </div>
+    </div>
+</div>

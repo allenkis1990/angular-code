@@ -1,0 +1,407 @@
+<div class="pos-nav-box ng-scope" ng-if="$state.current.name==='states.refundManage.refundDetail'">
+    <div class="pos-nav">
+        <span class="ng-scope">
+            <a href="javascript:void(0)"
+               ng-click="events.back();"
+               class="ico return"></a>
+        <a class="aw"
+           ng-click="events.back();"
+           href="javascript:void(0)">退款管理</a> &gt;</span>
+
+
+        <span ng-if="model.refundDetail.refundStatus!==1" ng-class="{}">退款详情</span>
+        <span ng-if="model.refundDetail.refundStatus===1" ng-class="{}">退款审批</span>
+    </div>
+</div>
+
+<div class="main-wrap-body" ng-show="$state.is('states.refundManage')">
+   <div class="main-wrap-body1">
+        <div class="tab-tit mt10">
+            <a class="current" ng-class="{current: model.dimension == 1}" ng-click="events.toggleDimension($event, 1)"
+               href="#">本单位</a>
+           <a class="" ng-if="events.isSubProjectManager()"  ng-class="{current: model.dimension == 2}" ng-click="events.toggleDimension($event, 2)" href="#">项目级</a>
+        </div>
+    </div>
+    <!--本单位-->
+    <div class="main-wrap-body" ng-show="model.dimension == 1" class="column">
+    <div class="tab-bd">
+        <div class="search-bar mt10">
+            <form novalidate autocomplete="off" name="queryForm">
+
+                <ul class="ul-form li-fl clear" has-permission="refundManage/searchOrderPage">
+                    <div hb-authorized-option   lock-range="merchantAccount" query-params="model.accountQuery"></div>
+                    <!--<li>
+
+
+
+                        <input type="text"
+                               class="ipt"
+                               hb-clear-input
+                               ng-model="query.tradeStartTimeMills"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               placeholder="交易成功开始时间"/> -
+                        <input type="text"
+                               hb-clear-input
+                               ng-model="query.tradeEndTimeMills"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               class="ipt "
+                               placeholder="交易成功结束时间"/>
+                    </li>-->
+                    <li>
+                        <input type="text"
+                               class="ipt"
+                               hb-clear-input
+                               ng-model="query.applyStartTimeMills"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               placeholder="退款申请开始时间"/> -
+                        <input type="text"
+                               hb-clear-input
+                               ng-model="query.applyEndTimeMills"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               class="ipt"
+                               placeholder="退款申请结束时间"/>
+
+                    </li>
+
+                    <li><input type="text"
+                               class="ipt"
+                               hb-clear-input
+                               ng-model="query.auditStartTime"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               placeholder="审批开始时间"/> -
+                        <input type="text"
+                               hb-clear-input
+                               ng-model="query.auditEndTime"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               class="ipt "
+                               placeholder="审批结束时间"/>
+                    </li>
+                    <li>
+                        <input type="text" class="ipt"
+                               hb-clear-input
+                               ng-model="query.loginInput" placeholder="请填写登录账号">
+                    </li>
+
+                    <li><input type="text" class="ipt ipt-medium" ng-pattern="/[0-9A-Za-z]/"
+                               ng-model="query.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"></li>
+                    <li>
+
+                    <li>
+                        <input type="text"
+
+                               class="ipt ipt-medium"
+                               ng-model="tempClass.schemeName"
+                               placeholder="选择培训方案"
+                               ng-click="events.selectClass()"/>
+                        <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                              ng-click="events.clearSchemeTextContent()"
+                              ng-if="tempClass.schemeName"
+                              class="k-icon k-i-close" role="button">
+                            select
+                        </span>
+                    </li>
+                    </li>
+                    <li>退款状态：
+                        <select ng-model="query.refundOrderStatus">
+                            <option value="ALL">全部</option>
+                            <option value="WAIT_FOR_AFFIRM">退款审批中</option>
+                            <option value="REFUND_PROCESSING">退款处理中</option>
+                            <option value="REFUND_SUCCESS">退款成功</option>
+                            <option value="REFUND_FAIL">退款失败</option>
+                            <option value="REJECT_APPLY">拒绝退款</option>
+                            <option value="CANCEL">已取消</option>
+                        </select>
+                    </li>
+                    <li>退款类型：
+                        <select ng-model="query.refundType">
+                            <option value="">全部</option>
+                            <option value="false">普通退款订单</option>
+                            <option value="true">强制退款订单</option>
+                        </select>
+                    </li>
+                    <li has-permission="refundManage/fetchTest">
+                        <select class="slt slt-middle" ng-model="query.test">
+                            <option value="">全部</option>
+                            <option value="true">测试</option>
+                            <option value="false">非测试</option>
+                        </select>
+                    </li>
+                    <!--<li>
+                                           <div command-tool model="query"></div>
+                                       </li>-->
+
+
+                </ul>
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <a href="javascript:void(0)" has-permission="refundManage/searchOrderPage"
+                           ng-click="events.search($event)"
+                           class="btn btn-b">查询</a>   <!--      has-permission="refundManage/searchOrderPage"-->
+                        <button ng-click="events.export_()"
+                                class="btn btn-b ml10" has-permission="refundManage/export"
+                                ng-disabled="submitExportOrder">导出退款信息
+                        </button>   <!--   has-permission="refundManage/export"-->
+
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="dash-line-3"></div>
+        <div style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;background-color: rgb(254, 254, 221);height:48px;line-height: 48px;padding-left:10px;">
+            当前结果合计：共有<span style="color:#FF0000;"><span ng-bind="model.normalCount"></span>笔</span>退款
+            <span ng-if="showTotal">
+           ,退款金额：<span style="color:#FF0000;"><span ng-bind="model.totalAmount| currency : '￥'"></span></span>
+        </span>
+        </div>
+        <div class="table" kendo-grid="node.mainGrid" k-options="mainGridOptions"></div>
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="model.dimension == 2" class="column">
+    <div class="tab-bd">
+        <div class="search-bar mt10">
+            <form novalidate autocomplete="off" name="queryForm">
+
+                <ul class="ul-form li-fl clear" has-permission="refundManage/searchOrderPage">
+                     <div hb-authorized-option   query-all=b{{model.showCreateUnit}} lock-range="merchantAccount" query-params="model.allAccountQuery"></div>
+                    <li>
+                        <input type="text"
+                               class="ipt"
+                               hb-clear-input
+                               ng-model="allQuery.applyStartTimeMills"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               placeholder="退款申请开始时间"/> -
+                        <input type="text"
+                               hb-clear-input
+                               ng-model="allQuery.applyEndTimeMills"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               class="ipt"
+                               placeholder="退款申请结束时间"/>
+
+                    </li>
+
+                    <li><input type="text"
+                               class="ipt"
+                               hb-clear-input
+                               ng-model="allQuery.auditStartTime"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               placeholder="审批开始时间"/> -
+                        <input type="text"
+                               hb-clear-input
+                               ng-model="allQuery.auditEndTime"
+                               k-options="kendoPlus.timeOptions"
+                               kendo-date-picker="kendoPlus.timeModel"
+                               hb-readonly
+                               class="ipt "
+                               placeholder="审批结束时间"/>
+                    </li>
+                    <li>
+                        <input type="text" class="ipt"
+                               hb-clear-input
+                               ng-model="allQuery.loginInput" placeholder="请填写登录账号">
+                    </li>
+
+                    <li><input type="text" class="ipt ipt-medium" ng-pattern="/[0-9A-Za-z]/"
+                               ng-model="allQuery.orderNo"
+                               hb-clear-input
+                               placeholder="请输入订单号"></li>
+                    <li>
+
+                    <li>
+                        <input type="text"
+
+                               class="ipt ipt-medium"
+                               ng-model="allTempClass.schemeName"
+                               placeholder="选择培训方案"
+                               ng-click="events.selectClass()"/>
+                        <span style="position:absolute;right:3px;top:9px;cursor:pointer"
+                              ng-click="events.clearSchemeTextContent()"
+                              ng-if="allTempClass.schemeName"
+                              class="k-icon k-i-close" role="button">
+                            select
+                        </span>
+                    </li>
+                    </li>
+                    <li>退款状态：
+                        <select ng-model="allQuery.refundOrderStatus">
+                            <option value="ALL">全部</option>
+                            <option value="WAIT_FOR_AFFIRM">退款审批中</option>
+                            <option value="REFUND_PROCESSING">退款处理中</option>
+                            <option value="REFUND_SUCCESS">退款成功</option>
+                            <option value="REFUND_FAIL">退款失败</option>
+                            <option value="REJECT_APPLY">拒绝退款</option>
+                            <option value="CANCEL">已取消</option>
+                        </select>
+                    </li>
+                    <li>退款类型：
+                        <select ng-model="allQuery.refundType">
+                            <option value="">全部</option>
+                            <option value="false">普通退款订单</option>
+                            <option value="true">强制退款订单</option>
+                        </select>
+                    </li>
+                    <li has-permission="refundManage/fetchTest">
+                        <select class="slt slt-middle" ng-model="allQuery.test">
+                            <option value="">全部</option>
+                            <option value="true">测试</option>
+                            <option value="false">非测试</option>
+                        </select>
+                    </li>
+                    <!--<li>
+                                           <div command-tool model="query"></div>
+                                       </li>-->
+
+
+                </ul>
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <a href="javascript:void(0)" has-permission="refundManage/searchOrderPage"
+                           ng-click="events.search($event)"
+                           class="btn btn-b">查询</a>   <!--      has-permission="refundManage/searchOrderPage"-->
+                        <button ng-click="events.export_()"
+                                class="btn btn-b ml10" has-permission="refundManage/export"
+                                ng-disabled="submitExportOrder">导出退款信息
+                        </button>   <!--   has-permission="refundManage/export"-->
+
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="dash-line-3"></div>
+        <div style="font-family:微软雅黑;font-size:13px;font-weight:bold;font-style:normal;text-decoration:none;color:#333333;background-color: rgb(254, 254, 221);height:48px;line-height: 48px;padding-left:10px;">
+            当前结果合计：共有<span style="color:#FF0000;"><span ng-bind="model.normalCount"></span>笔</span>退款
+            <span ng-if="showTotal">
+           ,退款金额：<span style="color:#FF0000;"><span ng-bind="model.totalAmount| currency : '￥'"></span></span>
+        </span>
+        </div>
+        <div class="table" kendo-grid="node.allGrid" k-options="allGridOptions"></div>
+    </div>
+</div>
+</div>
+
+
+<div ui-view="refundManageItem"></div>
+<script id="template1" type="text/x-kendo-template">
+    <tr data-uid="#= uid #">
+        <td>
+            #: $index #
+        </td>
+        <td>
+            <div class="goods-info">
+                b{{dataItem.refundMasterOrderNo}}
+
+            </div>
+        </td>
+        <td>
+            <span>b{{dataItem.orderFlowNo==null?"-":dataItem.orderFlowNo}}</span>
+        </td>
+        <td>
+            <div class="goods-info">b{{dataItem.productName}}</div><!--buyer-->
+            <!--（2012年）补2011年新会计人员培训班-->
+        </td>
+        <td>
+            <span>b{{dataItem.labelPrice}}</span>
+        </td>
+        <td>
+            <span>b{{dataItem.purchaseQuantity}}</span>
+        </td>
+        <td>
+
+            <span>b{{dataItem.totalAmount}}</span>
+        </td>
+        <td>
+
+            <span>b{{dataItem.refundAmount}}</span>
+        </td>
+        <td>
+             <span>购买人:b{{dataItem.buyer.name}}<br>
+            帐号:b{{dataItem.buyer.loginInput}}</span>
+        </td>
+        <td ng-if="model.dimension==2">
+            b{{dataItem.saleUnitName}}
+        </td ng-if="model.dimension==2">
+        <td ng-if="model.dimension==2">
+            b{{dataItem.belongUnitName}}
+        </td ng-if="model.dimension==2">
+        <td>
+            b{{dataItem.paymentUnit}}
+        </td>
+        <td>
+            <span>b{{dataItem.applyTime}}</span>
+        </td>
+        <td>
+            <span ng-if="dataItem.auditTime!==null||dataItem.auditTime!==''||dataItem.auditTime!==undefined">b{{dataItem.auditTime}}</span>
+            <span ng-if="dataItem.auditTime===null||dataItem.auditTime===''||dataItem.auditTime===undefined">-</span>
+        </td>
+        <td>
+
+            <span style="color:red" ng-if="dataItem.refundStatus===1">退款审批中</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===2">退款处理中</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===3">拒绝退款</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===4">退款处理中</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===5">退款处理中</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===6">退款成功</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===7">拒绝退款</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===8">退款失败</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===9">已取消</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===10">退款失败</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===11">退款成功</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===12">退款成功</span>
+            <span style="color:red" ng-if="dataItem.refundStatus===13">已取消</span>
+
+
+            <!--        <span style="color:red" ng-if="model.refundDetail.refundStatus===1">退款审批中</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===2">审核通过</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===3">拒绝申请</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===4">退款处理中</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===5">资源已回收</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===6">退款成功</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===7">拒绝退款</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===8">资源回收失败</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===9">买家取消退款申请</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===10">退款失败</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===11">退货不退款成功</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===12">退款不退货成功</span>
+                        <span style="color:red" ng-if="model.refundDetail.refundStatus===13">买家取消退款申请</span>-->
+
+
+        </td>
+        <td class="op">
+            <div ng-if="dataItem.refundStatus===1&&model.dimension==1">
+                <a href="javascript:void(0)" ng-click="events.approverefund(dataItem)" ng-show=" b{{dataItem.refund==true}}"
+                   has-permission="refundManage/approverefund" ng-if="dataItem.enforce===false">同意普通退款</a>
+                <!--has-permission="refundManage/approverefund"-->
+                <!--            <a   ng-click="events.approverefund(dataItem)" ng-if="dataItem.enforce===true">同意强制退款</a>&lt;!&ndash;has-permission="refundManage/enapproverefund"&ndash;&gt;-->
+                <a href="javascript:void(0)" has-permission="refundManage/rejectrefund" ng-show="b{{dataItem.refund==true}}"
+                   ng-click="events.rejectrefund(dataItem)">驳回普通退款</a>
+            </div>
+
+            <a ng-click="events.cancelrefund(dataItem)" has-permission="refundManage/cancelrefund"
+               ng-if="dataItem.refundStatus===1&&model.dimension==1">取消退款</a> <!--has-permission="refundManage/cancelrefund"-->
+            <a ng-if="dataItem.refundStatus===10||dataItem.refundStatus===8&&model.dimension==1" ng-click="events.resumerefund(dataItem)">继续退货</a>
+            <!--has-permission="refundManage/resumerefund"-->
+            <a ng-click="events.lookDetail(events,dataItem)" has-permission="refundManage/lookDetail">详情</a>
+            <!--has-permission="refundManage/lookDetail"-->
+        </td>
+
+    </tr>
+</script>

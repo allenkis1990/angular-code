@@ -1,0 +1,116 @@
+<!--<div class="m-header">
+    <div class="top-wrap">
+        <div class="p-wrap-full clear">
+            &lt;!&ndash;<div class="fl">
+                <a href="http://www.huilearning.com/app/download.html" target="_blank" class="top-app rel">
+                    <div ng-mouseover="events.hoverWeixin(true)" ng-mouseleave="events.hoverWeixin(false)"><i class="p-ico appico"></i>徽学网APP</div>
+                    <div class="hover-block" ng-if="model.erweimaShow">
+                        <div class="hover-bd">
+                            <i class="arrowtop"></i>
+                            <img src="ahzj/fykccs/images/ewm.jpg" width="100" height="100">
+                            <div class="tc">扫码下载APP</div>
+                        </div>
+                    </div>
+                </a>
+            </div>&ndash;&gt;
+            <div class="right fr" ng-if="!sureUseLogin"><a href="javascript:void(0)"
+                                                           ng-click="events.openLoginDialog($event)">登录</a> |
+                <a href="#" ui-sref="states.accountant.registration">注册</a> &lt;!&ndash;|&ndash;&gt;
+                &lt;!&ndash;<a href="#">学习中心</a>&ndash;&gt;</div>
+            <div class="right fr" ng-if="sureUseLogin"><span ng-bind="useInformation.userName"></span> 欢迎您！
+                | <a href="javascript:void(0)" ng-click="events.outOfLogin($event)">退出</a>
+                | <a href="javascript:void(0)" ng-click="events.goCenter($event)">学习中心</a></div>
+        </div>
+    </div>
+    <div class="p-wrap-full clear">
+        <img src="ahzj/fykccs/images/logo.png" alt=" " class="logo fl">
+        &lt;!&ndash; 导航 &ndash;&gt;
+        <div class="m-nav fr" ng-if="$state.current.name!=='states.accountant.registration'">
+            <div class="nav-bd">
+                <a href="#" ui-sref="states.accountant"
+                   ng-class="{'current':$state.current.name==='states.accountant'}">首页</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.onTraining')}"
+                   ng-click="$state.go('states.accountant.onTraining')">报名培训
+                </a>
+                <a href="javascript:void(0)"
+                   ng-class="{'current':$state.includes('states.accountant.creditVerification')}"
+                   ng-click="$state.go('states.accountant.creditVerification')">学时验证
+                </a>
+                &lt;!&ndash;<a href="#">转岗培训</a>&ndash;&gt;
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.notice')}"
+                   ng-click="$state.go('states.accountant.notice')">培训通知</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.laws')}"
+                   ng-click="$state.go('states.accountant.laws')">政策法规</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.courseShow')}"
+                   ng-click="$state.go('states.accountant.courseShow')">课程展示</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.helpCenter')}"
+                   ng-click="$state.go('states.accountant.helpCenter')">帮助中心</a>
+                &lt;!&ndash;<a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.concatUs')}"
+                   ng-click="$state.go('states.accountant.concatUs')">关于我们</a>&ndash;&gt;
+
+            </div>
+        </div>
+        &lt;!&ndash; /导航 &ndash;&gt;
+    </div>
+</div>-->
+<!--<div><a href="javascript:void(0)" ng-click="events.outOfLogin($event)">退出</a></div>-->
+<div class="m-header" style="position:relative">
+
+    <!--<div class="p-wrap-full clear">
+        <img src="ahzj/fykccs/images/logo.png" alt="徽学网" class="logo fl">
+        <div class="logo-txt fl">
+            安徽省级继续教育培训基地<br>
+            合肥宏景软件有限公司
+        </div>
+        <div class="p-ico tel-box fr">
+            <p>客服热线<span class="txt-sm">(工作时间：9:00-17:00)</span></p>
+        </div>
+    </div>-->
+    <div class="p-wrap-full clear">
+
+        <div class="logo-txt logo-txt-2 fl"
+             ng-click="$state.go('states.accountant')"
+             style="cursor:pointer;">阜阳市专业技术人员继续教育远程培训平台</div>
+        <div class="p-ico tel-box fr">
+            <p>客服热线<span class="txt-sm">(工作时间：9:00-17:00)</span></p>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="m-nav clear">
+        <div class="nav-bd fl">
+            <a href="javascript:void(0)"
+               ui-sref="states.accountant"
+               ng-class="{'current':$state.current.name==='states.accountant'}">首页</a>
+            <a href="javascript:void(0)"
+               ui-sref="states.accountant.news"
+               ng-class="{'current':$state.includes('states.accountant.news')}">新闻动态</a>
+            <a href="javascript:void(0)"
+               ui-sref="states.accountant.notice"
+               ng-class="{'current':$state.includes('states.accountant.notice')||$state.includes('states.accountant.noticeViews')}">通知公告</a>
+            <a href="javascript:void(0)"
+               ui-sref="states.accountant.laws"
+               ng-class="{'current':$state.includes('states.accountant.laws')}">政策法规</a>
+            <a href="javascript:void(0)"
+               ui-sref="states.accountant.onTraining"
+               ng-class="{'current':$state.includes('states.accountant.onTraining')}">报名培训</a>
+
+
+            <a href="javascript:void(0)"
+               ng-click="events.returnHome()"
+               class="return-btn">回主页</a>
+        </div>
+        <!--<div class="search-box fr mr15">
+            <select class="ui-slt-s fl">
+                <option>资讯</option>
+                <option>资讯</option>
+                <option>资讯</option>
+            </select>
+            <input type="text" class="search-ipt  fl" placeholder="请输入关键词">
+            <a href="#" class="p-ico search-btn  fr">搜索</a>
+        </div>-->
+    </div>
+</div>

@@ -1,0 +1,31 @@
+@import "../public/variables";
+
+.m-nav {
+  width: 710px;
+  height: 66px;
+  padding-top: 6px;
+
+  .nav-bd {
+    text-align: right;
+    a {
+      line-height: 90px;
+      display: inline-block;
+      color: #333;
+      font-size: 18px;
+      padding: 0 15px;
+
+      &:hover {
+        color: @base;
+        border-bottom: 4px solid @base;
+      }
+      &:focus {
+        outline: none;
+        text-decoration: none;
+      }
+    }
+    .current {
+      color: @base;
+      border-bottom: 4px solid @base;
+    }
+  }
+}

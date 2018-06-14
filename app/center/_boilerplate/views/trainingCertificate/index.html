@@ -1,0 +1,94 @@
+<div class="p-wrap-full m-content clear">
+    <div center-sider></div>
+    <div class="m-right-block fr mh576">
+        <div class="right-block-bd">
+            <div class="m-screen">
+                <div ng-if="model.yearOptionsId!==null" class="screen-style">
+                    <span class="style-name" style="width: 100px">继续教育年度</span>
+                    <a href="javascript:void(0)"
+                       style="text-decoration: none;margin-left: 10px;width:80px"
+                       ng-repeat="item in model.yearList"
+                       ng-class="{'current':model.yearOptionsId===item.optionId}"
+                       ng-bind="item.name"
+                       ng-click="events.tabYear(item,'')"></a>
+                </div>
+                <div class="screen-style"><span class="style-name" style="width: 100px">科目</span>
+                    <a href="javascript:void(0)"
+                       style="text-decoration: none;margin-left: 10px;width:80px"
+                       ng-if="model.subjectList.length!==0"
+                       ng-class="{'current':model.subjectOptionsId===-1}"
+                       ng-click="events.tabSubject(-1)">全部</a>
+                    <a href="javascript:void(0)"
+                       style="text-decoration: none;width:80px"
+                       ng-click="events.tabSubject(item.optionId,item.name)"
+                       ng-bind="item.name"
+                       ng-repeat="item in model.subjectList"
+                       ng-class="{'current':model.subjectOptionsId===item.optionId}"></a>
+                </div>
+
+            </div>
+            <div class="clear">
+                <p class="txt-o txt-ml mt10 fl">【统计】：<span class="b">b{{nowyear}}</span>年度考核<span>b{{model.name}}</span>通过<span
+                        class="b" ng-if="passInfo.havaPass!==null">b{{passInfo.havaPass}}</span><span class="b"
+                                                                                                      ng-if="passInfo.havaPass===null">-</span>学时.
+                    <!--，未通过<span class="b" ng-if="passInfo.unPass!==null">b{{passInfo.unPass}}</span><span class="b" ng-if="passInfo.unPass===null">-</span>学时。-->
+                </p>
+
+            </div>
+            <div class="table-h1 mt10 bt-1" style="height: 800px;overflow: auto">
+
+                <table class="ui-table table-line table-hover table-overflow" style="border-top:0;">
+                    <thead>
+                    <tr>
+
+                        <th width="150" style="text-align: center;">
+                            课程名称
+                        </th>
+                        <th width="100" style="text-align: center;">科目</th>
+                        <th width="80" style="text-align: center;">学时</th>
+                        <th width="80" style="text-align: center;">年度</th>
+                        <th width="120" style="text-align: center;">选课日期</th>
+                        <th width="120" style="text-align: center;">课程学习时段</th>
+                        <th width="120" style="text-align: center;">考核通过时间</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr ng-if="userPassedInfo.length!==0" ng-repeat="item in userPassedInfo">
+                        <!--      <td>
+                                  <label class="ui-label td-label">
+                                      <input type="checkbox"
+                                             ng-checked="item.ischecked==true"
+                                             ng-click="events.choose($event,item)" class="checkbox"/>
+                                      <a href="#" style="left:0;"></a>
+                                      <span class="ipt-txt"></span>
+                                  </label>
+                              </td>-->
+                        <td title="b{{item.courseName}}">b{{item.courseName}}</td>
+                        <td>b{{item.subject}}</td>
+                        <td>b{{item.grade}}</td>
+                        <td>b{{item.year}}</td>
+                        <td>b{{item.studyBeginTime| date:'yyyy-MM-dd'}}</td>
+                        <td>b{{item.studyBeginTime| date:'yyyy-MM-dd' }}<br/>b{{item.studyEndTime| date:'yyyy-MM-dd'}}
+                        </td>
+                        <td>b{{item.assessPassedTime| date:'yyyy-MM-dd'}}</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+                <div class="m-no-data tc"
+                     ng-if="userPassedInfo.length===0||userPassedInfo===undefined||userPassedInfo===null">
+                    <img src="@systemUrl@/images/no-data.png" alt="空数据">
+                    <p class="txt">暂无课程的学习记录~~</p>
+                </div>
+            </div>
+
+            <!--        <p class="tc mt10"><a href="#" class="a-more">查看更多+</a></p>-->
+            <div class="m-sum-bar mt10 tc" style="background-color: #08af9c; height: 40px;border: 0;">
+                <a href="javascript:void(0)" ng-click="events.preview()" class="a-txt-2">预览 / 打印学时证明&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+</div>

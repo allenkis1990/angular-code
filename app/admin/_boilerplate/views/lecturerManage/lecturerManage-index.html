@@ -1,0 +1,46 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.lecturerManage'"
+     ng-click="lessonTypeShow=false">
+    <div class="main-wrap-body" ng-show="model.dimension == 1" class="column">
+        <div class="teacher-add">
+            <a href="#" ng-click="events.addLesson($event)" has-permission="lecturerManage/add" class="btn btn-c">新增教师</a>
+        </div>
+        <!--<div class="tab-tit mt10">
+            <a href="#" class="current">本单位</a>
+            <a href="#">下级单位</a>
+        </div>-->
+        <div class="tab-bd">
+            <div class="search-bar mt10">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入教师姓名"
+                               ng-keyup="events.search($event)"
+                               ng-model="model.administorPageParams.name"
+                               hb-clear-input>
+                    </li>
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入教师帐号"
+                               ng-model="model.administorPageParams.loginInput"
+                               ng-keyup="events.search($event)"
+                               hb-clear-input>
+                    </li>
+                    <li>
+                        <select class="slt slt-medium" ng-model="model.administorPageParams.status">
+                            <option ng-selected="" value="0">请选择启用状态</option>
+                            <option value="1">启用</option>
+                            <option value="2">禁用</option>
+                        </select>
+                    </li>
+                    <li><a href="javascript:void(0)" has-permission="lecturerManage/detail"
+                           ng-click="events.searchLesson($event)" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-body table-box mt20">
+            <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid.options">
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view></div>
+
+<div kendo-window="node.windows.resetWindow" k-options="ui.windows.addWindow"></div>

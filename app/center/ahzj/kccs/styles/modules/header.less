@@ -1,0 +1,72 @@
+@import "../public/variables";
+/* 顶部 */
+.header {
+  height: 80px;
+  background: url("../images/header-bg.jpg") no-repeat;
+
+  .logo {
+    line-height: 80px;
+    font-size: 40px;
+    color: #fff;
+  }
+
+  .nav {
+    height: 80px;
+    overflow: hidden;
+
+    a {
+      width: 88px;
+      height: 80px;
+      color: #fff;
+      font-size: 12px;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      padding-top: 15px;
+      box-sizing: border-box;
+
+      &:hover {
+        background: url("../images/nav-bg.png") no-repeat;
+      }
+    }
+
+    .nav-txt {
+      width: 100%;
+      display: inline-block;
+      padding-top: 5px;
+    }
+
+    .p-ico {
+      width: 26px;
+      height: 24px;
+    }
+    .ico-index {
+      background-position: -180px 0;
+    }
+    .ico-market {
+      background-position: -210px 0;
+    }
+    .ico-center {
+      background-position: -240px 0;
+    }
+    .ico-exit {
+      background-position: -270px 0;
+    }
+
+    .ico-bmpx {
+      background-position: -100px -430px;
+    }
+
+    .ico-line {
+      display: inline-block;
+      width: 1px;
+      height: 80px;
+      background-position: -300px 0;
+      vertical-align: middle;
+    }
+
+    .current {
+      background: url("../images/nav-bg.png") no-repeat;
+    }
+  }
+}

@@ -1,0 +1,243 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.solution')" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ng-click="$state.go('states.solution')">解决方案管理</a> &gt; 新增解决方案
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="main-wrap-body">
+        <div class="column">
+            <form name="addSolutionForm" novalidate>
+                <ul class="ul-d-form udf-2 lh-1">
+                    <li>
+                        <span class="left-txt"><i>*</i>解决方案名称：</span>
+                        <input name="name" type="text" class="ipt ipt-large"
+                               ng-model="model.name"
+                               ng-maxlength="15"
+                               required ng-required="true"
+                               ajax-validate ajax-url="/web/admin/solution/newValidate"
+                        >
+                        <span ng-show="addSolutionForm.name.$dirty && addSolutionForm.name.$error.required"
+                              class="li-prompt"><span class="ico ico-prompt"></span>请输入解决方案名称</span>
+                        <span ng-show="addSolutionForm.name.$dirty && (!addSolutionForm.name.$error.required) && addSolutionForm.name.$error.maxlength"
+                              class="li-prompt"><span class="ico ico-prompt"></span>名称最多支持15个字</span>
+                        <span ng-show="addSolutionForm.name.$dirty && !(addSolutionForm.name.$error.required) && !(addSolutionForm.name.$error.maxlength) && addSolutionForm.name.$error.ajaxValidate"
+                              class="li-prompt"><span class="ico ico-prompt"></span>解决方案名称已存在</span>
+                    </li>
+                    <!--<li>-->
+                    <!--<span class="left-txt">解决方案类型：</span>-->
+                    <!--<label><input type="radio">正式</label>-->
+                    <!--<label class="ml20"><input type="radio">体验</label>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<span class="left-txt"><i>*</i>关联解决方案：</span>-->
+                    <!--<select class="slt slt-large">-->
+                    <!--<option>请选择关联正式解决方案</option>-->
+                    <!--<option>培训点</option>-->
+                    <!--<option>培训科</option>-->
+                    <!--<option>注册科</option>-->
+                    <!--</select>-->
+                    <!--</li>-->
+                    <li class="clear">
+                        <span class="left-txt fl">解决方案描述：</span>
+                        <textarea class="textarea w-textarea fl" ng-model="model.description">文本域</textarea>
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+        <div class="column mt30">
+            <div class="col-tit">选择岗位体系</div>
+            <div class="dash-line-1"></div>
+            <div class="clear">
+                <div class="wp-2 fl">
+                    <div class="tab-tit">
+                        <a href="#" class="current">待选岗位体系列表</a>
+                    </div>
+                    <div class="column-block bt0 clear">
+                        <div class="col-body bt0 h-1">
+                            <div class="search-bar">
+                                <ul class="ul-form uf-3 li-fl clear">
+                                    <li>
+                                        <input type="text" class="ipt ipt-medium" placeholder="岗位体系名称"
+                                               ng-model="model.electedJobName"
+                                               ng-keydown="events.queryByEnter($event, 1)"
+                                        />
+                                    </li>
+                                    <li><a href="#" ng-click="events.reloadElectedGrid($event, 1)"
+                                           class="btn btn-b">查询</a></li>
+                                    <li><a href="#" ng-click="events.batchSelectObject($event, 1)"
+                                           class="btn btn-r">全选</a></li>
+                                </ul>
+                            </div>
+                            <div kendo-grid="node.electedJobGrid" k-options="ui.electedJobGrid"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wp-3 fr">
+                    <div class="tab-tit clear">
+                        <a href="#" class="current">已选岗位体系列表(b{{model.selectedJobIdList.length}}个)</a>
+                        <a href="#" ng-click="events.emptyObject($event, 1)" class="btn btn-g fr">清空</a>
+                    </div>
+                    <div class="column-block bt0 clear">
+                        <div class="col-body bt0 h-1">
+                            <div class="search-bar">
+                                <ul class="ul-form uf-3 li-fl clear">
+                                    <li>
+                                        <input type="text" class="ipt ipt-medium" placeholder="岗位体系名称"
+                                               ng-model="selectedJobName"
+                                        />
+                                    </li>
+                                    <li><a href="javascript: void(0);" class="btn btn-b">查询</a></li>
+                                </ul>
+                            </div>
+                            <table class="table table-f">
+                                <thead>
+                                <tr>
+                                    <th width="100">岗位名称</th>
+                                    <th>岗位等级</th>
+                                    <th width="60">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="job in model.selectedJobList | filter: {name: selectedJobName}">
+                                    <td>b{{job.name}}</td>
+                                    <td>b{{job.jobGradeNames}}</td>
+                                    <td class="op">
+                                        <a href="#" ng-click="events.removeObject($event, 1, $index, job.id)">取消选择</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column mt30">
+            <div class="col-tit">选择课程</div>
+            <div class="dash-line-1"></div>
+            <div class="clear">
+                <div class="wp-2 fl">
+                    <div class="tab-tit">
+                        <a href="#" class="current">待选课程列表</a>
+                    </div>
+                    <div class="column-block bt0 clear">
+                        <div class="col-body bt0 h-1">
+                            <div class="search-bar">
+                                <ul class="ul-form uf-3 li-fl clear">
+                                    <li>
+                                        <input type="text" class="ipt ipt-small" placeholder="课程名称"
+                                               ng-model="model.lessonGridParams.name"
+                                               ng-keydown="events.queryByEnter($event, 2)"
+                                        />
+                                    </li>
+                                    <!--<li>-->
+                                    <!--<select class="slt slt-small">-->
+                                    <!--<option>选择课程分类</option>-->
+                                    <!--<option>培训点</option>-->
+                                    <!--<option>培训科</option>-->
+                                    <!--<option>注册科</option>-->
+                                    <!--</select>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                    <!--<select class="slt slt-small">-->
+                                    <!--<option>选择能力项</option>-->
+                                    <!--<option>培训点</option>-->
+                                    <!--<option>培训科</option>-->
+                                    <!--<option>注册科</option>-->
+                                    <!--</select>-->
+                                    <!--</li>-->
+                                    <li><a href="#" ng-click="events.reloadElectedGrid($event, 2)"
+                                           class="btn btn-b">查询</a></li>
+                                    <li><a href="#" ng-click="events.batchSelectObject($event, 2)"
+                                           class="btn btn-r">全选</a></li>
+                                </ul>
+                            </div>
+
+                            <div kendo-grid="node.electedLessonGrid" k-options="ui.electedLessonGrid"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wp-3 fr">
+                    <div class="tab-tit clear">
+                        <a href="#" class="current">已选课程( b{{model.selectedLessonIdList.length}} 门 )</a>
+                        <a href="#" ng-click="events.emptyObject($event, 2)" class="btn btn-g fr">清空</a>
+                    </div>
+                    <div class="column-block bt0 clear">
+                        <div class="col-body bt0 h-1">
+                            <div class="search-bar">
+                                <ul class="ul-form uf-3 li-fl clear">
+                                    <li>
+                                        <input type="text" class="ipt ipt-medium" placeholder="课程名称"
+                                               ng-model="selectedLessonName"
+                                        />
+                                    </li>
+                                    <li><a href="javascript: void(0);" class="btn btn-b">查询</a></li>
+                                </ul>
+                            </div>
+
+                            <table class="table table-f">
+                                <thead>
+                                <tr>
+                                    <th>课程名称</th>
+                                    <th width="100">课程分类</th>
+                                    <th width="60">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="lesson in model.selectedLessonList | filter: {name: selectedLessonName}">
+                                    <td>b{{lesson.name}}</td>
+                                    <td>b{{lesson.lessonTypeName}}</td>
+                                    <td class="op">
+                                        <a href="#"
+                                           ng-click="events.removeObject($event, 2, $index, lesson.id)">取消选择</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 能力项 -->
+        <!--<div class="column mt30">-->
+        <!--<div class="col-tit">已选能力项（3大类，34个能力项）</div>-->
+        <!--<div class="dash-line-1"></div>-->
+        <!--<div class="tab-tit">-->
+        <!--<a href="#" class="current">自我管理</a>-->
+        <!--<a href="#">工作导向</a>-->
+        <!--</div>-->
+        <!--<div class="column-block clear">-->
+        <!--<div class="col-body bt0 overflow-a">-->
+        <!--<ul class="ul-course uc-7 li-fl clear">-->
+        <!--<li>职场情绪管理<span class="num">1门</span></li>-->
+        <!--<li>职场情绪管理<span class="num">1门</span></li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!-- 统计 -->
+        <!--<div class="column mt30">-->
+        <!--<div class="col-tit clear">统计<a href="#" class="btn btn-b fr">点击刷新</a> </div>-->
+        <!--<div class="dash-line-1"></div>-->
+        <!--<span><span class="b">岗位体系数量：</span>30个</span>-->
+        <!--<span class="ml50"><span class="b">课程数量：</span>22门</span>-->
+        <!--<span class="ml50"><span class="b">能力项数量：</span>222门</span>-->
+        <!--</div>-->
+
+        <div class="btn-center pt20">
+            <a href="#" ng-click="events.create($event)" class="btn"
+               ng-class="{'btn-g': !model.noSubmitIncrease || !addSolutionForm.$valid, 'btn-r': model.noSubmitIncrease && addSolutionForm.$valid}">保存</a>
+            <a href="javascript: void(0);" ng-click="$state.go('states.solution')" class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>
+<!--<div class="btn-center">-->
+<!--<a href="#" ng-click="events.create($event)" class="btn" ng-class="{'btn-g': !model.noSubmitIncrease || !addRequiredPackageForm.$valid, 'btn-r': model.noSubmitIncrease && addRequiredPackageForm.$valid}">保存</a>-->
+<!--<a href="javascript: void(0);" ng-click="$state.go('states.requiredPackage')" class="btn btn-g ml10">取消</a>-->
+<!--</div>-->

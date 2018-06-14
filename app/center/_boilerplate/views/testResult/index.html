@@ -1,0 +1,89 @@
+<!-- 内容 -->
+<!--<div class="p-wrap-full content-bd-3 clear m-content">
+    <div class="wp-70">
+        <div class="content-tit" ng-bind="model.testResult.examRoundName"></div>
+        <div class="block-gray mt10 p10">
+            <div class="ml10">当前成绩：<span class="fs30 t-r" ng-bind="(model.testResult.currentExamScore === null ? '-' : model.testResult.currentExamScore)"></span></div>
+            <div class="bor-dt mt10">
+                <div class="mt10 ml10">
+                    本次答卷用时：<span ng-bind="model.testResult.currentExamTimeLength"></span>分钟<br>
+                    答卷限时：<span ng-bind="model.testResult.examTimeLength"></span>分钟<br>
+                    余考次数：<span ng-bind="model.testResult.surplusExamCount===-1?'无限次':model.testResult.surplusExamCount"></span><br>
+                    总分：<span ng-bind="model.testResult.totalExamScore"></span><br>
+                </div>
+            </div>
+        </div>
+        <table class="ui-table mt10">
+            <thead>
+            <tr>
+                <th colspan="3">
+                    <span class="fs20 t-r" ng-class="{'t-r':model.testResult.examinationResult !==1,'t-b':model.testResult.examinationResult ===1}"></span> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>考试成绩：<span ng-bind="(model.testResult.examGetScore === null ? '-' : model.testResult.examGetScore)"></span></td>
+                <td>练习成绩：<span ng-bind="model.testResult.questionGetScore"></span></td>
+                <td>总成绩：<span ng-bind="model.testResult.userTotalScore"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>-->
+<!-- /内容 -->
+
+
+<div class="main-frame body-bg">
+    <div class="main-frame-bd">
+        <div class="m-course-test">
+            <div class="header">
+                <div class="p-wrap-full tc clear">
+                    <div class="fs24 pt10" style="padding-top:25px;">《<span
+                            ng-bind="model.testResult.examRoundName"></span>》
+                    </div>
+                    <!--
+                                        <div class="fs14">考试人员：白七七<span class="ml100">试卷总分：100分</span><span class="ml100">及格分数：60分</span><span class="ml100">开始总时长：60分钟</span></div>
+                    -->
+                </div>
+            </div>
+            <div class="p-wrap-full clear">
+                <div class="exam-cont exam-cont-1">
+                    <p class="submit-succ"><span class="p-ico"></span>试卷提交成功！</p>
+                    <div class="exam-info mt20">
+                        <p>考试成绩得分：<span class="b fs30 t-b"
+                                        ng-bind="(model.testResult.currentExamScore === null ? '-' : model.testResult.currentExamScore)"></span>
+                            分</p>
+                        <p>本次考试用时：<span ng-bind="model.testResult.currentExamTimeLength"></span>分钟</p>
+                        <p>考试总时长：<span
+                                ng-bind="model.testResult.examTimeLength===null?'-':model.testResult.examTimeLength"></span>分钟
+                        </p>
+                        <p>剩余考试次数：<span class="b fs30 t-b"
+                                        ng-bind="model.testResult.surplusExamCount===-1?'无限次':model.testResult.surplusExamCount"></span>
+                            次</p>
+                    </div>
+                </div>
+
+                <div class="m-tips-1 tc mt10"
+                     ng-if="model.testResult.limitExamCount&&model.testResult.classRelearn&&model.testResult.pass===false&&!model.showSuccessRelearnMsg&&model.testResult.surplusExamCount===0">
+                    <p class="fs18 b">温馨提示</p>
+                    <p class="mt10">亲爱的同学，考试次数已用完且考试成绩未达到本班培训考核要求，你可通过重学班级获得再次考核机会，是否使用？</p>
+                    <a href="javascript:void(0)"
+                       ng-click="events.classRelearn()"
+                       class="ui-btn btn-gr btn-big mt20">确定使用</a>
+                </div>
+
+                <div class="m-tips-1 tc mt10"
+                     ng-if="model.testResult.limitExamCount&&model.testResult.classRelearn&&model.testResult.pass===null&&!model.showSuccessRelearnMsg&&model.testResult.surplusExamCount===0">
+                    <p class="fs18 b">温馨提示</p>
+                    <p class="mt10">亲爱的同学，后台正在计算考试结果，请稍后刷新页面！</p>
+                </div>
+
+                <div class="m-tips-1 tc mt10" ng-if="model.showSuccessRelearnMsg">
+                    <p class="fs18 b">温馨提示</p>
+                    <p class="submit-succ mt20"><span class="p-ico"></span></p>
+                    <p class="mt10">恭喜，您已获得整班重学的机会！<br>请进入班级学习</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<!--<div class="dialog w-textarea">&lt;!&ndash; kendo-window="ui.remarkwindow"
+    k-options="node.remarkwindow"&ndash;&gt;
+    <div class="dialog-body mt30">
+       &lt;!&ndash; <div class="dialog-tit">备注信息<a href="#" class="ico ico-close"></a></div>&ndash;&gt;
+        <div class="dialog-cont">
+            <ul class="ul-d-form pt10 lh-1">
+                <li class="clear">
+                    <span class="ml30 fl">备注信息：</span>
+                    <div class="w-4 fl">
+                        <textarea class="textarea wp-m-full fl" placeholder="请输入备注，备注信息可填写变更地址或具限定具体发货日期等，用于发货人发货时确认"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-center">
+            <a href="#" class="btn btn-r">确定</a>
+            <a href="#" class="btn btn-g ml10">取消</a>
+        </div>
+    </div>
+</div>-->
+
+    <ul class="ul-d-form pt10 lh-1">
+        <li class="clear">
+            <span class="ml30 fl">备注信息：</span>
+            <div class="w-4 fl">
+                <textarea class="textarea wp-m-full fl" ng-model="model.remark"  placeholder="请输入备注，备注信息可填写变更地址或具限定具体发货日期等，用于发货人发货时确认"></textarea>
+            </div>
+        </li>
+    </ul>
+
+<div class="btn-center">
+    <a href="javascript:void(0)" class="btn btn-r" ng-click="events.saveremark(dataItem); (model.datasuccess===true)?dialog.close($index) :1">确定</a>
+    <a href="javascript:void(0)" class="btn btn-g ml10" ng-click="dialog.close($index)">取消</a>
+</div>

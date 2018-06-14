@@ -1,0 +1,21 @@
+<ul class="ul-form li-fl lh-1 clear">
+    <div region-query-info
+         model="model"></div>
+    <li ng-if="time">
+        <div hb-date-arrange
+             template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+             sb-mode="true"
+             start-date="model.startTime"
+             end-date="model.endTime"
+             start-placeholder="开通时间"
+             config="timeConfig"
+             end-placeholder="开通时间"></div>
+    </li>
+    <li>
+        <div command-tool
+             permission="permission"
+             report-query="events.genReportQuery()"
+             grid="grid"
+             model="model"></div>
+    </li>
+</ul>

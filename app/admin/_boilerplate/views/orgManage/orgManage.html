@@ -1,0 +1,73 @@
+<div class="main-wrap-body-1 clear">
+    <div class="column-block w-tree fl" id="treeDiv">
+        <div class="col-tit">组织机构</div>
+        <div class="col-body">
+            <ul class="ul-tree org-tree">
+                <li>
+                    <div kendo-tree-view="node.tree"
+                         id="orgTree"
+                         k-options="ui.tree.options"
+                         k-on-change="model.selectedItem = dataItem"
+                    >
+                        <div k-template ng-click="events.getOrgInfo(dataItem)" id="unit_b{{dataItem.id}}">
+                            <div class="tree-item">
+                                <span class="tree-item-name" title="b{{dataItem.name}}">
+                                    <span class="cate" ng-if="dataItem.type==='1'">单位</span>
+                                    <span class="cate" ng-if="dataItem.type==='2'">部门</span>
+                                    <span ng-bind="dataItem.name" class="tree-item-text"></span>
+                                </span>
+                            </div>
+                            <div class="op-ico" ng-show="operateAble">
+                                <a href="javascript:void(0);"
+                                   class="ico-op ico-up-t mr10"
+                                   style="margin-top:17px;"
+                                   ng-click='events.doUp($event,dataItem)'
+                                   has-permission="orgManage/moveUp"></a>
+                                <a href="javascript:void(0);"
+                                   class="ico-op ico-down-t"
+                                   style="margin-top:17px;"
+                                   ng-click='events.doDown($event,dataItem)'
+                                   has-permission="orgManage/moveDown"></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="right-pre right-pre-1" id="infoDiv">
+        <div class="column-block w-pre" ng-show="operateAble">
+            <div class="col-tit">机构操作</div>
+            <div class="col-body">
+                <div class="p10">
+                    <a href="" ng-class="{'hide': model.selectedItem.type === '2'}" class="btn-r btn"
+                       ng-click="events.addNode('1')" has-permission="orgManage/add">添加单位</a>
+                    <!--ng-class="{'hide': model.selectedItem.type !== '1'&& model.selectedItem.type !== '2'}"-->
+                    <a href="" class="btn-r btn ml10" ng-click="events.addNode('2')"
+                       has-permission="orgManage/add">添加部门</a>
+                    <a href="" class="btn-b btn ml20" ng-click="events.editNode()"
+                       has-permission="orgManage/edit">修改</a>
+                    <a href="" class="btn-b btn ml10" ng-click="events.deleteNode()" has-permission="orgManage/remove">删除</a>
+                </div>
+            </div>
+        </div>
+        <div ng-class="{'column-block w-pre mt30':operateAble,'column-block w-pre':!operateAble}">
+            <div class="col-tit">机构基本信息</div>
+            <div class="col-body">
+                <ul class="ul-d-form udf-1 ml30">
+                    <li><span class="left-txt b">机构名称：</span><span ng-bind="model.orgName"></span></li>
+                    <li class="clear"><span class="left-txt b fl">机构描述：</span><span
+                            class="right-txt fl"><span ng-bind="model.orgDis"></span></span>
+                    </li>
+                    <li ng-if="model.type==1"><span class="left-txt b">机构学院管理员：</span><span
+                            ng-bind="model.admin"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div kendo-window="node.windows.addInfo" k-options="ui.windows.addInfo"></div>
+<div kendo-window="node.windows.editInfo" k-options="ui.windows.editInfo"></div>
+
+

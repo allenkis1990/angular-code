@@ -1,0 +1,81 @@
+<div class="dialog-body">
+    <div class="dialog-tit">编辑课程学习<a href="javascript:void(0)"
+                                     class="ico ico-close"
+                                     ng-click="events.modEditTrueOrFalse(false)"></a></div>
+    <div class="dialog-cont">
+        <ul class="ul-d-form pt20 pl20 lh-1">
+            <li><span class="left-txt"><i>*</i>选课规则模板：</span><!--<a href="javascript:void(0)"
+                                                                ng-if="submitData.courseLearning.ruleId==null||submitData.courseLearning.ruleId==undefined||submitData.courseLearning.ruleId==''"
+                                                                ng-click="events.opencourseRuleKendoDialog()"
+                                                                class="txt-b">选择选课规则模板</a>-->
+                <span ng-if="submitData.courseLearning.ruleId!==null&&submitData.courseLearning.ruleId!==undefined&&submitData.courseLearning.ruleId!==''"
+                      ng-bind="model.modViewList[0].ruleName"></span>
+                <!--<a href="javascript:void(0)"
+                   ng-if="submitData.courseLearning.ruleId!==null&&submitData.courseLearning.ruleId!==undefined&&submitData.courseLearning.ruleId!==''"
+                   ng-click="events.opencourseRuleKendoDialog()"
+                   class="txt-b">更换选课规则模板</a>-->
+            </li>
+        </ul>
+        <div class="cb-tit mt20 clear">课程学习要求</div>
+
+        <div class="mt10 pl10">
+            <p>
+                <span class="b pb10">前置条件 —— 配置开始培训内容的前提要求</span><br>
+                无
+            </p>
+            <!--只有必修包-->
+            <p class="bor-t pt10 mt10" ng-if="model.modViewList[0].ruleType===1">
+                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                <label>满足各包内选课要求</label><br>
+                <label>课程学习进度&gt;=<input type="text"
+                                         ng-model="submitData.courseLearning.rateOfProgress" class="ipt ipt-c-xm">
+                    %</label><br>
+                <label>累计获得学时数=<span class="txt-b">b{{model.modViewList[0].requiredPeriod}}</span></label><br>
+            </p>
+            <!--只有选修包-->
+            <p class="bor-t pt10 mt10" ng-if="model.modViewList[0].ruleType===2">
+                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                <label>满足各包内选课要求</label><br>
+                <label>课程学习进度&gt;=<input type="text"
+                                         ng-model="submitData.courseLearning.rateOfProgress" class="ipt ipt-c-xm">
+                    %</label><br>
+                <label>累计获得学时数=<span class="txt-b">b{{model.modViewList[0].requiredPeriod}}</span></label><br>
+                <label ng-repeat="item in model.modViewList[0].coursePackageNames">获得<span class="txt-b">[b{{item.coursePackageName}}]</span>学时数=<span
+                        class="txt-b">b{{item.totalPeriod}}</span>;</label><br>
+            </p>
+            <!--选修包 选修包-->
+            <p class="bor-t pt10 mt10" ng-if="model.modViewList[0].ruleType===3">
+                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                <label>满足各包内选课要求</label><br>
+                <label>课程学习进度&gt;=<input type="text"
+                                         ng-model="submitData.courseLearning.rateOfProgress" class="ipt ipt-c-xm">
+                    %</label><br>
+                <label>累计获得学时数=<span class="txt-b">b{{model.modViewList[0].requiredPeriod}}</span></label><br>
+                <!--
+                                    <label ng-repeat="item in model.modViewList[0].coursePackageNames">获得必修课学时数=<span class="txt-b">b{{item.requiredPeriod}}</span>;</label><br>
+                -->
+                <label ng-repeat="item in model.modViewList[0].coursePackageNames">获得<span class="txt-b">[b{{item.coursePackageName}}]</span>学时数=<span
+                        class="txt-b">b{{item.totalPeriod}}</span>;</label><br>
+            </p>
+
+
+            <p class="bor-t pt10 mt10" ng-if="model.modViewList.length==0">
+                <span class="b pb10">考核判断 —— 配置培训内容通过条件</span><br>
+                -
+            </p>
+            <p class="bor-t pt10 mt10"><span class="b pb10">通过成果 —— 配置培训内容通过后所得成果</span><br><span
+                    class="txt-g">无</span></p>
+        </div>
+
+
+    </div>
+    <div class="btn-center">
+        <button ng-disabled="submitAble"
+                ng-click="events.saveEditCourse()"
+                class="btn btn-r">保存
+        </button>
+        <a href="javascript:void(0)"
+           class="btn btn-g ml10"
+           ng-click="events.modEditTrueOrFalse(false)">取消</a>
+    </div>
+</div>

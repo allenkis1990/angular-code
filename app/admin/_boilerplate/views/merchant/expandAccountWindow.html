@@ -1,0 +1,104 @@
+<style>
+    .wzy-w-260 {
+        top: 2px;
+        left: 260px;
+    }
+
+    .wzy-w-825 {
+        width: 210px;
+    }
+
+    .wzy-w-630 {
+        top: 2px;
+        left: 625px;
+    }
+</style>
+<div class="dialog w-4">
+    <div class="dialog-body">
+        <form name="expandAccountForm" novalidate>
+            <div class="dialog-tit">拓展账号数<a href="javascript:void(0);" class="ico ico-close"
+                                            ng-click="showDisabled = false;node.windows.expandAccountWindow.center().close();"></a>
+            </div>
+
+            <div class="dialog-cont">
+                <ul class="ul-d-form pl10">
+                    <li><span class="left-txt">企业名称：</span>b{{model.accountExpandInfo.companyName}}</li>
+                    <li><span class="left-txt">商学院名称：</span>b{{model.accountExpandInfo.businessSchoolName}}</li>
+                    <li><span class="left-txt">现有账号数：</span>b{{model.accountExpandInfo.hasAccountNum}}个</li>
+                    <li><span class="left-txt"><i>*</i>拓展账号数：</span><input type="text" class="ipt ipt-mini"
+                                                                           placeholder="请输入账号数"
+                                                                           ng-model="model.accountExpandInfo.expandAccountNum"
+                                                                           name="accountConcurrence"
+                                                                           min="1"
+                                                                           required
+                                                                           ng-pattern="regexps.positiveInteger">
+                        个
+                        <span
+                                ng-show="expandAccountForm.accountConcurrence.$dirty &&expandAccountForm.accountConcurrence.$error.required"
+                                class="li-prompt  wzy-w-260"><span class="ico ico-prompt"></span>请输入账号并发数！</span>
+
+                        <span
+                                ng-show="expandAccountForm.accountConcurrence.$dirty && (!expandAccountForm.accountConcurrence.$error.required) && expandAccountForm.accountConcurrence.$error.pattern"
+                                class="li-prompt wzy-w-260"><span class="ico ico-prompt"></span>只能输入正整数！</span>
+                    </li>
+                    <li><span class="left-txt"><!--<i>*</i>-->服务期限：</span>与平台服务期限一致<!--<input type="text" class="ipt ipt-small"
+                                                                          placeholder="开始日期"
+                                                                          hb-readonly
+                                                                          hb-clear-input
+                                                                          required
+                                                                          name="expandAccountServeTimeBegin"
+                                                                          kendo-date-picker="node.expandAccountServeTimeBegin"
+                                                                          k-options="ui.datePicker.expandAccountServeTimeBegin.options"
+                                                                          ng-model="model.accountExpandInfo.expandAccountServeTimeBegin"
+
+                        >
+                        - <input type="text" class="ipt ipt-small" placeholder="结束日期"
+                                 hb-readonly
+                                 hb-clear-input
+                                 required
+                                 name="expandAccountServeTimeEnd"
+                                 kendo-date-picker="node.expandAccountServeTimeEnd"
+                                 k-options="ui.datePicker.expandAccountServeTimeEnd.options"
+                                 ng-model="model.accountExpandInfo.expandAccountServeTimeEnd"></li>
+                    <li>
+                        <span class="left-txt"
+                              ng-show="expandAccountForm.expandAccountServeTimeBegin.$dirty &&expandAccountForm.expandAccountServeTimeBegin.$error.required"></span><span
+                        ng-show="expandAccountForm.expandAccountServeTimeBegin.$dirty &&expandAccountForm.expandAccountServeTimeBegin.$error.required"
+                        style="color:red;"
+                        >请选择账号并发数服务开始日期！</span>
+
+                    </li>
+                    <li>
+                        <span class="left-txt"
+                              ng-show="expandAccountForm.expandAccountServeTimeEnd.$dirty &&expandAccountForm.expandAccountServeTimeEnd.$error.required"></span>
+                            <span
+                                ng-show="expandAccountForm.expandAccountServeTimeEnd.$dirty &&expandAccountForm.expandAccountServeTimeEnd.$error.required"
+                                style="color:red;"
+                                >请选择账号并发数服务结束日期！</span>
+                    </li>
+                    <li>
+                        <span class="left-txt"
+                              ng-show="model.accountExpandInfo.expandAccountServeTimeEnd==model.accountExpandInfo.expandAccountServeTimeBegin&&model.accountExpandInfo.expandAccountServeTimeBegin!=''&&model.accountExpandInfo.expandAccountServeTimeEnd!=''"></span>
+                            <span
+                                ng-show="model.accountExpandInfo.expandAccountServeTimeEnd==model.accountExpandInfo.expandAccountServeTimeBegin&&model.accountExpandInfo.expandAccountServeTimeBegin!=''&&model.accountExpandInfo.expandAccountServeTimeEnd!=''"
+                                style="color:red;"
+                                >结束日期不能小于开始日期！</span>
+                    </li>-->
+                    <li><span class="left-txt txt-long">请输入受理单号：</span><input type="text" class="ipt ipt-medium"
+                                                                              placeholder="请输入受理单号"
+                                                                              ng-model="model.accountExpandInfo.itemId">
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <div class="btn-center">
+            <input type="button" ng-click="events.saveExpandAccount($event);expandAccountForm.$setPristine()"
+                   ng-disabled="expandAccountForm.$invalid || showDisabled"
+                   ng-class="{'btn-g': !expandAccountForm.$valid|| showDisabled, 'btn-r': expandAccountForm.$valid && !showDisabled}"
+                   class="btn" value="保存">
+            <input type="button" ng-click="showDisabled = false;node.windows.expandAccountWindow.center().close();"
+                   class="btn btn-g ml10"
+                   value="取消">
+        </div>
+    </div>
+</div>

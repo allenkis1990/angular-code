@@ -1,0 +1,95 @@
+<div>
+    <div class="search-bar mt10">
+        <ul class="ul-form li-fl lh-1 clear"
+            style="display:inline-block;margin-right:15px;">
+            <li>
+                <div hb-authorized-option query-all="true" lock-range="commodity" query-params="model.query"
+                     ng-if="viewName==='states.classEstablishSubProject'"></div>
+                <div hb-authorized-option lock-range="commodity" query-params="model.query"
+                     ng-if="viewName==='states.classEstablish'"></div>
+            </li>
+            <li exp="true">
+                <div hb-sku-directive
+                     clear-all="clearAll"
+                     category-type="trainClassCategoryId"
+                     lwhmodel="skuParamsClassEstablish"
+                     ng-model="skuParamsClassEstablish"
+                     templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+
+            </li>
+            <li exp="true">
+                <div select-goods hide-good-option="true"
+                     sku-name="skuName"
+                     lwh-sku-model="skuParamsClassEstablish"
+                     scheme-id="model.query.trainClass.trainClassId"></div>
+            </li>
+            <li style="margin-left:15px;">
+                <div>
+                    <input type="text" class="ipt ipt-small" ng-model="model.query.learningBeginTime" placeholder="学时"
+                           style="width: 80px"/>
+                    <div ng-if="model.mustDoubleLearningBeginTime == 1"
+                         style="position: absolute;top: 30px;color: #ff0000;">
+                        请输入数字
+                    </div>
+                </div>
+            </li>
+            <li>-</li>
+            <li>
+                <div><input type="true" class="ipt ipt-small" ng-model="model.query.learningEndTime" placeholder="学时"
+                            style="width: 80px"/>
+                    <div ng-if="model.mustDoubleLearningEndTime == 1" style="position: absolute;top: 30px;color: red;">
+                        请输入数字
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class-report-search
+             sku-name="skuName"
+             lwh-sku-model="skuParamsClassEstablish"
+             permission="permission"
+             ng-if="viewName==='states.classEstablish'"
+             view-name="viewName"
+             grid="model.node.grid"
+             time="true"
+             model="model.query">
+        </div>
+
+        <div class-report-search
+             sku-name="skuName"
+             lwh-sku-model="skuParamsClassEstablish"
+             permission="permission"
+             ng-if="viewName==='states.classEstablishSubProject'"
+             view-name="viewName"
+             grid="model.node.grid"
+             time="true"
+             model="model.query">
+        </div>
+
+        <div region-report-search
+             lwh-sku-model="skuParamsClassEstablish"
+             permission="permission"
+             ng-if="viewName==='states.regionEstablish'"
+             view-name="viewName"
+             grid="model.node.grid"
+             time="true"
+             model="model.query">
+        </div>
+    </div>
+    <div class="column mt10">
+        <div class="tips-box-1 clear">
+            <span class="b">合计</span>：净开通
+            <!--<span class="t-r b" ng-bind="totalInfo.info.openStatistics.total_netOpenNum||'暂无数据'"></span>-->
+            <span class="t-r b" ng-bind="totalInfo.info.totalSize||'暂无数据'"></span>
+            人次<span ng-if="viewName !== 'states.regionEstablish'">，成交总额 <span class="t-r b">¥<span
+                ng-bind="totalInfo.info.totalAmount"></span></span></span>
+            <span class="fr">单位：人次</span>
+            <span summary-desc view-name="viewName"></span>
+        </div>
+        <div class="mt10" kendo-grid="model.node.grid" ng-if="viewName==='states.classEstablish'"
+             k-ng-delay="kendoPlus.gridDelay" k-options="mainGridOptions"></div>
+        <div class="mt10" kendo-grid="model.node.grid" ng-if="viewName!=='states.classEstablish'"
+             k-ng-delay="kendoPlus.gridDelay" k-options="mainGridOptions"></div>
+
+    </div>
+</div>

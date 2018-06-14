@@ -1,0 +1,152 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.periodSellStatisticSubProject'"
+     ng-click="lessonTypeShow=false">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li>
+                <div hb-authorized-option query-params="model.authorizedQuery"
+                     query-all ="true" lock-range = "merchantAccount"></div>
+            </li>
+            <li>
+                <select class="slt slt-small"
+                        ng-model="model.chooseParams.trainingSchemeType" STYLE="width: 170px">
+                    <option value="">请选择培训方案形式</option>
+                    <option value="TRAINING_CLASS">培训班学习</option>
+                    <option value="COURSE">自主选课学习</option>
+                </select>
+            </li>
+            <li>
+                <input ng-model="model.chooseParams.goodName"
+                       hb-clear-input type="text"
+                       ng-click="events.openKendoWindow('schemeWindow')"
+                       class="ipt ipt-s"
+                       placeholder="请选择培训方案"/>
+            </li>
+
+            <li ng-show="model.commodityTypeDisabled===false">
+                <select class="slt slt-small"
+                        ng-model="model.chooseParams.commodityType"
+                        ng-show="model.chooseParams.trainingSchemeType==='TRAINING_CLASS'">
+                    <option value="TRAINING_CLASS">培训班</option>
+                </select>
+
+                <select class="slt slt-small"
+                        ng-model="model.chooseParams.commodityType"
+                        ng-show="model.chooseParams.trainingSchemeType==='COURSE'">
+                    <option value="">请选择商品类型</option>
+                    <option value="PERIOD">学时商品</option>
+                    <option value="COURSE">课程</option>
+                </select>
+            </li>
+
+            <li>
+                <input type="text"
+                       class="ipt ipt-small"
+                       ng-model="model.chooseParams.lowprice"
+                       placeholder="商品单价区间"/> -
+
+                <input type="text"
+                       class="ipt ipt-small"
+                       ng-model="model.chooseParams.hightprice"
+                       placeholder="商品单价区间"/>
+            </li>
+
+            <li>
+                <div hb-date-arrange
+                     template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+                     config="timeConfig"
+                     start-date="model.chooseParams.startCreateTime"
+                     end-date="model.chooseParams.endCrateTime"
+                     start-placeholder="销售日期" end-placeholder="销售日期"></div>
+            </li>
+
+
+            <li><a href="javascript:void(0)" has-permission="periodSellStatisticSubProject/query" ng-click="events.search()"
+                   class="btn btn-b">查询</a></li>
+            <li><a href="javascript:void(0)" ng-click="events.clearUserPageParams()" class="btn btn-b">重置条件</a></li>
+            <li>
+                <button href="javascript:void(0)" ng-disabled="submitExportOrder===false"
+                        has-permission="periodSellStatisticSubProject/export" ng-click="events.exportCourseStatistics()"
+                        class="btn btn-b">批量导出
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="tips-box-1 clear">
+        <span class="fl b mr10 ">统计</span>|
+        <span class="ml10">
+
+            累计销售数：b{{model.totalSellCount}}个，
+            退款退货数：b{{model.totalRefundCount}}个，
+            净销售数：b{{model.totalNetSellCount}}个（其中学时商品b{{model.periodTotalNetSellCount}}个、课程商品b{{model.courseTotalNetSellCount}}个以及班级商品b{{model.classTotalNetSellCount}}个）；
+            累计成交总额：¥b{{model.totalTradingMoney}}元，
+            累计退款总额：¥b{{model.totalRefundMoney}}元。
+
+            <span class="t-r">不包含异常的销售，如换班、换课的数据。</span>
+        </span>
+
+        <span summary-desc view-name="OWN_VIEW_NAME"></span>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.periodGrid" k-options="ui.periodGrid.options">
+        </div>
+    </div>
+</div>
+<div ui-view></div>
+
+
+<!--培训班弹窗-->
+<div class="dialog w-2" k-options="kendoPlus.windowOptions" kendo-window="schemeWindow" style="width:1200px;">
+    <div class="dialog-body mt30">
+        <div class="dialog-tit">选择培训方案<a href="javascript:void(0)"
+                                         class="ico ico-close"
+                                         ng-click="events.closeKendoWindow('schemeWindow')"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <select class="slt slt-small"
+                                ng-model="model.queryParam.categoryType"
+                                ng-disabled="model.categoryTypeDisabled===true">
+                            <!--<option value="">培训方案形式</option>-->
+                            <option value="TRAINING_CLASS_GOODS">培训班学习</option>
+                            <option value="COURSE_SUPERMARKET_GOODS">自主选课学习</option>
+                        </select>
+                    </li>
+
+                    <div hb-sku-directive
+                         category-type="model.queryParam.categoryType"
+                         lwhmodel="skuParamsCommoditySellStatic"
+                         ng-model="skuParamsCommoditySellStatic"
+                         templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"></div>
+
+
+                    <li ng-class="{'margin-left15':model.queryParam.categoryType}">
+                        <input type="text" ng-model="model.queryShow.schemeName" placeholder="培训方案名称"
+                               class="ipt ipt-middle"
+                               hb-clear-input>
+                    </li>
+                    <li>
+                        <div hb-sku-directive
+                             lwhmodel="skuParamsSpxsStatic"
+                             templateurl="@systemUrl@/templates/common/hb-sku-anthorpl.html"
+                             ng-model="skuParamsSpxsStatic">
+                        </div>
+                    </li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.doSearch()"
+                           class="btn btn-b">搜索</a>
+                    <li>
+                </ul>
+            </div>
+
+            <div kendo-grid k-options="selectClassGridOptions">
+            </div>
+
+        </div>
+        <div class="btn-center">
+            <a href="javascript:void(0)"
+               class="btn btn-g ml10"
+               ng-click="events.closeKendoWindow('schemeWindow')">取消</a>
+        </div>
+    </div>
+</div>

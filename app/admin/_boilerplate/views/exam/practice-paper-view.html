@@ -1,0 +1,101 @@
+<div class="dialog w-2">
+    <div class="dialog-body ">
+        <div class="dialog-tit">试卷详情<a href="#" ng-click="events.closePaperViewWindow($event)"
+                                       class="ico ico-close"></a></div>
+
+        <div class="dialog-cont p20">
+            <div class="mb10 mt10"><b>试卷基本信息</b></div>
+            <div class="dash-line-1"></div>
+            <ul class="ul-d-form lh-1 clear">
+                <li class="wp-4 fl">
+                    <span class="left-txt ">试卷名称：</span>
+                    <span ng-bind="model.viewPaper.name"></span>
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt">试卷分类：</span>
+                    <span ng-bind="model.viewPaper.libraryName"></span>
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt">出题方式：</span>
+                    按课程ID出题
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt">试卷类型：</span>
+                    智能组卷
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt">试卷总分：</span>
+                    <span ng-bind="model.viewPaper.totalScore"></span>
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt">建议及格分：</span>
+                    <span ng-bind="model.viewPaper.passScore"></span>
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt">组卷试题范围：</span>
+                    按课程ID出题
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt fl">试卷状态：</span>
+                    <span ng-if="model.viewPaper.enable===true">启用</span>
+                    <span ng-if="model.viewPaper.enable===false">停用</span>
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt ">创建人：</span>
+
+                    <span title="b{{model.viewPaper.createUserId}}"
+                          ng-bind="model.viewPaper.createUserId.length>16?(model.viewPaper.createUserId | limitTo:16)+'...':model.viewPaper.createUserId"></span>
+                </li>
+                <br>
+                <li class="wp-4 fl">
+                    <span class="left-txt ">创建时间：</span>
+                    <span ng-bind="model.viewPaper.createTime"></span>
+                </li>
+            </ul>
+            <div class="mb10 mt30"><b>试题信息</b></div>
+            <div class="dash-line-1"></div>
+            <ul class="ul-d-form lh-1 clear">
+                <li class="wp-4 fl">
+                    <span class="left-txt">测验试题数量：</span>
+                    <span ng-bind="model.viewPaper.questionNum"></span>题
+                </li>
+                <li class="wp-4 fl">
+                    <span class="left-txt">每题分数：</span>
+                    <span ng-bind="model.viewPaper.totalScore/model.viewPaper.questionNum| number : 1"></span>分
+                </li>
+            </ul>
+            <div class="mb10 mt30"><b>试题规则</b></div>
+            <div class="dash-line-1"></div>
+            <ul class="ul-d-form lh-1">
+                <li>
+                    <span class="left-txt">测验次数：</span>
+                    <span ng-if="model.viewPaper.limitPracticeNum===false">不限</span>
+                    <span ng-if="model.viewPaper.limitPracticeNum===true">b{{model.viewPaper.practiceNum}}</span>
+                </li>
+                <li>
+                    <span class="left-txt">测验结果：</span>
+                    <span ng-if="model.viewPaper.publiced===false">不公布答题情况</span>
+                    <span ng-if="model.viewPaper.publiced===true">公布答题情况</span>
+
+                </li>
+            </ul>
+            <!--  <div class="mb10 mt30"><b>关联的学时商品</b></div>
+              <div class="dash-line-1"></div>
+              <table class="table">
+                  <tbody>
+                  <tr>
+                      <td class="tl">学时商品1</td>
+                      <td class="op" width="150"><a href="#">查看</a></td>
+                  </tr>
+                  <tr>
+                      <td class="tl">学时商品2</td>
+                      <td class="op"><a href="#">查看</a></td>
+                  </tr>
+                  </tbody>
+              </table>-->
+        </div>
+
+    </div>
+</div>
+
+

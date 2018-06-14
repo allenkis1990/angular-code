@@ -1,0 +1,43 @@
+<div class="dialog-body">
+    <div class="dialog-tit">编辑兴趣课程<a href="javascript:void(0)"
+                                     class="ico ico-close"
+                                     ng-click="events.cancelEditInter()"></a></div>
+    <div class="dialog-cont">
+
+
+        <div class="cb-right" style="margin:inherit">
+            <div class="cb-tit clear">兴趣课程配置</div>
+            <a href="javascript:void(0)"
+               class="add-box mt10"
+               ng-click="events.openInterKendoDialog()">+ 请选择兴趣课程包</a>
+
+
+            <div class="lwh-interCourse clear">
+                <div ng-repeat="item in submitData.interestCourse.interestCourses"
+                     ng-class="{'item-nobor':$last}"
+                     class="item">b{{item.coursePoolName}}<a href="javascript:void(0)"
+                                                             ng-click="events.spliceInter($index)"
+                                                             class="txt-b fr">【删除】</a></div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-if="$state.current.name==='states.releaseGoods'"
+           ng-click="events.closeKendoWindow('editInterWindow')"
+           class="btn btn-r">保存</a>
+
+        <button ng-if="$state.current.name!=='states.releaseGoods'"
+                ng-click="events.submitInter()"
+                class="btn btn-r">保存
+        </button>
+
+        <a href="javascript:void(0)"
+           class="btn btn-g ml10"
+           ng-click="events.cancelEditInter()">取消</a>
+    </div>
+</div>

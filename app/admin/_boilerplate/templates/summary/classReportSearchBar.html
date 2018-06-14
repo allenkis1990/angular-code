@@ -1,0 +1,19 @@
+<ul class="ul-form li-fl lh-1 clear">
+
+    <li ng-if="time">
+        <div hb-date-arrange
+             template-url="@systemUrl@/templates/tpls/tpl-date-arrange.html"
+             sb-mode="true"
+             start-date="model.startTime"
+             end-date="model.endTime"
+             config="timeConfig"
+             start-placeholder="开通时间" end-placeholder="开通时间"></div>
+    </li>
+    <li>
+        <div command-tool
+             permission="permission"
+             lwh-sku-model="lwhSkuModel"
+             report-query="events.genReportQuery()"
+             grid="grid" model="model"></div>
+    </li>
+</ul>

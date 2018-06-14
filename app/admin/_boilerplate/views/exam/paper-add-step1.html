@@ -1,0 +1,790 @@
+<!--//组卷第一步-->
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.paperConfig" class="ico return"></a>
+        <a href="javascript: void(0);" ui-sref="states.paperConfig" class="aw">试卷管理</a> >
+        <span ng-show="!show.addQuestion">新建试卷</span>
+        <a href="javascript: void(0);" ng-show="show.addQuestion" ng-click="events.cancleAddQuestion()" class="aw">
+            新增试卷</a>
+        <span ng-show="show.addQuestion"> > 配置试题</span>
+    </div>
+</div>
+<div class="main-wrap-body" ng-show="show.addPaperStep1" ng-click="events.treeHide($event)">
+    <div class="steps mb30">
+        <div class="bg-line rd3"><span class="bg-l-current rd3" style="margin-left:0;"></span></div>
+        <ul class="ul-step li-fl clear">
+            <li class="current"><span class="ico s-1"></span>
+
+                <p class="step-name">填写试卷基本信息</p></li>
+            <li><span class="ico s-2"></span>
+
+                <p class="step-name">配置考题</p></li>
+            <li><span class="ico s-3"></span>
+
+                <p class="step-name">保存试卷</p></li>
+        </ul>
+    </div>
+    <div class="rel udf-3">
+        <form name="addPaperStep1Form" novalidate>
+            <ul class="ul-d-form udf-4 lh-1">
+                <a></a>
+                <li><span class="left-txt"><i>*</i>试卷名称：</span><input type="text" class="ipt ipt-large"
+                                                                      name="name"
+                                                                      ng-model="model.paper.name"
+                                                                      ng-maxlength="30"
+                                                                      required ng-required="true"
+                                                                      ajax-data="validateParams"
+                                                                      ajax-validate
+                                                                      ajax-url="/web/admin/paper/checkPaperName">
+                    <span class="li-prompt"
+                          ng-show="addPaperStep1Form.name.$dirty && addPaperStep1Form.name.$error.ajaxValidate && !addPaperStep1Form.name.$error.maxlength">
+                        <span class="ico ico-prompt"></span>试卷名称不能重复。</span>
+                    <span ng-show="addPaperStep1Form.name.$dirty && addPaperStep1Form.name.$error.required"
+                          class="li-prompt"><span class="ico ico-prompt"></span>请输入试卷名称</span>
+                    <span ng-show="addPaperStep1Form.name.$dirty && addPaperStep1Form.name.$error.maxlength"
+                          class="li-prompt"><span class="ico ico-prompt"></span>试卷最多支持30个汉字</span>
+                </li>
+                <li><span class="left-txt"><i>*</i>试卷分类：</span><input type="text" class="ipt ipt-large"
+                                                                      placeholder="请选择所属节点"
+                                                                      ng-model="model.parentName"
+                                                                      ng-click="events.openTree($event)"
+                                                                      name="parentId"
+                                                                      readonly
+                                                                      ng-required="true">
+                    <div class="column-block w-tree fl" ng-show="examTypeTreeShow" ng-click="$event.stopPropagation()"
+                         style="  position: absolute;z-index: 10;left: 121px;">
+                        <div class="col-body p0">
+                            <div kendo-tree-view="node.tree"
+                                 k-options="ui.tree.options"
+                                 k-on-change="model.selectedItem = dataItem" class="mh-1" style="width: 230px;">
+                    <span k-template ng-click="events.getOrgInfo(dataItem)">
+                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="" has-permission="paperConfig/toAddPaperType"
+                       ng-click="globle.stateGo('states.paperClassification','试卷分类')" class="btn btn-r ml10">新建分类</a>
+                    <span
+                            ng-show="addPaperStep1Form.parentId.$dirty && (addPaperStep1Form.parentId.$error.required || !model.paper.examTypeId)"
+                            class="li-prompt"><span class="ico ico-prompt"></span>请选择所属分类</span>
+
+                </li>
+                <li><span class="left-txt"><i>*</i>组卷方式：</span>
+                    <select class="slt slt-large" ng-model="model.paper.configType">
+                        <!--<option value="0">请选择组卷方式</option>-->
+                        <option value="3">智能组卷</option>
+                        <!--<option value="1">手动组卷</option>-->
+                    </select>
+                </li>
+                <li><span class="left-txt"><i>*</i>出题范围：</span>
+                    <input type="radio" value="1" ng-model="model.paper.randomType"/>按题库出题
+                    <input type="radio" value="2" ng-model="model.paper.randomType"/>按学员课程ID出题
+                </li>
+
+                <li class="clear" ng-show="model.paper.randomType==='1'">
+                    <span class="left-txt fl"><i>*</i>选择题库：</span>
+                    <div class="fl">
+                        <input type="text" class="ipt ipt-large"
+                               placeholder="请选择题库"
+                               ng-click="events.openSmartPaperLibraryTree($event)"/>
+                        <div class="column-block w-tree fl"
+                             style="  position: absolute;z-index: 10;" ng-show="smartPaperLibraryTreeShow"
+                             ng-click="$event.stopPropagation()">
+                            <div class="col-body p0">
+                                <div kendo-tree-view="node.smartPaperlibraryTree"
+                                     k-options="ui.smartPaperLibraryTree.options"
+                                     k-on-change="model.libraryTreeSelectedItem = dataItem" class="mh-1"
+                                     style="width: 230px;">
+                                    <span k-template ng-click="events.getQuestionOrgInfo(dataItem)">
+                                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li ng-if="model.paper.randomType==='1'">
+                    <span class="left-txt" style="float: left;">已选题库：</span>
+                    <div style="margin-left: 120px">
+                        <div ng-repeat="library in model.paper.randomTakeObjectConfigurationItemDtos">
+                            <span class="tl" ng-bind="library.name"></span></br>
+                        </div>
+                    </div>
+                </li>
+                <li style="clear: both;">
+                    <span class="left-txt"><i>*</i>试卷总分：</span>b{{model.paper.totalScore}}分
+                </li>
+                <!--  <li style="clear: both;"><span class="left-txt"><i>*</i>试卷总分：</span><input type="text" ng-pattern="/^[1-9]\d*$/" class="ipt ipt-large"
+                             name="totalScore"
+                             required ng-required="true"
+                             ng-model="model.paper.totalScore"><span class="ml5">分</span>
+                      <span ng-show="addPaperStep1Form.totalScore.$dirty && addPaperStep1Form.totalScore.$error.required"
+                            class="li-prompt"><span class="ico ico-prompt"></span>请输入试卷总分</span>
+                      <span ng-show="addPaperStep1Form.totalScore.$error.pattern" class="li-prompt"><span
+                          class="ico ico-prompt"></span>请输入正整数</span>
+                  </li>-->
+                <li><span class="left-txt"><i>*</i>建议及格分：</span><input type="text"
+                                                                       class="ipt ipt-large"
+                                                                       ng-model="model.paper.passScore"
+                                                                       name="passScore"
+                                                                       required ng-required="true"
+                                                                       ng-pattern="/^[1-9]\d*$/"
+                >
+                    <span ng-show="addPaperStep1Form.passScore.$dirty && addPaperStep1Form.passScore.$error.required"
+                          class="li-prompt"><span class="ico ico-prompt"></span>请输入建议及格分</span>
+                    <span ng-show="addPaperStep1Form.passScore.$error.pattern" class="li-prompt"><span
+                            class="ico ico-prompt"></span>请输入正整数</span>
+                    <span class="ml5">分</span></li>
+                <li><span class="left-txt"><i>*</i>建议考试时长：</span><input type="text"
+                                                                        class="ipt ipt-large"
+                                                                        ng-model="model.paper.timeLength"
+                                                                        name="timeLength"
+                                                                        required ng-required="true"
+                                                                        ng-pattern="/^[1-9]\d*$/"
+                >
+                    <span ng-show="addPaperStep1Form.timeLength.$dirty && addPaperStep1Form.timeLength.$error.required"
+                          class="li-prompt"><span class="ico ico-prompt"></span>请输入建议考试时长</span>
+                    <span ng-show="addPaperStep1Form.timeLength.$error.pattern" class="li-prompt"><span
+                            class="ico ico-prompt"></span>请输入正整数</span>
+                    <span class="ml5">分钟</span></li>
+                <li class="clear" ng-if="model.paper.configType==='3' && model.paper.randomType==='2'">
+                    <span class="left-txt fl"> 组卷题库范围：</span>
+                    按学员课程ID出题
+                </li>
+                <li><span class="left-txt"><i>*</i>试卷状态：</span>
+                    <input type="radio" value="true" ng-model="model.paper.enabled"/>启用
+                    <input type="radio" value="false" ng-model="model.paper.enabled"/>停用
+                </li>
+            </ul>
+        </form>
+        <div class="btn-center">
+            <a href="" ng-click="events.continueAdd()"
+               has-permission="paperConfig/addPaperContinue"
+               ng-class="{'btn-g': !addPaperStep1Form.$valid || !model.hasSelectLiarary, 'btn-r': addPaperStep1Form.$valid && model.hasSelectLiarary}"
+               class="btn">保存并进入下一步</a>
+            <a href="" ng-click="events.savePaper('2')"
+               has-permission="paperConfig/saveAddPaperDraft"
+               ng-class="{'btn-g': !addPaperStep1Form.$valid|| !model.hasSelectLiarary, 'btn-r': addPaperStep1Form.$valid&& model.hasSelectLiarary}"
+               class="btn">保存为草稿</a>
+            <a href="" has-permission="paperConfig/cancelsavePaper" class="btn btn-g ml10"
+               ng-click="$state.go('states.paperConfig')">取消</a>
+        </div>
+    </div>
+</div>
+
+<!--手动组卷第二部-->
+<div class="main-wrap-body" ng-show="show.addPaperStep2">
+    <div class="steps mb30">
+        <div class="bg-line rd3"><span class="bg-l-current rd3" style="margin-left:33.33%;"></span>
+        </div>
+        <ul class="ul-step li-fl clear">
+            <li class="ed"><span class="ico s-1"></span>
+
+                <p class="step-name">填写试卷基本信息</p></li>
+            <li class="current"><span class="ico s-2"></span>
+
+                <p class="step-name">配置考题</p></li>
+            <li><span class="ico s-3"></span>
+
+                <p class="step-name">保存试卷</p></li>
+        </ul>
+    </div>
+    <div class="column">
+        <div class="col-tit">试卷基本信息</div>
+        <div class="dash-line-2"></div>
+        <div class="col-body mb20">
+            <ul class="ul-d-form udf-5 li-fl clear">
+                <li class="clear"><span class="left-txt fl">试卷名称：</span><span
+                        class="to fl" ng-bind="model.paper.name"></span>
+                </li>
+                <li><span class="left-txt">试卷分类：</span><label ng-bind="model.parentName"></label></li>
+                <li ng-if="model.paper.configType==='1'"><span class="left-txt">组卷方式：</span>固定试卷</li>
+                <li ng-if="model.paper.configType==='3'"><span class="left-txt">组卷方式：</span>智能试卷</li>
+                <li ng-if="model.paper.randomType==='1'"><span class="left-txt">出题范围：</span>按题库出题</li>
+                <li ng-if="model.paper.randomType==='2'"><span class="left-txt">出题范围：</span>按学员课程ID出题</li>
+                <li><span class="left-txt">试卷总分：</span><label ng-bind="model.paper.totalScore"></label>分</li>
+                <li><span class="left-txt">建议及格分：</span><label ng-bind="model.paper.passScore"></label>分</li>
+                <li ng-if="model.paper.randomType==='1'">
+                    <span class="left-txt" style="float: left">已选题库：</span>
+                    <div style="margin-left: 120px">
+                        <p ng-repeat="library in model.paper.randomTakeObjectConfigurationItemDtos">
+                            <span class="tl" ng-bind="library.name"></span></br>
+                        </p>
+                    </div>
+                </li>
+                <li><span class="left-txt">建议考试时长：</span><label ng-bind="model.paper.timeLength"></label>分钟</li>
+
+            </ul>
+        </div>
+        <div class="col-tit mt50">配置试卷考题</div>
+        <div class="dash-line-2"></div>
+        <div class="column">
+            类型：
+            <a href="" class="btn-b btn" has-permission="paperConfig/radioQuestionForAdd"
+               ng-click="events.toAddQuestion(2)">单选题</a>
+            <a href="" class="btn-b btn ml10" has-permission="paperConfig/multiQuestionForAdd"
+               ng-click="events.toAddQuestion(3)">多选题</a>
+            <a href="" class="btn-b btn ml10" has-permission="paperConfig/optionQuestionForAdd"
+               ng-click="events.toAddQuestion(1)">判断题</a>
+        </div>
+    </div>
+    <table class="table mt20">
+        <thead>
+        <tr>
+            <th width="100">调整顺序</th>
+            <th width="60">题序</th>
+            <th>大题名称</th>
+            <th width="60">题型</th>
+            <th width="60">试题数</th>
+            <th width="60">大题总分</th>
+            <th width="60">分值分配</th>
+            <th width="150">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in model.paper.configurationItemDtos">
+            <td><a href="" ng-click="events.exChange($index,1)"
+                   ng-class="{'ico-op ico-up-disabled': $index==0,'ico-op ico-up-t':$index!=0}"></a>
+                <a href="" ng-click="events.exChange($index,2)"
+                   ng-class="{'ico-op ico-down-disabled': $index==model.paper.configurationItemDtos.length-1,'ico-op ico-down-t':$index!=model.paper.configurationItemDtos.length-1}"></a>
+            </td>
+            <td ng-bind="$index+1"></td>
+            <td class="tl" ng-bind="item.name"></td>
+            <td ng-if="item.type==2">单选题</td>
+            <td ng-if="item.type==3">多选题</td>
+            <td ng-if="item.type==1">判断题</td>
+            <td ng-bind="item.count"></td>
+            <td ng-bind="item.totalScore"></td>
+            <td ng-if="item.scoreWay==='1'">平均分配</td>
+            <td ng-if="item.scoreWay==='2'">独立设置</td>
+            <td class="op">
+                <a href="" ng-click="events.modifyQuestion(item)">配置</a>
+                <a href="" ng-click="events.deleteQuestion($index)">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="btn-center">
+        <a href="" class="btn btn-r ml10" has-permission="paperConfig/savePaper" ng-click="events.savePaper()">保存为试卷</a>
+        <a href="" class="btn btn-r ml10" has-permission="paperConfig/saveAddPaperDraft"
+           ng-click="events.savePaper('2')">保存为草稿</a>
+        <a href="" class="btn btn-r ml10" has-permission="paperConfig/turnToLastStep" ng-click="events.back()">返回上一步</a>
+        <a href="" class="btn btn-g ml10" has-permission="paperConfig/cancelsavePaper"
+           ng-click="$state.go('states.paperConfig')">取消</a>
+    </div>
+</div>
+
+
+<!--添加试题-->
+<div class="main-wrap-body" ng-show="show.addQuestion">
+    <div class="dialog-body column" ng-click="events.libraryTreeHide($event)">
+        <div class="col-tit">配置试卷考题<a href="" class="ico ico-close"></a></div>
+        <div class="dash-line-2"></div>
+        <div class="dialog-cont">
+            <form name="addQuestionForm" novalidate>
+                <div class="column">
+                    <ul class="ul-form li-fl lh-1 clear">
+                        <li>大题名称：<input type="text" class="ipt ipt-small"
+                                        ng-model="model.bugQuestions.name"
+                                        name="name"
+                                        ng-maxlength="30"
+                                        required ng-required="true"
+                        >
+                            <span ng-show="addQuestionForm.name.$dirty && addQuestionForm.name.$error.required"
+                                  class="li-prompt" style="left:215px"><span
+                                    class="ico ico-prompt"></span>大题名称不能为空</span>
+                            <span ng-show="addQuestionForm.name.$dirty && addQuestionForm.name.$error.maxlength"
+                                  class="li-prompt" style="left:215px"><span class="ico ico-prompt"></span>大题名称最多支持30个汉字</span>
+                        </li>
+
+                        <li>大题总分：<input type="text" class="ipt ipt-c-xm"
+                                        ng-model="model.bugQuestions.totalScore"
+                                        ng-change="events.changeTotalscore()"
+                                        ng-pattern="/^[1-9]\d*$/"
+                                        ng-maxlength="10"
+                                        name="totalScore"
+                                        required ng-required="true"
+                        >
+                            <span ng-show="addQuestionForm.totalScore.$dirty && addQuestionForm.totalScore.$error.required"
+                                  class="li-prompt" style="left:133px"><span
+                                    class="ico ico-prompt"></span>大题总分不能为空</span>
+                            <span ng-show="addQuestionForm.totalScore.$error.pattern" class="li-prompt"
+                                  style="left:133px"><span class="ico ico-prompt"></span>请输入正整数</span>
+                        </li>
+                        <li>试题数量：<input type="text" class="ipt ipt-c-xm ipt-disabled" disabled value="10"
+                                        ng-model="model.bugQuestions.questions.length"></li>
+                        <li>每题分值设置：
+                            <input type="radio" value="1" ng-model="model.bugQuestions.scoreWay"
+                                   ng-click="events.scoreWay(1)">按总分平均到每题
+                            <input type="radio" value="2" ng-model="model.bugQuestions.scoreWay"
+                                   ng-click="events.scoreWay(2)">独立设置每题分值
+                        </li>
+                    </ul>
+                    <div class="col-tit">选择试题</div>
+                    <div class="dash-line-2"></div>
+                    <div class="search-bar">
+                        <ul class="ul-form  li-fl clear">
+                            <li>
+                                <input type="text" class="ipt ipt-small" placeholder="请选择题库"
+                                       ng-model="model.libraryName"
+                                       ng-click="events.openlibraryTree($event)" style="width:157px;">
+
+                                <div class="column-block w-tree fl" ng-show="libraryTreeShow"
+                                     ng-click="$event.stopPropagation()"
+                                     style="  position: absolute;z-index: 10; width:171px;">
+                                    <div class="col-body">
+                                        <div kendo-tree-view="node.libraryTree"
+                                             k-options="ui.libraryTree.options"
+                                             k-on-change="model.libraryTreeSelectedItem = dataItem">
+                    <span k-template ng-click="events.getQuestionOrgInfo(dataItem)">
+                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><input type="text" class="ipt ipt-medium" placeholder="请选择课程"
+                                       ng-model="model.selectedCourseName"
+                                       ng-focus="events.selectCourse()"
+                            />
+                            </li>
+                            <li><a href="" has-permission="paperConfig/searchQuestionForAdd"
+                                   ng-click="events.searchQuestion()" class="btn btn-b">查询</a></li>
+                        </ul>
+                    </div>
+                    <div class="clear">
+                        <div class="column-block wp-4 fl">
+                            <div class="col-tit ct-1"><span>已选题库：<span
+                                    ng-repeat="item in model.paperConfig.libraryItems" ng-bind="item.name"><span
+                                    ng-if="$index+1!==model.paperConfig.libraryItems.length">、</span></span></span>
+                            </div>
+                            <div class="col-body bt0 h-1">
+
+                                <div ng-if="fillQuestion" kendo-grid="node.question.fillGridInstance"
+                                     k-options="ui.fillQuestionGrid.options">
+                                </div>
+                                <div ng-if="!fillQuestion" kendo-grid="node.question.gridInstance"
+                                     k-options="ui.questionGrid.options">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="column-block wp-4 fr">
+                            <div class="col-tit clear">已选试题：<label
+                                    ng-bind="model.bugQuestions.questions.length"></label>题<a href=""
+                                                                                              has-permission="paperConfig/clearSelectedQues"
+                                                                                              class="btn btn-g btn-1 fr"
+                                                                                              ng-click="events.emptyQuestion()">清空</a>
+                            </div>
+                            <div class="col-body bt0 h-1">
+
+
+                                <table ng-if="model.questionSearch.questionType!=6">
+                                    <thead>
+                                    <tr>
+                                        <th>题目</th>
+                                        <th width="50">难易度</th>
+                                        <th width="50" ng-if="model.questionSearch.questionType==4">空格数</th>
+                                        <th width="60">设置分数</th>
+                                        <th width="60" ng-if="model.questionSearch.questionType==4">每空得分</th>
+                                        <th width="40">操作</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr ng-repeat="item in model.bugQuestions.questions">
+                                        <td class="tl">
+                                            <a href="" class="table-btn"
+                                               ng-click="events.paperQuestionView(item.id,model.questionSearch.questionType)"
+                                               ng-bind="item.topic"></a>
+                                        </td>
+                                        <td ng-bind="item.mode"></td>
+                                        <td ng-if="model.questionSearch.questionType==4"
+                                            ng-bind="item.answerCount"></td>
+                                        <td><input type="text" ng-class="scoreInputClass"
+                                                   ng-readonly="model.bugQuestions.scoreWay==='1'"
+                                                   ng-model="item.score"
+                                                   ng-pattern="/^[0-9].*$/"
+                                                   required ng-required="true"
+                                        ></td>
+                                        <td ng-if="model.questionSearch.questionType==4"
+                                            ng-bind="events.setFillQuestionAnswerItemScore(item)">
+
+                                        </td>
+                                        <td class="op">
+                                            <button class="table-btn" ng-click="events.removeQuestion(item.id)">删除
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="btn-center">
+                <a href="" has-permission="paperConfig/confirmQuestionForAdd"
+                   ng-class="{'btn-g': !addQuestionForm.$valid, 'btn-r': addQuestionForm.$valid}" class="btn"
+                   ng-click="events.saveQuestion()">确定选择</a>
+                <a href="" has-permission="paperConfig/cancelsavePaper" class="btn btn-g ml10"
+                   ng-click="events.cancleAddQuestion()">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--智能组卷添加试题-->
+<div class="main-wrap-body" kendo-window="node.windows.addSmartQuestion" k-options="ui.windowOptions">
+    <!----------------  按题型数量出试题  ----------------->
+    <div class="dialog w-textarea">
+        <div class="dialog-body">
+            <form name="smartPaperAddQuestionForm" novalidate>
+                <div class="dialog-tit">配置试卷考题<a href="" ng-click="events.closeAddQuestion()" class="ico ico-close">
+
+                </a>
+                </div>
+                <div class="dialog-cont">
+                    <div class="column">
+                        <ul class="ul-d-form lh-1 clear">
+                            <li><span class="left-txt"> 大题名称：</span><input type="text"
+                                                                           class="ipt ipt-large"
+                                                                           ng-model="model.smartPaperBigQuestions.name"
+                                                                           name="name"
+                                                                           ng-maxlength="30"
+                                                                           required ng-required="true"
+                            >
+                                <span
+                                        ng-show="smartPaperAddQuestionForm.name.$dirty && smartPaperAddQuestionForm.name.$error.required"
+                                        class="li-prompt"><span class="ico ico-prompt"></span>请输入试题名称</span>
+                                <span
+                                        ng-show="smartPaperAddQuestionForm.name.$dirty && smartPaperAddQuestionForm.name.$error.maxlength"
+                                        class="li-prompt"><span class="ico ico-prompt"></span>试卷最多支持30个汉字</span>
+                            </li>
+                            <li><span class="left-txt"> 大题总分：</span><input type="text"
+                                                                           class="ipt ipt-large"
+                                                                           ng-model="model.smartPaperBigQuestions.totalScore"
+                                                                           ng-pattern="/^[1-9]\d*$/"
+                                                                           name="totalScore"
+                                                                           required ng-required="true"
+                            >
+                                <span
+                                        ng-show="smartPaperAddQuestionForm.totalScore.$dirty && smartPaperAddQuestionForm.totalScore.$error.required"
+                                        class="li-prompt"><span class="ico ico-prompt"></span>请输入大题总分分数</span>
+                                <span ng-show="smartPaperAddQuestionForm.totalScore.$error.pattern"
+                                      class="li-prompt"><span
+                                        class="ico ico-prompt"></span>请输入正整数</span>
+                            </li>
+                            <li><span class="left-txt"> 试题数量：</span><input type="text"
+                                                                           class="ipt ipt-large"
+                                                                           ng-model="model.smartPaperBigQuestions.count"
+                                                                           ng-pattern="/^[1-9]\d*$/"
+                                                                           name="count"
+                                                                           required ng-required="true"
+                            >
+                                <span
+                                        ng-show="smartPaperAddQuestionForm.count.$dirty && smartPaperAddQuestionForm.count.$error.required"
+                                        class="li-prompt"><span
+                                        class="ico ico-prompt"></span>请输入试题数量</span>
+                                <span ng-show="smartPaperAddQuestionForm.count.$error.pattern"
+                                      class="li-prompt"><span
+                                        class="ico ico-prompt"></span>请输入正整数</span>
+                            </li>
+                        </ul>
+                        <div class="mt10 ml20 mr10">
+                            <span class="txt-r">注：</span>
+                            <p ng-if="model.paper.randomType ==='1'">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.当前题库对应题型的数量为<span ng-bind="model.questionNumber"
+                                                                                        class="txt-r"></span>试题数量配置建议不超过<span
+                                    ng-bind="model.questionNumber" class="txt-r"></span>题。</p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span ng-if="model.paper.randomType ==='1'">2.</span>随机出题(智能组卷)，每大题下的每题的分值为相同的。
+                            </p>
+
+                            <!--<p>2、智能组卷，若填空题为系统自动阅卷，只有一题中，每个空都答对了，才得分，否则正题不得分。(综合题里的填空题小题亦同)。</p>-->
+
+                            <!--<p>3、智能组卷，综合题里的每小题按照综合题的分值平均分摊至每小题上。</p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-center">
+                    <a href=""
+                       ng-class="{'btn-g': !smartPaperAddQuestionForm.$valid, 'btn-r': smartPaperAddQuestionForm.$valid}"
+                       class="btn"
+                       ng-click="events.saveSmartPaperQuestion()">保存</a>
+                    <a href="" class="btn btn-g ml10" ng-click="events.closeAddQuestion()">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--查看试题-->
+<div kendo-window="node.windows.questionView" k-options="ui.windowOptions">
+    <!-- 综合题-->
+    <div class="dialog udf-8">
+        <div class="dialog-body" ng-if="model.questionView.questionType==6">
+
+            <div class="dialog-tit">查看试题<a href="" class="ico ico-close"
+                                           ng-click="node.windows.questionView.close()"></a>
+            </div>
+            <div class="dialog-cont">
+
+
+                <ul class="ul-d-form udf-2 ml30">
+                    <li><span class="left-txt">试题所属题库：</span><span ng-bind="model.questionView.libraryName"></span></li>
+                    <li><span class="left-txt">试题类型：</span><span ng-bind="model.questionView.questionTypeName"></span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">试题题目：</span>
+
+                        <div class="w-textarea2 fl">
+
+
+                            <span ng-bind-html="model.questionView.topic"></span>
+                            <ul class="ul-d-form udf-7 mt20" ng-repeat="subQuestion in model.subQuestionsView">
+                                <li class="clear"><span class="left-txt fl">【题目<span ng-bind="$index+1"></span>】：</span>
+
+                                    <div class="w-textarea3 fl">
+                                        <span ng-bind-html="subQuestion.topic"></span>
+                                    </div>
+                                </li>
+                                <!--简答题-->
+                                <li class="clear" ng-if="subQuestion.questionType==5"><span
+                                        class="left-txt fl">参考答案：</span>
+
+                                    <div class="w-textarea3 fl">
+                                        <span ng-bind-html="subQuestion.answers"></span>
+                                    </div>
+                                </li>
+                                <!--单选题、多选题 -->
+                                <li class="clear"><span class="left-txt fl"
+                                                        ng-if="subQuestion.questionType==2||subQuestion.questionType==3">试题选项：</span>
+
+                                    <div class="w-textarea3 fl">
+                                        <div class="clear" ng-repeat="item in subQuestion.configurationItems"><span
+                                                class="fl mr10"
+                                                ng-bind="events.digitalToLetter($index)"></span><span>.</span>
+                                            <span ng-bind-html="item.content"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li ng-if="subQuestion.questionType==2"><span class="left-txt">试题正确答案：</span><span
+                                        ng-bind="events.getSubRadioRightAnswer(subQuestion)"></span>
+                                </li>
+                                <li ng-if="subQuestion.questionType==3">
+                                    <span class="left-txt">试题正确答案：</span>
+                                    <span ng-repeat="item in events.getSubMultiselectAnswer(subQuestion)">
+                   <span ng-bind="item"></span>&nbsp&nbsp
+                </span>
+                                </li>
+                                <!-- 填空题-->
+                                <li ng-if="subQuestion.questionType==4"><span class="left-txt">答案匹配规则：</span>
+                                    <span ng-if="subQuestion.answerType==2">每空多种答案</span>
+                                    <span ng-if="subQuestion.answerType==1">每空答案精确匹配</span>
+                                </li>
+                                <li class="clear" ng-if="subQuestion.questionType==4"><span
+                                        class="left-txt fl">试题正确答案：</span>
+
+                                    <div class="w-textarea3 b fl" ng-if="subQuestion.answerType==1">
+                                        <div class="clear" ng-repeat="item in subQuestion.answersGroup">
+                                            <span class="fl mr10">第<span ng-bind="events.toChinese($index+1)"></span>组：</span>
+
+                                            <div class="answer-box fl">
+                                                <span class="mr10"
+                                                      ng-repeat="item2 in item track by $index" ng-bind="item2"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-textarea3 b fl" ng-if="subQuestion.answerType==2">
+                                        <div class="mt10 clear" ng-repeat="item in subQuestion.answersGroup">
+                                            <span class="fl mr10">第b<span ng-bind="events.toChinese($index+1)"></span>空：</span>
+
+                                            <div class="answer-box fl">
+                                                <span class="mr10" ng-repeat="item2 in item track by $index"
+                                                      ng-bind="item2"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!--判断题-->
+                                <li ng-if="subQuestion.QuestionType==1">
+                                    <span class="left-txt">正确项：</span>
+                                    <span ng-if="subQuestion.correct==true">正确</span>
+                                    <span ng-if="subQuestion.correct==false">错误</span>
+                                </li>
+
+                                <li><span class="left-txt">试题难易度：</span>
+                                    <span ng-if="subQuestion.mode==1">简单</span>
+                                    <span ng-if="subQuestion.mode==2">中等</span>
+                                    <span ng-if="subQuestion.mode==3">难</span>
+                                </li>
+                                <li class="clear"><span class="left-txt fl">试题解析：</span>
+
+                                    <div class="w-textarea3 fl">
+                                        <span ng-bind-html="subQuestion.description"></span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li><span class="left-txt">试题是否启用：</span>
+                        <span ng-if="model.questionView.enabled==='true'">启用</span>
+                        <span ng-if="model.questionView.enabled==='false'">停用</span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">试题解析：</span>
+
+                        <div class="w-textarea2 fl">
+                            <span ng-bind-html="model.questionView.description"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--单选题,多选题,简答题,判断题,填空题-->
+        <div class="dialog-body" ng-if="model.questionView.questionType!=6">
+            <div class="dialog-tit">查看试题<a href="" class="ico ico-close"
+                                           ng-click="node.windows.questionView.close()"></a>
+            </div>
+            <div class="dialog-cont">
+                <ul class="ul-d-form udf-2 ml30">
+                    <li><span class="left-txt">试题所属题库：</span><span ng-bind="model.questionView.libraryName"></span></li>
+                    <li><span class="left-txt">试题类型：</span><span ng-bind="model.questionView.questionTypeName"></span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">试题题目：</span>
+
+                        <div class="w-textarea2 fl">
+                            <span ng-bind-html="model.questionView.topic"></span>
+                        </div>
+                    </li>
+                    <!--简答题-->
+                    <li class="clear" ng-if="model.questionView.questionType==5"><span class="left-txt fl">参考答案：</span>
+
+                        <div class="w-textarea2 fl">
+                            <span ng-bind-html="model.questionView.answers"></span>
+                        </div>
+                    </li>
+                    <!--单选题、多选题 -->
+                    <li class="clear"><span class="left-txt fl"
+                                            ng-if="model.questionView.questionType==2||model.questionView.questionType==3">试题选项：</span>
+
+                        <div class="w-textarea2 fl">
+                            <div class="clear" ng-repeat="item in model.questionView.configurationItems"><span
+                                    class="fl mr10" ng-bind="events.digitalToLetter($index)"></span><span>.</span>
+                                <span ng-bind-html="item.content"></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-if="model.questionView.questionType==2"><span class="left-txt">试题正确答案：</span><span
+                            ng-bind="events.getRadioRightAnswer()"></span>
+                    </li>
+                    <li ng-if="model.questionView.questionType==3">
+                        <span class="left-txt">试题正确答案：</span>
+                        <span ng-repeat="item in events.getMultiselectAnswer()">
+                       <span ng-bind="item"></span> &nbsp&nbsp
+                    </span>
+                    </li>
+                    <!-- 填空题-->
+                    <li ng-if="model.questionView.questionType==4"><span class="left-txt">答案匹配规则：</span>
+                        <span ng-if="model.questionView.answerType==2">每空多种答案</span>
+                        <span ng-if="model.questionView.answerType==1">每空答案精确匹配</span>
+                    </li>
+                    <li class="clear" ng-if="model.questionView.questionType==4"><span
+                            class="left-txt fl">试题正确答案：</span>
+
+                        <div class="w-textarea2 b fl" ng-if="model.questionView.answerType==1">
+                            <div class="clear" ng-repeat="item in model.questionView.answersGroup">
+                                <span class="fl mr10">第<span ng-bind="events.toChinese($index+1)"></span>组：</span>
+
+                                <div class="answer-box fl">
+                                    <span class="mr10" ng-repeat="item2 in item track by $index"><span
+                                            ng-bind="item2"></span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-textarea2 b fl" ng-if="model.questionView.answerType==2">
+                            <div class="mt10 clear" ng-repeat="item in model.questionView.answersGroup">
+                                <span class="fl mr10">第<span ng-bind="events.toChinese($index+1)"></span>空：</span>
+
+                                <div class="answer-box fl" ng-repeat="item2 in item track by $index">
+                                    <span class="mr10" ng-bind="item2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!--判断题-->
+                    <li ng-if="model.questionView.questionType==1">
+                        <span class="left-txt">正确项：</span>
+                        <span ng-if="model.questionView.correct==='true'">正确</span>
+                        <span ng-if="model.questionView.correct==='false'">错误</span>
+                    </li>
+
+                    <li><span class="left-txt">试题难易度：</span>
+                        <span ng-if="model.questionView.mode==1">简单</span>
+                        <span ng-if="model.questionView.mode==2">中等</span>
+                        <span ng-if="model.questionView.mode==3">难</span>
+                    </li>
+                    <li><span class="left-txt">试题是否启用：</span>
+                        <span ng-if="model.questionView.enabled==='true'">启用</span>
+                        <span ng-if="model.questionView.enabled==='false'">停用</span>
+                    </li>
+                    <li class="clear"><span class="left-txt fl">试题解析：</span>
+
+                        <div class="w-textarea2 fl">
+                            <span ng-bind-html="model.questionView.description"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--选择课程-->
+<div class="dialog" kendo-window="node.windows.addWindow" k-options="ui.windowOptions" style="width:900px;">
+    <div class="dialog-body mt30" style="margin-top: 0px;">
+        <div class="dialog-tit">添加课程<a href="javascript:void(0)" ng-click="events.cancelCourseList($event);"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+
+
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        <input ng-model="model.selectedCourseCateName" class="ipt ipt-medium"
+                               ng-click="events.openCourseCategoryTree($event)" name="parentId"
+                               placeholder="请选择课程所属分类">
+                        <div class="hide-block" style="left: 0px">
+                            <div kendo-tree-view="node.tree"
+                                 id="courseCategoryTree"
+                                 k-options="ui.courseCatagoryTree.options"
+                                 k-on-change="model.selectedItem = dataItem" ng-show="CourseCategoryTree">
+                                <span k-template ng-click="events.getCourseCategoryInfo(dataItem)">
+                                  <label ng-bind="dataItem.name"></label>
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><input type="text" ng-model="model.searchCourseName" class="ipt ipt-medium" placeholder="课程名称"/>
+                    </li>
+                    <li><a href="#" class="btn btn-b" has-permission="paperConfig/searchQuestionForAdd"
+                           ng-click="events.searchQuestionLibraryList($event);">查询</a></li>
+                </ul>
+            </div>
+
+            <div kendo-grid="node.courseGridInstance" k-options="ui.courseGrid.options"></div>
+
+            <!--<div class="btn-center">-->
+            <!--<a href="javascript:void(0)" class="btn btn-r" ng-show="!noData" ng-click="events.selectCourseList($event);">确定</a>-->
+            <!--<a href="#" href="javascript:void(0)" ng-show="!noData"  class="btn btn-g ml10" ng-click="events.cancel($event);">取消</a>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>

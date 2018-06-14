@@ -1,0 +1,46 @@
+<div class="main-wrap-cont">
+    <div class="m-box-1">
+        <div class="m-box-2">
+            <div class="m-box-3">
+                <div class="main-wrap-body">
+                    <div class="tips-box">
+                        温馨提示:<br>
+                        1. 导入学员将由系统为学员自动生成登录帐号。在导入报名表前请下载 <span class="b t-r"><a ng-click="events.toDownQuestionMode()"
+                                                                                 href="b{{model.downloadModelUrl}}/mfs/resource/file/SMV2UserImport.xlsx"
+                    >[导入学员模板]</a></span>，并严格根据表格内容填写保存后再导入系统；<br>
+                        2. 导入表格一次最多支持1000条记录，若超过1000条则不能正常导入；<br>
+                        3. 导入后可以通过“导入任务查看” 查看并确认导入结果。<br>
+                        4. 默认密码为身份证后六位<br>
+                    </div>
+                    <div class="clear" style="margin-bottom: 15px">
+                        <input type="text" ng-model="model.upload.result.fileName" readonly class="ipt ipt-large ml20"
+                               placeholder="请选择要导入的表格" style="float:left;margin-top:10px;"/>
+
+                        <!--   <div hb-file-uploader="test" auto="true" ng-model="model.upload.result"
+                                class="upload" style="float:left;margin-left:10px">选择文件</div>-->
+                        <a class="upload" hb-file-uploader="test"
+                           style="float:left;margin-left:10px"
+                           auto="true"
+                           accepts="xlsx"
+                           href="javascript:void(0)"
+                           ng-model="model.upload.result">
+                        </a>
+                        <!--     <div><a href="javascript: void(0);" ng-click="events.showRegion()" class="ml20" style="margin-top: 16px; color: #3399FF;">查看地区数据</a></div>-->
+                    </div>
+                    <!--     <div class="clear">
+                     <span class="b">默认密码：</span>         <label><input type="radio" value="1" ng-model="model.importUser.passWordType">000000</label>
+                             <label class="ml20"><input type="radio" value="2" ng-model="model.importUser.passWordType">身份证后六位</label>&lt;!&ndash;placeholder="6-12位数字或字母组成"&ndash;&gt;
+                            <label class="ml20"><input type="radio" value="3" ng-model="model.importUser.passWordType">自定义密码 <input    ng-show="model.importUser.passWordType==3" ng-model="model.importUser.password" type="text" class="ipt ipt-m"></label>
+                         </div>-->
+                    <div>
+                        <br>
+                        <span><input type="checkbox" ng-model="model.importUser.test">导入数据仅作为测试账号</span>
+                        <br>
+                        <a href="javascript: void(0);" class="btn btn-r mt20"
+                           ng-click="events.importUser($event)">导入</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

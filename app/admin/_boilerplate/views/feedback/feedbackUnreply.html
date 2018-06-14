@@ -1,0 +1,55 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ui-sref="states.feedback" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ui-sref="states.feedback">意见反馈</a> &gt;
+        未处理的反馈
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mb20">
+        <div class="col-tit">意见反馈内容b{{name}}</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <ul class="ul-d-form udf-2">
+        <li><span class="left-txt">问题类型：</span>b{{model.feedback.type}}</li>
+        <li class="clear"><span class="left-txt fl">反馈内容：</span>
+            <span class="w-textarea fl" ng-bind-html="model.feedback.desc"></span></li>
+        <!--<li class="clear">
+            <span class="left-txt fl">附件图片：</span>
+
+            <div class="attachment-img w-textarea fl">
+                <span ng-repeat="pic in pictures track by $index"><img src="b{{pic.picturePath}}"></span>
+            </div>
+        </li>-->
+        <li><span class="left-txt">反馈人：</span>b{{model.feedback.userName}}</li>
+        <li><span class="left-txt">邮箱号：</span>b{{model.feedback.email}}</li>
+        <li><span class="left-txt" ng-if="model.feedback.mobile!=null">手机号：</span>b{{model.feedback.mobile}}</li>
+        <li><span class="left-txt" ng-if="model.feedback.mobile==null">手机号：</span>暂无手机号</li>
+    </ul>
+    <div class="column mb20">
+        <div class="col-tit">回复意见反馈</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <form name="feedbackForm" novalidate="novalidate">
+        <ul class="ul-d-form udf-2 lh-1">
+            <li class="clear"><span class="left-txt fl">回复内容：</span><textarea name="reply" style="width: 80%;" required
+                                                                              kendo-editor
+                                                                              ng-model="model.feedback.answerReply"
+                                                                              k-options="ui.editor"></textarea></li>
+
+            <li ng-show="feedbackForm.reply.$dirty && feedbackForm.reply.$error.required"><span
+                    class="left-txt"></span><span style="color:#ff0000;">请输入内容</span></li>
+            <li><span class="left-txt"></span><label><input type="checkbox" ng-model="isSendEmail"/>同时通过邮件回复</label>
+            </li>
+        </ul>
+        <div class="btn-center">
+            <div class="btn-center">
+                <input type="button" ng-click="events.update($event);" class="btn" ng-disabled=""
+                       ng-class="{'btn-g': !feedbackForm.$valid, 'btn-r': feedbackForm.$valid}" value="回复"/>
+                <!--<a ui-sref="states.feedback" class="btn btn-g ml10">取消</a>-->
+                <a href="javascript:void(0);" ng-click="$state.go('states.feedback');" class="btn btn-g ml10">取消</a>
+
+            </div>
+        </div>
+    </form>
+</div>

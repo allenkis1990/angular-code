@@ -1,0 +1,72 @@
+<div class="dialog-body">
+    <div class="dialog-tit">操作日志<a href="" ng-click="events.closeKendoWindow('authorizedOpDialog')" class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+        <div class="op-list">
+            <div ng-show="model.logList.length==0" class="no-data clear">
+                <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                <div class="p-txt">暂时没有数据!</div>
+            </div>
+            <div class="list-items" ng-repeat="item in model.logList">
+                <p>【<span ng-bind="item.creatorName"></span>】在【<span ng-bind="item.createTime"></span>】
+                    <span ng-show="item.createType===1"
+                    >配置</span><span ng-show="item.createType===2"
+                    >调整</span>了授权规则。
+                </p>
+                <p ng-if="item.createType===1">
+                    商户收款帐号为【
+                    <span ng-if="item.newData.type==='1'">本单位自主收款</span>
+                    <span ng-if="item.newData.type==='2'">被授权单位自主收款</span>
+                    】；
+                </p>
+                <p ng-if="item.createType===1">
+                    商品定价规则为【
+                    <span ng-if="item.newData.priceType==='1'">被授权销售单位不可定价，只可按本单位设定的价格销售。</span>
+                    <span ng-if="item.newData.priceType==='2'">支持被授权销售单位自主灵活定价，不受本单位限制。</span>
+                    <span ng-if="item.newData.priceType==='3'">被授权销售单位只可在本单位设定的销售价区间内，设定销售价销售。</span>】；
+                </p>
+                <p ng-if="item.createType===1&&item.newData.priceType==='3'">
+                    销售价区间为【<span ng-bind="item.newData.priceStart"></span>≤销售价≤<span ng-bind="item.newData.priceEnd"></span>】
+                </p>
+                <p ng-if="item.createType===2&&item.newData.type!==item.oldData.type">
+                    商户收款帐号从【
+                    <span ng-if="item.oldData.type==='1'">本单位自主收款</span>
+                    <span ng-if="item.oldData.type==='2'">被授权单位自主收款</span>
+                    】修改为【
+                    <span ng-if="item.newData.type==='1'">本单位自主收款</span>
+                    <span ng-if="item.newData.type==='2'">被授权单位自主收款</span>
+                    】
+                </p>
+                <p ng-if="item.createType===2&&item.newData.priceType!==item.oldData.priceType">
+                    商品定价规则从【
+                    <span ng-if="item.oldData.priceType==='1'">被授权销售单位不可定价，只可按本单位设定的价格销售。</span>
+                    <span ng-if="item.oldData.priceType==='2'">支持被授权销售单位自主灵活定价，不受本单位限制。</span>
+                    <span ng-if="item.oldData.priceType==='3'">被授权销售单位只可在本单位设定的销售价区间内，设定销售价销售。</span>】
+                    修改为【
+                    <span ng-if="item.newData.priceType==='1'">被授权销售单位不可定价，只可按本单位设定的价格销售。</span>
+                    <span ng-if="item.newData.priceType==='2'">支持被授权销售单位自主灵活定价，不受本单位限制。</span>
+                    <span ng-if="item.newData.priceType==='3'">被授权销售单位只可在本单位设定的销售价区间内，设定销售价销售。</span>
+                    】
+                </p>
+                <p ng-if="item.createType===2&&item.newData.priceType==='3'&&item.newData.priceType!==item.oldData.priceType">
+                    销售价区间为【<span ng-bind="item.newData.priceStart"></span>≤销售价≤<span ng-bind="item.newData.priceEnd"></span>】
+                </p>
+                <p
+                        ng-if="item.createType===2&&item.newData.priceType==='3'&&item.newData.priceType===item.oldData.priceType&&(item.oldData.priceStart!==item.newData.priceStart||item.oldData.priceEnd!==item.newData.priceEnd)">
+                    销售价区间从【<span ng-bind="item.oldData.priceStart"></span>≤销售价≤<span ng-bind="item.oldData.priceEnd"></span>】
+                    调整为【<span ng-bind="item.newData.priceStart"></span>≤销售价≤<span ng-bind="item.newData.priceEnd"></span>】
+                </p>
+            </div>
+
+        </div>
+        <div class="pages mt20 fr">
+                    <span class="page-info">第<span ng-bind="model.pageNo"></span>/<span
+                            ng-bind="model.pageCount"></span>页 总共<span ng-bind="model.totalSize"></span>条</span>
+            <a href="javascript:void(0);" class="a-1" ng-click="events.page(1)">首页</a>
+            <a href="javascript:void(0);" class="a-1" ng-click="events.page(model.pageNo-1)">上一页</a>
+            <a ng-repeat="a in model.pageList" ng-class="{'current':a==model.pageNo}" href="javascript:void(0);"
+               ng-click="events.page(a)"><span ng-bind="a"></span></a>
+            <a href="javascript:void(0);" class="a-1" ng-click="events.page(model.pageNo+1)">下一页</a>
+            <a href="javascript:void(0);" class="a-1" ng-click="events.page(model.pageCount)">尾页</a>
+        </div>
+    </div>
+</div>

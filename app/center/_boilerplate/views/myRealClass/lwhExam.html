@@ -1,0 +1,96 @@
+<div>
+    <div class="lwh-modal"></div>
+    <div class="dialog-box w6" style="z-index:1000;position:fixed;left:35%;top:25%">
+        <div class="dialog-body pl-0" style="position:relative">
+
+            <div class="lwh-cacel" ng-click="cacel()"></div>
+
+            <div class="m-exam-dialog ">
+                <div class="d-qus-tit">
+                    <span class="d-qus-label">题目</span>
+                    <div class="d-qus-body">b{{examInfo.topic}}( )</div>
+                </div>
+                <div class="d-qus-slt">
+                    <span class="d-qus-label">选项</span>
+                    <div class="d-qus-body">
+                        <!--单选slt-ed-->
+                        <div ng-repeat="item in examInfo.configurationItems"
+                             ng-class="{'slt-ed':examInfo.radioModel===item.id}" class="d-slt"
+                             ng-if="examInfo.questionType===2">
+                            <label class="ui-label ui-label-1"
+                                   style="display:block;"
+                                   ng-click="changeRadio(item.id)">
+                                <input type="radio"
+                                       class="radio"
+                                       value="b{{item.id}}"
+                                       name="danxuan"
+                                       ng-model="examInfo.radioModel">
+                                <a class="lwh-exam-link" href="javascript:void(0)"></a>
+                                <span class="ipt-txt">b{{digitalToLetter($index+1)}}.b{{item.content}}</span>
+                            </label>
+                        </div>
+
+                        <!--多选-->
+                        <div class="d-slt" ng-class="{'slt-ed':item.ischecked===true}"
+                             ng-repeat="item in examInfo.configurationItems" ng-if="examInfo.questionType===3">
+                            <span class="ui-label ui-label-1"
+                                  ng-click="changeChk(item,$event)"
+                                  style="display:block;">
+                                <input type="checkbox" class="checkbox">
+                                <a class="lwh-examchx-link" href="javascript:void(0)"></a>
+                                <span class="ipt-txt">b{{digitalToLetter($index+1)}}.b{{item.content}}</span>
+                            </span>
+                        </div>
+
+                        <!--判断-->
+                        <div class="d-slt"
+                             ng-class="{'slt-ed':examInfo.radioModel===item.id}"
+                             ng-repeat="item in examInfo.configurationItems"
+                             ng-if="examInfo.questionType===1">
+                            <label class="ui-label ui-label-1"
+                                   ng-click="changeRadio(item.id)"
+                                   style="display:block">
+                                <input type="radio"
+                                       class="radio"
+                                       value="b{{item.id}}"
+                                       ng-model="examInfo.radioModel"
+                                       name="panduan">
+                                <a class="lwh-exam-link" href="javascript:void(0)"></a>
+                                <span class="ipt-txt">b{{digitalToLetter($index+1)}}.b{{item.content}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-center bor-t">
+                    <div class="lwh-mb-10" ng-if="examInfo.isRight===false">回答错误，请重新作答！您还可以作答b{{examInfo.resTime}}次
+                    </div>
+                    <div class="lwh-mb-10" style="color:green;" ng-if="examInfo.isRight===true">回答正确！</div>
+                    <!--单选按钮-->
+                    <button ng-disabled="examInfo.radioModel===null || examInfo.confirmBtnDis===true"
+                            ng-if="examInfo.showNext!==true&&examInfo.questionType===2"
+                            ng-click="confirm()"
+                            class="btn btnblue btn-m lwhDisBtn">确定提交
+                    </button>
+                    <!--多选按钮-->
+                    <button ng-disabled="examInfo.checkBoxModel.length<=0 || examInfo.confirmBtnDis===true"
+                            ng-if="examInfo.showNext!==true&&examInfo.questionType===3"
+                            ng-click="confirm()"
+                            class="btn btnblue btn-m lwhDisBtn">确定提交
+                    </button>
+
+                    <!--判断按钮-->
+                    <button ng-disabled="examInfo.radioModel===null || examInfo.confirmBtnDis===true"
+                            ng-if="examInfo.showNext!==true&&examInfo.questionType===1"
+                            ng-click="confirm()"
+                            class="btn btnblue btn-m lwhDisBtn">确定提交
+                    </button>
+                    <!--ng-if="examInfo.showNext===true"-->
+                    <a href="javascript:void(0)"
+                       ng-if="examInfo.showNext===true"
+                       ng-click="next()"
+                       class="btn btnblue btn-m">下一题</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

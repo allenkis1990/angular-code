@@ -1,0 +1,124 @@
+[
+  {
+    "name": "首页",
+    "state": "states.home",
+    "menuIcon": "ico-1"
+  },
+  {
+    "name": "岗位管理",
+    "state": "states.job",
+    "menuIcon": "ico-2"
+  },
+  {
+    "name": "课程资源管理",
+    "menuIcon": "ico-3",
+    "subs": [
+      {
+        "name": "课程资源管理",
+        "state": "states.lessonResourceManage",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "课程分类管理",
+        "state": "states.courseResourcesManager",
+        "menuIcon": "ico-1"
+      }
+    ]
+  },
+  {
+    "name": "学习安排",
+    "menuIcon": "ico-4",
+    "subs": [
+      {
+        "name": "必修课安排",
+        "state": "states.requiredPackage",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "选课中心",
+        "state": "states.selectCourseCenter",
+        "menuIcon": "ico-1"
+      }
+    ]
+  },
+  {
+    "name": "考评管理",
+    "menuIcon": "ico-5",
+    "subs": [
+      {
+        "name": "题库管理",
+        "state": "states.library",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "试题管理",
+        "state": "states.question",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "试卷分类管理",
+        "state": "states.paperType",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "试卷管理",
+        "state": "states.paper",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "考试管理",
+        "state": "states.exam",
+        "menuIcon": "ico-1"
+      }
+    ]
+  },
+  {
+    "name": "平台基础信息",
+    "state": "states.platformBasicInfo",
+    "menuIcon": "ico-6",
+    "subs": [
+      {
+        "name": "组织机构管理",
+        "state": "states.orgManage",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "学员账号管理",
+        "state": "states.employee",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "管理员账号管理",
+        "state": "states.adminAccountManager",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "教师账号管理",
+        "state": "states.teacherAccountManage",
+        "menuIcon": "ico-1"
+      }
+    ]
+  },
+  {
+    "name": "运营管理",
+    "state": "states.operationManage",
+    "menuIcon": "ico-8",
+    "subs": [
+      {
+        "name": "公告管理",
+        "state": "states.noticeManage",
+        "menuIcon": "ico-1"
+      },
+      {
+        "name": "意见反馈",
+        "state": "states.feedback",
+        "menuIcon": "ico-1"
+      }
+    ]
+  },
+  {
+    "name": "个人中心",
+    "state": "states.personCenter",
+    "menuIcon": "ico-7"
+  }
+]

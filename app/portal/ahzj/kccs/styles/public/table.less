@@ -1,0 +1,210 @@
+@import "variables";
+
+/**********  table  ***************/
+table {
+  border: none;
+  border-spacing: 0;
+  border-collapse: collapse;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.ui-table {
+  width: 100%;
+  background-color: #fff;
+  font-size: 14px;
+
+  th {
+    height: 40px;
+    border: 1px solid #ddd;
+    border-bottom-width: 2px;
+    background-color: #eee;
+    padding: 0 10px;
+    text-align: center;
+  }
+  td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  .tl {
+    text-align: left;
+  }
+
+  .op {
+    a {
+      color: @base;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.table-class {
+  font-size: 15px;
+  table-layout: fixed;
+  th, td {
+    border: 0;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  td {
+    border-bottom: 1px dashed #ddd;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  .tit {
+    color: #333;
+    padding-left: 8px;
+    position: relative;
+
+    &:hover {
+      color: @important;
+    }
+
+    &:before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      background-color: #015293;
+      position: absolute;
+      top: 8px;
+      left: -3px;
+    }
+  }
+}
+
+.table-line {
+  tr {
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+  }
+
+  td, th {
+    border: 0;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  th {
+    border-top: 1px solid #e8e8e8;
+  }
+
+  .full-row, .full-row-1 {
+    border: 0;
+  }
+  .full-row-1 {
+    td {
+      padding: 5px;
+    }
+  }
+  .order-row {
+    td {
+      background-color: #f2f2f2;
+      position: relative;
+    }
+  }
+  .course-cont {
+    position: relative;
+    height: 56px;
+
+    img {
+      width: 100px;
+      height: 56px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    a {
+      display: block;
+    }
+
+    .course-cont-bd {
+      padding-left: 110px;
+    }
+
+    .course-name, .book-name {
+      width: 365px;
+    }
+    .book-name {
+      padding-top: 20px;
+    }
+    .course-info {
+      color: #999;
+      font-size: 14px;
+    }
+
+    .img {
+      position: absolute;
+      width: 100px;
+      height: 56px;
+
+      .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+        line-height: 56px;
+        color: #fff;
+        display: block;
+
+        .bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #000;
+          opacity: .3;
+          filter: alpha(opacity=30);
+          display: block;
+        }
+        .txt {
+          position: relative;
+          z-index: 9;
+        }
+      }
+    }
+  }
+  .txt-ml {
+    margin-left: -6px;
+  }
+  .op-1 {
+    a {
+      display: block;
+      color: #08af9c;
+      margin: 0 5px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .ui-btn {
+      padding: 3px 0;
+      color: #fff;
+      background-color: #fcb032;
+      border-radius: 5px;
+      width: 50px;
+      display: inline-block;
+
+      &:hover {
+        text-decoration: none;
+        background-color: lighten(#fcb032, 3%);
+      }
+    }
+    .ui-btn-s {
+      padding: 0;
+      margin-top: 2px;
+    }
+  }
+}

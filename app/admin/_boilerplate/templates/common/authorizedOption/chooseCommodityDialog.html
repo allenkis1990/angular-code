@@ -1,0 +1,38 @@
+<div class="dialog-body">
+    <div class="dialog-tit">选择商品<a href="javascript:void(0)"
+                                   ng-click="events.closeKendoWindow('selectCommodityWindow')"
+                                   class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+
+
+        <!--<div class="search-bar mt10">-->
+            <!--<ul class="ul-form li-fl clear">-->
+
+                <!--<li>-->
+                    <!--<input type="text"-->
+                           <!--class="ipt ipt-medium"-->
+                           <!--ng-keyup="events.pressEnterKey($event)"-->
+                           <!--ng-model="model.queryParam.unitName"-->
+                           <!--placeholder="请输入培训方案名称"/>-->
+                <!--</li>-->
+
+
+                <!--<li><a href="javascript:void(0)"-->
+                       <!--ng-click="events.MainPageQueryList($event,'accountGridInstance')"-->
+                       <!--class="btn btn-b">查询</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+
+        <div
+                style="min-height:200px;"
+                kendo-grid="kendoPlus.commodityGridInstance"
+             k-options="commodityGird.options">
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('selectCommodityWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

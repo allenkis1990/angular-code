@@ -1,0 +1,102 @@
+<div class="dialog wp-m-full">
+    <div class="dialog-body">
+        <div class="dialog-tit">添加考试<a href="javascript:void(0)" ng-click="node.windows.addExam2.close()"
+                                       class="ico ico-close"></a></div>
+        <div class="dialog-cont">
+            <form name="examValidate" novalidate>
+                <div class="rel udf-6">
+                    <ul class="ul-d-form udf-2 lh-1">
+                        <li>
+                            <span class="left-txt"><i>*</i>考试名称：</span>
+                            <input type="text" class="ipt ipt-large"
+                                   name="name"
+                                   ng-model="model.releaseExam.name"
+                                   ng-maxlength="50"
+                                   required
+                                   ng-required="true">
+                            <span class="li-prompt"
+                                  ng-show="examValidate.name.$dirty&&examValidate.name.$error.required"><span
+                                    class="ico ico-prompt"></span>考试名称不能为空。</span>
+                            <span ng-show="examValidate.name.$dirty && examValidate.name.$error.maxlength"
+                                  class="li-prompt">
+                                        <span class="ico ico-prompt"></span>考试名称长度不能超过50</span>
+                        </li>
+                        <li class="clear">
+                            <span class="left-txt fl"><i>*</i>所用试卷：</span><span
+                                ng-bind="model.releaseExam.paperName"></span>
+                        </li>
+                        <li>
+                            <span class="left-txt">考试总分：</span>
+                            <span ng-bind="model.releaseExam.totalScore"></span>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i>*</i>考试及格分数：</span>
+                            <input type="text" class="ipt ipt-large" ng-model="model.releaseExam.passScore"
+                                   name="passScore"
+                                   ng-pattern="/^[1-9]\d*$/"
+                                   required
+                                   ng-required="true"/><span class="ml5">分</span>
+                            <span class="li-prompt"
+                                  ng-show="examValidate.passScore.$dirty&&examValidate.passScore.$error.required">
+                          <span class="ico ico-prompt"></span>考试及格分数不能为空。
+                            </span>
+                            <span class="li-prompt"
+                                  ng-show="examValidate.passScore.$dirty&&examValidate.passScore.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i>*</i>考试时长：</span>
+                            <input type="text" class="ipt ipt-large" ng-model="model.releaseExam.examTimeLength"
+                                   name="examTimeLength"
+                                   ng-pattern="/^[1-9]\d*$/"
+                                   required
+                                   ng-required="true"/>
+                            <span class="ml5">分钟</span>
+                            <span class="li-prompt"
+                                  ng-show="examValidate.examTimeLength.$dirty&&examValidate.examTimeLength.$error.required">
+                    <span class="ico ico-prompt"></span>考试时长不能为空。</span>
+                            <span class="li-prompt"
+                                  ng-show="examValidate.examTimeLength.$dirty&&examValidate.examTimeLength.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                        </li>
+                        <li>
+                            <span class="left-txt">考试前置条件：</span>
+                            学员需学完 <input type="text" class="ipt ipt-mini" ng-model="model.releaseExam.completeQuantity"
+                                         name="completeQuantity" ng-pattern="/^[1-9]\d*$/"/> 门课程，方可开放考试。
+                            <span class="li-prompt"
+                                  ng-show="examValidate.completeQuantity.$dirty&&examValidate.completeQuantity.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                        </li>
+                        <li>
+                            <span class="left-txt"><i>*</i>考试次数：</span>
+                            该场考试允许学员考 <input type="text" class="ipt ipt-mini"
+                                             name="examCount"
+                                             ng-pattern="/^[1-9]\d*$/"
+                                             ng-model="model.course.examCount"
+                                             required
+                                             ng-required="true"/> 次
+                            <span class="li-prompt"
+                                  ng-show="examValidate.examCount.$dirty&&examValidate.examCount.$error.required"
+                            >
+                    <span class="ico ico-prompt"></span>考试次数不能为空。</span>
+                            <span class="li-prompt"
+                                  ng-show="examValidate.examCount.$dirty&&examValidate.examCount.$error.pattern">
+                               <span class="ico ico-prompt"></span>请输入正整数。</span>
+                        </li>
+                        <li><span class="left-txt">考试通过后是否可以继续考试：</span><select class="slt slt-small"
+                                                                                ng-model="model.releaseExam.continueExam">
+                            <option value="1" selected>是</option>
+                            <option value="0">否</option>
+                        </select>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div class="btn-center">
+            <a href="javascript:void(0);" class="btn btn-r" ng-click="events.releaseExam($event)">发布考试</a>
+            <a href="javascript:void(0);" class="btn btn-r" ng-click="events.returnExamList($event)">返回上一步</a>
+            <a href="javascript:void(0);" class="btn btn-g ml10" ng-click="events.cancelReleaseExam($event)">取消</a>
+        </div>
+    </div>
+</div>

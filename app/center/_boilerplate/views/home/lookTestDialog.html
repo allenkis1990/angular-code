@@ -1,0 +1,47 @@
+<!--
+<div class="dialog-box">
+    <div class="dialog-bd">确认删除该培训商品？</div>
+    <div class="dialog-ft" style="margin-top:20px;"><button
+                              ng-click="events.confirmDeleteGoods()"
+                              style="padding:8px 25px;"
+                              ng-disabled="deleteSubmitAble"
+                              class="ui-btn btn-o">确定</button><button style="padding:8px 25px;"
+                                                                       i="close"
+                                                                       class="ui-btn btn-g ml10">关闭</button></div>
+</div>-->
+
+<div class="dialog-box w6">
+    <div class="dialog-bd">
+        <p>测验最高分<span class="fs24 txt-o"
+                      ng-bind="detail.coursePracticeResult.historyBestScore"></span>分
+        </p>
+        <p>剩余测验次数：<span ng-bind="model.remainTimes"></span></p>
+        <p class="mt10 t-b b fs16">测验记录</p>
+        <table class="ui-table table-s table-line mt5">
+            <thead>
+            <tr>
+                <th width="60">NO.</th>
+                <th width="140">交卷时间</th>
+                <th width="100">得分(分)</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+        </table>
+        <div class="table-h">
+            <table class="ui-table table-s table-line">
+                <tbody>
+                <tr ng-repeat="item in model.testPaperList">
+                    <td width="60" ng-bind="$index+1"></td>
+                    <td width="140" ng-bind="item.completeTime"></td>
+                    <td width="100" ng-bind="item.score"></td>
+                    <td class="op"><a href="javascript:void(0)"
+                                      ng-if="model.canEnterTestPaperView"
+                                      ng-click="events.goTestHistoryDetail(item)">查看</a><span
+                            ng-if="!model.canEnterTestPaperView">-</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<p class="tc mt10"><a href="#" class="a-more">查看更多+</a></p>-->
+    </div>
+</div>

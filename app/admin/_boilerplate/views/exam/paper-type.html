@@ -1,0 +1,146 @@
+<div class="main-wrap-body">
+    <div class="tab-tit mt10" ng-if="events.isSubProjectManager()">
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.myself.code}"
+           ng-click="events.chooseTab($event,tabMap.myself.code)"
+           ng-bind="tabMap.myself.name"
+        ></a>
+        <a href=""
+           ng-class="{ current: currentTab===tabMap.all.code}"
+           ng-click="events.chooseTab($event,tabMap.all.code)"
+           ng-bind="tabMap.all.name"
+        ></a>
+    </div>
+    <!-- 本单位 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.myself.code">
+        <br/>
+        <div class="column"><a href="" has-permission="paperClassification/toAddPaperType" class="btn-r btn"
+                               ng-click="events.toAdd()">新建类别</a></div>
+
+        <div class="dash-line-2"></div>
+
+        <div ng-show="!myselfNoData" kendo-treelist="node.myselfPaperTypeTree" k-options="myselfTreelistOptions"></div>
+
+        <div ng-show="myselfNoData" class="no-data clear">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">Sorry~未搜索到试卷分类！</div>
+        </div>
+    </div>
+    <!-- /本单位 -->
+    <!-- 全部 -->
+    <div class="tab-bd" ng-show="currentTab===tabMap.all.code">
+        <br/>
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <div unit-id="model.unitId" hb-unit-select default-choose="true"
+                     unit-set-callback="events.unitSetCallback(unitId)"
+                     default-txt="请选择查看单位"   ></div>
+            </ul>
+        </div>
+        <div class="dash-line-2"></div>
+
+        <div ng-show="!allNoData" kendo-treelist="node.allPaperTypeTree" k-options="allTreelistOptions"></div>
+
+        <div ng-show="allNoData" class="no-data clear">
+            <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+            <div class="p-txt">Sorry~未搜索到试卷分类！</div>
+        </div>
+    </div>
+    <!-- /全部 -->
+
+
+    <!--新建类别-->
+    <div class="dialog" kendo-window="node.windows.addPaperWindow" k-options="windowOptions" style="width: 579px;">
+        <form name="addPaperTypeForm" novalidate>
+
+            <div class="dialog-body" ng-click="events.treeHide($event)">
+                <div class="dialog-tit">
+                    <span ng-if="addOrUpdate=='add'">新建类别</span>
+                    <span ng-if="addOrUpdate=='update'">修改类别</span>
+                    <a href="" class="ico ico-close" ng-click="events.cancel()"></a></div>
+                <div class="dialog-cont">
+                    <ul class="ul-d-form ml30">
+                        <li><span class="left-txt"><i>*</i>类别所属节点：</span><input type="text" class="ipt ipt-medium"
+                                                                                placeholder="请选择所属节点"
+                                                                                ng-model="model.parentName"
+                                                                                ng-click="events.openTree($event)"
+                                                                                name="parentId" readonly
+                                                                                required ng-required="true">
+
+                            <div class="hide-block" ng-show="libraryTreeShow" ng-click="$event.stopPropagation()">
+                                <div class="col-body">
+                                    <div kendo-tree-view="node.tree"
+                                         k-options="ui.tree.options"
+                                         k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getOrgInfo(dataItem)">
+                      <label style="width: 100px;" ng-bind="dataItem.name"></label>
+                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span
+                                    ng-show="addPaperTypeForm.parentId.$dirty && (addPaperTypeForm.parentId.$error.required || !model.paperType.parentId)"
+                                    class="li-prompt"><span class="ico ico-prompt"></span>请选择所属节点</span>
+
+                        </li>
+                        <li>
+                            <span ng-show="addPaperTypeForm.name.$dirty && addPaperTypeForm.name.$error.required"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>请输入分类的名称</span>
+                            <span ng-show="addPaperTypeForm.name.$dirty && addPaperTypeForm.name.$error.maxlength"
+                                  class="li-prompt"><span class="ico ico-prompt"></span>最多支持10个汉字</span>
+
+                        </li>
+
+                        <li><span class="left-txt"><i>*</i>类别名称：</span><input type="text"
+                                                                              name="name"
+                                                                              class="ipt ipt-medium"
+                                                                              placeholder="请输入类别名称"
+                                                                              ng-model="model.paperType.name"
+                                                                              required ng-required="true"
+                                                                              ng-maxlength="10"
+                        />
+
+                        </li>
+                    </ul>
+                </div>
+                <div ng-if="addOrUpdate=='add'" class="btn-center">
+                    <input type="button" class="btn " value="保存"
+                           has-permission="paperClassification/savePaperType"
+                           ng-class="{'btn-g': !addPaperTypeForm.$valid, 'btn-r': addPaperTypeForm.$valid}"
+                           ng-click="events.save()"/>
+                    <input type="button" has-permission="paperClassification/cancelPaperType" class="btn btn-g ml10"
+                           value="取消" ng-click="events.cancel()"/>
+                </div>
+                <div ng-if="addOrUpdate=='update'" class="btn-center">
+                    <input type="button" class="btn " value="保存"
+                           has-permission="paperClassification/saveUpdatePaperType"
+                           ng-class="{'btn-g': !addPaperTypeForm.$valid, 'btn-r': addPaperTypeForm.$valid}"
+                           ng-click="events.save()"/>
+                    <input type="button" has-permission="paperClassification/cancelUpdatePaperType"
+                           class="btn btn-g ml10" value="取消" ng-click="events.cancel()"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="dialog" kendo-window="node.windows.detailsPaperWindow" k-options="windowOptions">
+        <div class="dialog-body">
+            <div class="dialog-tit">查看试卷类别信息
+                <a href="" class="ico ico-close" ng-click="node.windows.detailsPaperWindow.close()"></a>
+            </div>
+            <div class="dialog-cont">
+                <ul class="ul-d-form ml30">
+                    <li><span class="left-txt">类别名称：</span><span ng-bind="model.detailsPaperType.name"></span></li>
+                    <li><span class="left-txt">类别所属节点：</span><span ng-bind="model.detailsPaperType.parentName"></span>
+                    </li>
+                    <li><span class="left-txt">试卷数量：</span><span ng-bind="model.detailsPaperType.count"></span></li>
+                    <li><span class="left-txt">创建者：</span><span ng-bind="model.detailsPaperType.userName"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+

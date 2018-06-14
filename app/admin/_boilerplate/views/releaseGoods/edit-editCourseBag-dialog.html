@@ -1,0 +1,58 @@
+<div class="dialog-body">
+    <div class="dialog-tit">编辑课程学习<a href="javascript:void(0)"
+                                     class="ico ico-close"
+                                     ng-click="events.cacelCourseBag()"></a></div>
+    <div class="dialog-cont">
+
+
+        <div class="cb-right" style="margin:inherit">
+            <div class="cb-tit clear">课程包内容</div>
+            <a href="javascript:void(0)"
+               ng-click="events.opencourseBagKendoDialog()"
+               class="add-box mt10">+ 请添加课程包</a>
+
+
+            <div class="lwh-interCourse clear">
+                <div ng-repeat="item in submitData.courseLearning.poolList"
+                     ng-class="{'item-nobor':$last}"
+                     class="bg-b item">b{{item.coursePackageName}}<a href="javascript:void(0)"
+                                                                ng-click="events.spliceCourseBag($index,item)"
+                                                                class="txt-b fr">【删除】</a></div>
+            </div>
+
+
+        </div>
+
+
+        <div class="cb-tit mt20 clear">课程学习要求</div>
+        <div class="mt10 pl10">
+            <div class="mtb10">
+                <p>前置条件-配置开始培训内容的前提条件</p>
+                <p class="txt-g pt5">无</p>
+            </div>
+            <div class="mtb10">
+                <p class="dash-line-6">考核判断-配置培训内容通过条件</p>
+
+                <p class="pt5">课程学习进度&gt;=<input type="text"
+                                                 ng-model="submitData.courseLearning.rateOfProgress"
+                                                 class="ipt ipt-c-xm">%</p>
+
+
+            </div>
+            <div class="mtb10">
+                <p class="dash-line-6">通过成果-配置培训内容通过后所得成果</p>
+                <p class="txt-g pt5">无</p>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.saveEditCourseBag()"
+           class="btn btn-r">保存</a>
+        <a href="javascript:void(0)"
+           class="btn btn-g ml10"
+           ng-click="events.cacelCourseBag()">取消</a>
+    </div>
+</div>

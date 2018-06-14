@@ -1,0 +1,95 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goAdministratorManage($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goAdministratorManage($event)">管理员管理</a>
+        &gt;查看详情
+    </div>
+</div>
+
+<div style="margin-top:13px;position: absolute;margin-left: 20px">
+    <a href="javascript:void(0)" ng-click="events.viewAdministrator($event)"
+       has-permission="administratorManage/administratorAccountInfo"
+       ng-class="{false :'btn-g btn',true:'btn-b btn'}[model.showAdministrator]">
+        账号基础信息
+    </a>
+    <a href="javascript:void(0)" ng-click="events.viewshowRole($event)"
+       has-permission="administratorManage/administratorAccountRoleInfo"
+       ng-class="{false :'btn-g btn',true:'btn-b btn'}[model.roleSelected]">
+        所属角色权限
+    </a>
+</div>
+
+
+<div class="main-wrap-body" style="margin-top: 45px;" ng-show="model.showAdministrator">
+    <div class="column mb20">
+        <div class="col-tit clear">账号基础信息</div>
+        <div class="dash-line-1"></div>
+    </div>
+    <div class="rel udf-2">
+        <ul class="ul-d-form udf-2 lh-1" style="margin-left: -300px;">
+            <li><span class="left-txt">用户名：</span><span ng-bind="model.userMessage.loginInput"></span></li>
+            <li><span class="left-txt">姓名：</span><span ng-bind="model.userMessage.name"></span></li>
+            <li><span class="left-txt">性别：</span><span ng-bind="model.userMessage.sex"></span></li>
+            <li><span class="left-txt">单位名称：</span><span ng-bind="model.userMessage.unitName"></span></li>
+            <li><span class="left-txt">单位地区：</span><span ng-bind="model.userMessage.areaName"></span></li>
+            <li><span class="left-txt">手机：</span><span ng-bind="model.userMessage.phoneNumber"></span></li>
+            <li><span class="left-txt">邮箱：</span><span ng-bind="model.userMessage.email"></span></li>
+            <li><span class="left-txt">启用状态：</span><span ng-bind="model.userMessage.status"></span></li>
+            <li><span class="left-txt">创建时间：</span><span ng-bind="model.userMessage.createTime"></span></li>
+            <li><span class="left-txt">创建人：</span><span ng-bind="model.userMessage.creatorName"></span></li>
+
+        </ul>
+    </div>
+</div>
+
+<div ng-show="model.showRole" style="margin-top: 45px;">
+    <div class="main-wrap-body-1 mt20 clear" style="padding-bottom: 1px;">
+        <div class="column mb20">
+            <div class="col-tit">角色信息</div>
+            <div class="dash-line-1"></div>
+        </div>
+        <div class="rel udf-2">
+            <ul class="ul-d-form udf-2 lh-1" style="margin-left: -320px;">
+                <li><span class="left-txt">角色名称：</span><span ng-bind="model.roleMessage"></span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-wrap-body mt10" style="padding-top: 5px;">
+        <div class="column mb20">
+            <div class="col-tit admiclear">角色权限</div>
+            <div class="dash-line-1"></div>
+        </div>
+
+        <div class="main-wrap-body-1 mt20 clear">
+            <div class="column mb20 expand-content">
+
+                <div ng-repeat="root in model.permissionMessage | orderBy:'sort'" class="expand-smbox">
+                    <div class="expand-mintit">
+                        <span ng-bind="root.name"></span>
+                        <span class="ico open"></span>
+                    </div>
+
+                    <ul class="expand-list" style="padding-left: 35px;padding-bottom: 10px">
+                        <li ng-repeat="item in root.children | orderBy:'sort'">
+                           <span style="width:117px" class="expand-list-txt">
+                                     <i class="expand-icon abs"></i>
+                                <span ng-bind="item.name"></span>
+                            </span>
+
+                            <div class="btn-date-box" ng-show="item.children.length>0">
+                                <span ng-repeat="node in item.children | orderBy:'sort'">
+                                   <label class="btn-date first">
+                                       <span ng-bind="node.name"></span>
+                                   </label>
+                                </span>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

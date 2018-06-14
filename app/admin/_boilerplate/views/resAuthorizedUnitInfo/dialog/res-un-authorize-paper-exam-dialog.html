@@ -1,0 +1,31 @@
+<div class="column table-box mt20">
+
+    <div kendo-grid="node.paperExamUnAuthorizeGridInstance"
+         k-options="grid.paperExamUnAuthorizeGrid">
+    </div>
+</div>
+<div class="mt30"><b>待确认授权试卷</b></div>
+<table class="table table-nf mt10">
+    <thead>
+    <tr>
+        <th width="200">试卷名称</th>
+        <th width="80">组卷方式</th>
+        <th width="60">试卷总分</th>
+        <th width="50">创建时间</th>
+        <th width="80">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in model.toBeAuthorizeExamPaperResList">
+        <td ng-bind="item.name"></td>
+        <td ng-bind="item.configType">20</td>
+        <td ng-bind="item.totalScore">30</td>
+        <td ng-bind="item.createTime">2018-02-02 20:20</td>
+        <td class="op"><a href="">详情</a><a href="" ng-click="events.removeToBeAuthorizeRes(dataItem,'EXAM_PAPER')">取消选择</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="btn-center">
+    <a href="" ng-click="events.authorizeResForSingleType('EXAM_PAPER',$index)" class="btn btn-r">确定授权</a>
+    <a href="" ng-click="dialog.close($index)" class="btn btn-g ml10">取消</a>
+</div>

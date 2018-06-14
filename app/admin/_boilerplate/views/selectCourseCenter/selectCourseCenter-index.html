@@ -1,0 +1,84 @@
+<div class="main-wrap-body" ng-click="events.closeTree($event)"
+     ng-show="$state.current.name === 'states.selectCourseCenter'">
+    <div class="column">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text"
+                           ng-model="model.queryParam.courseName"
+                           class="ipt ipt-small"
+                           placeholder="请输入课程名称"
+                           clear-operator
+                           ng-keyup="events.pressEnterKey($event)"
+                /></li>
+                <li><input type="text"
+                           ng-model="model.queryParam.categoryName"
+                           ng-click="events.openTree($event)"
+                           class="ipt ipt-medium"
+                           hb-readonly
+                           clear-operator
+                           placeholder="请选择课程分类"/>
+
+                    <div class="column-block w-tree hide-block fl"
+                         ng-click="events.openTree($event)"
+                         ng-show="courseCategoryTreeShow"
+                         style="position: absolute;
+                   z-index: 10;
+                   left: 0px;
+                   width:205px;
+                   max-height: 250px;
+                   overflow: auto;"
+                    >
+                        <div kendo-tree-view="node.tree"
+                             k-options="ui.mainPageTree.options"
+                             k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.selectCategory($event,dataItem);">
+                      <label style="width: 140px;"><span ng-bind="dataItem.name"></span></label>
+                    </span>
+                        </div>
+                    </div>
+
+                </li>
+                <li>
+                    <select class="select-small"
+                            ng-model="model.queryParam.courseStatus"
+                    >
+                        <option selected="selected" value="-2">课程转换状态</option>
+                        <option value="0">转换中</option>
+                        <option value="1">转换成功</option>
+                        <option value="2">转换失败</option>
+                    </select>
+                </li>
+                <li>
+                    <input kendo-date-picker="node.provideBeginTime"
+                           k-options="ui.datePicker.begin.options"
+                           ng-model="model.queryParam.selectTimeStart"
+                           type="text" class="ipt"
+                           hb-clear-input
+                           hb-readonly
+                           placeholder="添加日期"/>
+                    -
+                    <input kendo-date-picker="node.provideEndTime"
+                           k-options="ui.datePicker.end.options"
+                           ng-model="model.queryParam.selectTimeEnd"
+                           type="text" class="ipt"
+                           hb-clear-input
+                           hb-readonly
+                           placeholder="添加日期"/><!--style="height:19px;margin-top:0px;"-->
+                </li>
+                <li><a href="javascript:;" ng-click="events.QueryMainPageList()" class="btn btn-b">查询</a></li>
+                <li><a href="javascript:;" ng-click="events.deleteManySelectCourse($event)" class="btn btn-b"
+                       has-permission="selectCourseCenter/del">移除选修课</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="dash-line-1"></div>
+    <div class="column"><a href="javascript:void(0);" class="btn-r btn" ng-click="events.openAdd()"
+                           has-permission="selectCourseCenter/add">添加选修课</a></div>
+    <div class="column mt20">
+        <div id="dataGrid" kendo-grid="node.gridInstance" k-options="ui.grid.options">
+        </div>
+    </div>
+</div>
+
+<div ui-view></div>

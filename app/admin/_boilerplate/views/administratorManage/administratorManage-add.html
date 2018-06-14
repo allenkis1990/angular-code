@@ -1,0 +1,270 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ng-click="events.goAdministratorManage($event)"></a>
+        <a class="aw" href="javascript:void(0)" ng-click="events.goAdministratorManage($event)">管理员管理</a>
+        &gt; 新增用户
+    </div>
+</div>
+<div class="mt50">
+    <div class="steps mb30" ng-if="model.showAddLesson">
+        <div class="bg-line rd3"><span class="bg-l-current rd3" style="margin-left:0;"></span></div>
+        <ul class="ul-step li-fl clear">
+            <li class="current"><span class="ico s-1"></span>
+
+                <p class="step-name">填写基本信息</p></li>
+            <li><span class="ico s-2"></span>
+
+                <p class="step-name">分配账号角色</p></li>
+            <li><span class="ico s-3"></span>
+
+                <p class="step-name">完成帐号创建</p></li>
+        </ul>
+    </div>
+
+    <div class="steps" ng-if="model.showAddSection">
+        <div class="bg-line rd3"><span class="bg-l-current rd3" style="width: 850px"></span>
+        </div>
+        <ul class="ul-step li-fl clear">
+            <li class="current"><span class="ico s-1"></span>
+
+                <p class="step-name">填写基本信息</p></li>
+            <li class="current"><span class="ico s-2"></span>
+
+                <p class="step-name">分配账号角色</p></li>
+            <li><span class="ico s-3"></span>
+
+                <p class="step-name">完成帐号创建</p></li>
+        </ul>
+    </div>
+
+    <div class="steps" ng-if="model.showLessonSuccess">
+        <div class="bg-line rd3"><span class="bg-l-current rd3" style="width: 1290px;"></span>
+        </div>
+        <ul class="ul-step li-fl clear">
+            <li class="current"><span class="ico s-1"></span>
+
+                <p class="step-name">填写基本信息</p></li>
+            <li class="current"><span class="ico s-2"></span>
+
+                <p class="step-name">分配账号角色</p></li>
+            <li class="current"><span class="ico s-3"></span>
+
+                <p class="step-name">完成帐号创建</p></li>
+        </ul>
+    </div>
+
+
+    <div ng-class="{'rel udf-2 block-pos-1':model.showAddLesson,'rel udf-2 block-pos':!model.showAddLesson}">
+
+        <form name="administratorValidate" novalidate>
+            <ul class="ul-d-form udf-2 lh-1">
+                <li><span class="left-txt"><i>*</i>账号：</span><input type="text"
+                                                                    class="ipt ipt-large"
+                                                                    name="loginInput"
+                                                                    ng-model="model.createParam.loginInput"
+                                                                    required ng-required="true"
+                                                                    ng-minlength="6"
+                                                                    ng-maxlength="20"
+                                                                    ng-pattern="/^[a-zA-Z][a-zA-Z0-9_]*$/"
+                                                                    placeholder="6~20个字符，可使用字母、数字、下划线，需以字母开头"
+                                                                    ajax-validate
+                                                                    ajax-url="/web/admin/administratorManage/isLoginInputExist"
+                                                                    style="width: 355px"
+                >
+                    <span style="margin-left: 130px;"
+                          ng-show="administratorValidate.loginInput.$dirty && administratorValidate.loginInput.$error.required"
+                          class="li-prompt">
+                          <span class="ico ico-prompt"></span>账号不能为空。
+                      </span>
+
+                    <span style="margin-left: 170px;"
+                          ng-show="administratorValidate.loginInput.$dirty && !administratorValidate.loginInput.$error.required && (administratorValidate.loginInput.$error.minlength || administratorValidate.loginInput.$error.maxlength)"
+                          class="li-prompt lip-2"><span class="ico ico-prompt"></span> 长度在6~20之间！
+                     </span>
+
+                    <span style="margin-left: 170px;"
+                          ng-show="administratorValidate.loginInput.$dirty && !administratorValidate.loginInput.$error.required && !administratorValidate.loginInput.$error.maxlength && !administratorValidate.loginInput.$error.minlength && administratorValidate.loginInput.$error.pattern"
+                          class="li-prompt lip-2 lip-2"><span class="ico ico-prompt"></span>账号只能由字母、数字、下划线组成 需以字母开头！
+                    </span>
+
+                    <span style="margin-left: 170px;" ng-show="administratorValidate.loginInput.$dirty && !administratorValidate.loginInput.$error.required &&
+                          !administratorValidate.loginInput.$error.minlength &&
+                          !administratorValidate.loginInput.$error.maxlength &&
+                          !administratorValidate.loginInput.$error.pattern &&
+                          administratorValidate.loginInput.$error.ajaxValidate" class="li-prompt lip-2"><span
+                            class="ico ico-prompt"></span>账号已被注册</span>
+
+                </li>
+
+
+                <li><span class="left-txt"><i>*</i>姓名/昵称：</span><input type="text" class="ipt ipt-large"
+                                                                       name="name"
+                                                                       ng-model="model.createParam.name"
+                                                                       placeholder="请填实姓名或昵称"
+                                                                       required ng-required="true"
+                                                                       style="width: 355px">
+                    <span class="li-prompt" style="margin-left: 130px;"
+                          ng-show="administratorValidate.name.$dirty&&administratorValidate.name.$error.required"><span
+                            class="ico ico-prompt"></span>姓名不能为空。</span>
+                </li>
+                <!--
+                                <li><span class="left-txt"><i>*</i>单位名称：</span>
+                                    <input type="text" name="type" class="ipt ipt-large"
+                                           ng-click="events.openLessonTypeTree()"
+                                           placeholder="请选择单位"
+                                           ng-model="model.createParam.unitName" required
+                                           ng-required="true" readonly="true" >
+
+                                    <div class="hide-block hb-1 mh-1" ng-show="areaShow" >
+                                        <div kendo-tree-view="node.tree"
+                                             k-options="ui.tree.options"
+                                             k-on-change="model.selectedItem = dataItem">
+                                            <span k-template ng-click="events.getArea(dataItem)">
+                                              <label style="width: 100px;"><span ng-bind="dataItem.name"></span></label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>-->
+
+
+                <li>
+                    <span class="left-txt"><i>*</i>性别：</span>
+                    <input type="radio" ng-model="model.createParam.sex" value="1">男
+                    <input type="radio" ng-model="model.createParam.sex" value="2">女
+                </li>
+
+                <li><span class="left-txt"><i>*</i>密码：</span><input type="password" class="ipt ipt-large"
+                                                                    ng-model="model.createParam.password"
+                                                                    required ng-required="true"
+                                                                    name="password"
+                                                                    autocomplete="off"
+                                                                    ng-minlength="6"
+                                                                    ng-maxlength="20"
+                                                                    ng-pattern=/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{6,20}$/
+ placeholder="建议至少使用字母、数字和符号两种及以上组合，6-20个"
+                                                                    style="width: 355px">
+
+                    <span style="margin-left: 130px;"
+                          ng-show="administratorValidate.password.$dirty && administratorValidate.password.$error.required"
+                          class="li-prompt">
+                              <span class="ico ico-prompt"></span>密码不能为空。
+                          </span>
+
+                    <!--<span  style="margin-left: 170px;" ng-show="administratorValidate.password.$dirty && !administratorValidate.password.$error.required && (administratorValidate.password.$error.minlength || administratorValidate.password.$error.maxlength)"-->
+                    <!--class="li-prompt lip-2"><span class="ico ico-prompt"></span> 长度在6~20之间！-->
+                    <!--</span>-->
+
+                    <span style="margin-left: 170px;"
+                          ng-show="administratorValidate.password.$dirty && !administratorValidate.password.$error.required && administratorValidate.password.$error.pattern"
+                          class="li-prompt lip-2 lip-2"><span class="ico ico-prompt"></span>密码只能由字母、数字,特殊符号中的2种组成,长度在6~20之间！
+                        </span>
+
+                </li>
+
+
+                <li><span class="left-txt"><i>*</i>确认密码：</span>
+                    <input type="password"
+                           hb-compare="model.createParam.password"
+                           name="repeatPass"
+                           ng-model="model.createParam.repeatPass"
+                           required ng-required="true"
+                           ng-minlength="6"
+                           autocomplete="off"
+                           ng-maxlength="20"
+                           placeholder="请再次输入密码"
+                           class="ipt ipt-large"
+                           style="width: 355px">
+
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="administratorValidate.repeatPass.$dirty&&administratorValidate.repeatPass.$error.required">请输入确认密码！</span>
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="administratorValidate.repeatPass.$error.maxlength||administratorValidate.repeatPass.$error.minlength"> 请输入6-20位字符！</span>
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="!administratorValidate.repeatPass.$error.required&&!administratorValidate.repeatPass.$error.maxlength&&!administratorValidate.repeatPass.$error.minlength&&administratorValidate.repeatPass.$error.compare">输入的密码不一致！</span>
+
+                </li>
+
+                <!--<li><span class="left-txt"><i></i>单位名称：</span>-->
+                <!--<input type="text" class="ipt ipt-large" placeholder="请输入单位名称" style="width: 355px" ng-model="model.createParam.unitName">-->
+                <!--</li>-->
+
+
+                <li><span class="left-txt"><i></i>手机：</span><input type="text" class="ipt ipt-large"
+                                                                   placeholder="请输入手机" style="width: 355px"
+                                                                   name="phoneNumber"
+                                                                   ng-pattern=/^[0-9]{11}$/
+ ng-model="model.createParam.phoneNumber">
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="administratorValidate.phoneNumber.$error.pattern">手机号必须是11位数字</span>
+                </li>
+
+                <li><span class="left-txt"><i></i>邮箱：</span><input type="email" class="ipt ipt-large"
+                                                                   placeholder="请输入邮箱" style="width: 355px"
+                                                                   name="email"
+                                                                   ng-model="model.createParam.email">
+                    <span style="margin-left: 130px;" class="li-prompt"
+                          ng-show="administratorValidate.email.$error.email">邮箱不符合格式</span>
+                </li>
+
+                <li>
+                    <span class="left-txt"><i>*</i>启用状态：</span>
+                    <input ng-model="model.createParam.status" value="1" type="radio" checked="checked">启用
+                    <input ng-model="model.createParam.status" value="2" type="radio">禁用
+                </li>
+
+            </ul>
+            <div class="btn-center">
+                <div class="btn-center">
+
+                    <a href="javascript:void(0)" ng-click="events.goAdministratorManage($event)"
+                       class="btn btn-r ml10" has-permission="administratorManage/backAdministorManage">返回</a>
+
+                    <a href="javascript:void(0)" class="btn btn-r ml10"
+                       ng-class="{'btn-disable':!administratorValidate.$valid||!model.save}"
+                       ng-click="events.saveAdministrator($event)" has-permission="administratorManage/saveAndBack">保存并返回</a>
+
+                    <a href="javascript:void(0)" class="btn btn-r"
+                       ng-class="{'btn-disable':!administratorValidate.$valid||!model.save}"
+                       ng-click="events.saveAndEnter($event)"
+                       has-permission="administratorManage/saveAndNext">保存并下一步</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="clear"
+         ng-class="{'main-wrap-body-1 mt10 clear block-pos-2':model.showAddSection,'main-wrap-body-1 mt0 clear block-pos':!model.showAddSection}">
+
+        <div kendo-grid="node.grid" k-options="ui.grid.options"></div>
+
+        <div class="dash-line-4 mt20"></div>
+        <div class="btn-center">
+            <a href="javascript:void(0)" class="btn btn-r ml10"
+               has-permission="administratorManage/backCreateAdministor"
+               ng-click="events.goAdministratorManage($event)">返回</a>
+            <a href="javascript:void(0)" class="btn btn-r ml10" has-permission="administratorManage/backLast"
+               ng-click="events.toUserAdd($event)">上一步</a>
+            <a href="javascript:void(0)" class="btn btn-r ml10" has-permission="administratorManage/toNext"
+               ng-click="events.saveAndFinalStep($event)">保存并下一步</a>
+        </div>
+    </div>
+</div>
+
+
+<div ng-class="{'prompt-box block-pos-3':model.showLessonSuccess,'prompt-box block-pos':!model.showLessonSuccess}">
+    <div class="p-img fl"><img src="@systemUrl@/images/img-complete.png"></div>
+    <div class="btn-center">
+        <p style="font-size: 18px;margin-bottom: 20px;">恭喜您，账号创建成功!</p>
+        <p style="font-size: 15px;margin-bottom: 20px;margin-left: 20px">账号角色为：
+            <sapn ng-bind="model.rolesString"></sapn>
+        </p>
+        <a href="javascript:void(0)" class="btn btn-r ml10" has-permission="administratorManage/continueAdd"
+           ng-click="events.carryOnAddUser($event)">继续添加</a>
+        <a href="javascript:void(0)" class="btn btn-r ml10"
+           has-permission="administratorManage/backCreateAdministorhome"
+           ng-click="events.goAdministratorManage($event)">返回</a>
+    </div>
+</div>
+</div>
+<div kendo-window="node.windows.historyCourseware" k-options="ui.windows.historyCoursewareOptions"></div>

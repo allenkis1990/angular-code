@@ -1,0 +1,56 @@
+<div class="dialog w-10">
+    <div class="dialog-body">
+        <div class="dialog-tit">选择课件<a href="javascript:void(0);" class="ico ico-close"
+                                       ng-click="events.toClosePage($event)"></a></div>
+        <div class="dialog-cont">
+            <div class="search-bar">
+                <ul class="ul-form li-fl clear">
+                    <li>
+                        课件供应商：
+                        <select ng-disabled="model.utils.lockProvider()"
+                                ng-change="events.searchCourseWare()"
+                                ng-model="model.courseWareQueryParams.supplierId" class="slt slt-mini"
+                                ng-options="provider.id as provider.name for provider in model.providers"></select>
+
+                    </li>
+                    <li>课件名称：<input type="text" class="ipt ipt-small" ng-model="model.courseWareQueryParams.name"
+                                    placeholder="请输入课件名称" hb-clear-input
+                                    ng-keyup="events.search($event)"/>
+                    </li>
+                    <li>
+                        课件分类：
+                        <input type="text" readonly="true" name="type" class="ipt ipt-medium"
+                               ng-click="events.openCourseWareTypeTree($event)"
+                               placeholder="课件分类"
+                               ng-model="model.typeName">
+                        <div class="hide-block hb-2 mh-1" ng-show="TypeShow" style="margin-left: 70px;"
+                             ng-click="events.openTree($event)">
+                            <div kendo-tree-view="node.courseWareCategoryTree"
+                                 k-options="ui.tree.courseWareCategoryOptions"
+                                 k-on-change="model.selectedItem = dataItem">
+                    <span k-template ng-click="events.getCourseWareTypeInfo(dataItem,$event)">
+                      <label style="width: 100px;"> <span ng-bind="dataItem.name"></span></label>
+                    </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>课件类型：
+                        <select class="slt slt-mini" ng-model="model.courseWareQueryParams.type">
+                            <option value="-1">全部</option>
+                            <option value="1">文档</option>
+                            <option value="2">单视频</option>
+                            <option value="3">视频包</option>
+                        </select>
+                    </li>
+                    <li><a href="javascript:void(0);" class="btn btn-b"
+                           ng-click="events.searchCourseWare($event)">查询</a></li>
+                </ul>
+            </div>
+            <div class="column table-box mt10">
+                <div kendo-grid="node.courseWareGrid"
+                     k-options="ui.courseWareGrid.options" k-ng-delay="model.delay">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

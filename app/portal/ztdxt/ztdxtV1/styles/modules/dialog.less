@@ -1,0 +1,152 @@
+@import "../public/variables";
+
+/*.mask-bg{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}*/
+
+.m-dialog {
+  position: relative;
+  z-index: 2;
+}
+
+.dialog-box {
+  width: 370px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+  box-sizing: border-box;
+
+  .dialog-hd {
+    height: 53px;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    .title {
+      border-left: 3px solid @base;
+      line-height: 24px;
+      margin-top: 15px;
+      padding-left: 10px;
+    }
+    .p-ico {
+      width: 22px;
+      height: 22px;
+      background-position: -322px -192px;
+      border-radius: 3px;
+      position: absolute;
+      right: 10px;
+      top: 13px;
+      opacity: 1;
+      filter: alpha(opacity=100);
+      &:hover {
+        background-color: #09c7b2;
+        background-position: -322px -218px;
+      }
+    }
+  }
+  .dialog-bd {
+    padding: 10px 30px 15px;
+    max-height: 400px;
+    overflow: auto;
+
+    .phone {
+      position: relative;
+      top: -7px;
+      margin-right: 10px;
+    }
+
+    .complete {
+      background-position: 0 -379px;
+      height: 40px;
+      width: 40px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    .cart {
+      background-position: -46px -379px;
+      height: 43px;
+      width: 40px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+  .dialog-ft {
+    border-top: 1px dashed #e8e8e8;
+    padding: 10px 15px;
+
+    .btn {
+      width: auto;
+      min-width: 60px;
+      height: 36px;
+      line-height: 36px;
+      padding: 0 15px;
+      border-radius: 0;
+    }
+  }
+  .m-tips {
+    margin: 10px;
+    border: 1px dashed @base;
+  }
+
+  .m-login {
+    width: auto;
+    height: auto;
+    background-color: #fff;
+  }
+
+}
+
+.w620 {
+  width: 620px;
+}
+
+.w10 {
+  width: 1000px;
+}
+
+.dialog-tip {
+  padding: 35px 0;
+  .p-ico {
+    width: 40px;
+    height: 42px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  .complete {
+    background-position: 0 -220px;
+  }
+  .cart {
+    background-position: -45px -220px;
+  }
+  .txt {
+    font-size: 22px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.dialog-bottom {
+  border-top: 1px dashed #ddd;
+  padding: 10px;
+
+  .ui-label {
+    position: absolute;
+    right: 30px;
+    bottom: 16px;
+    font-weight: normal;
+  }
+}
+
+.db-1 {
+  background: #f1f1f1;
+  border-radius: 0 0 5px 5px;
+}

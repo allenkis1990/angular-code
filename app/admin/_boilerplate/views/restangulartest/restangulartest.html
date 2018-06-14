@@ -1,0 +1,49 @@
+<style>
+    .restangular th {
+        text-align: center;
+    }
+
+    .ng-hide {
+        font-size: 13px;
+    }
+
+    .ng-show {
+        font-size: 20px;
+    }
+</style>
+<div class="restangular">
+    b{{$stateParams}}
+    <button kendo-button="node.buttons.add" k-on-click="events.create()" class="k-primary">创建</button>
+    <div ng-show="!model.showEdit">
+        <table>
+            <thead>
+            <th>编号</th>
+            <th>名字</th>
+            <th>年龄</th>
+            <th>操作</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="emp in model.employees">
+                <td>b{{emp.id}}</td>
+                <td>b{{emp.name}}</td>
+                <td>b{{emp.age}}</td>
+                <td>
+                    <button kendo-button="ui.buttons.edit" k-on-click="events.edit(emp)" class="k-primary">修改</button>
+                    <button kendo-button="ui.buttons.delete" k-on-click="events.remove(emp)">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="model.showEdit">
+        name: <input type="text" kendo-input="ui.inputs.name"/>
+
+        <button kendo-button="ui.buttons.update" k-on-click="events.update()">更新</button>
+
+    </div>
+
+    <div hb-pager ng-model="model.page"></div>
+
+</div>
+

@@ -1,0 +1,98 @@
+.m-header {
+  width: 100%;
+  height: 130px;
+  background: #fff url("../../../kccs/kccsv2/images/header-bg.jpg") no-repeat center bottom;
+  position: relative;
+  z-index: 200;
+
+  .top-wrap {
+    height: 30px;
+    line-height: 30px;
+    background: url("../../../kccs/kccsv2/images/top_bg.gif") no-repeat center 0;
+    color: #fff;
+
+    a {
+      color: #fff;
+      height: 30px;
+    }
+    .right a {
+      padding: 0 10px;
+    }
+    .appico {
+      background-position: -110px -245px;
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      position: relative;
+      top: -1px;
+    }
+    .appico-1 {
+      background-position: 0 0;
+      width: 16px;
+      height: 20px;
+      margin-right: 5px;
+      position: relative;
+      top: -2px;
+    }
+    a.top-app {
+
+      &:hover {
+        .hover-block{
+          display: block;
+        }
+      }
+      .hover-block {
+        position: absolute;
+        top: 33px;
+        left: 0px;
+        line-height: 1.5;
+        transition: all 0.4s;
+        padding-right: 10px;
+        z-index: 10;
+        display: none;
+
+        .hover-bd {
+          background-color: #fff;
+          text-align: left;
+          color: #333;
+          padding: 10px;
+          border-radius: 5px;
+          -moz-box-shadow: 0px 0px 7px #ccc;
+          -webkit-box-shadow: 0px 0px 7px #ccc;
+          box-shadow: 0px 0px 7px #ccc;
+          span {
+            display: inline-block;
+          }
+          .arrowtop {
+            width: 13px;
+            height: 7px;
+            position: absolute;
+            left: 50%;
+            top: -7px;
+            margin-left: -6px;
+            display: inline-block;
+            background: url("../../../kccs/kccsv2/images/icon.png") no-repeat -322px -23px;
+          }
+        }
+      }
+      .hover-block, .hover-bd, .hover-bd a {
+        /*opacity: 0;*/
+        filter: alpha(opacity=0);
+      }
+    }
+  }
+  .logo {
+    padding-top: 10px;
+  }
+  .channel-txt {
+    font-size: 30px;
+    color: #08af9c;
+    font-weight: bold;
+    border-left: 1px solid #08af9c;
+    padding-left: 25px;
+    margin-left: 21px;
+    height: 60px;
+    line-height: 52px;
+    margin-top: 22px;
+  }
+}

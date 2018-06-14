@@ -1,0 +1,67 @@
+@import "variables";
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  padding: 0;
+  line-height: 1.5;
+  color: #333;
+  font-family: "Arial";
+  font-size: 14px;
+  background-color: #f4f4f4;
+}
+
+input, textarea, select, button {
+  font-family: "Arial";
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, form, em, i {
+  margin: 0;
+}
+
+ul, ol {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+img {
+  border: 0;
+}
+
+a, span {
+  display: inline-block;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #333;
+  &:hover {
+    text-decoration: none;
+    color: @base;
+  }
+}
+
+* {
+  box-sizing: content-box;
+}
+
+a,
+input,
+textarea,
+label,
+i,
+.slt,
+span {
+  transition: all .4s;
+  -moz-transition: all .4s;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+}
+
+@-ms-viewport {
+  width: auto;
+}

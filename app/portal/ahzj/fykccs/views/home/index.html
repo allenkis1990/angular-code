@@ -1,0 +1,319 @@
+
+
+
+<!--<div class="p-wrap-full white-bg clear mt10 mb10">
+    <div class="title-box mt18 clear mb10"><h2 class="title">友情链接</h2></div>
+    <div class="clear">
+        <ul class="linklist">
+            <li>
+                <a href="http://www.ah.hrss.gov.cn" target="_blank"><img src="ahzj/fykccs/images/linkpic1.jpg" alt=" "></a>
+            </li>
+            <li>
+                <a href="http://www.ahhfld.gov.cn/" target="_blank"><img src="ahzj/fykccs/images/linkpic2.jpg" alt=" "></a>
+            </li>
+            <li>
+                <a href="http://web.huangshan.gov.cn/JA012" target="_blank"><img src="ahzj/fykccs/images/linkpic3.jpg" alt=" "></a>
+            </li>
+            <li>
+                <a href="http://www.fyldbz.gov.cn/" target="_blank"><img src="ahzj/fykccs/images/linkpic4.jpg" alt=" "></a>
+            </li>
+            <li>
+                <a href="http://www.ahsz.hrss.gov.cn/" target="_blank"><img src="ahzj/fykccs/images/linkpic5.jpg" alt=" "></a>
+            </li>
+
+
+        </ul>
+    </div>
+</div>-->
+
+
+<div class="main-wrap">
+
+    <div class="w-bg clear mb50">
+        <!-- banner，通知公告 -->
+        <div class="clear mb15">
+            <div class="m-serve fl ">
+                <div class="list-wrap">
+                    <h1><span class="p-ico signup-ico"></span>报名培训</h1>
+                    <div class="nav-bar-item">
+                        <div class="item-mn">
+                            <span class="p-ico trainstudy-ico"></span>
+                            <span class="txt">培训班学习</span></div>
+                        <dl class="extend-list">
+                            <div ng-repeat="item in model.trainClassSkuArr">
+                                <dt ng-bind="item.name"></dt>
+                                <dd>
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.goDetailTraining(item,subItem,item.yearList[0],'TRAINING_CLASS_GOODS')"
+                                       ng-repeat="subItem in item.yearList[0].skuPropertyOptions"><span ng-bind="subItem.name"></span>年</a>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="bor-b"></div>
+                    <div class="nav-bar-item">
+                        <div class="item-mn">
+                            <span class="p-ico selection-ico"></span>
+                            <span class="txt">自主选课学习</span></div>
+
+                        <dl class="extend-list" style="top:-198px;">
+                            <div ng-repeat="item in model.goodsSkuArr">
+                                <dt ng-bind="item.name"></dt>
+                                <dd>
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.goDetailTraining(item,subItem,item.yearList[0],'COURSE_SUPERMARKET_GOODS')"
+                                       ng-if="item.yearList"
+                                       ng-repeat="subItem in item.yearList[0].skuPropertyOptions"><span ng-bind="subItem.name"></span>年</a>
+                                    <a href="javascript:void(0)"
+                                       ng-click="events.goDetailTrainingMajor(item,subItem,item.yearList[0],'COURSE_SUPERMARKET_GOODS')"
+                                       ng-if="item.majorList"
+                                       ng-repeat="subItem in item.majorList"><span ng-bind="subItem.name"></span></a>
+                                </dd>
+                            </div>
+
+                        </dl>
+                    </div>
+                </div>
+                <img class="ban" src="ahzj/fykccs/images/banner-fy.jpg" alt="">
+            </div>
+
+
+
+
+            <div class="w340 m-news fr">
+                <div class="block-tit clear">
+                    <div class="p-ico tit-txt fl">用户登录</div>
+                </div>
+                <div class="m-login">
+                    <!-- 未登录 -->
+                    <div class="course-my" ng-if="!sureUseLogin">
+                        <div class="course-my-info clear"><a class="my-headimg"><img src="ahzj/fykccs/images/user-img-index.jpg"></a>
+                            <div class="info-detail mt10">
+                                <div>HI，您还没登录,欢迎登录徽学网</div>
+                            </div>
+                            <div class="login-entry">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.openLoginDialog()"
+                                   class="btn-r">登录</a>
+                                <a href="javascript:void(0)"
+                                   ui-sref="states.accountant.registration"
+                                   class="btn-b-b">注册</a>
+                            </div>
+                        </div>
+
+                        <ul class="entry-box clearfix">
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.openLoginDialog()"><i class="p-ico i1"></i><span>我的学习</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.openLoginDialog()"><i class="p-ico i2"></i><span>学习档案</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.openLoginDialog()"><i class="p-ico i3"></i><!--<i class="p-ico red-r">2</i>--><span>我的订单</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.openLoginDialog()"><i class="p-ico i4"></i><span>购物车</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.openLoginDialog()"><i class="p-ico i5"></i><!--<i class="p-ico red-r red-r-2">2</i>--><span>通知</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.openLoginDialog()"><i class="p-ico i6"></i><span>账户设置</span></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- /未登录 -->
+
+                    <!-- 已登录 -->
+                    <div class="course-my" ng-if="sureUseLogin">
+                        <div class="course-my-info clear">
+                            <a class="my-headimg"><img src="ahzj/fykccs/images/user-img-index.jpg"
+                                                       ng-src="{{useInformation.photo===null?'ahzj/fykccs/images/user-img-index.jpg':'/mfs'+useInformation.photo}}"></a>
+                            <div class="info-detail">
+                                <div class="mb5">欢迎您，<span class="t-b"
+                                                           ng-bind="useInformation.userName"></span></div>
+                                <span class="fs12">除了诗和远方外，还有徽学网！</span></div>
+                            <div class="login-entry">
+                                <a href="javascript:void(0)"
+                                   ng-click="events.goCenter($event)"
+                                   class="btn-b-b w196">进入学习中心</a><a href="javascript:void(0)" ng-click="events.outOfLogin($event)" class="btn-g">退出</a>
+                            </div>
+                        </div>
+
+                        <ul class="entry-box clearfix">
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.goMyCourse()"><i class="p-ico i1"></i><span>我的学习</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.goTrainingCertificate()"><i class="p-ico i2"></i><span>学习档案</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.goMyOrder()"><i class="p-ico i3"></i><!--<i class="p-ico red-r">2</i>--><span>我的订单</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.goShoppingCart()"><i class="p-ico i4"></i><span>购物车</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.goNotice()"><i class="p-ico i5"></i><!--<i class="p-ico red-r red-r-2">2</i>--><span>通知</span></a></li>
+                            <li><a href="javascript:void(0)"
+                                   ng-click="events.goAccountSetting()"><i class="p-ico i6"></i><span>账户设置</span></a></li>
+                        </ul>
+                    </div>
+                    <!-- /已登录 -->
+                </div>
+            </div>
+
+
+            <!--<div class="course-my" ng-if="!sureUseLogin">
+                <div class="course-my-info clear"><a class="my-headimg"><img src="ahzj/fykccs/images/userimgindex.jpg"></a>
+                    <div class="info-detail mt10">
+                        <div>HI，您还没登录</div>
+                        <span>欢迎登录徽学网</span></div>
+                </div>
+                <div class="login-entry">
+                    <a href="javascript:void(0)" ng-click="events.openLoginDialog()" class="btn-b-b">登录</a>
+                    <a href="#" ui-sref="states.accountant.registration" class="btn-r">注册</a>
+                </div>
+                <ul class="entry-box clearfix">
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.openLoginDialog()"><i class="p-ico i1"></i><span>我的学习</span></a></li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.openLoginDialog()"><i class="p-ico i2"></i><span>学习档案</span></a></li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.openLoginDialog()"><i class="p-ico i3"></i><span>我的订单</span></a></li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.openLoginDialog()"><i class="p-ico i4"></i><span>购物车</span></a></li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.openLoginDialog()"><i class="p-ico i5"></i><span>通知</span></a></li>
+                    <li><a href="javascript:void(0)"
+                           ng-click="events.openLoginDialog()"><i class="p-ico i6"></i><span>帐号设置</span></a></li>
+                </ul>
+            </div>-->
+            <!--&lt;!&ndash; 登录框-登录后 &ndash;&gt;-->
+        </div>
+
+
+        <div class="training-process mb15 clear">
+            <div class="p-ico tit fl">培训流程</div>
+            <div class="train-step-box fl">
+                <span href="#" class="p-ico step step-1">用户注册</span>
+                <span class="p-ico arrow"></span>
+                <span href="#" class="p-ico step step-2">选择课程</span>
+                <span class="p-ico arrow"></span>
+                <span href="#" class="p-ico step step-3">在线学习</span>
+                <span class="p-ico arrow"></span>
+                <span href="#" class="p-ico step step-4">考核通过</span>
+                <span class="p-ico arrow"></span>
+                <span href="#" class="p-ico step step-5">档案记载</span>
+                <span class="p-ico arrow"></span>
+                <span href="#" class="p-ico step step-6">打印证书</span>
+            </div>
+        </div>
+
+        <!-- /banner，通知公告 -->
+        <!-- 选择地区培训 -->
+
+        <!-- /选择地区培训 -->
+        <!-- 新闻动态，政策法规 -->
+        <div class="mb15 clear">
+            <div class="w360 m-news fl mr15">
+                <div class="block-tit clear">
+                    <div class="p-ico tit-txt fl">通知公告</div>
+                    <a href="#" ui-sref="states.accountant.notice" class="p-ico more fr">更多</a>
+                </div>
+
+                <ul class="news-bd">
+                    <li ng-repeat="item in model.pxtzList"><a href="javascript:void(0)"
+                                                              ng-click="$state.go('states.accountant.noticeViews',{id:item.id})"
+                                                              title="{{item.title}}"
+                                                              ng-bind="item.shortTitle"></a><span class="date"
+                                                                                                  ng-bind="item.publishTime"></span>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="w360 m-news fl">
+                <div class="block-tit clear">
+                    <div class="p-ico tit-txt fl">新闻动态</div>
+                    <a href="#" ui-sref="states.accountant.news" class="p-ico more fr">更多</a>
+                </div>
+                <ul class="news-bd">
+                    <li ng-repeat="item in model.xwdtList"><a href="javascript:void(0)"
+                                                              ng-click="$state.go('states.accountant.news.newsDetail',{id:item.id})"
+                                                              title="{{item.title}}"
+                                                              ng-bind="item.shortTitle"></a><span class="date"
+                                                                                                  ng-bind="item.publishTime"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="w360 m-news fr">
+                <div class="block-tit clear">
+                    <div class="p-ico tit-txt fl">政策法规</div>
+                    <a href="#" ui-sref="states.accountant.laws" class="p-ico more fr">更多</a>
+                </div>
+                <ul class="news-bd">
+                    <li ng-repeat="item in model.zcfgList"><a href="javascript:void(0)"
+                                                              ng-click="$state.go('states.accountant.laws.lawDetail',{id:item.id})"
+                                                              title="{{item.title}}"
+                                                              ng-bind="item.shortTitle"></a><span class="date"
+                                                                                                  ng-bind="item.publishTime"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /新闻动态，政策法规 -->
+
+        <!-- 热门班级，培训指南 -->
+        <div class="mb15 clear">
+            <div class="class-list-box">
+                <div class="block-tit clear">
+                    <div class="tit-tab fl"><a href="javascript:void(0)"
+                                               ng-click="events.tabHotAndSelf('hot')"
+                                               ng-class="{'current':model.hotAndSelf==='hot'}"><span class="first">热门班级</span></a><a href="javascript:void(0)"
+                                                                                                                                     ng-click="events.tabHotAndSelf('self')"
+                                                                                                                                     ng-class="{'current':model.hotAndSelf==='self'}"><span>自主选课</span></a></div>
+                    <a href="javascript:void(0)"
+                       ng-click="$state.go('states.accountant.onTraining')"
+                       class="p-ico more fr">更多</a>
+                </div>
+                <!--最热班级-->
+                <ul class="class-list class-list-3 clear" ng-if="model.hotAndSelf==='hot'">
+                    <li ng-repeat="item in model.hotClassList" ng-click="events.goClassDetail(item)">
+                        <div class="img">
+                            <img ng-src="{{item.photoPath}}" alt=" ">
+                        </div>
+                        <a class="title" href="javascript:void(0)" ng-bind="item.saleTitle"></a>
+                        <div class="info"><span class="p-ico clock-ico"></span><span ng-bind="item.credit"></span>学时</div>
+                    </li>
+                </ul>
+
+
+                <!--自主选课-->
+
+                <ul class="class-list class-list-3 clear" ng-if="model.hotAndSelf==='self'">
+                    <li ng-repeat="item in model.selfChoseList" ng-click="events.goSelfDetail(item)">
+                        <div class="img">
+                            <img ng-src="{{item.photoPath}}" alt=" ">
+                        </div>
+                        <a class="title" href="javascript:void(0)" ng-bind="item.saleTitle"></a>
+                        <div class="info"><span class="p-ico clock-ico"></span><span ng-bind="item.credit"></span>学时</div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+        <!-- /热门班级，培训指南 -->
+        <!-- 友情链接 -->
+        <div class="blk-box clear mb15 mr15">
+            <span class="blk-top-left p-ico"></span>
+            <span class="blk-top-right p-ico"></span>
+            <span class="blk-bottom-left p-ico"></span>
+            <span class="blk-bottom-right p-ico"></span>
+            <div class="blk-con clear">
+                <h2 class="p-ico link-t-ico fl">友情链接</h2>
+                <div class="link-box fl">
+                    <a href="http://www.mohrss.gov.cn/" title="中华人民共和国人力资源和社会保障部" target="_blank"><img src="ahzj/fykccs/images/linkpic1.jpg" alt=" "></a>
+                    <a href="http://www.ah.hrss.gov.cn/web/index.html" title="安徽省人力资源和社会保障厅" target="_blank"><img src="ahzj/fykccs/images/linkpic2.jpg" alt=" "></a>
+                    <a href="http://www.ahedu.gov.cn/" title="安徽教育网" target="_blank"><img src="ahzj/fykccs/images/linkpic3.jpg" alt=" "></a>
+                    <a href="http://ahjyrs.ahedu.gov.cn/" title="安徽教育人事网" target="_blank"><img src="ahzj/fykccs/images/linkpic4.jpg" alt=" "></a>
+                    <a href="http://www.ahgbjy.gov.cn/" title="安徽干部教育在线" target="_blank"><img src="ahzj/fykccs/images/linkpic5.jpg" alt=" "></a>
+                </div>
+            </div>
+        </div>
+        <!-- /友情链接 -->
+    </div>
+
+
+</div>

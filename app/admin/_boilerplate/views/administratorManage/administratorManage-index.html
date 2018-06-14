@@ -1,0 +1,91 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.administratorManage'"
+     ng-click="lessonTypeShow=false">
+<div class="main-wrap-body1">
+  <div class="tab-tit mt10">
+        <a  ng-class="{current: model.dimension == 1}" ng-click="events.toggleDimension($event, 1)"
+           href="#">项目级</a>
+        <a class="" ng-if="events.isSubProjectManager()"  ng-class="{current: model.dimension == 2}" ng-click="events.toggleDimension($event, 2)" href="#">项目级</a>
+    </div>
+</div>
+    <div class="main-wrap-body" ng-show="model.dimension == 1" class="column">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li><input type="text" class="ipt ipt-medium" ng-model="model.administorPageParams.loginInput"
+                       placeholder="账号"
+                       hb-clear-input
+                       ng-keyup="events.search($event)"/>
+            </li>
+            <li><input type="text" class="ipt ipt-medium" ng-model="model.administorPageParams.name"
+                       hb-clear-input
+                       placeholder="姓名" ng-keyup="events.search($event)"/></li>
+            <li>
+                <select class="slt slt-medium" ng-model="model.administorPageParams.status">
+                    <option ng-selected="" value="0">启用状态</option>
+                    <option value="1">启用</option>
+                    <option value="2">禁用</option>
+                </select>
+            </li>
+            <li>
+                <select class="slt slt-medium"
+                        ng-model="model.administorPageParams.roleId"
+                        ng-options=" role.roleId as role.name for role in model.roleList ">
+                    <option ng-selected="" value="">所属角色</option>
+                </select>
+            </li>
+
+            <li><a href="javascript:void(0)" has-permission="administratorManage/detail"
+                   ng-click="events.searchLesson($event)" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="column">
+        <div class="dash-line-3"></div>
+        <a href="#" ng-click="events.addLesson($event)" class="btn-r btn"
+           has-permission="administratorManage/add">新增管理员</a>
+    </div>
+     <div class="col-body table-box mt20">
+    <div kendo-grid="node.lessonGrid" k-options="ui.lessonGrid.options" ></div>
+     </div>
+    </div>
+
+
+   <div class="main-wrap-body" ng-show="model.dimension == 2" class="column">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li><div hb-unit-select unit-id="model.allAdministorPageParams.createUnitId" default-unit-id="b{{model.createUnitId}}"
+                     default-choose="true"  default-txt="请选择创建单位" ng-if="events.isSubProjectManager()"></div>
+            </li>
+            <li><input type="text" class="ipt ipt-medium" ng-model="model.allAdministorPageParams.loginInput"
+                       placeholder="账号"
+                       hb-clear-input
+                       ng-keyup="events.search($event)"/>
+            </li>
+            <li><input type="text" class="ipt ipt-medium" ng-model="model.allAdministorPageParams.name"
+                       hb-clear-input
+                       placeholder="姓名" ng-keyup="events.search($event)"/></li>
+            <li>
+                <select class="slt slt-medium" ng-model="model.allAdministorPageParams.status">
+                    <option ng-selected="" value="0">启用状态</option>
+                    <option value="1">启用</option>
+                    <option value="2">禁用</option>
+                </select>
+            </li>
+            <li>
+                <select class="slt slt-medium"
+                        ng-model="model.allAdministorPageParams.roleId"
+                        ng-options=" role.roleId as role.name for role in model.roleList " ng-click="events.getAllRole()">
+                    <option ng-selected="" value="">所属角色</option>
+                </select>
+            </li>
+
+            <li><a href="javascript:void(0)" has-permission="administratorManage/search"
+                   ng-click="events.searchAllAdmin($event)" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+       <div class="dash-line-3"></div>
+     <div kendo-grid="node.allAdminGrid" k-options="ui.allAdminGrid.options" >
+      </div>
+    </div>
+
+</div>
+<div ui-view></div>
+<div kendo-window="node.windows.resetWindow" k-options="ui.windows.addWindow"></div>

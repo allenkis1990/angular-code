@@ -1,0 +1,58 @@
+<div class="dialog-body lwh-pop">
+    <div class="dialog-tit">配置弹窗题考核<a href="javascript:void(0)"
+                                      class="ico ico-close"
+                                      ng-click="events.cancelEditPop()"></a></div>
+    <div class="dialog-cont" style="overflow:inherit">
+        <ul class="ul-d-form pt20 pl20 lh-1">
+
+            <li>
+                <span class="left-txt"><i>*</i>纳入班级考核：</span>
+                <label><input class="rad"
+                              ng-model="submitData.popupQuestionConfig.addPopupQuestionAssess"
+                              value="true"
+                              name="addPopupQuestionAssess"
+                              type="radio">纳入考核</label>
+            </li>
+
+            <li><span class="left-txt">来源：</span>课件知识点弹窗
+
+            <li><span class="left-txt"><i>*</i>校验弹窗题：</span><a href="javascript:void(0)"
+                                                               ng-click="events.lookHasNotPopCourseList()"
+                                                               class="txt-b">查看无弹窗题的课程</a>
+                <span style="color:red;">（保存前请先核查课程下是否有弹窗题）</span>
+            </li>
+            <li><span class="left-txt"><i>*</i>每个课程弹窗题答题次数：</span>答题次数 <input type="text"
+                                                                              ng-model="submitData.popupQuestionConfig.popupQuestionAnswerCount"
+                                                                              class="ipt ipt-c-xm"> 次
+            </li>
+            <li ng-if="model.submitType==='trainingClass'">
+                <span class="left-txt"><i>*</i>是否提供课程重学：</span>
+                <label><input class="rad"
+                              name="courseRelearn"
+                              value="true"
+                              ng-model="submitData.popupQuestionConfig.courseRelearn"
+                              type="radio">提供</label>
+                <label class="ml20"><input class="rad"
+                                           name="courseRelearn"
+                                           value="false"
+                                           ng-model="submitData.popupQuestionConfig.courseRelearn"
+                                           type="radio">不提供</label>
+
+                <div class="qus-ico">
+                    <a href="javascript:void(0)" class="a-info mr20"><span class="instructions"></span></a>
+                    <span class="qus-txt qus-txt-1" style="width:350px;">
+                                                    提供课程重学，则支持在课程进度>0%的情况下，由学员侧发起重学操作
+                                                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.saveEditPop()"
+           class="btn btn-r">保存</a>
+        <a href="javascript:void(0)"
+           class="btn btn-g ml10"
+           ng-click="events.cancelEditPop()">取消</a>
+    </div>
+</div>

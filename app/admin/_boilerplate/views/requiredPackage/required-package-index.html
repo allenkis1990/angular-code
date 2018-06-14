@@ -1,0 +1,35 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.requiredPackage'">
+    <div class="search-bar">
+        <ul class="ul-form li-fl clear">
+            <li><input type="text" ng-keydown="events.queryByEnter($event)" ng-model="model.indexPageParams.name"
+                       class="ipt ipt-medium" placeholder="请输入必修包名称"/></li>
+            <!--<li><input type="text" ng-model="model.indexPageParams.creator" class="ipt ipt-medium" placeholder="请输入创建人姓名"/></li>-->
+            <li>
+                <input kendo-date-picker="node.createBeginDate" k-options="ui.datePicker.begin"
+                       ng-model="model.indexPageParams.createBeginDate" type="text" class="ipt ipt-medium"
+                       placeholder="必修包创建时间"
+                       hb-readonly hb-clear-input
+                       ng-keydown="events.queryByEnter($event)"
+                /> -
+                <input kendo-date-picker="node.createEndDate" k-options="ui.datePicker.end"
+                       ng-model="model.indexPageParams.createEndDate" type="text" class="ipt ipt-s"
+                       placeholder="必修包创建时间"
+                       hb-readonly hb-clear-input
+                       ng-keydown="events.queryByEnter($event)"
+                />
+            </li>
+            <li><a href="#" ng-click="events.reloadRequiredPackageGrid($event)" class="btn btn-b">查询</a></li>
+        </ul>
+    </div>
+    <div class="dash-line-2"></div>
+    <div class="column">
+        <a href="javascript: void(0);" has-permission="requiredPackage.editNew"
+           ng-click="$state.go('states.requiredPackage.editNew')" class="btn-r btn">新建必修课包</a>
+    </div>
+
+    <div class="column table-box mt20">
+        <div kendo-grid="node.requiredPackageGrid" k-options="ui.requiredPackageGrid"></div>
+    </div>
+</div>
+<div ui-view></div>
+

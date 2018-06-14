@@ -1,0 +1,24 @@
+<div class="pf-dialog-container" ng-repeat="dialog in contentDialogs" ng-style="{zIndex: dialog.dialogIndex}">
+    <div class="mask"></div>
+    <div class="dialog w-2" ng-style="dialog.style">
+        <div class="dialog-box" style="margin-top:5px">
+            <div class="dialog-hd">b{{dialog.title}}<a href="javascript:void(0)"
+                                                       ng-click="dialog.cancel($index)"
+                                                       class="p-ico close"></a></div>
+            <div class="dialog-bd" ng-include="dialog.templateUrl" data-onload="dialog.loaded($index)">
+
+            </div>
+            <div class="dialog-ft">
+                <a href="javascript:void(0)" class="btn-normal btn"
+                   ng-click="dialog.click($index, $event)"
+                   ng-if="dialog.showCertain"
+                   ng-disabled="dialog.requestIng">确定</a>
+                <a href="javascript:void(0)"
+                   class="btn-gray btn ml10"
+                   ng-click="dialog.cancel($index)" ng-if="dialog.showCancel">取消</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

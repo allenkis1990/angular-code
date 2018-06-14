@@ -1,0 +1,42 @@
+<div class="mb10"><b>待选题库</b></div>
+<div class="search-bar mt10">
+    <ul class="ul-form li-fl clear">
+        <li>
+            <input type="text" class="ipt ipt-medium" placeholder="请输入题库名称">
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="btn btn-b" ng-click="events.reLoadQuestionLibraryUnAuthorizeGrid()">查询</a>
+        </li>
+    </ul>
+</div>
+<div class="column table-box mt20">
+
+    <div kendo-grid="node.questionLibraryUnAuthorizeGridInstance"
+         k-options="grid.questionLibraryUnAuthorizeGrid">
+    </div>
+</div>
+<div class="mt30"><b>待确认授权题库</b></div>
+<table class="table table-nf mt10">
+    <thead>
+    <tr>
+        <th width="150">题库名称</th>
+        <th width="60">试题数量</th>
+        <th width="120">上级题库</th>
+        <th width="50">创建时间</th>
+        <th width="50">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in model.toBeAuthorizeQuestionLibraryResList">
+        <td ng-bind="item.name"></td>
+        <td ng-bind="item.questionCount"></td>
+        <td ng-bind="item.parentLibrary"></td>
+        <td ng-bind="item.createTime"></td>
+        <td class="op"><a href="">详情</a><a href="" ng-click="events.removeToBeAuthorizeRes(dataItem,'QUESTION_LIBRARY')">取消选择</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="btn-center">
+    <a href="" ng-click="events.authorizeResForSingleType('QUESTION_LIBRARY',$index)" class="btn btn-r">确定授权</a>
+    <a href="" ng-click="dialog.close($index)" class="btn btn-g ml10">取消</a>
+</div>

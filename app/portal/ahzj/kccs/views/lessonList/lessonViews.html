@@ -1,0 +1,20 @@
+<!-- 位置导航 -->
+<div class="pos-nav mb30"><a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span><a href="#"
+                                                                                            ui-sref="states.accountant.lessonList">培训课程</a><span>&gt;</span><span
+        ng-bind="model.lessonViewsInfo.name"></span></div>
+<!-- /位置导航 -->
+<div class="p-wrap-full">
+    <div class="p20 clear">
+        <div class="m-article">
+            <div class="article-top">
+                <h1 ng-bind="model.lessonViewsInfo.name"></h1>
+                <div class="date"><i class="p-ico pubdate-icon"></i>创建时间：<span
+                        ng-bind="model.lessonViewsInfo.createTime"></span><span class="ml10"></span></div>
+            </div>
+            <div class="article-text">
+                <h4>课程简介：</h4>
+                <p ng-bind="model.lessonViewsInfo.abouts"></p>
+            </div>
+        </div>
+    </div>
+</div>

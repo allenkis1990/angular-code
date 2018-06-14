@@ -1,0 +1,27 @@
+<div class="header clear">
+    <a href="javascript:void(0);" class="logo fl" style="font-size: 34px;color: #2F404A;">
+        <!--    b{{$$userInfo.unitName}}-->
+        <span ng-bind="porTitleName+'管理平台'"></span>
+    </a>
+
+    <div class="header-nav fr">
+        <a href="javascript:void(0)" ng-click="doLogOut()">退出登录</a>
+    </div>
+    <div class="user fr">
+        <div class="img-user fl">
+            <img ng-src="b{{ $$userInfo.photo ? '/mfs'+ $$userInfo.photo : '@systemUrl@/images/user-img.jpg'}}" alt=" ">
+            <span class="img-mask"><img ng-src="@systemUrl@/images/mask-user-img.png"></span>
+        </div>
+        <div class="user-info fl">
+            <span class="user-name" style="cursor: pointer;"
+                  ng-bind="$$userInfo.userName" ng-click="globle.stateGo('states.personCenter', '个人中心')"></span>
+            <span class="user-name" ng-if="!$$userInfo.userName || $$userInfo.userName === ''"
+                  style="color: red;">请登录</span>
+            <a href="javascript:void(0);" class="user-level rd3"
+               style="cursor: default;"
+               ng-if="$$userInfo.userName && $$userInfo.userName !== ''">管理员
+                <!--<i class="ico"></i>-->
+            </a>
+        </div>
+    </div>
+</div>

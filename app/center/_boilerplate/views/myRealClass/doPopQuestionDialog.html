@@ -1,0 +1,218 @@
+<div class="mask-bg-lwh" style="z-index:998"></div>
+<div class="m-dialog" style="z-index:999;position:fixed;top:50%;left:50%;margin-left:-300px;margin-top:-170px ">
+    <div class="dialog-box w6">
+        <div class="dialog-bd">
+            <!--单选-->
+            <div class="question-panel" ng-if="popModel.currentQuestion.questionType===2">
+                <div class="question-tit">
+                    <span class="tit-label">单选题</span>
+                    <div class="panel-bd tit-bd" ng-bind="popModel.currentQuestion.topic"></div>
+                </div>
+                <!--答题选项-->
+                <div class="question-option" ng-if="!popModel.lookAnswer">
+                    <span class="tit-label">选项</span>
+                    <div class="panel-bd option-bd">
+                        <div class="option-items"
+                             ng-click="popEvents.chosePanduan(item)"
+                             ng-class="{'checked':item.ischecked}"
+                             ng-repeat="item in popModel.currentQuestion.configurationItems">
+                            <span class="options-label"
+                                  ng-bind="item.enIndex"></span>
+                            <div class="items-bd" ng-bind="item.content"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="result-box"
+                     ng-if="!popModel.lookAnswer&&popModel.showResult"
+                     ng-class="{'right':popModel.currentQuestion.right,'wrong':!popModel.currentQuestion.right}">
+                    <span class="p-ico"></span>
+                    <span class="txt" ng-bind="popModel.currentQuestion.right?'回答正确':'回答错误'"></span>
+                </div>
+
+
+                <!--题西选项-->
+                <div ng-if="popModel.lookAnswer">
+                    <div class="question-option">
+                        <span class="tit-label">选项</span>
+                        <div class="panel-bd option-bd">
+                            <div class="option-items"
+                                 ng-repeat="item in popModel.currentQuestion.configurationItems">
+                            <span class="options-label"
+                                  ng-bind="item.enIndex"></span>
+                                <div class="items-bd" ng-bind="item.content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-box"
+                         ng-class="{'right':popModel.currentQuestion.right,'wrong':!popModel.currentQuestion.right}">
+                        <span class="p-ico"></span>
+                        <span class="txt" ng-bind="popModel.currentQuestion.right?'回答正确':'回答错误'"></span>
+                        <span class="ml50">正确答案：</span><span class="t1"
+                                                             ng-bind="popEvents.parseRightAnswer('dan')"></span>
+                        <span class="ml50">你的答案：</span><span class="t2" ng-bind="popEvents.parseMyAnswer()"></span>
+                    </div>
+
+                    <div class="question-option mt20"
+                         ng-if="popModel.currentQuestion.description">
+                        <span class="tit-label">题析</span>
+                        <div class="panel-bd option-bd" ng-bind="popModel.currentQuestion.description"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--判断-->
+            <div class="question-panel" ng-if="popModel.currentQuestion.questionType===1">
+                <div class="question-tit">
+                    <span class="tit-label">判断题</span>
+                    <div class="panel-bd tit-bd" ng-bind="popModel.currentQuestion.topic"></div>
+                </div>
+                <!--答题选项-->
+                <div class="question-option" ng-if="!popModel.lookAnswer">
+                    <span class="tit-label">选项</span>
+                    <div class="panel-bd option-bd">
+                        <div class="option-items"
+                             ng-class="{'checked':item.ischecked}"
+                             ng-click="popEvents.chosePanduan(item)"
+                             ng-repeat="item in popModel.currentQuestion.configurationItems">
+                            <span class="options-label"
+                                  ng-bind="item.enIndex"></span>
+                            <div class="items-bd" ng-bind="item.content"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-box"
+                     ng-if="!popModel.lookAnswer&&popModel.showResult"
+                     ng-class="{'right':popModel.currentQuestion.right,'wrong':!popModel.currentQuestion.right}">
+                    <span class="p-ico"></span>
+                    <span class="txt" ng-bind="popModel.currentQuestion.right?'回答正确':'回答错误'"></span>
+                </div>
+
+
+                <!--题西选项-->
+
+                <div ng-if="popModel.lookAnswer">
+
+                    <div class="question-option">
+                        <span class="tit-label">选项</span>
+                        <div class="panel-bd option-bd">
+                            <div class="option-items"
+                                 ng-repeat="item in popModel.currentQuestion.configurationItems">
+                            <span class="options-label"
+                                  ng-bind="item.enIndex"></span>
+                                <div class="items-bd" ng-bind="item.content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-box"
+                         ng-class="{'right':popModel.currentQuestion.right,'wrong':!popModel.currentQuestion.right}">
+                        <span class="p-ico"></span>
+                        <span class="txt" ng-bind="popModel.currentQuestion.right?'回答正确':'回答错误'"></span>
+                        <span class="ml50">正确答案：</span
+                        ><span class="t1" ng-if="popModel.currentQuestion.correct===true">A</span
+                    ><span class="t1" ng-if="popModel.currentQuestion.correct===false">B</span>
+                        <span class="ml50">你的答案：</span
+                        ><span class="t2" ng-if="popModel.answer[0]===true">A</span
+                    ><span class="t2" ng-if="popModel.answer[0]===false">B</span>
+                    </div>
+
+                    <div class="question-option mt20"
+                         ng-if="popModel.currentQuestion.description">
+                        <span class="tit-label">题析</span>
+                        <div class="panel-bd option-bd" ng-bind="popModel.currentQuestion.description"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--多选-->
+            <div class="question-panel" ng-if="popModel.currentQuestion.questionType===3">
+                <div class="question-tit">
+                    <span class="tit-label">多选题</span>
+                    <div class="panel-bd tit-bd" ng-bind="popModel.currentQuestion.topic"></div>
+                </div>
+                <!--答题选项-->
+                <div class="question-option" ng-if="!popModel.lookAnswer">
+                    <span class="tit-label">选项</span>
+                    <div class="panel-bd option-bd">
+                        <div class="option-items"
+                             ng-click="popEvents.choseDuoxuan(item)"
+                             ng-class="{'checked':item.ischecked}"
+                             ng-repeat="item in popModel.currentQuestion.configurationItems">
+                            <span class="options-label"
+                                  ng-bind="item.enIndex"></span>
+                            <div class="items-bd" ng-bind="item.content"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="result-box"
+                     ng-if="!popModel.lookAnswer&&popModel.showResult"
+                     ng-class="{'right':popModel.currentQuestion.right,'wrong':!popModel.currentQuestion.right}">
+                    <span class="p-ico"></span>
+                    <span class="txt" ng-bind="popModel.currentQuestion.right?'回答正确':'回答错误'"></span>
+                </div>
+
+
+                <!--题西选项-->
+                <div ng-if="popModel.lookAnswer">
+                    <div class="question-option">
+                        <span class="tit-label">选项</span>
+                        <div class="panel-bd option-bd">
+                            <div class="option-items"
+                                 ng-repeat="item in popModel.currentQuestion.configurationItems">
+                            <span class="options-label"
+                                  ng-bind="item.enIndex"></span>
+                                <div class="items-bd" ng-bind="item.content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-box"
+                         ng-class="{'right':popModel.currentQuestion.right,'wrong':!popModel.currentQuestion.right}">
+                        <span class="p-ico"></span>
+                        <span class="txt" ng-bind="popModel.currentQuestion.right?'回答正确':'回答错误'"></span>
+                        <span class="ml50">正确答案：</span><span class="t1"
+                                                             ng-bind="popEvents.parseRightAnswer('duo')"></span>
+                        <span class="ml50">你的答案：</span><span class="t2"
+                                                             ng-bind="popEvents.parseMyAnswer()"></span>
+                    </div>
+
+                    <div class="question-option mt20" ng-if="popModel.currentQuestion.description">
+                        <span class="tit-label">题析</span>
+                        <div class="panel-bd option-bd" ng-bind="popModel.currentQuestion.description"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="dialog-bottom tc rel">
+            <a href="javascript:void(0)"
+               ng-if="!popModel.lookAnswer&&!popModel.showCloseBtn&&!popModel.currentQuestionOver"
+               ng-click="popEvents.submit()"
+               class="btn-normal btn">确定</a>
+
+            <a href="javascript:void(0)"
+               ng-if="((popModel.count<popModel.questionList.length-1)&&popModel.lookAnswer)||popModel.currentQuestionOver"
+               ng-click="popEvents.next()"
+               class="btn-normal btn">下一题</a>
+
+
+            <a href="javascript:void(0)"
+               ng-if="popModel.showCloseBtn"
+               ng-click="popEvents.close()"
+               class="btn-normal btn">关闭窗口</a>
+
+            <div ng-if="!popModel.lookAnswer" class="ui-label">已答次数/可答次数：<span
+                    ng-bind="popModel.currentQuestion.hasAnswerCount"></span>/<span
+                    ng-bind="popModel.currentQuestion.allowAnswerCount"></span></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="main-wrap main-wrap-2">
+
+    <div class="w-bg clear mb50">
+        <!-- 位置导航 -->
+        <div class="pos-nav clear">
+            <span class="p-ico"></span>当前位置：<a href="#" ui-sref="states.accountant">首页</a><span>&gt;</span><a href="javascript:void(0)">培训指南</a><span>&gt;</span>{{events.getTypeName()}}
+        </div>
+        <!-- /位置导航 -->
+        <div class="clear mt15">
+            <div class="left-block fl">
+                <div class="left-block-hd">培训指南</div>
+                <div class="ul-left-list">
+                    <a class="list-items"
+                       ng-class="{'current':model.type==='1'}"
+                       ng-click="$state.go('states.accountant.trainDirection',{type:'1'})"
+                       href="javascript:void(0)">培训须知</a>
+                    <a class="list-items"
+                       ng-class="{'current':model.type==='2'}"
+                       ng-click="$state.go('states.accountant.trainDirection',{type:'2'})"
+                       href="javascript:void(0)">培训流程</a>
+                    <a class="list-items"
+                       ng-class="{'current':model.type==='3'}"
+                       ng-click="$state.go('states.accountant.trainDirection',{type:'3'})"
+                       href="javascript:void(0)">操作演示</a>
+                    <a class="list-items"
+                       ng-class="{'current':model.type==='4'}"
+                       ng-click="$state.go('states.accountant.trainDirection',{type:'4'})"
+                       href="javascript:void(0)">常见问题</a>
+                </div>
+            </div>
+
+
+
+
+            <div class="w9 fr mr15 mh500" ui-view="detail">
+                <div class="m-article" ng-if="model.type==='1'">
+                    <div class="article-top-2">
+                        <h1>培训须知</h1>
+                    </div>
+                    <div class="article-text-2">
+                        <!--<p class="b">一、学习须知</p>
+                        <p>对培训平台操作和使用上有疑问您可拨打客服电话0551-65329081转614进行咨询。<br>
+                            视频暂不支持谷歌、火狐、遨游以及极速等浏览器播放视频；建议使用IE浏览器，IE8以上版本请使用兼容模式。</p>
+                        <p class="b">二、缴费须知</p>
+                        <p>平台仅支持在线网银缴费，学员根据缴费向导完成缴费后，系统将自动为您开通学习权限。</p>-->
+                    </div>
+                </div>
+
+
+                <div class="m-article" ng-if="model.type==='2'">
+                    <div class="article-top-2">
+                        <h1>培训流程</h1>
+                    </div>
+                    <div class="article-text-2">
+                        <!--<p class="b">一、学习须知</p>
+                        <p>对培训平台操作和使用上有疑问您可拨打客服电话0551-65329081转614进行咨询。<br>
+                            视频暂不支持谷歌、火狐、遨游以及极速等浏览器播放视频；建议使用IE浏览器，IE8以上版本请使用兼容模式。</p>
+                        <p class="b">二、缴费须知</p>
+                        <p>平台仅支持在线网银缴费，学员根据缴费向导完成缴费后，系统将自动为您开通学习权限。</p>-->
+                    </div>
+                </div>
+
+                <div class="m-article" ng-if="model.type==='3'">
+                    <div class="article-top-2">
+                        <h1>操作演示</h1>
+                    </div>
+                    <div class="article-text-2">
+                        <!--<p class="b">一、学习须知</p>
+                        <p>对培训平台操作和使用上有疑问您可拨打客服电话0551-65329081转614进行咨询。<br>
+                            视频暂不支持谷歌、火狐、遨游以及极速等浏览器播放视频；建议使用IE浏览器，IE8以上版本请使用兼容模式。</p>
+                        <p class="b">二、缴费须知</p>
+                        <p>平台仅支持在线网银缴费，学员根据缴费向导完成缴费后，系统将自动为您开通学习权限。</p>-->
+                    </div>
+                </div>
+
+
+                <div class="m-news-2" ng-if="model.type==='4'">
+                    <ul class="news-bd" ng-if="model.cjwtList.length>0">
+                        <li ng-repeat="item in model.cjwtList"><a href="javascript:void(0)"
+                                                                  ng-click="events.goDetail(item)"
+                                                                  ng-bind="item.title"></a><span class="time" ng-bind="item.publishTime"></span></li>
+                    </ul>
+                    <div pagination
+                         ng-if="model.cjwtList.length>0"
+                         ng-change="events.getSimpleList()"
+                         ng-model="model.currentPage"
+                         total-items="model.total"
+                         items-per-page="model.itemsPerPage"
+                         max-size="model.maxSize"
+                         previous-text="上一页"
+                         next-text="下一页"></div>
+
+                    <div class="m-no-data tc" ng-if="model.cjwtList.length<=0">
+                        <img src="ahzj/kccs/images/no-data.png" alt="空数据">
+                        <p class="txt">当前分类下还没有数据哦</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

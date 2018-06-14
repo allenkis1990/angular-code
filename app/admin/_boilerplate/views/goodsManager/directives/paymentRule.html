@@ -1,0 +1,261 @@
+<div class="column">
+    <div class="col-tit clear">
+        收款规则<span ng-if="justView!=='true'">配置</span>
+        <div class="fr">
+            <div ng-if="ruleModel.editable&&editRule===false" loading-biu is-loading="ruleModel.saving"
+                 loading="events.editRule($event)" text="编辑"></div>
+            <div ng-if="ruleModel.editable&&editRule===true" loading-biu
+                 is-loading="ruleModel.saving"
+                 loading="events.saveRule($event)" text="保存"></div>
+            <div ng-if="ruleModel.editable&&editRule===true" loading-biu
+                 is-disable="ruleModel.saving"
+                 loading="events.cancelEditRule($event)" text="取消"></div>
+            <div ng-if="ruleModel.editable" sku-id="skuId" authorized-op-dialog></div>
+        </div>
+    </div>
+    <div class="dash-line-1"></div>
+    <ul class="ul-d-form mt20">
+        <li><span class="left-txt"><i>*</i>商品收款帐户：</span>
+            <label ng-if="editRule||ruleModel.paymentRule.type==1">
+                <input ng-if="editRule" class="rad" type="radio" value=1
+                       ng-model="ruleModel.paymentRule.type"/>
+                <span ng-if="justView=='true'">培训方案由授权方自主收款</span>
+                <span ng-if="justView!=='true'">本单位自主收款</span>
+            </label>
+            <label ng-if="editRule||ruleModel.paymentRule.type==2">
+                <input ng-if="editRule" class="rad" type="radio" value=2
+                       ng-model="ruleModel.paymentRule.type"/>
+                <span ng-if="justView=='true'">培训方案由本单位（被授权方）自主收款</span>
+                <span ng-if="justView!=='true'">被授权单位自主收款</span>
+            </label>
+        </li>
+        <li class="clear" ng-if="ruleModel.paymentRule.type==1">
+            <span class="left-txt mt20 fl"><i>*</i>收款帐号清单：</span>
+
+            <div class="w-textarea fl">
+                <div class="tab-tit mt10">
+                    <a href=""
+                       ng-repeat="value in ruleModel.tabList"
+                       ng-class="{current:ruleModel.currentTab.code===value.code}"
+                       ng-bind="value.name"
+                       ng-click="events.changeTab($event,value)"></a>
+                </div>
+                <!--收款账号配置信息-->
+                <div class="tab-bd mt20">
+                    <table class="table table-nf">
+                        <thead>
+                        <tr class="bg-gl">
+                            <th width="60">支付方式</th>
+                            <th>支付帐号类型</th>
+                            <th>收款帐号别名</th>
+                            <th>开户帐号信息</th>
+                            <th>分行号</th>
+                            <th width="60">柜台号</th>
+                        </tr>
+                        </thead>
+                        <!--含有子渠道-->
+                        <tbody
+                                ng-if="utils.validateIsNull(ruleModel.currentTab.subTradeChannel)===false&&ruleModel.currentTab.subTradeChannel.length>0"
+                                ng-repeat="bodyItem in ruleModel.currentTab.subTradeChannel">
+                        <tr>
+                            <td colspan="6" class="b tl t-b" ng-bind="bodyItem.name"></td>
+                        </tr>
+                        <tr
+                                ng-if="utils.validateIsNull(bodyItem.paymentAccountList)===false&&bodyItem.paymentAccountList.length>0"
+                                ng-repeat="item in bodyItem.paymentAccountList">
+                            <td ng-bind="item.firstType===1?'线上':(item.firstType===2?'线下':'未知')"></td>
+                            <td ng-bind="item.tradeChannelName?item.tradeChannelName:'-'"></td>
+                            <td ng-bind="item.accountAlias?item.accountAlias:'-'"></td>
+                            <td>
+                                <p ng-if="item.code==='OTHER'"> 商户号：
+                                    <span ng-bind="item.accountNo?item.accountNo:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code!=='CCB'&&item.code!=='OTHER'">商户号：
+                                    <span ng-bind="item.accountNo?item.accountNo:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code==='CCB'"> 开户户名：
+                                    <span ng-bind="item.merchantName?item.merchantName:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code==='CCB'"> 开户银行：
+                                    <span ng-bind="item.depositBank?item.depositBank:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code==='CCB'"> 银行账号：
+                                    <span ng-bind="item.accountNo?item.accountNo:'-'"></span>
+                                </p>
+                            </td>
+                            <td ng-bind="item.branchBankId?item.branchBankId:'-'"></td>
+                            <td ng-bind="item.counterNumber?item.counterNumber:'-'"></td>
+                        </tr>
+                        <tr
+                                ng-if="utils.validateIsNull(bodyItem.paymentAccountList)===true||bodyItem.paymentAccountList.length===0">
+                            <td colspan="6">该渠道下无本单位自主创建的收款帐号，被授权方无法使用。请前往渠道配置调整。</td>
+                        </tr>
+                        </tbody>
+                        <!--不含子渠道-->
+                        <tbody
+                                ng-if="utils.validateIsNull(ruleModel.currentTab.subTradeChannel)===true||ruleModel.currentTab.subTradeChannel.length===0"
+                        >
+                        <tr
+                                ng-if="utils.validateIsNull(ruleModel.currentTab.paymentAccountList)===false&&ruleModel.currentTab.paymentAccountList.length>0"
+
+                                ng-repeat="item in ruleModel.currentTab.paymentAccountList">
+                            <td ng-bind="item.firstType===1?'线上':(item.firstType===2?'线下':'未知')"></td>
+                            <td ng-bind="item.tradeChannelName?item.tradeChannelName:'-'"></td>
+                            <td ng-bind="item.accountAlias?item.accountAlias:'-'"></td>
+                            <td>
+                                <p ng-if="item.code==='OTHER'"> 商户号：
+                                    <span ng-bind="item.accountNo?item.accountNo:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code!=='CCB'&&item.code!=='OTHER'">商户号：
+                                    <span ng-bind="item.accountNo?item.accountNo:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code==='CCB'"> 开户户名：
+                                    <span ng-bind="item.merchantName?item.merchantName:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code==='CCB'"> 开户银行：
+                                    <span ng-bind="item.depositBank?item.depositBank:'-'"></span>
+                                </p>
+
+                                <p ng-if="item.code==='CCB'"> 银行账号：
+                                    <span ng-bind="item.accountNo?item.accountNo:'-'"></span>
+                                </p>
+                            </td>
+                            <td ng-bind="item.branchBankId?item.branchBankId:'-'"></td>
+                            <td ng-bind="item.counterNumber?item.counterNumber:'-'"></td>
+                        </tr>
+                        <tr
+                                ng-if="utils.validateIsNull(ruleModel.currentTab.paymentAccountList)===true||ruleModel.currentTab.paymentAccountList.length===0">
+                            <td colspan="6">该渠道下无本单位自主创建的收款帐号，被授权方无法使用。请前往渠道配置调整。</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="column mt20">
+                        <div class="col-tit">发票信息</div>
+                        <div class="dash-line-1"></div>
+                    </div>
+                    <ul class="ul-d-form udf-9 bg-g lh-1">
+                        <li class="clear">
+                            <span class="left-txt fl">是否提供发票：</span>
+
+                            <div class="w-4 fl label-view">
+                                <label>
+                                    <input class="rad" type="radio" disabled value=2
+                                           ng-model="ruleModel.currentTab.billConfig.isProvide">
+                                    提供发票
+                                </label>
+                                <label class="ml50">
+                                    <input class="rad" type="radio" disabled value=1
+                                           ng-model="ruleModel.currentTab.billConfig.isProvide">
+                                    不提供发票
+                                </label><br/>
+                                <label>
+                                    <input class="rad" type="radio" disabled value=1
+                                           ng-model="ruleModel.currentTab.billConfig.provideType">
+                                    开发学员自选是否需要发票
+                                </label>
+                                <label class="ml50">
+                                    <input class="rad" type="radio" disabled value=2
+                                           ng-model="ruleModel.currentTab.billConfig.provideType">
+                                    强制向学员提供发票
+                                </label>
+                            </div>
+                        </li>
+                        <li class="clear">
+                            <span class="left-txt fl">发票类型：</span>
+
+                            <div class="w-4 fl label-view">
+                                <label>
+                                    <input class="rad" type="checkbox" disabled
+                                           ng-model="ruleModel.currentTab.billConfig.selectCommonVAT">
+                                    增值税普通发票
+                                </label>
+                                <label class="ml50">
+                                    <input class="rad" type="checkbox" disabled
+                                           ng-model="ruleModel.currentTab.billConfig.selectCommonElectron">
+                                    电子普通发票
+                                </label><br/>
+                                <label>
+                                    <input class="rad" type="checkbox" disabled
+                                           ng-model="ruleModel.currentTab.billConfig.selectVATOnly">
+                                    增值税专用发票
+                                </label>
+                                <label class="ml50">
+                                    <input class="rad" type="checkbox" disabled
+                                           ng-model="ruleModel.currentTab.billConfig.selectNonTax">
+                                    非税务票（纸质）
+                                </label>
+                            </div>
+                        </li>
+                        <li class="clear"
+                            ng-if="!(ruleModel.currentTab.billConfig.selectVATOnly && !ruleModel.currentTab.billConfig.selectCommonVAT && !ruleModel.currentTab.billConfig.selectCommonElectron && !ruleModel.currentTab.billConfig.selectNonTax)">
+                            <span class="left-txt fl">发票抬头：</span>
+
+                            <div class="w-4 fl label-view">
+                                <label>
+                                    <input class="rad" type="checkbox" disabled
+                                           ng-model="ruleModel.currentTab.billConfig.selectPersonal">
+                                    个人
+                                </label>
+                                <label class="ml50">
+                                    <input class="rad" type="checkbox" disabled checked
+                                           ng-model="ruleModel.currentTab.billConfig.selectUnit">
+                                    单位
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li><span class="left-txt fl"><i>*</i>商品定价规则：</span>
+
+            <div class="w-textarea fl ml5">
+                <label class="db" ng-if="editRule||ruleModel.paymentRule.priceType==1">
+                    <input ng-if="editRule" class="rad" type="radio" value=1
+                           ng-model="ruleModel.paymentRule.priceType"/>
+                    <span ng-if="justView=='true'">按照授权方制定的固定价格销售。</span>
+                    <span ng-if="justView!=='true'">被授权销售单位不可定价，只可按本单位设定的价格销售。</span>
+
+                </label>
+                <label ng-class="{'mt5':editRule}" class="db" ng-if="editRule||ruleModel.paymentRule.priceType==2">
+                    <input ng-if="editRule" class="rad" type="radio" value=2
+                           ng-model="ruleModel.paymentRule.priceType"/>
+                    <span ng-if="justView=='true'">支持自主灵活定价培训方案价格。</span>
+                    <span ng-if="justView!=='true'">支持被授权销售单位自主灵活定价，不受本单位限制。</span>
+                </label>
+                <label ng-class="{'mt5':editRule}" class="db" ng-if="editRule||ruleModel.paymentRule.priceType==3">
+                    <input ng-if="editRule" class="rad" type="radio" value=3
+                           ng-model="ruleModel.paymentRule.priceType"/>
+                    <span ng-if="justView=='true'">按照授权方指定的销售价区间，定价销售。</span>
+                    <span ng-if="justView!=='true'">被授权销售单位只可在本单位设定的销售价区间内，设定销售价销售。</span>
+                </label>
+            </div>
+        </li>
+        <li ng-if="ruleModel.paymentRule.priceType==3" class="clear"><span class="left-txt mt5 fl"><i>*</i>销售价区间：</span>
+
+            <div ng-if="editRule" class="mt5 w-textarea fl">
+                <input type="text" class="ipt ipt-mini tc" ng-model="ruleModel.paymentRule.priceStart"
+                       placeholder="请输入数字"> 元 ≤ 销售价 ≤
+                <input type="text" class="ipt ipt-mini tc" ng-model="ruleModel.paymentRule.priceEnd"
+                       placeholder="请输入数字"> 元。
+                <span class="t-r">请输入正整数数字（包括“0”）</span>
+            </div>
+            <div ng-if="editRule==false" class="w-textarea fl">
+                <label class="mt5 ml5 db">
+                    <span ng-bind="ruleModel.paymentRule.priceStart"></span>
+                    元 ≤ 销售价 ≤
+                    <span ng-bind="ruleModel.paymentRule.priceEnd"></span>元。
+                </label>
+            </div>
+        </li>
+    </ul>
+</div>
+
+

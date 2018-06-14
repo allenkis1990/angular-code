@@ -1,0 +1,34 @@
+<div class="dialog-body">
+    <!--  <div class="dialog-tit" style="text-align: left"><a href="#" class="p-ico"></a></div>-->
+    <div class="dialog-cont">
+        <p style="text-align: left">测验最高分
+            <span class="fs24 txt-o" ng-if="log.haveTest===true"><span>b{{log.highestScore}}</span>
+            <span class="fs24 txt-o" ng-if="log.haveTest===false"><span>-</span></span>分
+            </span>
+        </p>
+        <p class="mt10" style="text-align: left;font-weight: 600">测验记录</p>
+        <table class="ui-table table-s table-line mt5">
+            <thead>
+            <tr>
+                <th width="60" style="text-align: center">NO.</th>
+                <th width="280" style="text-align: center">交卷时间</th>
+                <th width="100" style="text-align: center">得分(分)</th>
+                <th class="op" style="text-align: center">操作</th>
+            </tr>
+            </thead>
+        </table>
+        <div class="table-h">
+            <table class="ui-table table-s table-line">
+                <tbody ng-repeat="(x,item) in log.practicePapers">
+                <tr>
+                    <td width="60" style="text-align: center">b{{x+1}}</td>
+                    <td width="280" style="text-align: center">b{{item.completeTime}}</td>
+                    <td width="100" style="text-align: center">b{{item.score}}</td>
+                    <td class="op"><a href="javascript:void(0)" ng-click="events.look(item)">查看</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--     <p class="tc mt10"><a href="#" class="a-more">查看更多+</a></p>-->
+    </div>
+</div>

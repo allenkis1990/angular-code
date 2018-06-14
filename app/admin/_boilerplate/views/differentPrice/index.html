@@ -1,0 +1,33 @@
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit">课程清单</div>
+        <div class="dash-line-1"></div>
+    </div>
+
+
+    <div class="column">
+
+        <table class="table table-nf table-2">
+            <thead>
+            <tr>
+                <th class="tl">课程名称</th>
+                <th width="80">学时</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in model.courseList">
+                <td class="tl" ng-bind="item.name"></td>
+                <td><span class="b fs16" ng-bind="item.period"></span>学时</td>
+                <td class="op">
+                    <a href="javascript:void(0)"
+                       ng-click="events.lookCourseDetail(item.id)">查看</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+

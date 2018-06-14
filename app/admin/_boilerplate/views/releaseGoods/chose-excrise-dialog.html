@@ -1,0 +1,28 @@
+<div class="dialog-body">
+    <div class="dialog-tit">选择测验卷<a href="javascript:void(0)"
+                                    ng-click="events.closeKendoWindow('choseExcriseWindow')"
+                                    class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+        <div class="search-bar">
+            <ul class="ul-form li-fl clear">
+                <li><input type="text"
+                           placeholder="请填写试卷名称"
+                           ng-keyup="events.pressEnterKey($event,'excriseGridInstance','excrisePage')"
+                           ng-model="excrise.name"
+                           class="ipt ipt-medium"></li>
+                <li><a href="javascript:void(0)"
+                       ng-click="events.MainPageQueryList($event,'excriseGridInstance','excrisePage')"
+                       class="btn btn-b">搜索</a></li>
+            </ul>
+        </div>
+
+        <div kendo-grid="kendoPlus.excriseGridInstance"
+             k-options="excriseGrid.options">
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('choseExcriseWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

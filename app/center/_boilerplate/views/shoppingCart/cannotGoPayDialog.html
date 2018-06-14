@@ -1,0 +1,16 @@
+<div class="dialog-bd">
+    <p>Sorry！ 选择结算的培训内容，存在收款帐号主体不同。无法一起结算。</p>
+    <p class="fs16 b mt15">建议按以下方案，结算</p>
+    <div class="mt15" style="height:450px; overflow:auto">
+        <div class="pay-solution-box" ng-repeat="item in model.shopping505goods" ng-if="item.shoppingCartCommodityList.length>0" >
+            <span class="num" ng-bind="$index+1"></span>
+            <p class="mt5" ng-repeat="subItem in item.shoppingCartCommodityList">[<span ng-bind="subItem.commodityType==='TRAINING_CLASS'?'培训班':'课程'"></span>]<span ng-bind="subItem.courseName"></span>，年度：<span ng-bind="subItem.skuPropertyNameList[1].skuPropertyValueName"></span>，科目：<span ng-bind="subItem.skuPropertyNameList[0].skuPropertyValueName"></span></p>
+        </div>
+    </div>
+</div>
+
+<div class="dialog-bottom tc rel">
+    <a href="javascript:void(0)"
+       ng-click="model.cannotGoPayDialog.remove()"
+       class="btn-normal btn">确定</a>
+</div>

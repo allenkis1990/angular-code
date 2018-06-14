@@ -1,0 +1,111 @@
+<div class="dialog w-textarea3" kendo-window="node.windows.editWindow"
+     k-options="windowOptions"
+     ng-click="events.closeTree($event)" style="width:550px;">
+    <div class="dialog-body">
+        <div class="dialog-tit">教师帐号基础信息<a href="javascript:void(0);" class="ico ico-close"
+                                           ng-click="events.closeEditWindow();teacherInfo.$setPristine()"></a></div>
+        <div class="dialog-cont">
+            <form name="teacherInfo" novalidate>
+                <input type="hidden" ng-model="model.teacherInfo.id">
+                <input type="hidden" ng-model="model.teacherInfo.userId">
+                <ul class="ul-form uf-1 clear" style="width:483px;">
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 账号：</span>
+                        <span ng-bind="model.teacherInfo.account"></span>
+                    </li>
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 持有者姓名：</span><input type="text"
+                                                                                                   class="ipt ipt-medium"
+                                                                                                   name="yourname"
+                                                                                                   ng-model="model.teacherInfo.name"
+                                                                                                   placeholder="请输入姓名"
+                                                                                                   ng-maxlength="50"
+                                                                                                   required
+                                                                                                   ng-required="true"
+                    />
+                        <span ng-show="teacherInfo.yourname.$dirty &&
+              teacherInfo.yourname.$error.required"
+                              class="li-prompt lip-2">
+                <span class="ico ico-prompt"></span>
+                请输入持有者姓名！
+              </span>
+
+                        <span ng-show="teacherInfo.yourname.$dirty &&
+              !teacherInfo.yourname.$error.required &&
+              teacherInfo.yourname.$error.maxlength"
+                              class="li-prompt lip-2">
+                <span class="ico ico-prompt"></span>
+                姓名长度不能超过50
+              </span>
+                    </li>
+                    <li>
+                        <span class="s-txt width124"><i class="text-red">*</i> 邮箱号：</span><input type="email"
+                                                                                                 class="ipt ipt-medium"
+                                                                                                 name="email"
+                                                                                                 placeholder="请输入邮箱号"
+                                                                                                 ng-model="model.teacherInfo.email"
+                                                                                                 required
+                                                                                                 ng-pattern="regexps.email"
+                                                                                                 ng-maxlength="50"
+                                                                                                 ajax-data="validateEmailParams"
+                                                                                                 ajax-validate
+                                                                                                 ajax-url="/web/admin/teacher/validateEmail"
+                    />
+                        <span ng-show="teacherInfo.email.$dirty &&
+              teacherInfo.email.$error.required" class="li-prompt">
+                <span class="ico ico-prompt lip-2"></span>
+                请输入邮箱！
+              </span>
+                        <span ng-show="teacherInfo.email.$dirty &&
+              !teacherInfo.email.$error.required &&
+              teacherInfo.email.$error.pattern"
+                              class="li-prompt lip-2">
+                <span class="ico ico-prompt"></span>
+                邮箱格式不正确！
+              </span>
+                        <span ng-show="teacherInfo.email.$dirty &&
+              !teacherInfo.email.$error.required &&
+              teacherInfo.email.$error.maxlength"
+                              class="li-prompt lip-2">
+                <span class="ico ico-prompt"></span>
+                邮箱长度不能超过50！
+              </span>
+                        <span ng-show="teacherInfo.email.$dirty &&
+              !teacherInfo.email.$error.required &&
+              !teacherInfo.email.$error.pattern &&
+              !teacherInfo.email.$error.maxlength &&
+              teacherInfo.email.$error.ajaxValidate"
+                              class="li-prompt lip-2">
+                <span class="ico ico-prompt"></span>
+                邮箱已被使用！
+              </span>
+                    </li>
+                    <li><span class="s-txt width124"><i class="text-red">*</i> 所在单位：</span>
+                        <span ng-bind="model.teacherInfo.unitName"></span>
+                    </li>
+                    <li>
+                        <span class="s-txt width118"></span>
+                        <span class="txt-r"> 注：</span>
+                        1、帐号所属的单位，即是该帐号的管理范围；<br/>
+                        <span
+                                class="ml146">&nbsp;&nbsp;2、初始密码统一为“teacher”
+              </span>
+                    </li>
+                    <li>
+                        <div class="btn-center">
+                            <input type="button" ng-click="events.saveEdit();teacherInfo.$setPristine()"
+                                   ng-disabled="teacherInfo.$invalid||showDisabled"
+                                   ng-class="{'btn-g': !teacherInfo.$valid||showDisabled, 'btn-r': teacherInfo.$valid && !showDisabled}"
+                                   class="btn"
+                                   value="保存">
+                            <input type="button" ng-click="events.closeEditWindow();teacherInfo.$setPristine()"
+                                   class="btn btn-g ml10"
+                                   value="取消">
+                        </div>
+                    </li>
+                </ul>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>

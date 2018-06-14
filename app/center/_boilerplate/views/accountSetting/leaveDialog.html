@@ -1,0 +1,13 @@
+<div class="mask-bg-lwh" style="z-index:998"></div>
+<div class="dialog mt20" style="width: 300px;position:fixed;z-index:100;top:30%;left:42%;z-index:999; ">
+    <div class="dialog-body">
+        <div class="dialog-tit dt-1"><a ng-click="closeleaveDialog()" class="p-ico"></a></div>
+        <div class=" tc fs16" ng-bind="content.content">
+            <!--      你编辑的账号信息尚未保存，离开会使内容丢失，确定离开此页吗？-->
+        </div>
+        <div class="btn-bar">
+            <a ng-click="leaveDialog()" class="ui-btn btn-o" ng-bind="content.okValue">离开此页</a>
+            <a ng-click="closeleaveDialog()" class="ui-btn btn-g ml10" ng-bind="content.cancel">留在此页</a>
+        </div>
+    </div>
+</div>

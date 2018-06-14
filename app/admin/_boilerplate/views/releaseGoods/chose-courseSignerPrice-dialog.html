@@ -1,0 +1,72 @@
+<div class="dialog-body">
+    <div class="dialog-tit">选择课程<a href="javascript:void(0)"
+                                   ng-click="events.closeKendoWindow('choseCourseIndividualWindow')"
+                                   class="ico ico-close"></a></div>
+    <div class="dialog-cont">
+
+        <div class="column">
+            <div class="col-tit">待选课程
+            </div>
+        </div>
+
+        <ul class="ul-form li-fl clear">
+            <li><input type="text"
+                       placeholder="请填写课程名称"
+                       ng-keyup="events.pressEnterKey($event,'priceCourseInstance','signerPriceCoursePage')"
+                       ng-model="priceCourseParams.courseName"
+                       class="ipt ipt-medium"></li>
+
+            <li><select class="slt slt-large"
+                        ng-options="item.coursePackageId as item.coursePackageName for item in submitData.courseLearning.poolList"
+                        ng-model="priceCourseParams.poolId">
+                <option value="">请选择课程包</option>
+            </select>
+            </li>
+
+            <li><a href="javascript:void(0)"
+                   ng-click="events.MainPageQueryList($event,'priceCourseInstance','signerPriceCoursePage')"
+                   class="btn btn-b">查询</a></li>
+        </ul>
+
+
+        <div kendo-grid="kendoPlus.priceCourseInstance"
+             k-options="priceCourseGrid.options">
+        </div>
+
+        <div class="column">
+            <div class="col-tit">共<span ng-bind="events.countTheHasChoseCourse().len"></span>门课程，共<span
+                    ng-bind="events.countTheHasChoseCourse().totalPeriod"></span>学时）
+            </div>
+
+            <table class="table table-nf table-2">
+                <thead>
+                <tr>
+                    <th class="tl">课程名称</th>
+                    <th width="120">所属课程包</th>
+                    <th width="80">学时</th>
+                    <th width="100">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in model.tempCourseIndividualPrice.courseList">
+                    <td class="tl" ng-bind="item.courseName"></td>
+                    <td ng-bind="item.coursePoolName"></td>
+                    <td><span class="b fs16" ng-bind="item.period"></span>学时</td>
+                    <td class="op">
+                        <a href="javascript:void(0)" ng-click="events.lookCourseDetail(item.courseId)">查看</a>
+                        <a href="javascript:void(0)"
+                           ng-click="events.spliceSignerPriceCourse($index,item)">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+    <div class="btn-center">
+        <a href="javascript:void(0)"
+           ng-click="events.closeKendoWindow('choseCourseIndividualWindow')"
+           class="btn btn-g ml10">取消</a>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+<div class="main-wrap-body" ng-show="$state.current.name === 'states.courseWareManager.popAdd'">
+    <div class="pos-nav-box">
+        <div class="pos-nav">
+            <a href="javascript: void(0);" ng-click="events.back($event)" class="ico return"></a>
+            <a href="javascript: void(0);" ng-click="events.back($event)" class="aw">课件管理</a> &gt; 新建弹窗题
+        </div>
+    </div>
+    <div class="dash-line-3" style="margin-top: 10px"></div>
+    <div class="col-tit">弹窗题目配置</div>
+    <form name="addPopQuestionFrom" novalidate id="popForm">
+
+        <!--共用-->
+        <ul class="ul-d-form udf-2 lh-1 ml30">
+            <li><span class="left-txt">课件名称：</span><span ng-bind="courseWareName"></span></li>
+            <li><span class="left-txt">课件时长：</span><span><span ng-bind="hour"></span>&nbsp;时&nbsp;<span
+                    ng-bind="minute"></span>&nbsp;分&nbsp;<span ng-bind="second"></span>&nbsp;秒</span></li>
+            <li><span class="left-txt"><i>*</i>弹窗时间：</span>
+                <input name="hour" ng-model="model.hour" type="text"
+                       class="ipt ipt-small" style="width: 50px;" ng-required="true" ng-pattern="/^[0-9]\d*$/"
+                       maxlength="3"/>&nbsp;时&nbsp;
+                <input name="minute" ng-model="model.minute" type="text" ng-pattern="/^[0-9]\d*$/"
+                       maxlength="2" class="ipt ipt-small" style="width: 50px;" ng-required="true"/>&nbsp;分&nbsp;
+                <input name="second" ng-model="model.second" type="text" ng-pattern="/^[0-9]\d*$/"
+                       maxlength="2" class="ipt ipt-small" style="width: 50px;" ng-required="true"/>&nbsp;秒
+                <span ng-show="addPopQuestionFrom.hour.$error.required || addPopQuestionFrom.minute.$error.required || addPopQuestionFrom.second.$error.required"
+                      class="li-prompt" style="left:400px"><span class="ico ico-prompt"></span>弹窗时间点不能为空</span>
+                <span ng-show="!(addPopQuestionFrom.hour.$error.required || addPopQuestionFrom.minute.$error.required || addPopQuestionFrom.second.$error.required) && !model.passTimePoint"
+                      class="li-prompt" style="left:400px"><span class="ico ico-prompt"></span>弹窗时间点必须小于课件时长</span>
+            </li>
+            <li><span class="left-txt"><i>*</i>试题类型：</span>
+                <label ng-repeat="qt in model.questionType">
+                    <input type="radio" ng-value="qt.typeCode" ng-click="events.changeButton()"
+                           ng-model="model.question.questionType" ng-disabled="model.saveType === 2"/> <span
+                        ng-bind="qt.name"></span>
+                </label>
+            </li>
+            <li class="clear"><span class="left-txt fl"><i>*</i>试题题目：</span>
+                <div class="fl width-600">
+                    <textarea ng-model="model.question.topic"
+                              required style="height: 110px;width: 500px;"
+                              name="topic"></textarea>
+                    <span ng-show="addPopQuestionFrom.topic.$dirty && addPopQuestionFrom.topic.$error.required"
+                          class="li-prompt left-730"><span class="ico ico-prompt"></span>请输入试题题目</span>
+                </div>
+        </ul>
+
+        <div ng-switch="model.question.questionType">
+            <!--单选题-->
+            <ul class="ul-d-form udf-2 lh-1 ml30" ng-switch-when="2">
+
+                <li><span class="left-txt"><i>*</i>试题选项个数: </span>
+                    <select class="slt slt-large" ng-change="events.setQuestionCount()" ng-model="model.questionCount">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </li>
+                <li class="clear"><span class="left-txt fl"><i>*</i>试题选项:</span>
+                    <div class="w-textarea2 fl">
+                        <div class="clear mb10" ng-repeat="item in model.question.configurationItems"
+                             style="padding-top:12px"><span
+                                class="fl mr10 b"><span ng-bind="events.digitalToLetter.($index)"></span></span>
+
+                            <div class="fl width-600">
+                                <input prefix-name="textarea_"
+                                       dynamic-name="$index"
+                                       ng-model="item.content" type="text"
+                                       class="ipt ipt-small" style="width: 485px;" ng-required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><span class="left-txt"><i>*</i>正确选项:</span>
+                    <span ng-repeat="item in model.question.configurationItems">
+                            <input type="radio" ng-value="$index+1" ng-model="radio.radioSelected"/><span
+                            ng-bind="events.digitalToLetter.($index)"></span>
+                            </span>
+                </li>
+            </ul>
+
+            <!--多选-->
+            <ul class="ul-d-form udf-2 lh-1 ml30" ng-switch-when="3">
+                <li><span class="left-txt"><i>*</i>试题选项个数:</span>
+                    <select class="slt slt-large" ng-change="events.setQuestionCount()" ng-model="model.questionCount">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </li>
+                <li class="clear"><span class="left-txt fl"><i>*</i>试题选项:</span>
+
+                    <div class="w-textarea2 fl">
+                        <div class="clear" ng-repeat="item in model.question.configurationItems"
+                             style="padding-top:12px">
+                            <span class="fl mr10 b"><span ng-bind="events.digitalToLetter.($index)"></span></span>
+                            <div class="fl width-600 ">
+                                <input prefix-name="textarea_"
+                                       dynamic-name="$index"
+                                       ng-model="item.content" type="text"
+                                       class="ipt ipt-small" style="width: 485px;" ng-required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><span class="left-txt"><i>*</i>正确选项:</span>
+                    <span ng-repeat="item in model.question.configurationItems">
+                      <input type="checkbox" ng-checked="events.checkMultiAnswers(item.id)" value="true"
+                             ng-click="events.setMultipleQuestionAnswers(item.id,$index)"/>
+                        <span ng-bind="events.digitalToLetter.($index)"></span>
+                    </span>
+                </li>
+            </ul>
+            <!--判断-->
+            <ul class="ul-d-form udf-2 lh-1 ml30" ng-switch-when="1">
+                <li><span class="left-txt"><i>*</i>正确选项:</span>
+                    <input type="radio" value="true" ng-model="model.question.correct"/>正确
+                    <input type="radio" value="false" ng-model="model.question.correct"/>错误
+                </li>
+            </ul>
+        </div>
+        <ul class="ul-d-form udf-2 lh-1 ml30">
+            <li class="clear"><span class="left-txt fl">试题解析：</span>
+
+                <div class="fl width-600">
+                    <textarea ng-model="model.question.description"
+                              style="height: 110px;width: 500px;"
+                              name="description"></textarea>
+                </div>
+            </li>
+        </ul>
+
+        <div class="btn-center">
+            <a href="" ng-click="model.saveType === 1 ? events.save('2') : events.modify('2')"
+               ng-class="{'btn-g': !addPopQuestionFrom.$valid, 'btn-r': addPopQuestionFrom.$valid}"
+               class="btn">保存</a>
+            <a class="btn btn-g ml10" ng-click="events.back($event)">取消</a>
+        </div>
+
+        <div class="col-tit">已添加弹窗题</div>
+        <div class="col-body table-box mt20">
+            <table>
+                <tr>
+                    <th style="width: 20px;">No</th>
+                    <th style="width: 40px;">弹窗时间</th>
+                    <th style="width: 50px;">试题类型</th>
+                    <th style="width: 130px;">试题题目</th>
+                    <th style="width: 250px;">试题答案</th>
+                    <th style="width: 80px;">正确答案</th>
+                    <th style="width: 80px;">操作</th>
+                </tr>
+                <tbody>
+                <tr ng-repeat="pop in model.popsInit">
+                    <td><span ng-bind="$index + 1"></span></td>
+                    <td><span ng-bind="events.formatTimePoint(pop.timePoint)"></span></td>
+                    <td><span ng-bind="pop.questionType"></span></td>
+                    <td><span ng-bind="pop.topic"></span></td>
+                    <td><span ng-bind="events.formatAnswerAndOptions(pop.options)"></span></td>
+                    <td><span ng-bind="events.formatAnswerAndOptions(pop.answer)"></span></td>
+                    <td>
+                        <button class="table-btn" has-permission="courseWareManager/savePop"
+                                ng-click="events.modifiedShow($index + 1)">修改
+                        </button>
+                        <button class="table-btn" ng-click="events.delPop(pop.id)">删除</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+
+
+

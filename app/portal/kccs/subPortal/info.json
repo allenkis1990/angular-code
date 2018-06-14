@@ -1,0 +1,9 @@
+{
+  "name": "courseSupermarket",
+  "themes": {
+    "default": "kccs/subPortal/styles/default/webstyle.css",
+    "red": "kccs/subPortal/styles/red/webstyle.css"
+  },
+  "main": "kccs/subPortal/portal.app.js",
+  "version": "0.0.1"
+}

@@ -1,0 +1,40 @@
+<div class="main-body">
+    <div class="nav clear">
+        <div class="nav-toggle l" ng-click="goLeft()">
+            <span class="ico nav-prev"></span>
+        </div>
+        <div class="nav-toggle r" ng-click="goRight()">
+            <span class="ico nav-next"></span>
+        </div>
+        <div class="title-view" ng-style="style">
+
+            <a href="javascript:;"
+               ng-click="clickTab($event, tab.activeView.stateName, tab.activeView.params, tab.viewName)"
+               ng-class="{'current': $state.includes(tab.activeView.stateName), 'no-close': !tab.closeAble}"
+               ng-repeat="tab in HB_TAB.tabs">
+                b{{tab.name}}
+                <span ng-if="tab.closeAble" ng-click="closeTab($event, $index, tab.viewName)" class="ico close"></span>
+            </a>
+            <div class="nav-tool"
+                 ng-click="navToolClick($event)">
+                <span class="ico nav-refresh" title="刷新当前" data-action="refresh"></span>
+                <span class="ico nav-closeAll" title="关闭全部" data-action="closeAll"></span>
+            </div>
+        </div>
+    </div>
+    <div class="main-wrap-cont abs"
+         ng-init="OWN_VIEW_NAME=tab.viewName"
+         ng-style=" $state.includes(tab.activeView.stateName)?{zIndex: '10'}:{zIndex: '9'}"
+         ng-repeat="tab in HB_TAB.tabs">
+
+        <div class="m-box-1">
+            <div class="m-box-2">
+                <div class="m-box-3" ui-view="b{{OWN_VIEW_NAME}}"></div>
+            </div>
+            <div class="footer clear">
+                主办单位：合肥宏景软件有限公司 <a style="margin-left:10px;" href="http://www.miibeian.gov.cn/" target="_blank">闽 ICP 备08103886号</a><br>技术支持：福建华博教育科技股份有限公司
+            </div>
+        </div>
+    </div>
+</div>
+

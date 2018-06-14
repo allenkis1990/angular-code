@@ -1,0 +1,266 @@
+<!--班级信息-->
+<div class="tab-bd clear" ng-show="model.classTab === 0 && model.noUserInformation">
+    <div class="wp-9 fl" style="width: 30%">
+        <div class="col-tit">已报班级</div>
+        <div class="column-block clear">
+            <div class="col-body bt0 mh-3">
+                <div class="search-bar">
+                </div>
+                <div class="no-data w-4 pt50 clear">
+                    <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                    <div class="p-txt">请先输入相关信息进行搜索！</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wp-10 fr" style="width: 70%">
+        <div class="col-tit">班级信息</div>
+        <div class="column-block bt0 clear">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10">
+                    <div class="no-data w-4 pt50 clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">请先输入相关信息进行搜索！</div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-bd clear" ng-show="model.classTab === 0 && !model.noUserInformation">
+    <div class="wp-9 fl" style="width: 30%">
+        <div class="col-tit">已报班级</div>
+        <div class="column-block clear">
+            <div class="col-body bt0 mh-3">
+                <div class="search-bar">
+                    <ul class="ul-form uf-3 li-fl clear">
+                        <li>
+                            <select class="slt slt-small"
+                                    ng-options="item.optionId as item.name for item in classInfoModel.yearList"
+                                    ng-model="classInfoModel.trainingYear">
+                            </select>
+                        </li>
+                        <li>
+                            <select class="slt slt-small"
+                                    ng-options="item.optionId as item.name for item in classInfoModel.subjectsList"
+                                    ng-model="classInfoModel.trainingSubjects">
+                            </select>
+                        </li>
+                        <li>
+                            <input type="text"
+                                   class="ipt ipt-small"
+                                   ng-model="classInfoModel.className"
+                                   placeholder="班级名称"></li>
+                        <li><a href="javascript:void (0);"
+                               has-permission="classInformation/searchClass"
+                               ng-click="events.MainPageQueryList()"
+                               class="btn btn-b">搜索</a></li>
+                    </ul>
+                </div>
+                <div kendo-grid="node.learningClass"
+                     k-ng-delay="kendoPlus.gridDelay"
+                     k-options="ui.learningClass.options">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wp-10 fr" style="width: 70%">
+        <div class="col-tit">班级信息</div>
+        <div class="column-block bt0 clear" ng-if="classInfoModel.noClassInformarion">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10">
+                    <div class="no-data w-4 pt50 clear">
+                        <div class="p-img"><img src="@systemUrl@/images/empty.png"></div>
+                        <div class="p-txt">请先输入相关信息进行搜索！</div>
+                    </div>
+                </div>
+                <!-- /基本信息 -->
+            </div>
+        </div>
+        <div class="column-block bt0 clear" ng-if="!classInfoModel.noClassInformarion">
+            <div class="col-body bt0 mh-3">
+                <div class="tab-tit-3">
+                    <a href="javascript:void (0);"
+                       ng-class="{'current':classInfoModel.classInforTab === 0}"
+                       ng-click="classInfoModel.classInforTab = 0"
+                       class="current">基本信息</a>
+                    <a href="javascript:void (0);"
+                       ng-if="classInfoModel.createType !== 4"
+                       ng-class="{'current':classInfoModel.classInforTab === 1}"
+                       ng-click="events.changeClassInforTab($event,2)">学习情况</a>
+                    <a href="javascript:void (0);"
+                       ng-if="classInfoModel.createType !== 4&&classInfoModel.classRealInfo.exam===true"
+                       ng-class="{'current':classInfoModel.classInforTab === 2}"
+                       ng-click="events.getClassTestInfo()">班级考试</a>
+                </div>
+                <!-- 基本信息 -->
+                <div class="tab-bd mt10 " ng-show="classInfoModel.classInforTab === 0">
+                    <div class="b fs16">班级信息</div>
+                    <div class="mt10 ml20 mr20">
+                        班级名称：<span class="fs16 t-r" ng-bind="classInfoModel.classRealInfo.className"></span>
+                        <div ng-if="classInfoModel.createType !== 4">
+                            实付金额：<span class="ml50 b t-r fs16" ng-bind="'¥'+classInfoModel.classRealInfo.price"></span>
+                        </div>
+                        <div class="mt10">
+                            考核结果：
+                            <a href="#" class="t-r b fs16 result">
+                                <span class="t-d" ng-bind="classInfoModel.classRealInfo.examinationResult"></span>
+                                <span class="hover-block">考核要求：<br>班级课程学习进度>=<span ng-bind="classInfoModel.classRealInfo.rateOfProgress"></span>%<span ng-if="classInfoModel.classRealInfo.exam===true">，弹窗题+考试成绩>=<span ng-bind="classInfoModel.classRealInfo.passScore"></span>分</span></span>
+                            </a>
+                            <button href="javascript:void(0);"
+                                    class="btn btn-b btn-mini ml20"
+                                    ng-click="events.oneKeyOk()"
+                                    ng-disabled="!classInfoModel.classRealInfo.fullCourseRequireCredit"
+                                    has-permission="classInformation/onekeyStudy"
+                                    ng-if="(classInfoModel.classRealInfo.examinationResult !== '合格' && classInfoModel.classUseStatus === 0) && classInfoModel.createType !== 4">
+                                一键合格
+                            </button>
+                            <div class="dash-line-4 mt10"></div>
+                            <ul class="ul-d-form udf-14 li-fl clear">
+                                <li><span class="left-txt">学时年度：</span><span ng-bind="classInfoModel.classRealInfo.trainingYear"></span>年
+                                </li>
+                                <li><span class="left-txt">科目：</span><span ng-bind="classInfoModel.classRealInfo.trainingSubject"></span></li>
+                                <li><span class="left-txt">学时：</span><span ng-bind="classInfoModel.classRealInfo.hours"></span></li>
+                                <li ng-if="classInfoModel.classRealInfo.trainingProfession"><span class="left-txt">专业：</span><span ng-bind="classInfoModel.classRealInfo.trainingProfession"></span></li>
+                                <li><span class="left-txt">开通时间：</span><span ng-bind="classInfoModel.classRealInfo.activeTime"></span></li>
+                                <li ng-if="classInfoModel.createType !== 4"><span class="left-txt">开通方式：</span><span ng-bind="classInfoModel.classRealInfo.activeType"></span>
+                                </li>
+                                <li><span class="left-txt">报名时间：</span><span ng-bind="classInfoModel.classRealInfo.signUpBeginTime"></span>
+                                    至 <span ng-bind="classInfoModel.classRealInfo.signUpEndTime"></span>
+                                </li>
+                                <li><span class="left-txt">培训时间：</span><span ng-bind="classInfoModel.classRealInfo.trainingBeginTime"></span>
+                                    至 <span ng-bind="classInfoModel.classRealInfo.trainingEndTime"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--<div class="b fs16 mt20">可换班级</div>-->
+                    <!--<div class="tips-box-2 mt10">换班的前提条件为：培训班考核未通过、同等价格、目标班级培训时间未结束，若已考核通过则不能换班！-->
+                    <!--</div>-->
+                    <!--<a href="javascript:void (0);" ng-click="classInfoModel.showClassChangeList = true" class="btn btn-b mt10">查询可换班级</a>-->
+                    <!--<div ng-show="classInfoModel.showClassChangeList">-->
+                    <!--<div kendo-grid="node.changeClass"-->
+                    <!--k-options="ui.changeClass.options"-->
+                    <!--k-ng-delay="classInfoModel.changeClassOk"></div>-->
+                    <!--</div>-->
+                </div>
+                <!-- /基本信息 -->
+
+                <!-- 学习情况 -->
+                <div class="tab-bd mt10" ng-show="classInfoModel.classInforTab === 1">
+                    <div class="b fs16">课程整体信息</div>
+                    <div class="sta-pic-1">
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t1">
+                                    <span><span ng-bind="classInfoModel.classTotalLearning.totalCredit"></span>学时</span></div>
+                            </div>
+                            <span class="sp-info">整体选课要求</span>
+                        </div>
+
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t2">
+                                    <span>学习进度</span>
+                                    <p>已学：<span ng-bind="classInfoModel.classTotalLearning.userLearningSchedule"></span>%</p>
+                                </div>
+                            </div>
+                            <span class="sp-info">学习进度</span>
+                        </div>
+
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t3">
+                                    <span>已选学时</span>
+                                    <p>已选学时：<span ng-bind="classInfoModel.classTotalLearning.userSelectedCredit"></span>学时</p>
+                                    <p>还需选学时：<span ng-bind="(classInfoModel.classTotalLearning.totalCredit -
+                                        classInfoModel.classTotalLearning.userSelectedCredit >= 0 ?
+                                        classInfoModel.classTotalLearning.totalCredit -
+                                        classInfoModel.classTotalLearning.userSelectedCredit : 0 )"></span>学时</p>
+                                </div>
+                            </div>
+                            <span class="sp-info">已选学时</span>
+                        </div>
+
+                        <div class="sp-cont">
+                            <div class="pic-show">
+                                <div class="pic-txt t4">
+                                    <p>共<span ng-bind="classInfoModel.classTotalLearning.totalPopQuestionNum===null?'-':classInfoModel.classTotalLearning.totalPopQuestionNum"></span>题</p>
+                                    <p>已答<span ng-bind="classInfoModel.classTotalLearning.answeredPopQuestionNum"></span>题（答对<span ng-bind="classInfoModel.classTotalLearning.correctPopQuestionNum"></span>）</p>
+                                    <p>未答<span ng-bind="classInfoModel.classTotalLearning.unAnsweredPopQuestionNum===null?'-':classInfoModel.classTotalLearning.unAnsweredPopQuestionNum"></span></p>
+
+                                    <!--<p><span ng-bind="(classInfoModel.classTotalLearning.correctPopQuestionScore === null ? 0 :classInfoModel.classTotalLearning.correctPopQuestionScore) + '分'"></span>(已答<span ng-bind="classInfoModel.classTotalLearning.answeredPopQuestionNum"></span>答对<span ng-bind="classInfoModel.classTotalLearning.correctPopQuestionNum"></span>)
+                                    </p>-->
+                                </div>
+                            </div>
+                            <span class="sp-info">弹窗答题</span>
+                        </div>
+                    </div>
+                    <div class="b fs16 mt10">课程学习情况</div>
+                    <div class="mw-1">
+                        <div kendo-grid="node.learnStatus"
+                             k-ng-delay="classInfoModel.changeClassOk"
+                             k-options="ui.learningStatus.options"></div>
+                    </div>
+                </div>
+                <!-- /学习情况 -->
+
+                <!-- 班级考试 -->
+                <div class="tab-bd mt10" ng-if="classInfoModel.classInforTab === 2&&classInfoModel.classRealInfo.exam===true">
+                    <p>当前共<span class="t-r" ng-bind="classInfoModel.classTestInfomation.length + '场'"></span>考试</p>
+                    <table class="table table-nf table-s mt10">
+                        <thead>
+                        <tr>
+                            <th width="17%" class="tl">考试名称</th>
+                            <th width="12%">总分</th>
+                            <th width="12%">考试时长</th>
+                            <th width="29%">考试周期</th>
+                            <th width="10%">考试次数</th>
+                            <th width="10%">已考次数</th>
+                            <th width="10%">考试成绩</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="item in classInfoModel.classTestInfomation">
+                        <tr class="bg-g">
+                            <td class="tl" ng-bind="item.examRoundName"></td>
+                            <td ng-bind="item.totalScore + '分'"></td>
+                            <td ng-bind="item.examTime + '分钟'"></td>
+                            <td><span ng-bind="item.examBeginTime"></span> 至 <span ng-bind="item.examEndTime"></span></td>
+                            <td ng-bind="item.examTimes===0?'无限':item.examTimes"></td>
+                            <td ng-bind="item.haveExamTimes > 0 ? item.haveExamTimes : '-'"></td>
+                            <td ng-bind="(item.userScore === null ? '-':item.userScore) + '分'"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" class="p0">
+                                <table class="table table-noline">
+                                    <tbody>
+                                    <tr ng-repeat="data in item.examTimesDetail">
+                                        <td width="53%" class="tl"><span
+                                                class="pl20">答卷时间：<span ng-bind="data.answerPaperTime"></span></span></td>
+                                        <td width="40%">成绩：<span ng-bind="data.score"></span>分</td>
+                                        <td width="5%" class="op">
+                                            <a href="javascript:void (0);"
+                                               ng-if="classInfoModel.classUseStatus === 0 && classInfoModel.classRealInfo.examinationResult !== '合格' && classInfoModel.classInfoStatus !== '冻结'"
+                                               has-permission="classInformation/detailText"
+                                               ng-click="events.deleteClassTest(item,data)">删除</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /班级考试 -->
+            </div>
+        </div>
+    </div>
+</div>

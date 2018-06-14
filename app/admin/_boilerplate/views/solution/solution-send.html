@@ -1,0 +1,115 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript: void(0);" ng-click="$state.go('states.solution')" class="ico return"></a>
+        <a class="aw" href="javascript: void(0);" ng-click="$state.go('states.solution')">解决方案管理</a> &gt; 推送解决方案
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column">
+        <div class="col-tit">待选商学院列表</div>
+        <div class="dash-line-1"></div>
+        <div class="col-body">
+            <div class="search-bar">
+                <ul class="ul-form li-fl lh-1 clear">
+                    <li>
+                        <input type="text" class="ipt ipt-medium" placeholder="请输入企业名称"
+                               ng-model="model.companyName"
+                               ng-keydown="events.queryByEnter($event)"
+                        />
+                    </li>
+                    <li><a href="#" ng-click="events.reloadElectedMerchantGrid($event)" class="btn btn-b">查询</a></li>
+                </ul>
+            </div>
+            <div kendo-grid="node.electedMerchantGrid" k-options="ui.electedMerchantGrid"></div>
+        </div>
+    </div>
+
+    <div class="column mt30">
+        <div class="col-tit">待推送商学院列表
+            <a href="#" ng-click="events.clearMerchant($event)" class="btn btn-g fr">清空</a>
+        </div>
+
+        <div class="dash-line-1"></div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="30">No.</th>
+                <th>公司名称</th>
+                <th width="180">商学院</th>
+                <th width="80">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="config in model.sendingConfigList">
+                <td>b{{$index + 1}}</td>
+                <td>b{{config.merchantName}}</td>
+                <td>b{{config.schoolName}}</td>
+                <td class="op">
+                    <a href="#" ng-click="events.removeMerchant($event, $index, config.merchantId)">取消选择</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--<div class="column mt10 wp-full">-->
+    <!--<div class="col-tit">推送规则设置</div>-->
+    <!--<div class="dash-line-1"></div>-->
+    <!--<div class="wrap-tab">-->
+    <!--<div ng-if="model.sendingConfigList.length > 0" class="tab-tit tab-tit-2" style="width: 500%">-->
+    <!--<div ng-repeat="config in model.sendingConfigList" class="tit">-->
+    <!--<a href="#"-->
+    <!--ng-class="{'current': config.current}"-->
+    <!--ng-click="events.toggleConfig($event, config.merchantId)">-->
+    <!--b{{config.schoolName}}-->
+    <!--</a>-->
+    <!--<span ng-if="config.validBeginTime == null || config.validEndTime == null" class="prompt"><span class="tr-arrow"></span>请设置服务期限</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="more">-->
+    <!--&lt;!&ndash;-----------  向后  -----------&ndash;&gt;-->
+    <!--<span class="ico ico-next"></span>-->
+    <!--&lt;!&ndash;-----------  向前  -----------&ndash;&gt;-->
+    <!--<span class="ico ico-prev hide"></span>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div ng-if="model.sendingConfigList.length > 0" class="column-block clear">-->
+    <!--<div class="col-body bt0">-->
+    <!--<ul class="ul-d-form lh-1 pl20">-->
+    <!--<li>-->
+    <!--<span class="left-txt txt-long">是否推送能力项：</span>-->
+    <!--<label for="ability_true">-->
+    <!--<input id="ability_true" name="sendAbility" ng-click="events.configAbility(model.config.merchantId, true)" ng-checked="model.config.sendAbility" type="radio">是-->
+    <!--</label>-->
+    <!--<label for="ability_false" class="ml10">-->
+    <!--<input id="ability_false" name="sendAbility" ng-click="events.configAbility(model.config.merchantId, false)" ng-checked="model.config.sendAbility == false" type="radio">否-->
+    <!--</label>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<span class="left-txt txt-long">解决方案服务期限：</span>-->
+    <!--<input type="text" class="ipt ipt-medium"-->
+    <!--ng-model="model.config.validBeginTime"-->
+    <!--kendo-date-picker="node.validBeginTime"-->
+    <!--k-options="ui.datePicker.validBeginTime"-->
+    <!--k-ng-delay="ui.datePicker.validBeginTime"-->
+    <!--hb-readonly> 至-->
+    <!--<input type="text" class="ipt ipt-medium"-->
+    <!--ng-model="model.config.validEndTime"-->
+    <!--kendo-date-picker="node.validEndTime"-->
+    <!--k-options="ui.datePicker.validEndTime"-->
+    <!--k-ng-delay="ui.datePicker.validEndTime"-->
+    <!--hb-readonly>-->
+    <!--相当于服务b{{model.config.dayMinus}}天-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="btn-center pt20">
+        <a href="#" ng-click="events.send($event)" class="btn"
+           ng-class="{'btn-g': !model.noSubmitSend || model.sendingConfigList.length != 1, 'btn-r': model.noSubmitSend && model.sendingConfigList.length == 1}">确认推送</a>
+        <a href="javascript: void(0);" ng-click="$state.go('states.solution')" class="btn btn-g ml10">取消</a>
+    </div>
+</div>

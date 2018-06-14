@@ -1,0 +1,60 @@
+@import "../public/variables";
+@import "header";
+@import "side";
+@import "pos-nav";
+@import "screen";
+@import "other";
+@import "class-list";
+@import "page";
+@import "dialog";
+
+/**
+  * 页面主要框架
+  * 内容比较少时，footer会停留在底部，内容比较多时，footer在最下面
+  * footer要固定高度
+  */
+
+@footer-height: 75px; /* 底部高度 */
+.main-frame {
+  position: relative;
+  min-height: 100%;
+  z-index: 1;
+  background-color: #f2f2f2;
+
+  .main-frame-bd {
+    padding: 0 0 140px;
+    zoom: 1;
+
+  }
+}
+
+/* 底部 */
+.footer {
+  height: 140px;
+  margin: -140px 0 0;
+  position: relative;
+  z-index: 9;
+  text-align: center;
+  background: url("../../../@systemUrl@/images/footer-bg.png") no-repeat bottom;
+  &:after {
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    content: "center";
+    vertical-align: middle;
+    overflow: hidden;
+  }
+
+  .footer-bd {
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 30px;
+  }
+}
+
+.tra {
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  transition: all 0.4s;
+}

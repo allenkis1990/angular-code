@@ -1,0 +1,57 @@
+<div class="main-wrap-body">
+    <div class="dialog w-textarea">
+        <div class="dialog-body">
+            <div class="dialog-tit">头像设置1</div>
+            <div class="dialog-cont clear">
+                <div class="original-img fl">
+                    <div class="img-upload">
+                        <a href="javascript:void(0)" class="upload fl">
+                            <div upload-image
+                                 ng-model="model.uploadImageValue"
+                                 queue-container-id="lesson_image"></div>
+                        </a>
+                        <span class="fl">只支持JPG、PNG、GIF</span>
+                    </div>
+                    <div class="or-img-box">
+                        <img class="default" src="@systemUrl@/images/image_container.png" alt=""/>
+                        <!--<img class="horizontal hide" src="@systemUrl@/images/img-complete.png"/>-->
+                        <div class="btn-op clear">
+                            <button type="button"><span class="ico original-size"></span></button>
+                            <button type="button"><span class="ico bigger"></span></button>
+                            <button type="button"><span class="ico smaller"></span></button>
+                            <button type="button"><span class="ico turn-left"></span></button>
+                            <button type="button"><span class="ico turn-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-img fr">
+                    <p class="p-img-tit">预览</p>
+
+                    <div class="p-img-1">
+                        <img src="@systemUrl@/images/user-img.jpg" alt=" ">
+
+                        <p>120px × 120px</p>
+                    </div>
+                    <div class="p-img-2">
+                        <div class="img-user">
+                            <img src="@systemUrl@/images/user-img.jpg" alt=" ">
+                            <span class="img-mask"><img src="@systemUrl@/images/mask-user-img.png"></span>
+                        </div>
+                        <p>80px × 80px</p>
+                    </div>
+                    <div class="p-img-3">
+                        <div class="img-user">
+                            <img src="@systemUrl@/images/user-img.jpg" alt=" ">
+                            <span class="img-mask"><img src="@systemUrl@/images/mask-user-img.png"></span>
+                        </div>
+                        <p>60px × 60px</p>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-center">
+                <input type="button" class="btn btn-r" value="保存"/>
+                <input type="button" class="btn btn-g ml10" ng-click="events.close()" value="取消"/>
+            </div>
+        </div>
+    </div>
+</div>

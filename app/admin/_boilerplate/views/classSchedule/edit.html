@@ -1,0 +1,26 @@
+<div class="pos-nav-box">
+    <div class="pos-nav">
+        <a href="javascript:void(0)" class="ico return" ui-sref="states.classSchedule"></a>
+        <a class="aw" href="javascript:void(0)" ui-sref="states.classSchedule">培训课表管理</a>&gt;修改培训课表
+    </div>
+</div>
+<div class="main-wrap-body">
+    <div class="column mt20">
+        <span><i class="t-r">*</i>培训课表：</span>
+        <input type="text" class="ipt ipt-large" maxlength="50"
+               ng-model="model.planTemplate.name"
+               placeholder="请输入培训课表名称"/>
+    </div>
+    <div class="column mt30">
+        <div class="col-tit">配置课程</div>
+        <div class="dash-line-2"></div>
+        <a class="btn btn-r" ng-click="events.addItemTemplateWindow($event)" has-permission="/classSchedule/UrlAddPlanItemTemplate">新增课程</a>
+    </div>
+    <div class="col-body table-box mt20">
+        <div kendo-grid="node.itemTemplateGrid" k-options="itemTemplateGrid.options">
+        </div>
+    </div>
+    <div class="btn-center mt20">
+        <a class="btn btn-r" ng-click="events.beforeSubmit($event)" has-permission="/classSchedule/UrlUpdatePlanTemplate">保存修改</a>
+    </div>
+</div>

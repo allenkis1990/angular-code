@@ -1,0 +1,9 @@
+{
+  "name": "courseSupermarket",
+  "themes": {
+    "default": "kccs/kccsv2/styles/default/webstyle.css",
+    "red": "kccs/kccsv2/styles/red/webstyle.css"
+  },
+  "main": "kccs/kccsv2/portal.app.js",
+  "version": "0.0.1"
+}

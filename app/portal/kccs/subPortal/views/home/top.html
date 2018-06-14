@@ -1,0 +1,79 @@
+<div class="m-header">
+    <div class="top-wrap">
+        <div class="p-wrap-full clear">
+            <div class="fl">
+                <a href="javascript:void(0)"
+                   ng-mouseover="events.mouseover()"
+                   ng-mouseout="events.mouseout()"
+                   class="top-app rel">
+                    <i class="p-ico appico"></i>华博继教V6.0小程序
+                    <div class="hover-block" ng-if="showXcx">
+                        <div class="hover-bd">
+                            <i class="arrowtop"></i>
+                            <img src="kccs/subPortal/images/xcx.jpg" width="150" height="150">
+                            <div class="tc">扫我，步入指尖学习</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="ml10 fl">
+                <a href="https://kccs.59iedu.com/app/download.html" target="_blank" class="top-app rel">
+                    <div ng-mouseover="events.hoverWeixin(true)" ng-mouseleave="events.hoverWeixin(false)"><i class="p-ico appico">
+                    </i>华博继教V6.0APP</div>
+                    <div class="hover-block" ng-if="model.erweimaShow">
+                        <div class="hover-bd">
+                            <i class="arrowtop"></i>
+                            <img src="kccs/subPortal/images/ewm.png" width="150" height="150">
+                            <div class="tc">扫码下载APP</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="right fr" ng-if="!sureUseLogin"><a href="javascript:void(0)"
+                                                           ng-click="events.openLoginDialog($event)">登录</a> |
+                <a href="#" ui-sref="states.accountant.registration">注册</a> <!--|-->
+                <!--<a href="#">学习中心</a>--></div>
+            <div class="right fr" ng-if="sureUseLogin"><span ng-bind="useInformation.userName"></span> 欢迎您！
+                | <a href="javascript:void(0)" ng-click="events.outOfLogin($event)">退出</a>
+                | <a href="javascript:void(0)" ng-click="events.goCenter($event)">学习中心</a></div>
+        </div>
+    </div>
+    <div class="p-wrap-full clear">
+        <!--<img src="kccs/subPortal/images/logo.png"
+             style="cursor:pointer;"
+             ng-click="$state.go('states.accountant')"
+             alt=" "
+             class="logo fl">-->
+        <div class="portal-name fl"
+             title="{{porTitleName}}"
+             style='overflow:hidden;text-overflow: ellipsis;white-space: nowrap'
+             ng-click="$state.go('states.accountant')" ng-bind="porTitleName"></div>
+        <!-- 导航 -->
+        <div class="m-nav fr" ng-if="$state.current.name!=='states.accountant.registration'">
+            <div class="nav-bd">
+                <a href="#" ui-sref="states.accountant"
+                   ng-class="{'current':$state.current.name==='states.accountant'}">首页</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.onTraining')}"
+                   ng-click="$state.go('states.accountant.onTraining')">报名培训
+                </a>
+                <a href="javascript:void(0)"
+                   ng-class="{'current':$state.includes('states.accountant.creditVerification')}"
+                   ng-click="$state.go('states.accountant.creditVerification')">学时验证
+                </a>
+                <!--<a href="#">转岗培训</a>-->
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.notice')}"
+                   ng-click="$state.go('states.accountant.notice')">培训通知</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.laws')}"
+                   ng-click="$state.go('states.accountant.laws')">政策法规</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.courseShow')}"
+                   ng-click="$state.go('states.accountant.courseShow')">课程展示</a>
+                <a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.helpCenter')}"
+                   ng-click="$state.go('states.accountant.helpCenter')">帮助中心</a>
+                <!--<a href="javascript:void(0)" ng-class="{'current':$state.includes('states.accountant.concatUs')}"
+                   ng-click="$state.go('states.accountant.concatUs')">关于我们</a>-->
+
+            </div>
+        </div>
+        <!-- /导航 -->
+    </div>
+</div>

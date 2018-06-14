@@ -1,0 +1,103 @@
+@import "../public/variables";
+
+.m-nav {
+  width: 1170px;
+  height: 54px;
+  background-color: @base;
+  margin-left: auto;
+  margin-right: auto;
+
+  .nav-bd {
+    width: 900px;
+    .current {
+      background-color: #a90316;
+    }
+    a {
+      line-height: 54px;
+      display: block;
+      color: #fff;
+      font-size: 18px;
+      float: left;
+      padding-left: 40px;
+      padding-right: 40px;
+      &:hover {
+        .current;
+      }
+      &:focus {
+        outline: none;
+        text-decoration: none;
+      }
+    }
+    .current {
+      .current;
+    }
+    .return-btn {
+      background: #f39800;
+      width: 100px;
+      line-height: 36px;
+      padding-left: 0;
+      padding-right: 0;
+      text-align: center;
+      margin-top: 9px;
+      margin-left: 20px;
+      &:hover {
+        background: #ed8e00;
+      }
+    }
+  }
+  .nav-bd-2 {
+    a {
+      padding-left: 35px;
+      padding-right: 35px;
+    }
+  }
+  .search-box {
+    width: 253px;
+    border: 1px solid #fff;
+    height: 34px;
+    font-size: 14px;
+    margin-top: 9px;
+    .ui-slt-s {
+      background: none;
+      border: 0;
+      color: #fff;
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 9px 0 6px 6px;
+    }
+    .search-ipt {
+      border: 0;
+      background: none;
+      padding: 8px 0 6px;
+      width: 157px;
+      color: #fff;
+    }
+    .ui-slt-s:focus, .search-ipt:focus {
+      outline: none;
+    }
+    .ui-slt-s option {
+      color: #666;
+    }
+    .search-ipt:-ms-input-placeholder {
+      color: #fff;
+    }
+    .search-ipt:-moz-placeholder {
+      color: #fff;
+    }
+    .search-ipt::-webkit-input-placeholder {
+      color: #fff;
+    }
+
+    .search-btn {
+      width: 37px;
+      height: 34px;
+      background-color: #fef7f8;
+      background-position: -293px -74px;
+      text-indent: -9999px;
+      &:hover {
+        background-color: #fff;
+      }
+    }
+
+  }
+}
