@@ -42,6 +42,7 @@ define(['webuploader', 'cropper'],
                 $('head').append('<link href="/bower_components/cropper/dist/cropper.css" rel="stylesheet">');
                 return {
                     scope: {
+                        accept:'@',
                         closeVar: '=close',
                         aspectRatio: '=?',
                         mouseWheelZoom: '=?',
@@ -57,6 +58,7 @@ define(['webuploader', 'cropper'],
                         if (!options) {
                             return false;
                         }
+                        $scope.litmitFileSize=attrs.fileSizeTip?attrs.fileSizeTip:baseTip;
                         // 图片展示容器
                         var imagePreviewContainer = $('#image_preview_container'),
                             file = null,
@@ -113,10 +115,16 @@ define(['webuploader', 'cropper'],
                                 uploadSuccess: 'uploadSuccess',
                                 uploadError: 'uploadError'
                             };
-
-                        if(attrs.needOperate){
-
+                        if($scope.accept){
+                            defaultConfiguration.accept={
+                                title: 'files',
+                                extensions: $scope.accept
+                            };
                         }
+                        console.log(defaultConfiguration);
+                        /*if(attrs.needOperate){
+
+                        }*/
                         var instance = new WebUploader.Uploader(defaultConfiguration);
                         $scope.uploading = false;
 
@@ -190,6 +198,20 @@ define(['webuploader', 'cropper'],
                             instance.upload();
                         }
 
+                        //传的不是指定的文件类型弹窗提示错误
+                        instance.on('error', function (error) {
+                            switch (error) {
+                                case 'Q_TYPE_DENIED':
+                                    var accept = defaultConfiguration.accept.extensions;
+                                    var message = '请上传:';
+                                    message += accept;
+                                    message += '的文件类型';
+                                    HB_dialog.warning('提示', message);
+                                    break;
+                            }
+                        })
+
+
                         instance.on(events.beforeFileQueued, function (file) {
                             //console.log(file);
                             console.log(instance);
@@ -204,7 +226,7 @@ define(['webuploader', 'cropper'],
                             }
                             var fileSize=attrs.lwhFileSize?Number(attrs.lwhFileSize):baseFileSize;
                             if(file.size>fileSize){
-                                HB_dialog.warning('提示', '图片大小不能超过'+baseTip+'KB');
+                                HB_dialog.warning('提示', '图片大小不能超过'+(attrs.fileSizeTip?attrs.fileSizeTip:baseTip)+'KB');
                                 $scope.cropperInstalled=false;
                                 imagePreviewContainer.cropper ( 'destroy' );//销毁裁剪插件实例
                                 imagePreviewContainer.attr('src', '@systemUrl@/images/image_container.png');
@@ -218,6 +240,7 @@ define(['webuploader', 'cropper'],
                             instance.makeThumb(file, function (error, src) {
                                     if (error) {
                                         alert('不能预览');
+                                        $scope.myloading.hide();
                                         return;
                                     }
 
@@ -225,7 +248,7 @@ define(['webuploader', 'cropper'],
                                         $timeout(function () {
                                             imagePreviewContainer.attr('src', src);
                                             imagePreviewContainer.cropper({
-                                                aspectRatio: $rootScope.aspectRatio||16/9,
+                                                aspectRatio: $scope.aspectRatio?Number($scope.aspectRatio):($rootScope.aspectRatio||16/9),
                                                 mouseWheelZoom: !!$scope.mouseWheelZoom,
                                                 preview: $scope.previewSelector || '.img-preview',
                                                 autoCropArea: $scope.autoCropArea || 0.65,
